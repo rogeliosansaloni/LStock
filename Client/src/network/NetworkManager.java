@@ -51,4 +51,16 @@ public class NetworkManager extends Thread {
     running = false;
     interrupt();
   }
+
+  @Override
+  public void run () {
+    //try {
+      while (running) {
+        System.out.println("Waiting for object to be received...");
+        //TunnelObject recibido = (TunnelObject) obin.readObject();
+      }
+    //} catch (IOException | ClassNotFoundException e) {
+    //  e.printStackTrace();
+    //}
+  }
 }
