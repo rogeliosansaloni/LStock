@@ -10,6 +10,7 @@ public class NetworkManager extends Thread {
   private ObjectOutputStream obout;
   private boolean running;
   private static NetworkManager instance = null;
+  // TODO: Specify the controllers as attributes
 
   /**
    * Represents a Singleton
@@ -20,5 +21,15 @@ public class NetworkManager extends Thread {
       instance = new NetworkManager();
     }
     return instance;
+  }
+
+  public void startServerConnection () {
+    running = true;
+    start();
+  }
+
+  public void stopServerConnection () {
+    running = false;
+    interrupt();
   }
 }
