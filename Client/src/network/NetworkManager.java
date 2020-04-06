@@ -12,6 +12,7 @@ public class NetworkManager extends Thread {
   private boolean running;
   private static NetworkManager instance = null;
   // TODO: Specify the controllers as attributes
+  // TODO: Specify the views to be shown
 
   /**
    * Represents a Singleton
