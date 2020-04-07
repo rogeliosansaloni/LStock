@@ -9,8 +9,8 @@ import java.net.Socket;
 
 public class DedicatedServer extends Thread {
     private boolean isOn;
-    private ObjectInputStream objectIn;
-    private ObjectOutputStream objectOut;
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
     private Socket sClient;
 
     public DedicatedServer(Socket sClient) {
@@ -30,11 +30,11 @@ public class DedicatedServer extends Thread {
     public void run() {
         try {
             // Create the communication channels
-            objectIn = new ObjectInputStream(sClient.getInputStream());
-            objectOut = new ObjectOutputStream(sClient.getOutputStream());
+            ois = new ObjectInputStream(sClient.getInputStream());
+            oos = new ObjectOutputStream(sClient.getOutputStream());
 
             while(isOn) {
-                TunnelObject tunnelObject = (TunnelObject) objectIn.readObject();
+                TunnelObject tunnelObject = (TunnelObject) ois.readObject();
 
                 // When receiving tunnel object, we need to check its type
                 //if (tunnelObject instanceof AuthenticationInfo) {
