@@ -81,18 +81,6 @@ public class DBConnector {
         return rs;
     }
 
-    public void createUser(String db_name, String db_password){
-        String query = "CREATE USER '" + db_name + "' IDENTIFIED BY '" + db_password + "';";
-        try {
-            s =(Statement) conn.createStatement();
-            s.executeUpdate(query);
-
-        } catch (SQLException ex) {
-            System.out.println("Creating User KO: " + db_name + " --> " + ex.getSQLState());
-            System.out.println("Query: " + query);
-            System.err.println(ex);
-        }
-    }
 
     public void disconnect(){
         try {
