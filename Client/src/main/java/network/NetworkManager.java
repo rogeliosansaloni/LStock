@@ -10,8 +10,8 @@ import main.java.utils.JSONReader;
 
 public class NetworkManager extends Thread {
   private Socket serverSocket;
-  private ObjectInputStream obin;
-  private ObjectOutputStream obout;
+  private ObjectInputStream ois;
+  private ObjectOutputStream oos;
   private boolean running;
   private static NetworkManager instance = null;
   private NetworkConfiguration configuaration;
@@ -42,9 +42,9 @@ public class NetworkManager extends Thread {
     // Set up the connection to the server
     this.running = false;
     this.serverSocket = new Socket(configuaration.getIp(), configuaration.getPort()); // pass ip and port from NetworkConfiguration
-    obout = new ObjectOutputStream(this.serverSocket.getOutputStream());
-    obout.flush();
-    obin = new ObjectInputStream(this.serverSocket.getInputStream());
+    oos = new ObjectOutputStream(this.serverSocket.getOutputStream());
+    oos.flush();
+    ois = new ObjectInputStream(this.serverSocket.getInputStream());
 
     this.start();
   }
@@ -64,7 +64,7 @@ public class NetworkManager extends Thread {
     try {
       while (running) {
         System.out.println("Waiting for object to be received...");
-        TunnelObject recibido = (TunnelObject) obin.readObject();
+        TunnelObject recibido = (TunnelObject) ois.readObject();
       }
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();
