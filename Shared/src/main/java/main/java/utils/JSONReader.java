@@ -1,4 +1,4 @@
-package model;
+package main.java.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -16,7 +16,7 @@ public class JSONReader {
         gson = new Gson();
     }
 
-    public NetworkConfiguration getConfiguration () {
+    public NetworkConfiguration getClientConfiguration () {
         JsonReader reader;
         try {
             reader = new JsonReader(new FileReader(PATH));
