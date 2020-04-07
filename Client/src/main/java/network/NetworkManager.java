@@ -5,12 +5,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import main.java.model.entities.TunnelObject;
+import main.java.utils.JSONReader;
+
 public class NetworkManager extends Thread {
   private Socket serverSocket;
   private ObjectInputStream obin;
   private ObjectOutputStream obout;
   private boolean running;
   private static NetworkManager instance = null;
+  private NetworkConfiguration configuaration;
   // TODO: Specify the controllers as attributes
   // TODO: Specify the views to be shown
 
@@ -31,10 +35,13 @@ public class NetworkManager extends Thread {
   }
 
   private NetworkManager() throws IOException {
-    // TODO: Implement JsonReader to read from config json
+    // Get Network configuration from JSON
+    JSONReader jsonReader = new JSONReader();
+    configuaration = jsonReader.getClientConfiguration();
+
     // Set up the connection to the server
     this.running = false;
-    this.serverSocket = new Socket(); // pass ip and port from NetworkConfiguration
+    this.serverSocket = new Socket(configuaration.getIp(), configuaration.getPort()); // pass ip and port from NetworkConfiguration
     obout = new ObjectOutputStream(this.serverSocket.getOutputStream());
     obout.flush();
     obin = new ObjectInputStream(this.serverSocket.getInputStream());
@@ -54,13 +61,13 @@ public class NetworkManager extends Thread {
 
   @Override
   public void run () {
-    //try {
+    try {
       while (running) {
         System.out.println("Waiting for object to be received...");
-        //TunnelObject recibido = (TunnelObject) obin.readObject();
+        TunnelObject recibido = (TunnelObject) obin.readObject();
       }
-    //} catch (IOException | ClassNotFoundException e) {
-    //  e.printStackTrace();
-    //}
+    } catch (IOException | ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 }
