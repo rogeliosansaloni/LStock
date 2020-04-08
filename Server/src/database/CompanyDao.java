@@ -22,7 +22,7 @@ public class CompanyDao {
      */
     public void createCompany (Company company) {
         boolean companyExist = false;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%'");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%';");
 
         try {
             while (verify.next()) {
@@ -45,11 +45,11 @@ public class CompanyDao {
      * @param company Company to erase
      */
     public boolean deleteCompany (Company company) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%'");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%';");
         try {
             while (verify.next()) {
                 if (verify.next().equals("name")) {
-                    connectorDB.deleteQuery("DELETE FROM Company WHERE name ='"+company.getCompanyName()+"')");
+                    connectorDB.deleteQuery("DELETE FROM Company WHERE name LIKE '"+company.getCompanyName()+"');");
                     System.out.println("Company Deleted");
                     return true;
                 }
@@ -64,8 +64,8 @@ public class CompanyDao {
     /**
      * It will all get all the companies in the LStock
      */
-    public ArrayList<String> getAllCompanies () {
-        ResultSet getCompany = connectorDB.selectQuery("SELECT * FROM Company");
+        public ArrayList<String> getAllCompanies () {
+        ResultSet getCompany = connectorDB.selectQuery("SELECT * FROM Company;");
         ArrayList<String> companies = null;
         try {
             companies = new ArrayList<String>();
@@ -84,7 +84,7 @@ public class CompanyDao {
      * @param company Company where will get the information from.
      */
     public Company getCompanyInfo(Company Company){
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%'");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%';");
         Company companyData = new Company;
 
         try {

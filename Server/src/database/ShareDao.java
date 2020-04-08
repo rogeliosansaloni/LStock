@@ -11,22 +11,24 @@ import java.util.LinkedList;
 public class ShareDao {
 
     private DBConector dbConector;
-    public ShareDao(DBConector dbConector){
+    private Company company;
+    public ShareDao(DBConector dbConector, Company company){
         this.dbConector = dbConector;
+        this.company = company;
     }
 
     /**
      * It willl create a share in the database
      * @param share the share to create
      */
-    public void createShare (Share share) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Share WHERE share_id = "+ share.getShareId();
+    public void createShare (Share share, Company company) {
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Share WHERE share_id = "+ share.getShareId()+" AND company_id ="+company.getCompanyId()";";
 
         try {
             while (verify.next()) {
-                if (verify.next().equals("share_id")) {
+                if (verify.next().equals("share_id") && verify.next().equals("company_id")) {
                     System.out.println("Added shares");
-                    connectorDB.insertQuery("INSERT INTO Share (share_id) VALUES ('"+ share.getShareId() +"')");
+                    connectorDB.insertQuery("INSERT INTO Share (share_id) VALUES ('"+ share.getShareId() +"','"+share.getShareId()+"');");
                 }
             }
 
@@ -40,20 +42,20 @@ public class ShareDao {
      * It will permit to errase shares
      * @param share Share to erase
      */
-    public boolean deleteShare (Share share) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Share WHERE share_id = "+ share.getShareId();
+    public boolean deleteShare (Share share, Company company) {
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Share WHERE share_id = "+ share.getShareId()+" AND company_id ="+company.getCompanyId()";";
 
         try {
             while (verify.next()) {
-                if (verify.next().equals("share_id")) {
-                    connectorDB.deleteQuery("DELETE FROM Share WHERE share_id ='"+share.getShareId()+"')");
+                if (verify.next().equals("share_id") && verify.next().equals("company_id")) {
+                    connectorDB.deleteQuery("DELETE FROM Share WHERE share_id ='"+share.getShareId()+"'"+share.getShareId()+"');");
                     System.out.println("Share Deleted");
                     return true;
                 }
             }
 
         }catch (SQLException e) {
-            System.out.println("Error deleting shares";
+            System.out.println("Error deleting shares");
         }
         return false;
     }
@@ -61,8 +63,9 @@ public class ShareDao {
     /**
      * It will all get all the shares in the LStock
      */
-    public ArrayList<String> getAllShares () {
-        ResultSet getShares = connectorDB.selectQuery("SELECT * FROM Shares");
+    //TENGO DUDA LO UQE SE TIENE QUE DEVOLVER AQUI
+    public ArrayList<Shares> getAllShares () {
+        ResultSet getShares = connectorDB.selectQuery("SELECT * FROM Shares;");
         ArrayList<String> shares = null;
         try {
             shares = new ArrayList<String>();

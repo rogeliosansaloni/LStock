@@ -22,7 +22,7 @@ public class UserDao {
      */
     public void createUser (User user) {
         boolean userExist = false;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+user.getNickname()+"%' OR email LIKE '%"+user.getEmail()+"%'");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+user.getNickname()+"%' OR email LIKE '%"+user.getEmail()+"%';");
 
         try {
             while (verify.next()) {
@@ -51,18 +51,18 @@ public class UserDao {
      * @param user User to delete
      */
     public boolean deleteUser (User user) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE (nickname LIKE '"+ user.getNickname()+"' OR correo LIKE '"+user.getEmail()+"')");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE (nickname LIKE '"+ user.getNickname()+"' OR correo LIKE '"+user.getEmail()+"');");
 
         try {
             while (verify.next()) {
                 if (verifyEmail(user.getEmail(), verify.getObject("email"))) {
-                    connectorDB.deleteQuery("DELETE FROM User WHERE email='"+user.getEmail()+"')");
+                    connectorDB.deleteQuery("DELETE FROM User WHERE email LIKE'"+user.getEmail()+"');");
                     System.out.println("User Deleted");
                     return true;
                 }
                 else {
                     if (verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
-                        connectorDB.deleteQuery("DELETE FROM User WHERE nickname ='"+user.getNickName()+"')");
+                        connectorDB.deleteQuery("DELETE FROM User WHERE nickname LIKE'"+user.getNickName()+"');");
                         System.out.println("User Deleted");
                          return true;
                     }
@@ -79,7 +79,7 @@ public class UserDao {
      * It will get all the users registered in LStock
      */
     public Arraylist<String> getAllUsers () {
-        ResultSet getUsers = connectorDB.selectQuery("SELECT * FROM User");
+        ResultSet getUsers = connectorDB.selectQuery("SELECT * FROM User;");
         Arraylist<String> users = null;
         try {
             users = new Arraylist<String>();
@@ -99,7 +99,7 @@ public class UserDao {
      */
     public User getUserInfo(User user){
         User userData = new User;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE (nickname LIKE '"+ user.getNickname()+"' OR correo LIKE '"+user.getEmail()+"')");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE (nickname LIKE '"+ user.getNickname()+"' OR correo LIKE '"+user.getEmail()+"');");
 
         try {
             while (verify.next()){
