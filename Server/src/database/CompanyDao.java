@@ -9,17 +9,20 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 
-public class UserDao {
+public class CompanyDao {
 
-    private ConectorDB connectorDB;
+    private DBConector dbConector;
+    public  CompanyDao (DBConector dbConector){
+        this.dbConector = dbConector;
+    }
 
     /**
-     * CREATE Company
-     * @param Company company
+     * It willl create a company in the database
+     * @param company the company to create
      */
-    public void createUser (Company company) {
+    public void createCompany (Company company) {
         boolean companyExist = false;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+company.getCompanyName()+"%'");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%'");
 
         try {
             while (verify.next()) {
@@ -38,11 +41,11 @@ public class UserDao {
     }
 
     /**
-     * DELETE COMPANY
-     * @param Company company
+     * It will permit to errase a company
+     * @param company Company to erase
      */
-    public boolean deleteUser (Company company) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+company.getCompanyName()+"%'");
+    public boolean deleteCompany (Company company) {
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%'");
         try {
             while (verify.next()) {
                 if (verify.next().equals("name")) {
@@ -59,41 +62,40 @@ public class UserDao {
     }
 
     /**
-     * GET ALL Companies
-     * @param
+     * It will all get all the companies in the LStock
      */
-    public LinkedList<String> getAllCompanies () {
+    public ArrayList<String> getAllCompanies () {
         ResultSet getCompany = connectorDB.selectQuery("SELECT * FROM Company");
-        LinkedList<String> companies = null;
+        ArrayList<String> companies = null;
         try {
-            companies = new LinkedList<String>();
+            companies = new ArrayList<String>();
             while (getCompany.next()){
-                companies.add((String)getUsers.getObject("name"));
+                companies.add(getCompanies.getObject("name").toString());
             }
         } catch (SQLException e) {
             System.out.println("Error getting all companies");
         }
-        return users;
+        return companies;
 
     }
 
     /**
-     * GET COMPANY INFO
-     * @param Company Company
+     * It will get the information of one company
+     * @param company Company where will get the information from.
      */
     public Company getCompanyInfo(Company Company){
-        User userData = new User;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE (name LIKE '"+ user.getNickname()+"' OR correo LIKE '"+user.getEmail()+"')");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE nickname LIKE '%"+company.getCompanyName()+"%'");
+        Company companyData = new Company;
 
         try {
             while (verify.next()){
                 if (verify.next().equals("name")) {
-                    userData.setNickname((String) verify.getObject("name"));
+                    companyData.setName(verify.getObject("name").toString());
                 }
             }
-            return user;
+            return companyData;
         } catch (SQLException e) {
-            System.out.println("Error");
+            System.out.println("Error getting information from the company");
         }
         return null;
     }
