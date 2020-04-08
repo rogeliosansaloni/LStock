@@ -8,27 +8,27 @@ import java.sql.SQLException;
 
 public class DBConnector {
 
-    private String db_name;
-    private String db_password;
+    private String dbName;
+    private String dbPassword;
     private String db;
-    private int db_port;
+    private int dbPort;
     private String url = "jdbc:mysql://localhost";
     private static Connection conn = null;
     private static Statement s;
 
 
-    public DBConnector(String db_name, String db_password, String database, int db_port){
-        this.db_name = db_name;
-        this.db_password = db_password;
+    public DBConnector(String dbName, String dbPassword, String database, int dbPort){
+        this.dbName = dbName;
+        this.dbPassword = dbPassword;
         this.db = database;
-        this.db_port = db_port;
-        this.url += ":"+db_port+"/"+db;
+        this.dbPort = dbPort;
+        this.url += ":"+dbPort+"/"+db;
     }
 
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
-            conn = (Connection) DriverManager.getConnection(url, db_name, db_password);
+            conn = (Connection) DriverManager.getConnection(url, dbName, dbPassword);
             if (conn != null) {
                 System.out.println("Connecting database " + url + " ... OK");
             }
@@ -85,9 +85,9 @@ public class DBConnector {
     public void disconnect(){
         try {
             conn.close();
-        } catch (SQLException e) {
-            System.out.println("Connetion KO" + e.getSQLState());
-            System.err.println(e);
+        } catch (SQLException ex) {
+            System.out.println("Connection KO" + ex.getSQLState());
+            System.err.println(ex);
         }
     }
 

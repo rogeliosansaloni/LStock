@@ -11,38 +11,44 @@ import java.util.LinkedList;
 
 public class UserDao {
 
-    private ConectorDB connectorDB;
+    private DBConector dbConector;
+    public  UserDao (DBConector dbConector){
+        this.dbConector = dbConector;
+    }
 
     /**
-     * CREATE USER (when a client want to register)
-     * @param User user
+     * It create a user when it registered
+     * @param user the class that will be registering
      */
     public void createUser (User user) {
+        boolean userExist = false;
         ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+user.getNickname()+"%' OR email LIKE '%"+user.getEmail()+"%'");
 
         try {
             while (verify.next()) {
                 if (verifyEmail(user.getEmail(), verify.getObject("email"))) {
                     System.out.println("This email has an account already.");
+                    userExist = true;
                 }
                 else {
                     if (verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
                         System.out.println("This username is already taken.");
+                        userExist = true;
                     }
                 }
             }
             if(!userExist){
-                connectorDB.insertQuery("INSERT INTO Usuario (nickname,email,password,description,total_balance) VALUES ('"+user.getnickname()+"','"+user.getEmail()+"','"+user.getdescription()+"','"+user.getTotalBalance()"')");
+                connectorDB.insertQuery("INSERT INTO User (nickname,email,password,description,total_balance) VALUES ('"+user.getnickname()+"','"+user.getEmail()+"','"+user.getdescription()+"','"+user.getTotalBalance()"')");
             }
         }catch (SQLException e) {
-            System.out.println("Problema al obtener los datos del Select de Usuario");
+            System.out.println("Error Creating User");
         }
 
     }
 
     /**
-     * DELETE USER
-     * @param User user
+     * It will delete a user when its no longer available
+     * @param user User to delete
      */
     public boolean deleteUser (User user) {
         ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE (nickname LIKE '"+ user.getNickname()+"' OR correo LIKE '"+user.getEmail()+"')");
@@ -64,33 +70,32 @@ public class UserDao {
             }
 
         }catch (SQLException e) {
-            System.out.println("Problema al obtener los datos del Select de Usuario");
+            System.out.println("Error deleting user");
         }
         return false;
     }
 
     /**
-     * GET ALL USERS
-     * @param
+     * It will get all the users registered in LStock
      */
-    public LinkedList<String> deleteUser () {
+    public Arraylist<String> getAllUsers () {
         ResultSet getUsers = connectorDB.selectQuery("SELECT * FROM User");
-        LinkedList<String> users = null;
+        Arraylist<String> users = null;
         try {
-            users = new LinkedList<String>();
+            users = new Arraylist<String>();
             while (getUsers.next()){
-                users.add((String)getUsers.getObject("nickname"));
+                users.add((getUsers.getObject("nickname")).toString());
             }
         } catch (SQLException e) {
-            System.out.println("Error");
+            System.out.println("Error getting all users");
         }
         return users;
 
     }
 
     /**
-     * GET ALL USERS
-     * @param User user
+     * It will get all the information of one user
+     * @param user User information
      */
     public User getUserInfo(User user){
         User userData = new User;
@@ -99,51 +104,53 @@ public class UserDao {
         try {
             while (verify.next()){
                 if (verifyEmail(user.getEmail(), verify.getObject("email")) || verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
-                    userData.setNickname((String) verify.getObject("email"));
-                    userData.setNickname((String) verify.getObject("nickname"));
-                    userData.setNickname((String) verify.getObject("decription"));
-                    userData.setNickname((String) verify.getObject("totalBalance"));
+                    userData.setNickname(verify.getObject("email").toString());
+                    userData.setNickname(verify.getObject("nickname").toString());
+                    userData.setNickname((String) verify.getObject("decription").toString());
+                    userData.setNickname((String) verify.getObject("totalBalance").toString());
                 }
             }
             return user;
         } catch (SQLException e) {
-            System.out.println("Error");
+            System.out.println("Error to get user information");
         }
         return null;
     }
 
     /**
-     * VERIFY EMAIL
-     * @param String email
+     * It permits to verify that the email hasn't arealdy exist.
+     * @param  email Email to verify
+     * @param  dbEmail Email from database to compare
      */
-    public void verifyEmail (String email, String db_email) {
+    public void verifyEmail (String email, String dbEmail) {
 
         try {
             while (verify.next()) {
-                if (db_email.equals(email)) {
+                if (dbEmail.equals(email)) {
                     System.out.println("This email has an account already.");
                     return true;
                 }
             }
         }catch (SQLException e) {
-            System.out.println("Error");
+            System.out.println("Error getting email");
         }
 
     }
 
     /**
-     * VERIFY NICKNAME
-     * @param String nickname
+     * It permits to verify that the nickname hasn't arealdy exist.
+     * @param  nickname Nickname to verify
+     * @param  dbNickname Nickname from database to compare
      */
-    public void verifyNickname (String nickname, String db_nickname) {
+    public void verifyNickname (String nickname, String dbNickname) {
         try {
             while (verify.next()) {
-                if (db_nickname.equals(nickname)) {
+                if (dbNickname.equals(nickname)) {
                     return true;
                 }
             }
         }catch (SQLException e) {
-            System.out.println("Error");
+            System.out.println("Error getting nickname");
         }
 
     }
