@@ -11,10 +11,8 @@ import java.util.LinkedList;
 public class ShareDao {
 
     private DBConector dbConector;
-    private Company company;
-    public ShareDao(DBConector dbConector, Company company){
+    public  ShareDaoDao (DBConector dbConector){
         this.dbConector = dbConector;
-        this.company = company;
     }
 
     /**
@@ -28,7 +26,8 @@ public class ShareDao {
             while (verify.next()) {
                 if (verify.next().equals("share_id") && verify.next().equals("company_id")) {
                     System.out.println("Added shares");
-                    connectorDB.insertQuery("INSERT INTO Share (share_id) VALUES ('"+ share.getShareId() +"','"+share.getShareId()+"');");
+                    connectorDB.insertQuery("INSERT INTO Share (share_id,company_id) " +
+                            "VALUES ('"+ share.getShareId() +"','"+share.getCompanyId()+"','"+ share.getPrice()+"','"+share.getTime()+"');");
                 }
             }
 
@@ -48,7 +47,7 @@ public class ShareDao {
         try {
             while (verify.next()) {
                 if (verify.next().equals("share_id") && verify.next().equals("company_id")) {
-                    connectorDB.deleteQuery("DELETE FROM Share WHERE share_id ='"+share.getShareId()+"'"+share.getShareId()+"');");
+                    connectorDB.deleteQuery("DELETE FROM Share WHERE share_id ='"+share.getShareId()+"'"+share.getCompanyId()+"');");
                     System.out.println("Share Deleted");
                     return true;
                 }
@@ -63,7 +62,7 @@ public class ShareDao {
     /**
      * It will all get all the shares in the LStock
      */
-    //TENGO DUDA LO UQE SE TIENE QUE DEVOLVER AQUI
+    //TENGO DUDA LO QUE SE TIENE QUE DEVOLVER AQUI
     public ArrayList<Shares> getAllShares () {
         ResultSet getShares = connectorDB.selectQuery("SELECT * FROM Shares;");
         ArrayList<String> shares = null;
