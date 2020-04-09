@@ -20,7 +20,7 @@ public class BotDao {
 
     /**
      * It willl create a bot in the database
-     * @param bot the bot to create
+     * @param bot the bot to be created
      */
     public void createBot (Bot bot, Company company) {
         boolean botExist = false;

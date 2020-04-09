@@ -84,7 +84,7 @@ public class CompanyDao {
      * It will get the information of one company
      * @param company Company where will get the information from.
      */
-    public Company getCompanyInfo(Company Company){
+    public Company getCompanyInfo(Company company){
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getCompanyName() + "%';");
         Company companyData = new Company();
 
