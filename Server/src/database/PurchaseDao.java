@@ -1,18 +1,18 @@
-package Connetor;
+package database;
 
-
-import networ.DBConnector;
+import network.DBConnector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 
 public class PurchaseDao {
 
-    private DBConector dbConector;
-    public  PurchaseDaoDao (DBConector dbConector){
-        this.dbConector = dbConector;
+    private DBConnector dbConnector;
+
+    public  PurchaseDaoDao (DBConnector dbConnector){
+        this.dbConnector = dbConnector;
     }
 
     /**
@@ -20,15 +20,15 @@ public class PurchaseDao {
      * @param purchase the purchase to create
      */
     public void createPurchase (Purchase purchase, Company company, User user) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Purchase WHERE share_id = "+ share.getShareId()+" AND company_id ="+company.getCompanyId()
-                +"AND user_id = "+ user.getUserId()+";");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Purchase WHERE share_id = " + share.getShareId() + " AND company_id =" + company.getCompanyId()
+                + "AND user_id = " + user.getUserId() + ";");
 
         try {
             while (verify.next()) {
                 if (verify.next().equals("share_id") && verify.next().equals("company_id") && verify.next().equals("user_id")) {
                     System.out.println("Added Purchase");
                     connectorDB.insertQuery("INSERT INTO Purchase (share_id,company_id,user_id, share_quantity) " +
-                            "VALUES ('"+ share.getShareId() +"','"+ company.getCompanyId()+"','"+ user.getUserId()  +"','"+ share.getShareQuantity() +"')");
+                            "VALUES ('" + share.getShareId() + "','" + company.getCompanyId() + "','" + user.getUserId()  + "','" + share.getShareQuantity() + "')");
                 }
             }
 
@@ -39,17 +39,17 @@ public class PurchaseDao {
     }
 
     /**
-     * It will permit to errase purchase
+     * It will permit to erase purchase
      * @param purchase Purchase to erase
      */
     public boolean deletePurchase (Purchase purchase, Company company, User user) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Purchase WHERE share_id = "+ share.getShareId()+" AND company_id ="+company.getCompanyId()
-                +"AND user_id = "+ User.getUserId()+";");
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Purchase WHERE share_id = " + share.getShareId() + " AND company_id =" + company.getCompanyId()
+                + "AND user_id = " + User.getUserId() + ";");
         try {
             while (verify.next()) {
                 if (verify.next().equals("share_id") && verify.next().equals("company_id") && verify.next().equals("user_id")) {
-                    connectorDB.deleteQuery("DELETE FROM Purchase WHERE share_id = "+ share.getShareId()+" AND company_id ="+company.getCompanyId()
-                            +"AND user_id = "+ user.getUserId()+";");
+                    connectorDB.deleteQuery("DELETE FROM Purchase WHERE share_id = " + share.getShareId() + " AND company_id =" + company.getCompanyId()
+                            + "AND user_id = " + user.getUserId() + ";");
                     System.out.println("Purchase Deleted");
                     return true;
                 }
@@ -62,7 +62,7 @@ public class PurchaseDao {
     }
 
     /**
-     * It will all get all the purchases in the LStock
+     * It will get all the purchases in the LStock
      */
     //TENGO DUDA LO QUE SE TIENE QUE DEVOLVER AQUI
     public ArrayList<String> getAllPurchases () {

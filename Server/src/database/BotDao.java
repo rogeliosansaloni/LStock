@@ -1,19 +1,20 @@
-package Connetor;
+package database;
 
 
-import networ.DBConnector;
+import network.DBConnector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 
 public class BotDao {
 
-    private DBConector dbConector;
-    public  BotDao (DBConector dbConector){
-        this.dbConector = dbConector;
+    private DBConnector dbConnector;
+
+    public  BotDao (DBConnector dbConnector){
+        this.dbConnector = dbConnector;
     }
 
 
@@ -23,48 +24,48 @@ public class BotDao {
      */
     public void createBot (Bot bot, Company company) {
         boolean botExist = false;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Bot WHERE bot_id = "+ bot.getBotId()+" AND company_id ="+company.getCompanyId()";";
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";";
 
         try {
             while (verify.next()) {
                 if (verify.next().equals("bot_id") &&verify.next().equals("company_id")) {
-                    System.out.println("This bot already exist.");
+                    System.out.println("This bot already exists.");
                     botExist = true;
                 }
             }
             if(!botExist){
                 connectorDB.insertQuery("INSERT INTO Bot (bot_id, company_id) " +
-                        "VALUES ('"+bot.getBotId()+"','"+company.getCompanyId()+"','"+bot.getActiveTime()+"','"+bot.getProbability()+"')");
+                        "VALUES ('" + bot.getBotId() + "','" + company.getCompanyId() + "','" + bot.getActiveTime() + "','" + bot.getProbability() + "')");
             }
         }catch (SQLException e) {
-            System.out.println("Error creating bot");
+            System.out.println(String.format("Error creating bot for %s", company.getName()));
         }
 
     }
 
     /**
-     * It will permit to errase a bot
+     * It will permit to erase a bot
      * @param bot Bot to erase
      */
     public boolean deleteBot(Bot bot) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Share WHERE bot_id = "+ bot.getBotId()+" AND company_id ="+company.getCompanyId()";";
+        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Share WHERE bot_id = " + bot.getBotId() +" AND company_id =" + company.getCompanyId() + ";";
         try {
             while (verify.next()) {
                 if (verify.next().equals("bot_id") &&verify.next().equals("company_id")) {
-                    connectorDB.deleteQuery("DELETE FROM Bot WHERE bot_id = "+ bot.getBotId()+" AND company_id ="+company.getCompanyId()";");
+                    connectorDB.deleteQuery("DELETE FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";");
                     System.out.println("Bot Deleted");
                     return true;
                 }
             }
 
         }catch (SQLException e) {
-            System.out.println("Error deleting bot";
+            System.out.println("Error deleting bot");
         }
         return false;
     }
 
     /**
-     * It will all get all the bots in the LStock
+     * It will get all the bots in the LStock
      */
         public ArrayList<String> getAllBots () {
         ResultSet getBots = connectorDB.selectQuery("SELECT * FROM Bots;");

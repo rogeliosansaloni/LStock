@@ -1,4 +1,4 @@
-package Connetor;
+package network;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DBConnector {
 
-    private String dbName;
+    private String Username;
     private String dbPassword;
     private String db;
     private int dbPort;
@@ -17,8 +17,8 @@ public class DBConnector {
     private static Statement s;
 
 
-    public DBConnector(String dbName, String dbPassword, String database, int dbPort){
-        this.dbName = dbName;
+    public DBConnector(String dbUsername, String dbPassword, String database, int dbPort){
+        this.Username = dbUsername;
         this.dbPassword = dbPassword;
         this.db = database;
         this.dbPort = dbPort;
@@ -28,7 +28,7 @@ public class DBConnector {
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
-            conn = (Connection) DriverManager.getConnection(url, dbName, dbPassword);
+            conn = (Connection) DriverManager.getConnection(url, Username, dbPassword);
             if (conn != null) {
                 System.out.println("Connecting database " + url + " ... OK");
             }
