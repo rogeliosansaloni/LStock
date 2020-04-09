@@ -12,7 +12,7 @@ public class UserDao {
 
     private DBConnector dbConnector;
 
-    public  UserDao (DBConnector dbConector){
+    public  UserDao (DBConnector dbConnector){
         this.dbConnector = dbConnector;
     }
 
@@ -22,7 +22,7 @@ public class UserDao {
      */
     public void createUser (User user) {
         boolean userExist = false;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
 
         try {
             while (verify.next()) {
@@ -38,7 +38,7 @@ public class UserDao {
                 }
             }
             if(!userExist){
-                connectorDB.insertQuery("INSERT INTO User (nickname,email,password,description,total_balance) VALUES ('" + user.getnickname() + "','" + user.getEmail() + "','" + user.getdescription() + "','" + user.getTotalBalance() + "')");
+                dbConnector.insertQuery("INSERT INTO User (nickname,email,password,description,total_balance) VALUES ('" + user.getnickname() + "','" + user.getEmail() + "','" + user.getdescription() + "','" + user.getTotalBalance() + "')");
             }
         }catch (SQLException e) {
             System.out.println("Error Creating User");
@@ -51,18 +51,18 @@ public class UserDao {
      * @param user User to delete
      */
     public boolean deleteUser (User user) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()) {
                 if (verifyEmail(user.getEmail(), verify.getObject("email"))) {
-                    connectorDB.deleteQuery("DELETE FROM User WHERE email LIKE'" + user.getEmail() + "');");
-                    System.out.println("User %s deleted.", user.getEmail())));
+                    dbConnector.deleteQuery("DELETE FROM User WHERE email LIKE'" + user.getEmail() + "');");
+                    System.out.println("User %s deleted.", user.getEmail());
                     return true;
                 }
                 else {
                     if (verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
-                        connectorDB.deleteQuery("DELETE FROM User WHERE nickname LIKE'" + user.getNickName() + "');");
+                        dbConnector.deleteQuery("DELETE FROM User WHERE nickname LIKE'" + user.getNickName() + "');");
                         System.out.println((String.format("User %s deleted.", user.getNickname())));
                          return true;
                     }
@@ -98,16 +98,16 @@ public class UserDao {
      * @param user User information
      */
     public User getUserInfo(User user){
-        User userData = new User;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+        User userData = new User();
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()){
                 if (verifyEmail(user.getEmail(), verify.getObject("email")) || verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
-                    userData.setNickname(verify.getObject("email").toString());
+                    userData.setEmail(verify.getObject("email").toString());
                     userData.setNickname(verify.getObject("nickname").toString());
-                    userData.setNickname(verify.getObject("decription").toString());
-                    userData.setNickname(verify.getObject("totalBalance").toString());
+                    userData.setDescription(verify.getObject("decription").toString());
+                    userData.setTotalBalance(verify.getObject("totalBalance").toString());
                 }
             }
             return user;
@@ -122,7 +122,7 @@ public class UserDao {
      * @param  email Email to verify
      * @param  dbEmail Email from database to compare
      */
-    public void verifyEmail (String email, String dbEmail) {
+    public boolean verifyEmail (String email, String dbEmail) {
 
         try {
             while (verify.next()) {
@@ -142,7 +142,7 @@ public class UserDao {
      * @param  nickname Nickname to verify
      * @param  dbNickname Nickname from database to compare
      */
-    public void verifyNickname (String nickname, String dbNickname) {
+    public boolean verifyNickname (String nickname, String dbNickname) {
         try {
             while (verify.next()) {
                 if (dbNickname.equals(nickname)) {
