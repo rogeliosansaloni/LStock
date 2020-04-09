@@ -1,11 +1,11 @@
 package database;
 
 
+import java.util.ArrayList;
 import network.DBConnector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 
 public class UserDao {
@@ -78,11 +78,11 @@ public class UserDao {
     /**
      * It will get all the users registered in LStock
      */
-    public Arraylist<String> getAllUsers () {
-        ResultSet getUsers = connectorDB.selectQuery("SELECT * FROM User;");
-        Arraylist<String> users = null;
+    public ArrayList<String> getAllUsers() {
+        ResultSet getUsers = dbConnector.selectQuery("SELECT * FROM User;");
+        ArrayList<String> users = null;
         try {
-            users = new Arraylist<String>();
+            users = new ArrayList<String>();
             while (getUsers.next()){
                 users.add((getUsers.getObject("nickname")).toString());
             }
