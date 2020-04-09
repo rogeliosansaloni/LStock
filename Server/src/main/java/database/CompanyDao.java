@@ -23,7 +23,7 @@ public class CompanyDao {
      */
     public void createCompany (Company company) {
         boolean companyExist = false;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getCompanyName() + "%';");
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getCompanyName() + "%';");
 
         try {
             while (verify.next()) {
@@ -33,7 +33,7 @@ public class CompanyDao {
                 }
             }
             if(!companyExist){
-                connectorDB.insertQuery("INSERT INTO Company (name) VALUES ('" + company.getCompanyName() + "')");
+                dbConnector.insertQuery("INSERT INTO Company (name) VALUES ('" + company.getCompanyName() + "')");
             }
         }catch (SQLException e) {
             System.out.println("Error creating" + company.getCompanyName() + ".");
@@ -46,18 +46,18 @@ public class CompanyDao {
      * @param company Company to erase
      */
     public boolean deleteCompany (Company company) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getCompanyName() + "%';");
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getCompanyName() + "%';");
         try {
             while (verify.next()) {
                 if (verify.next().equals("name")) {
-                    connectorDB.deleteQuery("DELETE FROM Company WHERE name LIKE '" + company.getCompanyName() + "');");
+                    dbConnector.deleteQuery("DELETE FROM Company WHERE name LIKE '" + company.getCompanyName() + "');");
                     System.out.println("Company Deleted");
                     return true;
                 }
             }
 
         }catch (SQLException e) {
-            System.out.println("Error deleting " + company.getCompanyName() + ");
+            System.out.println("Error deleting " + company.getCompanyName());
         }
         return false;
     }
@@ -66,12 +66,12 @@ public class CompanyDao {
      * It will get all the companies in the LStock
      */
         public ArrayList<String> getAllCompanies () {
-        ResultSet getCompany = connectorDB.selectQuery("SELECT * FROM Company;");
+        ResultSet getCompany = dbConnector.selectQuery("SELECT * FROM Company;");
         ArrayList<String> companies = null;
         try {
             companies = new ArrayList<String>();
             while (getCompany.next()){
-                companies.add(getCompanies.getObject("name").toString());
+                companies.add(getCompany.getObject("name").toString());
             }
         } catch (SQLException e) {
             System.out.println("Error getting all companies");
@@ -85,8 +85,8 @@ public class CompanyDao {
      * @param company Company where will get the information from.
      */
     public Company getCompanyInfo(Company Company){
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getCompanyName() + "%';");
-        Company companyData = new Company;
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getCompanyName() + "%';");
+        Company companyData = new Company();
 
         try {
             while (verify.next()){

@@ -24,7 +24,7 @@ public class BotDao {
      */
     public void createBot (Bot bot, Company company) {
         boolean botExist = false;
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";";
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";";
 
         try {
             while (verify.next()) {
@@ -34,7 +34,7 @@ public class BotDao {
                 }
             }
             if(!botExist){
-                connectorDB.insertQuery("INSERT INTO Bot (bot_id, company_id) " +
+                dbConnector.insertQuery("INSERT INTO Bot (bot_id, company_id) " +
                         "VALUES ('" + bot.getBotId() + "','" + company.getCompanyId() + "','" + bot.getActiveTime() + "','" + bot.getProbability() + "')");
             }
         }catch (SQLException e) {
@@ -48,11 +48,11 @@ public class BotDao {
      * @param bot Bot to erase
      */
     public boolean deleteBot(Bot bot) {
-        ResultSet verify = connectorDB.selectQuery("SELECT * FROM Share WHERE bot_id = " + bot.getBotId() +" AND company_id =" + company.getCompanyId() + ";";
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Share WHERE bot_id = " + bot.getBotId() +" AND company_id =" + company.getCompanyId() + ";";
         try {
             while (verify.next()) {
                 if (verify.next().equals("bot_id") &&verify.next().equals("company_id")) {
-                    connectorDB.deleteQuery("DELETE FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";");
+                    dbConnector.deleteQuery("DELETE FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";");
                     System.out.println("Bot Deleted");
                     return true;
                 }
@@ -68,7 +68,7 @@ public class BotDao {
      * It will get all the bots in the LStock
      */
         public ArrayList<String> getAllBots () {
-        ResultSet getBots = connectorDB.selectQuery("SELECT * FROM Bots;");
+        ResultSet getBots = dbConnector.selectQuery("SELECT * FROM Bots;");
         ArrayList<String> bots = null;
         try {
             bots = new ArrayList<String>();
