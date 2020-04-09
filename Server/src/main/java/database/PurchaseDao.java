@@ -11,7 +11,7 @@ public class PurchaseDao {
 
     private DBConnector dbConnector;
 
-    public  PurchaseDao (DBConnector dbConnector){
+    public PurchaseDao (DBConnector dbConnector){
         this.dbConnector = dbConnector;
     }
 

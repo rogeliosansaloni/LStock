@@ -13,7 +13,7 @@ public class BotDao {
 
     private DBConnector dbConnector;
 
-    public  BotDao (DBConnector dbConnector){
+    public BotDao (DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 

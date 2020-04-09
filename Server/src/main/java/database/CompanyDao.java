@@ -13,7 +13,7 @@ public class CompanyDao {
 
     private DBConnector dbConnector;
 
-    public  CompanyDao (DBConnector dbConnector){
+    public CompanyDao (DBConnector dbConnector){
         this.dbConnector = dbConnector;
     }
 

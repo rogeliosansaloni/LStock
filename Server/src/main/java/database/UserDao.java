@@ -12,7 +12,7 @@ public class UserDao {
 
     private DBConnector dbConnector;
 
-    public  UserDao (DBConnector dbConnector){
+    public UserDao (DBConnector dbConnector){
         this.dbConnector = dbConnector;
     }
 
@@ -69,7 +69,7 @@ public class UserDao {
                 }
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error deleting user");
         }
         return false;

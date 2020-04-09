@@ -11,7 +11,7 @@ public class ShareDao {
 
     private DBConnector dbConnector;
 
-    public  ShareDao (DBConnector dbConnector){
+    public ShareDao (DBConnector dbConnector){
         this.dbConnector = dbConnector;
     }
 
