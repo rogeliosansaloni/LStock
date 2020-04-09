@@ -3,11 +3,11 @@ package network;
 public class NetworkConfiguration {
     private String ip;
     private int port;
-    private String db_ip;
-    private int db_port;
-    private String db_name;
-    private String db_user;
-    private String db_password;
+    private String dbIp;
+    private int dbPort;
+    private String dbName;
+    private String dbUser;
+    private String dbPassword;
 
     public String getIp() {
         return ip;
@@ -17,23 +17,23 @@ public class NetworkConfiguration {
         return port;
     }
 
-    public String getDb_ip() {
-        return db_ip;
+    public String getDbIp() {
+        return dbIp;
     }
 
-    public int getDb_port() {
-        return db_port;
+    public int getDbPort() {
+        return dbPort;
     }
 
-    public String getDb_name() {
-        return db_name;
+    public String getDbName() {
+        return dbName;
     }
 
-    public String getDb_user() {
-        return db_user;
+    public String getDbUser() {
+        return dbUser;
     }
 
-    public String getDb_password() {
-        return db_password;
+    public String getDbPassword() {
+        return dbPassword;
     }
 }
