@@ -2,10 +2,10 @@ package main.java.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import network.NetworkConfiguration;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import network.NetworkConfiguration;
 
 public class JSONReader {
     private static final String PATH = "client/src/main/resources/config.json";
