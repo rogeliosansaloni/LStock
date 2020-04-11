@@ -64,6 +64,27 @@ public class UserDao {
         return users;
 
     }
+    /**
+     * It will update the information of one user
+     * @param user User information
+     */
+    public User updateUser (User user){
+        User userData = new User();
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+
+        try {
+            while (verify.next()){
+                if (verifyEmail(user.getEmail(), verify.getObject("email")) || verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
+                    dbConnector.insertQuery("UPDATE User SET (description) VALUES ('" + user.getdescription() + "');");
+
+                }
+            }
+            return user;
+        } catch (SQLException e) {
+            System.out.println("Error updatting information");
+        }
+        return null;
+    }
 
     /**
      * It will get all the information of one user
