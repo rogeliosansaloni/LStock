@@ -26,11 +26,11 @@ git clone https://atlassian.salle.url.edu:7943/scm/dpoo/dpoo-stock-c2.git
 Primero ejecutamos el servidor y después el cliente. Podemos ejecutar diferentes instancias del cliente pero solo puede haber una instancia del servidor arrancado.
 
 ## Autores
-Mary Grace Adina - marygrace.adina
-Claudia Alonso Carrasco - claudia.alonso
-Kaye Ann Ignacio Jove - kayeann.ignacio
-Nicole Marie Jimenez Burayag - nicolemarie.jimenez
-Rafael Rebollo Cacín - rafael.rebollo
+Mary Grace Adina - marygrace.adina<br/>
+Claudia Alonso Carrasco - claudia.alonso<br/>
+Kaye Ann Ignacio Jove - kayeann.ignacio<br/>
+Nicole Marie Jimenez Burayag - nicolemarie.jimenez<br/>
+Rafael Rebollo Cacín - rafael.rebollo<br/>
 Rogelio Sansaloni Sanjuan - rogelio.sansaloni
 
 DPOO @ Mayo 2020
