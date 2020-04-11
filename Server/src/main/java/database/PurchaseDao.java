@@ -38,28 +38,6 @@ public class PurchaseDao {
 
     }
 
-    /**
-     * It will permit to erase purchase
-     * @param purchase Purchase to erase
-     */
-    public boolean deletePurchase (Purchase purchase, Company company, User user) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Purchase WHERE share_id = " + share.getShareId() + " AND company_id =" + company.getCompanyId()
-                + "AND user_id = " + User.getUserId() + ";");
-        try {
-            while (verify.next()) {
-                if (verify.next().equals("share_id") && verify.next().equals("company_id") && verify.next().equals("user_id")) {
-                    dbConnector.deleteQuery("DELETE FROM Purchase WHERE share_id = " + share.getShareId() + " AND company_id =" + company.getCompanyId()
-                            + "AND user_id = " + user.getUserId() + ";");
-                    System.out.println("Purchase Deleted");
-                    return true;
-                }
-            }
-
-        }catch (SQLException e) {
-            System.out.println("Error deleting purchase";
-        }
-        return false;
-    }
 
     /**
      * It will get all the purchases in the LStock

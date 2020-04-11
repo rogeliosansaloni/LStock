@@ -41,26 +41,6 @@ public class CompanyDao {
 
     }
 
-    /**
-     * It will permit to erase a company
-     * @param company Company to erase
-     */
-    public boolean deleteCompany (Company company) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getCompanyName() + "%';");
-        try {
-            while (verify.next()) {
-                if (verify.next().equals("name")) {
-                    dbConnector.deleteQuery("DELETE FROM Company WHERE name LIKE '" + company.getCompanyName() + "');");
-                    System.out.println("Company Deleted");
-                    return true;
-                }
-            }
-
-        }catch (SQLException e) {
-            System.out.println("Error deleting " + company.getCompanyName());
-        }
-        return false;
-    }
 
     /**
      * It will get all the companies in the LStock

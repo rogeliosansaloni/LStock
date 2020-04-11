@@ -37,27 +37,6 @@ public class ShareDao {
 
     }
 
-    /**
-     * It will permit to erase shares
-     * @param share Share to erase
-     */
-    public boolean deleteShare (Share share, Company company) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Share WHERE share_id = " + share.getShareId() +" AND company_id =" + company.getCompanyId() +";";
-
-        try {
-            while (verify.next()) {
-                if (verify.next().equals("share_id") && verify.next().equals("company_id")) {
-                    dbConnector.deleteQuery("DELETE FROM Share WHERE share_id ='" + share.getShareId() + "'" + share.getCompanyId() + "');");
-                    System.out.println("Share Deleted");
-                    return true;
-                }
-            }
-
-        }catch (SQLException e) {
-            System.out.println("Error deleting shares");
-        }
-        return false;
-    }
 
     /**
      * It will get all the shares in the LStock

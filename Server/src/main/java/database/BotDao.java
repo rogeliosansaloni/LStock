@@ -43,26 +43,6 @@ public class BotDao {
 
     }
 
-    /**
-     * It will permit to erase a bot
-     * @param bot Bot to erase
-     */
-    public boolean deleteBot(Bot bot) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Share WHERE bot_id = " + bot.getBotId() +" AND company_id =" + company.getCompanyId() + ";";
-        try {
-            while (verify.next()) {
-                if (verify.next().equals("bot_id") &&verify.next().equals("company_id")) {
-                    dbConnector.deleteQuery("DELETE FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";");
-                    System.out.println("Bot Deleted");
-                    return true;
-                }
-            }
-
-        }catch (SQLException e) {
-            System.out.println("Error deleting bot");
-        }
-        return false;
-    }
 
     /**
      * It will get all the bots in the LStock

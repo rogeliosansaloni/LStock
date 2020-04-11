@@ -46,34 +46,6 @@ public class UserDao {
 
     }
 
-    /**
-     * It will delete a user when its no longer available
-     * @param user User to delete
-     */
-    public boolean deleteUser (User user) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
-
-        try {
-            while (verify.next()) {
-                if (verifyEmail(user.getEmail(), verify.getObject("email"))) {
-                    dbConnector.deleteQuery("DELETE FROM User WHERE email LIKE'" + user.getEmail() + "');");
-                    System.out.println("User %s deleted.", user.getEmail());
-                    return true;
-                }
-                else {
-                    if (verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
-                        dbConnector.deleteQuery("DELETE FROM User WHERE nickname LIKE'" + user.getNickName() + "');");
-                        System.out.println((String.format("User %s deleted.", user.getNickname())));
-                         return true;
-                    }
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error deleting user");
-        }
-        return false;
-    }
 
     /**
      * It will get all the users registered in LStock
