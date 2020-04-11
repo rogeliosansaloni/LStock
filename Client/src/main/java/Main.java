@@ -1,4 +1,4 @@
-import main.java.utils.JSONReader;
+import utils.JSONReader;
 import network.NetworkConfiguration;
 
 public class Main {
