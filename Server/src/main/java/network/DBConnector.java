@@ -8,21 +8,21 @@ import java.sql.Statement;
 
 public class DBConnector {
 
+    private static String  BASE_URL;
     private String dbUsername;
     private String dbPassword;
-    private String db;
+    private String dbName;
     private int dbPort;
-    private String url = "jdbc:mysql://localhost";
+    private String url = "jdbc:mysql://";
     private static Connection conn = null;
     private static Statement s;
 
 
-    public DBConnector(String dbUsername, String dbPassword, String database, int dbPort){
+    public DBConnector(String dbUsername, String dbPassword, int dbPort){
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
-        this.db = database;
         this.dbPort = dbPort;
-        this.url += ":"+dbPort+"/"+db;
+        this.url += ":"+dbPort+"/";
     }
 
     public void connect() {
