@@ -1,4 +1,4 @@
-package main.java.utils;
+package utils;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
