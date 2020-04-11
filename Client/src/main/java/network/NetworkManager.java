@@ -5,8 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import main.java.model.entities.TunnelObject;
-import main.java.utils.JSONReader;
+import model.entities.TunnelObject;
+import utils.JSONReader;
 
 public class NetworkManager extends Thread {
   private Socket serverSocket;
