@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import main.java.model.entities.TunnelObject;
+import model.entities.TunnelObject;
 
 public class DedicatedServer extends Thread {
     private boolean isOn;
