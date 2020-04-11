@@ -5,7 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import entities.TunnelObject;
+import model.entities.TunnelObject;
 import utils.JSONReader;
 
 public class NetworkManager extends Thread {
