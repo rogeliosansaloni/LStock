@@ -1,5 +1,7 @@
 package database;
 
+import model.Company;
+import model.Share;
 import network.DBConnector;
 
 import java.sql.ResultSet;
@@ -20,14 +22,14 @@ public class ShareDao {
      * @param share the share to create
      */
     public void createShare (Share share, Company company) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Share WHERE share_id = " + share.getShareId() + " AND company_id =" + company.getCompanyId() + ";";
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Share WHERE share_id = " + share.getIdShare() + " AND company_id =" + company.getCompanyId() + ";";
 
         try {
             while (verify.next()) {
                 if (verify.next().equals("share_id") && verify.next().equals("company_id")) {
                     System.out.println("Added shares");
                     dbConnector.insertQuery("INSERT INTO Share (share_id,company_id) " +
-                            "VALUES ('" + share.getShareId() + "','" + share.getCompanyId() + "','" + share.getPrice() + "','" + share.getTime() + "');");
+                            "VALUES ('" + share.getIdShare() + "','" + share.getCompanyId() + "','" + share.getPrice() + "','" + share.getTime() + "');");
                 }
             }
 

@@ -20,4 +20,31 @@ public class Company {
     }
 
     public void  listBots(){}
+
+    /**
+     * Getters
+     * **/
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
+    public int getShares() {
+        return shares;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public ArrayList<Bot> getBot() {
+        return bot;
+    }
 }
