@@ -6,10 +6,12 @@ import com.google.gson.stream.JsonReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import network.NetworkConfiguration;
+import network.ServerConfiguration;
 
 public class JSONReader {
     private static final String PATH = "client/src/main/resources/config.json";
-    private NetworkConfiguration configuration;
+    private NetworkConfiguration clientConfiguration;
+    private ServerConfiguration serverConfiguration;
     private Gson gson;
 
     public JSONReader () {
@@ -20,10 +22,21 @@ public class JSONReader {
         JsonReader reader;
         try {
             reader = new JsonReader(new FileReader(PATH));
-            configuration = gson.fromJson(reader, NetworkConfiguration.class);
+            clientConfiguration = gson.fromJson(reader, ServerConfiguration.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return configuration;
+        return clientConfiguration;
+    }
+
+    public ServerConfiguration getServerConfiguration() {
+        JsonReader reader;
+        try {
+            reader = new JsonReader(new FileReader(PATH));
+            serverConfiguration = gson.fromJson(reader, ServerConfiguration.class);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return serverConfiguration;
     }
 }
