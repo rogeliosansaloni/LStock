@@ -59,6 +59,10 @@ public class NetworkManager extends Thread {
     interrupt();
   }
 
+  public void sendTunnelObject(TunnelObject object) throws IOException {
+    oos.writeObject(object);
+  }
+
   @Override
   public void run () {
     try {
