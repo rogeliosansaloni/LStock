@@ -5,8 +5,7 @@ public class Bot extends Thread{
     private float probability;
     private Company company;
 
-    public Bot(Runnable target, float activeTime, float probability, Company company) {
-        super(target);
+    public Bot(float activeTime, float probability, Company company) {
         this.activeTime = activeTime;
         this.probability = probability;
         this.company = company;

@@ -16,7 +16,7 @@ public class User extends TunnelObject {
     protected ArrayList<Company> company;
 
 
-    public User(int userId, String nickname, String email, String password, float stockValue, String description, float totalBalance) {
+    public User(int userId, String nickname, String email, String password, float stockValue, String description, float totalBalance, ArrayList<Company> company) {
         this.userId = userId;
         this.nickname = nickname;
         this.email = email;
@@ -24,9 +24,8 @@ public class User extends TunnelObject {
         this.stockValue = stockValue;
         this.description = description;
         this.totalBalance = totalBalance;
+        this.company = company;
     }
-
-
 
     public void lisTopCompanies(){}
     public void purchaseShared(){}

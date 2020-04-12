@@ -10,11 +10,13 @@ public class Company {
     private User user;
     private ArrayList<Bot> bot;
 
-    public Company(int companyId, String name, float value, int shares) {
+    public Company(int companyId, String name, float value, int shares, User user, ArrayList<Bot> bot) {
         this.companyId = companyId;
         this.name = name;
         this.value = value;
         this.shares = shares;
+        this.user = user;
+        this.bot = bot;
     }
 
     public void  listBots(){}
