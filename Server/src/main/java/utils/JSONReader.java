@@ -2,28 +2,27 @@ package utils;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import network.NetworkConfiguration;
+import network.ServerConfiguration;
 
 public class JSONReader {
-    private static final String PATH = "client/src/main/resources/config.json";
-    private NetworkConfiguration configuration;
+    private static final String PATH = "server/src/main/resources/config.json";
+    private ServerConfiguration serverConfiguration;
     private Gson gson;
 
-    public JSONReader () {
+    public JSONReader() {
         gson = new Gson();
     }
 
-    public NetworkConfiguration getClientConfiguration () {
+    public ServerConfiguration getServerConfiguration() {
         JsonReader reader;
         try {
             reader = new JsonReader(new FileReader(PATH));
-            configuration = gson.fromJson(reader, NetworkConfiguration.class);
+            serverConfiguration = gson.fromJson(reader, ServerConfiguration.class);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return configuration;
+        return serverConfiguration;
     }
 }
