@@ -3,16 +3,18 @@ package database;
 
 import java.util.ArrayList;
 import network.DBConnector;
+import model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 
 
 public class UserDao {
 
     private DBConnector dbConnector;
 
-    public UserDao (DBConnector dbConnector){
+    public UserDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
@@ -26,19 +28,19 @@ public class UserDao {
 
         try {
             while (verify.next()) {
-                if (verifyEmail(user.getEmail(), verify.getObject("email"))) {
+                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user)) {
                     System.out.println("This email has an account already.");
                     userExist = true;
                 }
                 else {
-                    if (verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
+                    if (verifyNickname(user.getNickname(), verify.getObject("nickname").toString(),user)) {
                         System.out.println("This username is already taken.");
                         userExist = true;
                     }
                 }
             }
             if(!userExist){
-                dbConnector.insertQuery("INSERT INTO User (nickname,email,password,description,total_balance) VALUES ('" + user.getnickname() + "','" + user.getEmail() + "','" + user.getdescription() + "','" + user.getTotalBalance() + "')");
+                dbConnector.insertQuery("INSERT INTO User (nickname,email,password,description,total_balance) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getDescription() + "','" + user.getTotalBalance() + "')");
             }
         }catch (SQLException e) {
             System.out.println("Error Creating User");
@@ -68,22 +70,20 @@ public class UserDao {
      * It will update the information of one user
      * @param user User information
      */
-    public User updateUser (User user){
-        User userData = new User();
+    public void updateUser (User user){
+
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()){
-                if (verifyEmail(user.getEmail(), verify.getObject("email")) || verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
-                    dbConnector.insertQuery("UPDATE User SET (description) VALUES ('" + user.getdescription() + "');");
+                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user) || verifyNickname(user.getNickname(), verify.getObject("nickname").toString(),user)) {
+                    dbConnector.insertQuery("UPDATE User SET (description) VALUES ('" + user.getDescription() + "');");
 
                 }
             }
-            return user;
         } catch (SQLException e) {
             System.out.println("Error updatting information");
         }
-        return null;
     }
 
     /**
@@ -96,14 +96,14 @@ public class UserDao {
 
         try {
             while (verify.next()){
-                if (verifyEmail(user.getEmail(), verify.getObject("email")) || verifyNickname(user.getNickname(), verify.getObject("nickname"))) {
+                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user) || verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
                     userData.setEmail(verify.getObject("email").toString());
                     userData.setNickname(verify.getObject("nickname").toString());
                     userData.setDescription(verify.getObject("decription").toString());
-                    userData.setTotalBalance(verify.getObject("totalBalance").toString());
+                    userData.setTotalBalance((float) verify.getObject("totalBalance"));
                 }
+                return user;
             }
-            return user;
         } catch (SQLException e) {
             System.out.println("Error to getting user information");
         }
@@ -115,7 +115,8 @@ public class UserDao {
      * @param  email Email to verify
      * @param  dbEmail Email from database to compare
      */
-    public boolean verifyEmail (String email, String dbEmail) {
+    public boolean verifyEmail (String email, String dbEmail, User user) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()) {
@@ -135,7 +136,9 @@ public class UserDao {
      * @param  nickname Nickname to verify
      * @param  dbNickname Nickname from database to compare
      */
-    public boolean verifyNickname (String nickname, String dbNickname) {
+    public boolean verifyNickname (String nickname, String dbNickname, User user) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+
         try {
             while (verify.next()) {
                 if (dbNickname.equals(nickname)) {
