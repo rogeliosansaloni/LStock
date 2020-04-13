@@ -22,14 +22,14 @@ public class ShareDao {
      * @param share the share to create
      */
     public void createShare (Share share, Company company) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Share WHERE share_id = " + share.getIdShare() + " AND company_id =" + company.getCompanyId() + ";";
-
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Share WHERE share_id = " + share.getIdShare() + " AND company_id =" + company.getCompanyId() + ";");
+        //falta para resolver
         try {
             while (verify.next()) {
-                if (verify.next().equals("share_id") && verify.next().equals("company_id")) {
+                if (false) {
                     System.out.println("Added shares");
-                    dbConnector.insertQuery("INSERT INTO Share (share_id,company_id) " +
-                            "VALUES ('" + share.getIdShare() + "','" + share.getCompanyId() + "','" + share.getPrice() + "','" + share.getTime() + "');");
+                    dbConnector.insertQuery("INSERT INTO Share (share_id, company_id, price) " +
+                            "VALUES ('" + share.getIdShare() + "','" + company.getCompanyId() + "','" + share.getPrice() + "');");
                 }
             }
 
@@ -42,6 +42,7 @@ public class ShareDao {
 
     /**
      * It will get all the shares in the LStock
+     * @return ArrayList<Share> all shares
      */
     //TENGO DUDA LO QUE SE TIENE QUE DEVOLVER AQUI
     public ArrayList<Share> getAllShares () {
@@ -51,14 +52,13 @@ public class ShareDao {
             shares = new ArrayList<Share>();
             while (getShares.next()){
                 //No tengo muy claro que se tiene que coger
-                Share s = new Share(getShares.getObject("share_id").toString());
+                Share s = new Share((float)getShares.getObject("share_id"));
                 shares.add(s);
             }
         } catch (SQLException e) {
             System.out.println("Error getting all shares");
         }
         return shares;
-
     }
 
 

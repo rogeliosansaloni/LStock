@@ -1,6 +1,8 @@
 package database;
 
 
+import model.Bot;
+import model.Company;
 import network.DBConnector;
 
 import java.sql.ResultSet;
@@ -24,14 +26,14 @@ public class BotDao {
      */
     public void createBot (Bot bot, Company company) {
         boolean botExist = false;
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";";
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Bot WHERE bot_id = " + bot.getBotId() + " AND company_id =" + company.getCompanyId() + ";");
 
         try {
             while (verify.next()) {
-                if (verify.next().equals("bot_id") &&verify.next().equals("company_id")) {
+
                     System.out.println("This bot already exists.");
                     botExist = true;
-                }
+
             }
             if(!botExist){
                 dbConnector.insertQuery("INSERT INTO Bot (bot_id, company_id) " +
@@ -61,7 +63,6 @@ public class BotDao {
         return bots;
 
     }
-
 
 
 }

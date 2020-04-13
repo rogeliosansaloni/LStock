@@ -19,6 +19,10 @@ public class Company {
         this.bot = bot;
     }
 
+    public Company() {
+
+    }
+
     public void  listBots(){}
 
     /**
@@ -46,5 +50,32 @@ public class Company {
 
     public ArrayList<Bot> getBot() {
         return bot;
+    }
+
+    /**
+     * Setters
+     * **/
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
+    }
+
+    public void setShares(int shares) {
+        this.shares = shares;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setBot(ArrayList<Bot> bot) {
+        this.bot = bot;
     }
 }

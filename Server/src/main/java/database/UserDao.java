@@ -51,6 +51,7 @@ public class UserDao {
 
     /**
      * It will get all the users registered in LStock
+     * @return ArrayList<String> all users registered
      */
     public ArrayList<String> getAllUsers() {
         ResultSet getUsers = dbConnector.selectQuery("SELECT * FROM User;");
@@ -71,7 +72,6 @@ public class UserDao {
      * @param user User information
      */
     public void updateUser (User user){
-
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
 
         try {
@@ -88,7 +88,8 @@ public class UserDao {
 
     /**
      * It will get all the information of one user
-     * @param user User information
+     * @param user  User information
+     * @return user  User infromation
      */
     public User getUserInfo(User user){
         User userData = new User();
@@ -114,6 +115,7 @@ public class UserDao {
      * It permits to verify that the email hasn't arealdy exist.
      * @param  email Email to verify
      * @param  dbEmail Email from database to compare
+     * @return boolean email verified
      */
     public boolean verifyEmail (String email, String dbEmail, User user) {
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
@@ -128,13 +130,14 @@ public class UserDao {
         }catch (SQLException e) {
             System.out.println("Error getting email");
         }
-
+        return false;
     }
 
     /**
      * It permits to verify that the nickname hasn't arealdy exist.
      * @param  nickname Nickname to verify
      * @param  dbNickname Nickname from database to compare
+     * @return boolean nickname verified
      */
     public boolean verifyNickname (String nickname, String dbNickname, User user) {
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
@@ -148,8 +151,7 @@ public class UserDao {
         }catch (SQLException e) {
             System.out.println("Error getting nickname");
         }
-
+        return false;
     }
-
 
 }
