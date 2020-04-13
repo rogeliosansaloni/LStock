@@ -5,8 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import main.java.model.entities.TunnelObject;
-import main.java.utils.JSONReader;
+import model.entities.TunnelObject;
+import utils.JSONReader;
 
 public class NetworkManager extends Thread {
   private Socket serverSocket;
@@ -57,6 +57,10 @@ public class NetworkManager extends Thread {
   public void stopServerConnection () {
     running = false;
     interrupt();
+  }
+
+  public void sendTunnelObject(TunnelObject object) throws IOException {
+    oos.writeObject(object);
   }
 
   @Override

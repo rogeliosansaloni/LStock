@@ -1,11 +1,10 @@
 package network;
 
-import model.entities.TunnelObject;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import model.entities.TunnelObject;
 
 public class DedicatedServer extends Thread {
     private boolean isOn;
