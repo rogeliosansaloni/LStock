@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
+import utils.JSONReader;
 
 public class Server extends Thread {
     private String ip;
@@ -13,12 +14,18 @@ public class Server extends Thread {
     private boolean isOn;
     private LinkedList<DedicatedServer> clients;
 
-    public Server(String ip, int port) throws IOException {
-        this.ip = ip;
-        this.port = port;
+    public Server() throws IOException {
+        initServerConfiguration();
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
         this.clients = new LinkedList<DedicatedServer>();
+    }
+
+    private void initServerConfiguration() {
+        JSONReader jsonReader = new JSONReader();
+        ServerConfiguration config = jsonReader.getServerConfiguration();
+        this.ip = config.getIp();
+        this.port = config.getPort();
     }
 
     public void startServer() {
