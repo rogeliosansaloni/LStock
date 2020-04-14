@@ -23,10 +23,5 @@ public class RegisterController implements ActionListener {
         if (e.getActionCommand().equals("login")) {
             view.setVisible(false);
         }
-
-
-
-
-
     }
 }
