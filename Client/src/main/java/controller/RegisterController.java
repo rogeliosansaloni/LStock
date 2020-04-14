@@ -14,6 +14,17 @@ public class RegisterController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("register")) {
+            String nickname =  view.getNickname();
+            String email = view.getEmail();
+            String pass1 = view.getPassword();
+            String pass2 = view.getPasswordVerification();
+        }
+        if (e.getActionCommand().equals("login")) {
+            view.setVisible(false);
+        }
+
+
 
 
 

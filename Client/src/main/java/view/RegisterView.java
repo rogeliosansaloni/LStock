@@ -192,4 +192,10 @@ public class RegisterView extends JFrame{
         jbRegister.addActionListener(actionListener);
         jbRegister.setActionCommand("register");
     }
+
+    public String getNickname () { return campos[0].toString();}
+    public String getEmail () { return campos[1].toString();}
+    public String getPassword () { return campos[2].toString();}
+    public String getPasswordVerification () { return campos[3].toString();}
+
 }
