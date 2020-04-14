@@ -1,5 +1,6 @@
 package controller;
 
+import view.LoginView;
 import view.RegisterView;
 
 import java.awt.event.ActionEvent;
@@ -41,7 +42,8 @@ public class RegisterController implements ActionListener {
         }
         if (e.getActionCommand().equals("login")) {
             view.setVisible(false);
-            //TODO: Opens the LoginView
+            LoginView loginView = new LoginView();
+            loginView.setVisible(true);
         }
     }
 
