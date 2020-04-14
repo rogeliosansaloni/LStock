@@ -24,10 +24,13 @@ public class RegisterController implements ActionListener {
             String email = view.getEmail();
             String pass1 = view.getPassword();
             String pass2 = view.getPasswordVerification();
-            validateCredentials(nickname, email, pass1, pass2);
+            if (validCredentials(nickname, email, pass1, pass2)) {
+                //TODO: Validate with server
+            }
         }
         if (e.getActionCommand().equals("login")) {
             view.setVisible(false);
+            //TODO: Opens the LoginView
         }
     }
 
@@ -39,7 +42,7 @@ public class RegisterController implements ActionListener {
      * @param pass2
      * @return a boolean if the fields are all valid
      */
-    public boolean validateCredentials (String nickname, String email, String pass1, String pass2) {
+    public boolean validCredentials (String nickname, String email, String pass1, String pass2) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
                             "[a-zA-Z0-9_+&*-]+)*@" +
                             "(?:[a-zA-Z0-9-]+\\.)+[a-z" +

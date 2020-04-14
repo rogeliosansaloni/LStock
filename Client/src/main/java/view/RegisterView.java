@@ -52,7 +52,7 @@ public class RegisterView extends JFrame{
         Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
-        //We add the image and we put some margin for the panel
+        //TODO: Add label under the logo
         jpNorth.add(labelLogo, BorderLayout.CENTER);
         jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
         jpRegister.add(jpNorth, BorderLayout.NORTH);
