@@ -13,6 +13,13 @@ public class RegisterView extends JFrame{
 
     private static final String PATH_LOGO = "/stock.png";
     private static final String TITLE = "StockLS - C2";
+    private static final String ERROR_MESSAGE_1 = "All fields are required.";
+    private static final String ERROR_MESSAGE_2 = "Fields can't be empty.";
+    private static final String ERROR_MESSAGE_3 = "Email is not valid.";
+    private static final String ERROR_MESSAGE_4 = "Password doesn't match.";
+    private static final String ERROR_MESSAGE_5 = "Password must have at least 8 characters.";
+    private static final String ERROR_MESSAGE_6 = "Password must have at least one capital letter and one number";
+
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
@@ -30,11 +37,15 @@ public class RegisterView extends JFrame{
         this.setTitle(TITLE);
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
         this.setSize(1024, 768);
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         initUI();
     }
 
+    /**
+     * Creates the UI of the register form
+     */
     public void initUI () {
         JPanel jpRegister = new JPanel();
         jpRegister.setLayout(new BorderLayout());
@@ -48,12 +59,12 @@ public class RegisterView extends JFrame{
         Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
-        //Añadimos la imagen y ponemos margen al panel para que quede más estético
+        //TODO: Add label under the logo
         jpNorth.add(labelLogo, BorderLayout.CENTER);
         jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
         jpRegister.add(jpNorth, BorderLayout.NORTH);
 
-        //Creamos un panel para los campos y otro para los botones
+        //We create a center panel for the form and the bottons
         jpCenter = new JPanel();
         jpCenter = new JPanel(new BorderLayout());
         jpCenter.setBackground(Color.WHITE);
@@ -64,8 +75,8 @@ public class RegisterView extends JFrame{
         jpCampos.setBorder(BorderFactory.createEmptyBorder(50,0,60,0));
         int anchuraCampo = 150;
         int alturaCampo = 20;
+
         campos = new JTextField[4];
-        //Color colorTextField = new Color(242, 239, 236);
         campos[0] = new JTextField("Nickname");
         campos[0].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[0].setBorder(null);
@@ -87,7 +98,7 @@ public class RegisterView extends JFrame{
             }
         });
         jpCampos.add(campos[0]);
-        //Ponemos un espacio de separacion entre los campos
+        //We add separation space between fields
         jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[1] = new JTextField("Email");
         campos[1].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
@@ -108,7 +119,7 @@ public class RegisterView extends JFrame{
             }
         });
         jpCampos.add(campos[1]);
-        //Ponemos un espacio de separacion entre los campos
+        //We add separation space between fields
         jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[2] = new JTextField("Password");
         campos[2].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
@@ -129,7 +140,7 @@ public class RegisterView extends JFrame{
             }
         });
         jpCampos.add(campos[2]);
-        //Ponemos un espacio de separacion entre los campos
+        //We add separation space between fields
         jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[3] = new JTextField("Verify Password");
         campos[3].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
@@ -157,20 +168,20 @@ public class RegisterView extends JFrame{
         jpBotones.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;
-        //Boton de login
-        //Color colorLogin = new Color(232, 185, 108);
+
         jbLogin = new JButton("Login");
         jbLogin.setBorder(null);
-        jbLogin.setBackground(color.getYELLOW());
+        jbLogin.setBackground(color.getLightGrey());
         jbLogin.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
-        jpBotones.add(jbLogin);
-        //Boton de register
-        //Color colorRegister = new Color(160, 160, 160);
+
         jbRegister = new JButton("Register");
         jbRegister.setBorder(null);
-        jbRegister.setBackground(color.getLightGrey());
+        jbRegister.setBackground(color.getYELLOW());
         jbRegister.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
+
         jpBotones.add(jbRegister);
+        jpBotones.add(jbLogin);
+
         jpCenter.add(jpBotones, BorderLayout.SOUTH);
         jpCenter.setBorder(BorderFactory.createEmptyBorder(0,250,150,250));
 
@@ -178,6 +189,10 @@ public class RegisterView extends JFrame{
         this.getContentPane().add(jpRegister);
     }
 
+    /**
+     * Proc that adds an actionListener to fields and buttons.
+     * @param actionListener the actionListener
+     */
     public void registerController (ActionListener actionListener) {
         campos[0].addActionListener(actionListener);
         campos[0].setActionCommand("nickname");
@@ -193,9 +208,55 @@ public class RegisterView extends JFrame{
         jbRegister.setActionCommand("register");
     }
 
-    public String getNickname () { return campos[0].toString();}
-    public String getEmail () { return campos[1].toString();}
-    public String getPassword () { return campos[2].toString();}
-    public String getPasswordVerification () { return campos[3].toString();}
+    /**
+     * Proc that shows a pop-up window with an error message
+     * @param error message to be shown
+     */
+    public void showErrorMessages (int error) {
+        switch (error) {
+            case 1:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_1);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_2);
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_3);
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_4);
+                break;
+            case 5:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_5);
+                break;
+            case 6:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_6);
+                break;
+        }
+    }
+
+    /**
+     * Function that returns the nickname typed in the nickname field
+     * @return Nickname
+     */
+    public String getNickname () { return campos[0].getText();}
+
+    /**
+     * Function that returns the email typed in the email field
+     * @return Email
+     */
+    public String getEmail () { return campos[1].getText();}
+
+    /**
+     * Function that returns the password typed in the password field
+     * @return Password
+     */
+    public String getPassword () { return campos[2].getText();}
+
+    /**
+     * Function that returns the password typed in the verify password field
+     * @return Repeated password
+     */
+    public String getPasswordVerification () { return campos[3].getText();}
 
 }
