@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class MainView extends JPanel{
+public class MainView extends JFrame{
 
     //logo de stock
     private static final String PATH_LOGO = "/stock.png";
@@ -20,8 +20,6 @@ public class MainView extends JPanel{
     protected JPanel northPanel;
     protected JPanel jpCard;
     protected StockColors color;
-
-
 
     public MainView () {
         color = new StockColors();
@@ -48,6 +46,8 @@ public class MainView extends JPanel{
         this.add(northPanel, BorderLayout.NORTH);
         jpCard = new JPanel(new CardLayout());
         this.add(jpCard, BorderLayout.CENTER);
+
+
     }
 
 }
