@@ -32,9 +32,9 @@ public class RegisterView extends MainView{
         jpCampos.setBorder(BorderFactory.createEmptyBorder(50,0,60,0));
         int anchuraCampo = 150;
         int alturaCampo = 20;
-        campos = new JTextField[2];
+        campos = new JTextField[4];
         //Color colorTextField = new Color(242, 239, 236);
-        campos[0] = new JTextField("Nickname or Email");
+        campos[0] = new JTextField("Nickname");
         campos[0].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[0].setBorder(null);
         campos[0].setMargin(new Insets(0,70,0,0));
@@ -42,7 +42,7 @@ public class RegisterView extends MainView{
         campos[0].addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (campos[0].getText().equals("Nickname or Email")) {
+                if (campos[0].getText().equals("Nickname")) {
                     campos[0].setText("");
                 }
             }
@@ -50,32 +50,75 @@ public class RegisterView extends MainView{
             @Override
             public void focusLost(FocusEvent e) {
                 if (campos[0].getText().equals("")) {
-                    campos[0].setText("Nickname or Email");
+                    campos[0].setText("Nickname");
                 }
             }
         });
         jpCampos.add(campos[0]);
         //Ponemos un espacio de separacion entre los campos
         jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
-        campos[1] = new JTextField("Password");
+        campos[1] = new JTextField("Email");
         campos[1].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[1].setBorder(null);
         campos[1].setBackground(color.getTEXTFIELD());
         campos[1].addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (campos[1].getText().equals("Password")) {
+                if (campos[1].getText().equals("Email")) {
                     campos[1].setText("");
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if (campos[1].getText().equals("")) {
-                    campos[1].setText("Password");
+                    campos[1].setText("Email");
                 }
             }
         });
         jpCampos.add(campos[1]);
+        //Ponemos un espacio de separacion entre los campos
+        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
+        campos[2] = new JTextField("Password");
+        campos[2].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
+        campos[2].setBorder(null);
+        campos[2].setBackground(color.getTEXTFIELD());
+        campos[2].addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (campos[2].getText().equals("Password")) {
+                    campos[2].setText("");
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (campos[2].getText().equals("")) {
+                    campos[2].setText("Password");
+                }
+            }
+        });
+        jpCampos.add(campos[2]);
+        //Ponemos un espacio de separacion entre los campos
+        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
+        campos[3] = new JTextField("Verify Password");
+        campos[3].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
+        campos[3].setBorder(null);
+        campos[3].setBackground(color.getTEXTFIELD());
+        campos[3].addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (campos[3].getText().equals("Verify Password")) {
+                    campos[3].setText("");
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (campos[3].getText().equals("")) {
+                    campos[3].setText("Verify Password");
+                }
+            }
+        });
+        jpCampos.add(campos[3]);
+
         jpCenter.add(jpCampos, BorderLayout.CENTER);
 
         jpBotones = new JPanel(new GridLayout(1,2, 30 ,0));
