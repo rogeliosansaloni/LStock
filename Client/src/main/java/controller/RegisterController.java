@@ -13,6 +13,10 @@ public class RegisterController implements ActionListener {
         this.view = view;
     }
 
+    /**
+     * Proc that capturees any event in the register view
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("register")) {
