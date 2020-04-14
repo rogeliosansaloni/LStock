@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -144,6 +145,21 @@ public class RegisterView extends MainView{
         jpCard.add(jpCenter);
     }
 
+    public void registerController (ActionListener actionListener) {
+        campos[0].addActionListener(actionListener);
+        campos[0].setActionCommand("nickname");
+        campos[1].addActionListener(actionListener);
+        campos[1].setActionCommand("email");
+        campos[2].addActionListener(actionListener);
+        campos[2].setActionCommand("pass1");
+        campos[3].addActionListener(actionListener);
+        campos[3].setActionCommand("pass2");
+        jbLogin.addActionListener(actionListener);
+        jbLogin.setActionCommand("login");
+        jbRegister.addActionListener(actionListener);
+        jbRegister.setActionCommand("register");
+    }
+
     public static void main( String[] args )
     {
         JFrame frame = new JFrame();
@@ -153,4 +169,5 @@ public class RegisterView extends MainView{
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
+
 }

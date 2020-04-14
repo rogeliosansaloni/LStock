@@ -3,6 +3,7 @@ import model.entities.TunnelObject;
 import network.NetworkConfiguration;
 import network.NetworkManager;
 import view.MainView;
+import view.RegisterView;
 
 import javax.swing.*;
 

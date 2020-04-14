@@ -21,8 +21,6 @@ public class MainView extends JPanel{
     protected JPanel jpCard;
     protected StockColors color;
 
-
-
     public MainView () {
         color = new StockColors();
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
@@ -48,6 +46,8 @@ public class MainView extends JPanel{
         this.add(northPanel, BorderLayout.NORTH);
         jpCard = new JPanel(new CardLayout());
         this.add(jpCard, BorderLayout.CENTER);
+
+
     }
 
 }
