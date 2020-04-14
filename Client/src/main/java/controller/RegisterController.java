@@ -26,7 +26,7 @@ public class RegisterController implements ActionListener {
     }
 
     /**
-     * Proc that capturees any event in the register view
+     * Proc that captures any event in the register view
      * @param e the actionEvent
      */
     @Override
@@ -43,6 +43,8 @@ public class RegisterController implements ActionListener {
         if (e.getActionCommand().equals("login")) {
             view.setVisible(false);
             LoginView loginView = new LoginView();
+            LoginController controller = new LoginController(loginView);
+            loginView.loginController(controller);
             loginView.setVisible(true);
         }
     }

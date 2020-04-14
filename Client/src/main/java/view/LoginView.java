@@ -4,6 +4,7 @@ import utils.StockColors;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.net.URL;
@@ -11,7 +12,8 @@ import java.net.URL;
 public class LoginView extends JFrame {
     private static final String PATH_LOGO = "/stock.png";
     private static final String TITLE = "StockLS - C2";
-
+    private static final String ERROR_MESSAGE_1 = "All fields are required.";
+    private static final String ERROR_MESSAGE_2 = "Fields can't be empty.";
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
@@ -138,4 +140,45 @@ public class LoginView extends JFrame {
         jpLogin.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpLogin);
     }
+
+    /**
+     * Proc thats adds listener to textfields and buttons.
+     * @param listener an ActionListener
+     */
+    public void loginController (ActionListener listener) {
+        campos[0].addActionListener(listener);
+        campos[0].setActionCommand("user");
+        campos[1].addActionListener(listener);
+        campos[1].setActionCommand("password");
+        jbLogin.addActionListener(listener);
+        jbLogin.setActionCommand("login");
+        jbRegister.addActionListener(listener);
+        jbRegister.setActionCommand("register");
+    }
+
+    /**
+     * Proc that shows the corresponding error
+     * @param error shows the corresponding error
+     */
+    public void showErrorMessage (int error) {
+        switch (error) {
+            case 1:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_1);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_2);
+                break;
+        }
+    }
+    /**
+     * Function that returns the introduced nickname or email
+     * @return introduced nickname or email
+     */
+    public String getNicknameEmail () { return campos[0].getText(); }
+
+    /**
+     * Function that returns the introduced password
+     * @return introduced password
+     */
+    public String getPassword () { return campos[1].getText(); }
 }
