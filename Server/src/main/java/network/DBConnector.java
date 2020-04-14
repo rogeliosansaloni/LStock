@@ -34,7 +34,7 @@ public class DBConnector {
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
-            conn = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:"+dbPort+"/"+ db + url + dbUsername + dbPassword+"");
+            conn = (Connection) DriverManager.getConnection( url, dbUsername,  dbPassword);
             if (conn != null) {
                 System.out.println("Connecting database " + url + " ... OK");
             }
