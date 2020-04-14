@@ -16,9 +16,6 @@ public class ClientMain {
             e.printStackTrace();
         }*/
         //test
-        JFrame frame = new JFrame();
-        MainView mainView = new MainView();
-        frame.add(mainView);
-        frame.setVisible(true);
+
     }
 }

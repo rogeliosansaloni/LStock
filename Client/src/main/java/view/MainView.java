@@ -1,28 +1,47 @@
 package view;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.net.URL;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MainView extends JPanel{
 
     //logo de stock
-    private static final String LINK_LOGO = "resources/stock.png";
-    private JLabel logo_stock;
+    private static final String PATH_LOGO = "/stock.png";
+    private static final int anchuraPanel = 1080;
+    private static final int alturaPanel = 768;
+    private JLabel labelLogo;
+    private JPanel northPanel;
+
 
     public MainView () {
-        this.setSize(1024, 768);
+        this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
         this.setLayout(new BorderLayout());
+        this.setVisible(true);
         initUI();
     }
 
-    private void initUI () {
-        ImageIcon imagen_logo = new ImageIcon(getClass().getResource(LINK_LOGO));
-        Image imagen = imagen_logo.getImage();
-        int anchura_imagen = 400;
-        int altura_foto = 400;
-        Image imagen_temp = imagen.getScaledInstance(anchura_imagen, altura_foto, Image.SCALE_SMOOTH);
-        imagen_logo = new ImageIcon(imagen_temp);
-        logo_stock = new JLabel ("", imagen_logo, JLabel.CENTER);
-        this.add(logo_stock, BorderLayout.NORTH);
+    public void initUI () {
+
+        //Creamos el panel superior
+        northPanel = new JPanel();
+        northPanel.setBackground(Color.WHITE);
+        //Creamos la imagen del logo
+        URL url = getClass().getResource(PATH_LOGO);
+        ImageIcon imageIcon = new ImageIcon(url);
+        Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
+        imageIcon = new ImageIcon(scaleImage);
+        labelLogo = new JLabel(imageIcon);
+        //Añadimos la imagen y ponemos margen al panel para que quede más estético
+        northPanel.add(labelLogo, BorderLayout.CENTER);
+        northPanel.setBorder(BorderFactory.createEmptyBorder(50,0,100,0));
+        //Añadimos el panel superior al panel global
+        this.add(northPanel, BorderLayout.NORTH);
+
     }
+
 }
