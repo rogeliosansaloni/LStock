@@ -23,7 +23,7 @@ public class RegisterController implements ActionListener {
 
     /**
      * Proc that capturees any event in the register view
-     * @param e
+     * @param e the actionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -44,10 +44,10 @@ public class RegisterController implements ActionListener {
 
     /**
      * Function that checks each field of the register form.
-     * @param nickname
-     * @param email
-     * @param pass1
-     * @param pass2
+     * @param nickname the nickname
+     * @param email the email
+     * @param pass1 the password
+     * @param pass2 repeated password
      * @return a boolean if the fields are all valid
      */
     public boolean validCredentials (String nickname, String email, String pass1, String pass2) {
@@ -91,7 +91,7 @@ public class RegisterController implements ActionListener {
     /**
      * Function that validates a password. It must be at least 8 characters with a capital letter and a digit.
      * The pattern is made from a regex.
-     * @param password
+     * @param password the password
      * @return a String with the error message
      */
     public int validatePassword(String password) {

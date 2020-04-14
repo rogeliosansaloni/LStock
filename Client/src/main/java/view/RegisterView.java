@@ -191,7 +191,7 @@ public class RegisterView extends JFrame{
 
     /**
      * Proc that adds an actionListener to fields and buttons.
-     * @param actionListener
+     * @param actionListener the actionListener
      */
     public void registerController (ActionListener actionListener) {
         campos[0].addActionListener(actionListener);
