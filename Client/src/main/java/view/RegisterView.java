@@ -30,6 +30,7 @@ public class RegisterView extends JFrame{
         this.setTitle(TITLE);
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
         this.setSize(1024, 768);
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         initUI();
@@ -193,9 +194,13 @@ public class RegisterView extends JFrame{
         jbRegister.setActionCommand("register");
     }
 
-    public String getNickname () { return campos[0].toString();}
-    public String getEmail () { return campos[1].toString();}
-    public String getPassword () { return campos[2].toString();}
-    public String getPasswordVerification () { return campos[3].toString();}
+    public void showErrorMessages (String error) {
+        JOptionPane.showMessageDialog(null,error);
+    }
+
+    public String getNickname () { return campos[0].getText();}
+    public String getEmail () { return campos[1].getText();}
+    public String getPassword () { return campos[2].getText();}
+    public String getPasswordVerification () { return campos[3].getText();}
 
 }
