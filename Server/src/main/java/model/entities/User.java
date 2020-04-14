@@ -1,9 +1,6 @@
-package model;
-
-import model.entities.TunnelObject;
+package model.entities;
 
 import java.util.ArrayList;
-import network.DedicatedServer;
 
 public class User {
     private int userId;

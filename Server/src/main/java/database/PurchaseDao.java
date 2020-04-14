@@ -1,8 +1,8 @@
 package database;
 
-import model.Company;
-import model.StockManager;
-import model.User;
+import model.entities.Company;
+import model.managers.StockManager;
+import model.entities.User;
 import network.DBConnector;
 
 import java.sql.ResultSet;

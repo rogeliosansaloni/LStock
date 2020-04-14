@@ -3,7 +3,7 @@ package database;
 
 import java.util.ArrayList;
 import network.DBConnector;
-import model.User;
+import model.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

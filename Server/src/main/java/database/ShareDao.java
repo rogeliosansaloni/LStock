@@ -1,7 +1,7 @@
 package database;
 
-import model.Company;
-import model.Share;
+import model.entities.Company;
+import model.entities.Share;
 import network.DBConnector;
 
 import java.sql.ResultSet;

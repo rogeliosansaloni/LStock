@@ -1,11 +1,10 @@
 package database;
 
 
-import model.Company;
+import model.entities.Company;
 import network.DBConnector;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 

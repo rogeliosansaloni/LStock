@@ -1,7 +1,9 @@
-package model;
+package model.managers;
 
 import database.CompanyDao;
 import database.UserDao;
+import model.entities.Company;
+import model.entities.User;
 import sun.net.www.protocol.http.AuthenticationInfo;
 
 import java.util.ArrayList;
