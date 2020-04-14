@@ -1,5 +1,7 @@
 package view;
 
+import utils.StockColors;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -17,10 +19,12 @@ public class MainView extends JPanel{
     private JLabel labelLogo;
     private JPanel northPanel;
     protected JPanel jpCard;
+    protected StockColors color;
 
 
 
     public MainView () {
+        color = new StockColors();
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
         this.setLayout(new BorderLayout());
         this.setVisible(true);

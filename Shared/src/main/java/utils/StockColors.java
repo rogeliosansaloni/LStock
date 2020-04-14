@@ -18,10 +18,47 @@ public class StockColors {
     private static final Color LIGHT_GREY = new Color(196,196,196);
     private static final Color LIGHT_LIGHT_GREY = new Color (229,229,229);
 
+    public Color getWHITE() {
+        return WHITE;
+    }
 
+    public Color getBLACK() {
+        return BLACK;
+    }
 
+    public Color getTEXTFIELD() {
+        return TEXTFIELD;
+    }
 
+    public Color getYELLOW() {
+        return YELLOW;
+    }
 
+    public Color getGREEN() {
+        return GREEN;
+    }
 
+    public Color getRED() {
+        return RED;
+    }
 
+    public Color getBLUE() {
+        return BLUE;
+    }
+
+    public Color getDarkGreyHeader() {
+        return DARK_GREY_HEADER;
+    }
+
+    public Color getDarkGreyText() {
+        return DARK_GREY_TEXT;
+    }
+
+    public Color getLightGrey() {
+        return LIGHT_GREY;
+    }
+
+    public Color getLightLightGrey() {
+        return LIGHT_LIGHT_GREY;
+    }
 }
