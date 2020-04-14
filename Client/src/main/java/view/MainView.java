@@ -17,7 +17,7 @@ public class MainView extends JPanel{
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
-    private JPanel northPanel;
+    protected JPanel northPanel;
     protected JPanel jpCard;
     protected StockColors color;
 
@@ -43,7 +43,7 @@ public class MainView extends JPanel{
         labelLogo = new JLabel(imageIcon);
         //Añadimos la imagen y ponemos margen al panel para que quede más estético
         northPanel.add(labelLogo, BorderLayout.CENTER);
-        northPanel.setBorder(BorderFactory.createEmptyBorder(50,0,100,0));
+        northPanel.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
         //Añadimos el panel superior al panel global
         this.add(northPanel, BorderLayout.NORTH);
         jpCard = new JPanel(new CardLayout());

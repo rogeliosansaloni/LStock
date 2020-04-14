@@ -19,6 +19,8 @@ public class LoginView extends MainView{
 
     public void initUI () {
         super.initUI();
+        //Resize header
+        northPanel.setBorder(BorderFactory.createEmptyBorder(50,0,100,0));
         //Creamos un panel para los campos y otro para los botones
         jpCenter = new JPanel();
         jpCenter = new JPanel(new BorderLayout());
