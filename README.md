@@ -6,7 +6,7 @@ El cliente puede realizar varias operaciones como acceder a su cuenta, visualiza
 
 ## Requerimientos
 
-Es imprescindible tener IntelliJ IDAE y tener instalado Java 11 SDK.. Es un proyecto desarrollado en Java soportado por el framework Maven. El proyecto tiene 3 módulos: Client, Server y Shared.
+Es imprescindible tener IntelliJ IDEA y tener instalado Java 11 SDK. Es un proyecto desarrollado en Java soportado por el framework Maven. El proyecto tiene 3 módulos: Client, Server y Shared.
 
 ## Instalación
 
@@ -18,10 +18,10 @@ git clone https://atlassian.salle.url.edu:7943/scm/dpoo/dpoo-stock-c2.git
 3. File > New > Project from existing sources...
 4. Seleccionar la carpeta donde se ha clonado el proyecto.
 5. Asegurar que mediante el wizard importar los módulos y seleccionar 11 como versión del SDK. Seguir el wizard hasta el final, importando los tres módulos.
-6. En caso de que no esté configurado correctamente el soporte al framework Maven, hacer clic derecho en cada módulo > Add Framework Support...  Maven. Detectará el fichero pom.xml para la configuración Maven.
-7. Si IntelliJ muestra un mensaje para la importación automática de dependencias, hacer clic a Enable auto-import.
+6. En caso de que no esté configurado correctamente el soporte al framework Maven, hacer clic derecho en cada módulo > Add Framework Support... > Maven. Detectará el fichero pom.xml para la configuración Maven.
+7. Si IntelliJ muestre un mensaje sobre la importación automática de dependencias, hacer clic a Enable auto-import.
 
-## Usage
+## Uso
 
 Primero ejecutamos el servidor y después el cliente. Podemos ejecutar diferentes instancias del cliente pero solo puede haber una instancia del servidor arrancado.
 
