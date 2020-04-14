@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class RegisterView extends MainView{
+public class LoginView extends MainView{
 
     private JPanel jpCenter;
     private JPanel jpCampos;
@@ -13,7 +13,7 @@ public class RegisterView extends MainView{
     private JButton jbRegister;
 
 
-    public RegisterView () {
+    public LoginView() {
         super();
     }
 
@@ -72,8 +72,8 @@ public class RegisterView extends MainView{
     public static void main( String[] args )
     {
         JFrame frame = new JFrame();
-        RegisterView registerView = new RegisterView();
-        frame.getContentPane().add(registerView);
+        LoginView loginView = new LoginView();
+        frame.getContentPane().add(loginView);
         frame.setSize(1024, 768);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
