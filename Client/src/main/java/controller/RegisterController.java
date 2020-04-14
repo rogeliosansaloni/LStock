@@ -26,7 +26,7 @@ public class RegisterController implements ActionListener {
     }
 
     /**
-     * Proc that capturees any event in the register view
+     * Proc that capturees any event in the login view
      * @param e the actionEvent
      */
     @Override

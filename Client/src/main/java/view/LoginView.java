@@ -141,6 +141,10 @@ public class LoginView extends JFrame {
         this.getContentPane().add(jpLogin);
     }
 
+    /**
+     * Proc thats adds listener to textfields and buttons.
+     * @param listener an ActionListener
+     */
     public void loginController (ActionListener listener) {
         campos[0].addActionListener(listener);
         campos[0].setActionCommand("user");
@@ -152,6 +156,10 @@ public class LoginView extends JFrame {
         jbRegister.setActionCommand("register");
     }
 
+    /**
+     * Proc that shows the corresponding error
+     * @param error shows the corresponding error
+     */
     public void showErrorMessage (int error) {
         switch (error) {
             case 1:
