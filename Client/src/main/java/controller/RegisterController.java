@@ -14,6 +14,9 @@ public class RegisterController implements ActionListener {
     private static final int ERROR_4 = 4;
     private static final int ERROR_5 = 5;
     private static final int ERROR_6 = 6;
+    private static final String REGEX_EMAIL = "^[a-zA-Z0-9_+&*-]+(?:\\."+ "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$";
+    private static final String REGEX_PASSWORD = "^(?=.*[A-Z])(?=.*[0-9]).*$";
+
 
     private RegisterView view;
 
@@ -51,10 +54,6 @@ public class RegisterController implements ActionListener {
      * @return a boolean if the fields are all valid
      */
     public boolean validCredentials (String nickname, String email, String pass1, String pass2) {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
-                            "[a-zA-Z0-9_+&*-]+)*@" +
-                            "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                            "A-Z]{2,7}$";
         //If all fields are empty
         if (nickname.equals("Nickname") && email.equals("Email") && pass1.equals("Password") && pass2.equals("Verify Password")) {
             view.showErrorMessages(ERROR_1);
@@ -67,7 +66,7 @@ public class RegisterController implements ActionListener {
         }
         //If email field isn't empty check if it's valid
         if (!email.equals("Email")) {
-            Pattern emailPattern = Pattern.compile(emailRegex);
+            Pattern emailPattern = Pattern.compile(REGEX_EMAIL);
             if (!emailPattern.matcher(email).matches()) {
                 view.showErrorMessages(ERROR_3);
                 return false;
@@ -95,11 +94,10 @@ public class RegisterController implements ActionListener {
      * @return a String with the error message
      */
     public int validatePassword(String password) {
-        String passwordRegex = "^(?=.*[A-Z])(?=.*[0-9]).*$";
         if (password.length() < 8) {
             return ERROR_5;
         }
-        Pattern pattern = Pattern.compile(passwordRegex);
+        Pattern pattern = Pattern.compile(REGEX_PASSWORD);
         if (!pattern.matcher(password).matches()) {
             return ERROR_6;
         }
