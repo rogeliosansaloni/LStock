@@ -13,6 +13,13 @@ public class RegisterView extends JFrame{
 
     private static final String PATH_LOGO = "/stock.png";
     private static final String TITLE = "StockLS - C2";
+    private static final String ERROR_MESSAGE_1 = "All fields are required.";
+    private static final String ERROR_MESSAGE_2 = "Fields can't be empty.";
+    private static final String ERROR_MESSAGE_3 = "Email is not valid.";
+    private static final String ERROR_MESSAGE_4 = "Password doesn't match.";
+    private static final String ERROR_MESSAGE_5 = "Password must have at least 8 characters.";
+    private static final String ERROR_MESSAGE_6 = "Password must have at least one capital letter and one number";
+
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
@@ -205,8 +212,27 @@ public class RegisterView extends JFrame{
      * Proc that shows a pop-up window with an error message
      * @param error message to be shown
      */
-    public void showErrorMessages (String error) {
-        JOptionPane.showMessageDialog(null,error);
+    public void showErrorMessages (int error) {
+        switch (error) {
+            case 1:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_1);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_2);
+                break;
+            case 3:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_3);
+                break;
+            case 4:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_4);
+                break;
+            case 5:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_5);
+                break;
+            case 6:
+                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_6);
+                break;
+        }
     }
 
     /**
