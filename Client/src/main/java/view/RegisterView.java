@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 public class RegisterView extends MainView{
 
@@ -35,7 +37,23 @@ public class RegisterView extends MainView{
         campos[0] = new JTextField("Nickname or Email");
         campos[0].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[0].setBorder(null);
+        campos[0].setMargin(new Insets(0,70,0,0));
         campos[0].setBackground(color.getTEXTFIELD());
+        campos[0].addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (campos[0].getText().equals("Nickname or Email")) {
+                    campos[0].setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (campos[0].getText().equals("")) {
+                    campos[0].setText("Nickname or Email");
+                }
+            }
+        });
         jpCampos.add(campos[0]);
         //Ponemos un espacio de separacion entre los campos
         jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
@@ -43,6 +61,20 @@ public class RegisterView extends MainView{
         campos[1].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[1].setBorder(null);
         campos[1].setBackground(color.getTEXTFIELD());
+        campos[1].addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (campos[1].getText().equals("Password")) {
+                    campos[1].setText("");
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (campos[1].getText().equals("")) {
+                    campos[1].setText("Password");
+                }
+            }
+        });
         jpCampos.add(campos[1]);
         jpCenter.add(jpCampos, BorderLayout.CENTER);
 
