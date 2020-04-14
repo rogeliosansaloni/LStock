@@ -91,7 +91,7 @@ public class RegisterController implements ActionListener {
      * Function that validates a password. It must be at least 8 characters with a capital letter and a digit.
      * The pattern is made from a regex.
      * @param password the password
-     * @return a String with the error message
+     * @return the corresponding error message
      */
     public int validatePassword(String password) {
         if (password.length() < 8) {
