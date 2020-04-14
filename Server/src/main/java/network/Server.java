@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.util.LinkedList;
 import utils.JSONReader;
 
+
 public class Server extends Thread {
     private String ip;
     private int port;
@@ -13,12 +14,19 @@ public class Server extends Thread {
     private ServerSocket sSocket;
     private boolean isOn;
     private LinkedList<DedicatedServer> clients;
+    private DBConnector dbConnector;
+
 
     public Server() throws IOException {
         initServerConfiguration();
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
         this.clients = new LinkedList<DedicatedServer>();
+    }
+
+    public void connectDBconnector(){
+        this.dbConnector = new DBConnector("ec2-15-236-105-133.eu-west-3.compute.amazonaws.com", "root", "admin", "LStock", 3306);
+        this.dbConnector.connect();
     }
 
     private void initServerConfiguration() {
@@ -57,6 +65,7 @@ public class Server extends Thread {
 
                 // Start dedicated server for the client
                 client.startServerConnection();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -70,4 +79,6 @@ public class Server extends Thread {
             client.stopServerConnection();
         }
     }
+
+
 }
