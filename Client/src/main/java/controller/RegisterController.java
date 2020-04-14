@@ -51,7 +51,7 @@ public class RegisterController implements ActionListener {
      * @param email the email
      * @param pass1 the password
      * @param pass2 repeated password
-     * @return a boolean if the fields are all valid
+     * @return true if the fields are all valid
      */
     public boolean validCredentials (String nickname, String email, String pass1, String pass2) {
         //If all fields are empty
