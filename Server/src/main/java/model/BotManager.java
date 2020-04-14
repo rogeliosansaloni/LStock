@@ -1,9 +1,10 @@
 package model;
 
 import database.BotDao;
+import network.DedicatedServer;
 
 public class BotManager {
-    //private DedicateServer dedicatedServer;
+    private DedicatedServer dedicatedServer;
     private BotDao botDao;
 
     public BotManager(BotDao botDao) {

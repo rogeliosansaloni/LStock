@@ -3,6 +3,7 @@ package model;
 import model.entities.TunnelObject;
 
 import java.util.ArrayList;
+import network.DedicatedServer;
 
 public class User extends TunnelObject {
     protected int userId;
@@ -12,7 +13,7 @@ public class User extends TunnelObject {
     protected float stockValue;
     protected String description;
     protected float totalBalance;
-    //protected DedicateServer dedicatedServer;
+    protected DedicatedServer dedicatedServer;
     protected ArrayList<Company> company;
 
 

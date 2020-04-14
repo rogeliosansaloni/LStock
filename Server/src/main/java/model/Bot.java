@@ -36,4 +36,24 @@ public class Bot extends Thread{
     public int getBotId() {
         return botId;
     }
+
+    /**
+     * Setters
+     */
+
+    public void setBotId(int botId) {
+        this.botId = botId;
+    }
+
+    public void setActiveTime(float activeTime) {
+        this.activeTime = activeTime;
+    }
+
+    public void setProbability(float probability) {
+        this.probability = probability;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
 }

@@ -22,5 +22,16 @@ public class Share {
     public float getPrice() {
         return price;
     }
+
+    /**
+     * Setters
+     */
+    public void setIdShare(int idShare) {
+        this.idShare = idShare;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
 }
 
