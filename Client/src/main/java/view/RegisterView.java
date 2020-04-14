@@ -12,6 +12,7 @@ public class RegisterView extends MainView{
     private JButton jbLogin;
     private JButton jbRegister;
 
+
     public RegisterView () {
         super();
     }
@@ -19,6 +20,7 @@ public class RegisterView extends MainView{
     public void initUI () {
         super.initUI();
         //Creamos un panel para los campos y otro para los botones
+        jpCenter = new JPanel();
         jpCenter = new JPanel(new BorderLayout());
         jpCenter.setBackground(Color.WHITE);
         jpCampos = new JPanel();
@@ -64,8 +66,7 @@ public class RegisterView extends MainView{
         jpBotones.add(jbRegister);
         jpCenter.add(jpBotones, BorderLayout.SOUTH);
         jpCenter.setBorder(BorderFactory.createEmptyBorder(0,250,150,250));
-
-        this.add(jpCenter, BorderLayout.CENTER);
+        jpCard.add(jpCenter);
     }
 
     public static void main( String[] args )

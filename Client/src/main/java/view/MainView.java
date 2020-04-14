@@ -16,6 +16,8 @@ public class MainView extends JPanel{
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
     private JPanel northPanel;
+    protected JPanel jpCard;
+
 
 
     public MainView () {
@@ -26,7 +28,6 @@ public class MainView extends JPanel{
     }
 
     public void initUI () {
-
         //Creamos el panel superior
         northPanel = new JPanel();
         northPanel.setBackground(Color.WHITE);
@@ -41,7 +42,8 @@ public class MainView extends JPanel{
         northPanel.setBorder(BorderFactory.createEmptyBorder(50,0,100,0));
         //Añadimos el panel superior al panel global
         this.add(northPanel, BorderLayout.NORTH);
-
+        jpCard = new JPanel(new CardLayout());
+        this.add(jpCard, BorderLayout.CENTER);
     }
 
 }
