@@ -1,27 +1,58 @@
 package view;
 
+import utils.StockColors;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.net.URL;
 
-public class RegisterView extends MainView{
+public class RegisterView extends JFrame{
 
+    private static final String PATH_LOGO = "/stock.png";
+    private static final String TITLE = "StockLS - C2";
+    private static final int anchuraPanel = 1080;
+    private static final int alturaPanel = 768;
+    private JLabel labelLogo;
+    protected JPanel jpNorth;
     private JPanel jpCenter;
     private JPanel jpCampos;
     private JPanel jpBotones;
     private JTextField[] campos;
     private JButton jbLogin;
     private JButton jbRegister;
-
+    private StockColors color;
 
     public RegisterView () {
-        super();
+        color = new StockColors();
+        this.setTitle(TITLE);
+        this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
+        this.setSize(1024, 768);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout());
+        initUI();
     }
 
     public void initUI () {
-        super.initUI();
+        JPanel jpRegister = new JPanel();
+        jpRegister.setLayout(new BorderLayout());
+        jpRegister.setBackground(Color.WHITE);
+
+        //Header
+        jpNorth = new JPanel();
+        jpNorth.setBackground(Color.WHITE);
+        URL url = getClass().getResource(PATH_LOGO);
+        ImageIcon imageIcon = new ImageIcon(url);
+        Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
+        imageIcon = new ImageIcon(scaleImage);
+        labelLogo = new JLabel(imageIcon);
+        //Añadimos la imagen y ponemos margen al panel para que quede más estético
+        jpNorth.add(labelLogo, BorderLayout.CENTER);
+        jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
+        jpRegister.add(jpNorth, BorderLayout.NORTH);
+
         //Creamos un panel para los campos y otro para los botones
         jpCenter = new JPanel();
         jpCenter = new JPanel(new BorderLayout());
@@ -142,7 +173,9 @@ public class RegisterView extends MainView{
         jpBotones.add(jbRegister);
         jpCenter.add(jpBotones, BorderLayout.SOUTH);
         jpCenter.setBorder(BorderFactory.createEmptyBorder(0,250,150,250));
-        jpCard.add(jpCenter);
+
+        jpRegister.add(jpCenter, BorderLayout.CENTER);
+        this.getContentPane().add(jpRegister);
     }
 
     public void registerController (ActionListener actionListener) {
@@ -159,15 +192,4 @@ public class RegisterView extends MainView{
         jbRegister.addActionListener(actionListener);
         jbRegister.setActionCommand("register");
     }
-
-    public static void main( String[] args )
-    {
-        JFrame frame = new JFrame();
-        RegisterView registerView = new RegisterView();
-        frame.getContentPane().add(registerView);
-        frame.setSize(1024, 768);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
-
 }

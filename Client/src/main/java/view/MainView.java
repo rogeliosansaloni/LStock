@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class MainView extends JPanel{
+public class MainView extends JFrame{
 
     //logo de stock
     private static final String PATH_LOGO = "/stock.png";
