@@ -19,8 +19,8 @@ public class DBConnector {
     private static Statement s;
 
 
-    public DBConnector(String url,String dbUsername, String dbPassword, String db, int dbPort){
-        this.url =url;
+    public DBConnector(String url, String dbUsername, String dbPassword, String db, int dbPort){
+        this.url = url;
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
         this.db = db;
@@ -33,10 +33,13 @@ public class DBConnector {
 
     public void connect() {
         try {
-            Class.forName("com.mysql.jdbc.Connection");
-            conn = (Connection) DriverManager.getConnection( url, dbUsername,  dbPassword);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn=(Connection) DriverManager.getConnection(url, dbUsername, dbPassword);
+
+            //Class.forName("com.mysql.jdbc.Connection");
+            //conn = (Connection) DriverManager.getConnection( url, dbUsername,  dbPassword);
             if (conn != null) {
-                System.out.println("Connecting database " + url + " ... OK");
+                System.out.println("Connecting database ... OK");
             }
         }
         catch(SQLException ex) {
@@ -96,7 +99,6 @@ public class DBConnector {
             System.err.println(ex);
         }
     }
-
 
 
 

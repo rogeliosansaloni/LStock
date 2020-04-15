@@ -24,10 +24,6 @@ public class Server extends Thread {
         this.clients = new LinkedList<DedicatedServer>();
     }
 
-    public void connectDBconnector(){
-        this.dbConnector = new DBConnector("ec2-15-236-105-133.eu-west-3.compute.amazonaws.com", "root", "admin", "LStock", 3306);
-        this.dbConnector.connect();
-    }
 
     private void initServerConfiguration() {
         JSONReader jsonReader = new JSONReader();
