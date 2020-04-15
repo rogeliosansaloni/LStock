@@ -13,21 +13,25 @@ public class DBConnector {
     private String dbPassword;
     private String dbName;
     private int dbPort;
+    private String db;
     private String url;
     private static Connection conn = null;
     private static Statement s;
 
 
-    public DBConnector(String dbUsername, String dbPassword, int dbPort){
+    public DBConnector(String url, String dbUsername, String dbPassword, String db, int dbPort){
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
         this.dbPort = dbPort;
-        this.url = BASE_URL + ":" + dbPort + "/";
+        this.url = BASE_URL ;
+        this.url += url +":" + dbPort + "/";
+        this.url += db;
+        this.url += "?verifyServerCertificate=false&useSSL=true";
     }
 
     public void connect() {
         try {
-            Class.forName("com.mysql.jdbc.Connection");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = (Connection) DriverManager.getConnection(url, dbUsername, dbPassword);
             if (conn != null) {
                 System.out.println("Connecting database " + url + " ... OK");
