@@ -1,34 +1,34 @@
 package network;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
+import java.sql.Statement;
 
 public class DBConnector {
 
-    private String db_name;
-    private String db_password;
-    private String db;
-    private int db_port;
-    private String url = "jdbc:mysql://localhost";
+    private static final String BASE_URL = "jdbc:mysql://";
+    private String dbUsername;
+    private String dbPassword;
+    private String dbName;
+    private int dbPort;
+    private String url;
     private static Connection conn = null;
     private static Statement s;
 
 
-    public DBConnector(String db_name, String db_password, String database, int db_port){
-        this.db_name = db_name;
-        this.db_password = db_password;
-        this.db = database;
-        this.db_port = db_port;
-        this.url += ":"+db_port+"/"+db;
+    public DBConnector(String dbUsername, String dbPassword, int dbPort){
+        this.dbUsername = dbUsername;
+        this.dbPassword = dbPassword;
+        this.dbPort = dbPort;
+        this.url = BASE_URL + ":" + dbPort + "/";
     }
 
     public void connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
-            conn = (Connection) DriverManager.getConnection(url, db_name, db_password);
+            conn = (Connection) DriverManager.getConnection(url, dbUsername, dbPassword);
             if (conn != null) {
                 System.out.println("Connecting database " + url + " ... OK");
             }
@@ -85,14 +85,9 @@ public class DBConnector {
     public void disconnect(){
         try {
             conn.close();
-        } catch (SQLException e) {
-            System.out.println("Connetion KO" + e.getSQLState());
-            System.err.println(e);
+        } catch (SQLException ex) {
+            System.out.println("Connection KO" + ex.getSQLState());
+            System.err.println(ex);
         }
     }
-
-
-
-
-
 }
