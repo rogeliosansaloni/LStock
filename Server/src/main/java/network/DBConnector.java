@@ -8,12 +8,12 @@ import java.sql.Statement;
 
 public class DBConnector {
 
-    private static String  BASE_URL;
+    private static final String BASE_URL = "jdbc:mysql://";
     private String dbUsername;
     private String dbPassword;
     private String dbName;
     private int dbPort;
-    private String url = "jdbc:mysql://";
+    private String url;
     private static Connection conn = null;
     private static Statement s;
 
@@ -22,7 +22,7 @@ public class DBConnector {
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
         this.dbPort = dbPort;
-        this.url += ":"+dbPort+"/";
+        this.url = BASE_URL + ":" + dbPort + "/";
     }
 
     public void connect() {
@@ -90,9 +90,4 @@ public class DBConnector {
             System.err.println(ex);
         }
     }
-
-
-
-
-
 }
