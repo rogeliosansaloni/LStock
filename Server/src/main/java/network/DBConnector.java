@@ -19,8 +19,8 @@ public class DBConnector {
     private static Statement s;
 
 
-    public DBConnector(String url,String dbUsername, String dbPassword, String db, int dbPort){
-        this.url =url;
+    public DBConnector(String url, String dbUsername, String dbPassword, String db, int dbPort){
+        this.url = url;
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
         this.db = db;
@@ -28,12 +28,14 @@ public class DBConnector {
         this.url += ":"+dbPort+"/";
         this.url += db;
         this.url += "?verifyServerCertificate=false&useSSL=true";
+
     }
 
 
     public void connect() {
         try {
-            Class.forName("com.mysql.jdbc.Connection");
+            //Class.forName("com.mysql.jdbc.Connection");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = (Connection) DriverManager.getConnection( url, dbUsername,  dbPassword);
             if (conn != null) {
                 System.out.println("Connecting database " + url + " ... OK");
