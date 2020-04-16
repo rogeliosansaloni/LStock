@@ -23,7 +23,6 @@ public class DBConnector {
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
         this.dbPort = dbPort;
-        this.url = url;
         this.url = String.format(BASE_URL, url, dbPort, db);
     }
 
