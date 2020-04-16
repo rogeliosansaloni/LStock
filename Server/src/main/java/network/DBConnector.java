@@ -8,7 +8,8 @@ import java.sql.Statement;
 
 public class DBConnector {
 
-    private static final String BASE_URL = "jdbc:mysql://";
+    //private static final String BASE_URL = "jdbc:mysql://";
+    private static final String BASE_URL = "jdbc:mysql://%s:%d/%s?verifyServerCertificate=false&useSSL=true";
     private String dbUsername;
     private String dbPassword;
     private String dbName;
@@ -23,10 +24,8 @@ public class DBConnector {
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
         this.dbPort = dbPort;
-        this.url = BASE_URL ;
-        this.url += url +":" + dbPort + "/";
-        this.url += db;
-        this.url += "?verifyServerCertificate=false&useSSL=true";
+        this.url = url;
+        this.url = String.format(BASE_URL, url, dbPort, db);
     }
 
     public void connect() {
