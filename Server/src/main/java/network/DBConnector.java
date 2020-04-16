@@ -8,26 +8,27 @@ import java.sql.Statement;
 
 public class DBConnector {
 
-    private static final String BASE_URL = "jdbc:mysql://";
+    private static final String BASE_URL = "jdbc:mysql://%s:%d/%s?verifyServerCertificate=false&useSSL=true";
     private String dbUsername;
     private String dbPassword;
     private String dbName;
     private int dbPort;
+    private String db;
     private String url;
     private static Connection conn = null;
     private static Statement s;
 
 
-    public DBConnector(String dbUsername, String dbPassword, int dbPort){
+    public DBConnector(String url, String dbUsername, String dbPassword, String db, int dbPort){
         this.dbUsername = dbUsername;
         this.dbPassword = dbPassword;
         this.dbPort = dbPort;
-        this.url = BASE_URL + ":" + dbPort + "/";
+        this.url = String.format(BASE_URL, url, dbPort, db);
     }
 
     public void connect() {
         try {
-            Class.forName("com.mysql.jdbc.Connection");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = (Connection) DriverManager.getConnection(url, dbUsername, dbPassword);
             if (conn != null) {
                 System.out.println("Connecting database " + url + " ... OK");
