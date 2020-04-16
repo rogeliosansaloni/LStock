@@ -8,7 +8,6 @@ import java.sql.Statement;
 
 public class DBConnector {
 
-    //private static final String BASE_URL = "jdbc:mysql://";
     private static final String BASE_URL = "jdbc:mysql://%s:%d/%s?verifyServerCertificate=false&useSSL=true";
     private String dbUsername;
     private String dbPassword;
