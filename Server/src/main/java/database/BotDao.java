@@ -30,8 +30,8 @@ public class BotDao {
         try {
             while (verify.next()) {
 
-                    System.out.println("This bot already exists.");
-                    botExist = true;
+                System.out.println("This bot already exists.");
+                botExist = true;
 
             }
             if(!botExist){
@@ -48,7 +48,7 @@ public class BotDao {
     /**
      * It will get all the bots in the LStock
      */
-        public ArrayList<String> getAllBots () {
+    public ArrayList<String> getAllBots () {
         ResultSet getBots = dbConnector.selectQuery("SELECT * FROM Bots;");
         ArrayList<String> bots = null;
         try {
