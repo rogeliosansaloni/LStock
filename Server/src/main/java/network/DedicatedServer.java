@@ -8,6 +8,7 @@ import java.net.Socket;
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
 import model.managers.StockManager;
+import utils.UserMapperImpl;
 
 public class DedicatedServer extends Thread {
     private boolean isOn;
@@ -39,7 +40,11 @@ public class DedicatedServer extends Thread {
                 TunnelObject tunnelObject = (TunnelObject) ois.readObject();
 
                 if (tunnelObject instanceof AuthenticationInfo) {
-                    System.out.println("Hello bitch, i'm testing you");
+                    StockManager model = new StockManager();
+                    UserMapperImpl mapper = new UserMapperImpl();
+                    AuthenticationInfo info = model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                    oos.writeObject(info);
+
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
