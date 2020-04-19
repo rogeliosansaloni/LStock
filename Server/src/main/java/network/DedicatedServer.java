@@ -43,7 +43,6 @@ public class DedicatedServer extends Thread {
                 if (tunnelObject instanceof AuthenticationInfo) {
                     StockManager model = new StockManager();
                     UserMapperImpl mapper = new UserMapperImpl();
-                    User usr = mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject);
                     AuthenticationInfo info = model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
                     oos.writeObject(info);
 
