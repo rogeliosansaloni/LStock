@@ -26,8 +26,8 @@ public class Server extends Thread {
     }
 
     public void connectDBconnector(){
-        this.dbConnector = new DBConnector(serverConfiguration.getDbIp(), serverConfiguration.getDbName(), serverConfiguration.getDbPassword(), serverConfiguration.getDbUser(), serverConfiguration.getPort());
-
+        this.dbConnector = new DBConnector(serverConfiguration.getDbIp(), serverConfiguration.getDbUser(), serverConfiguration.getDbPassword(),
+                serverConfiguration.getDbName(),serverConfiguration.getDbPort());
         this.dbConnector.connect();
     }
 
@@ -41,6 +41,7 @@ public class Server extends Thread {
     public void startServer() {
         // Start main server thread
         isOn = true;
+        connectDBconnector();
         this.start();
     }
 

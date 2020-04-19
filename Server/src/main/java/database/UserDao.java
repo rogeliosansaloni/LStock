@@ -8,8 +8,6 @@ import model.entities.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-
 public class UserDao {
 
     private DBConnector dbConnector;
