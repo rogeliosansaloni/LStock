@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
+import model.managers.StockManager;
 
 public class DedicatedServer extends Thread {
     private boolean isOn;
@@ -17,13 +20,13 @@ public class DedicatedServer extends Thread {
     }
 
     public void stopServerConnection() {
-        this.isOn = true;
-        this.start();
+        this.isOn = false;
+        this.interrupt();
     }
 
     public void startServerConnection() {
-        this.isOn = false;
-        this.interrupt();
+        this.isOn = true;
+        this.start();
     }
 
     public void run() {
@@ -35,10 +38,9 @@ public class DedicatedServer extends Thread {
             while(isOn) {
                 TunnelObject tunnelObject = (TunnelObject) ois.readObject();
 
-                // When receiving tunnel object, we need to check its type
-                //if (tunnelObject instanceof AuthenticationInfo) {
-                //    // Handle object
-                //}
+                if (tunnelObject instanceof AuthenticationInfo) {
+                    System.out.println("Hello bitch, i'm testing you");
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

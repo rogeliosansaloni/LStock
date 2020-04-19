@@ -41,7 +41,6 @@ public class Server extends Thread {
         // Start main server thread
         isOn = true;
         this.start();
-        connectDBconnector();
     }
 
     public void stopServer() {
