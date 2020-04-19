@@ -11,6 +11,7 @@ public class Server extends Thread {
     private String ip;
     private int port;
     private Server server;
+    private ServerConfiguration config;
     private ServerSocket sSocket;
     private boolean isOn;
     private LinkedList<DedicatedServer> clients;
@@ -25,13 +26,13 @@ public class Server extends Thread {
     }
 
     public void connectDBconnector(){
-        this.dbConnector = new DBConnector("ec2-15-236-105-133.eu-west-3.compute.amazonaws.com", "root", "admin", "LStock", 3306);
+        this.dbConnector = new DBConnector(config.getDbIp(), config.getDbName(), config.getDbPassword(), config.getDbUser(), config.getPort());
         this.dbConnector.connect();
     }
 
     private void initServerConfiguration() {
         JSONReader jsonReader = new JSONReader();
-        ServerConfiguration config = jsonReader.getServerConfiguration();
+        config = jsonReader.getServerConfiguration();
         this.ip = config.getIp();
         this.port = config.getPort();
     }
@@ -40,6 +41,7 @@ public class Server extends Thread {
         // Start main server thread
         isOn = true;
         this.start();
+        connectDBconnector();
     }
 
     public void stopServer() {

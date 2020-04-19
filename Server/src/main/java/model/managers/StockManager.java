@@ -4,6 +4,7 @@ import database.CompanyDao;
 import database.UserDao;
 import model.entities.Company;
 import model.entities.User;
+import network.DBConnector;
 import sun.net.www.protocol.http.AuthenticationInfo;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class StockManager {
     }
 
     public AuthenticationInfo registerUser(User user){
+        User usr = new User(user.getNickname(), user.getEmail(), user.getPassword());
         return null;
     }
     public AuthenticationInfo validateUser(User user){
