@@ -63,6 +63,10 @@ public class NetworkManager extends Thread {
     oos.writeObject(object);
   }
 
+  public void sendAuthentificationInformation (TunnelObject object) throws IOException {
+    oos.writeObject(object);
+  }
+
   @Override
   public void run () {
     try {
