@@ -5,7 +5,6 @@ import database.UserDao;
 import model.entities.AuthenticationInfo;
 import model.entities.Company;
 import model.entities.User;
-import network.DBConnector;
 
 import java.util.ArrayList;
 
