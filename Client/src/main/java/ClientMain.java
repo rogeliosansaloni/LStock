@@ -26,6 +26,7 @@ public class ClientMain {
         LoginController loginController = new LoginController(loginView);
         loginView.loginController(loginController);
         loginView.setVisible(true);
+
         /*try {
             // Test for server-client connection
             TunnelObject testOjbect = new TunnelObject();

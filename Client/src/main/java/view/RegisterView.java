@@ -21,7 +21,7 @@ public class RegisterView extends JFrame{
     private static final String ERROR_MESSAGE_6 = "Password must have at least one capital letter and one number";
 
     private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 768;
+    private static final int alturaPanel = 740;
     private JLabel labelLogo;
     private JLabel labelStock;
     protected JPanel jpNorth;
@@ -37,10 +37,11 @@ public class RegisterView extends JFrame{
         color = new StockColors();
         this.setTitle(TITLE);
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
-        this.setSize(1024, 768);
+        this.setSize(anchuraPanel, alturaPanel);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
+        this.setResizable(false);
         initUI();
     }
 
@@ -60,32 +61,33 @@ public class RegisterView extends JFrame{
         Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
+
         //TODO: Add label under the logo
         jpNorth.add(labelLogo, BorderLayout.CENTER);
         labelStock = new JLabel("StockLS", SwingConstants.CENTER);
-        Font fuenteLogo = new Font("Calibri", Font.PLAIN, 30);
+        Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
         labelStock.setFont(fuenteLogo);
         jpNorth.add(labelStock, BorderLayout.SOUTH);
-        jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
+        jpNorth.setBorder(BorderFactory.createEmptyBorder(80,0,10,0));
         jpRegister.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the bottons
         jpCenter = new JPanel();
-        jpCenter = new JPanel(new BorderLayout());
+        jpCenter = new JPanel(new GridLayout(6,1, 0 ,15));
         jpCenter.setBackground(Color.WHITE);
+        JLabel relleno1 = new JLabel();
+        relleno1.setPreferredSize(new Dimension(200, 50));
+        jpCenter.add(relleno1);
         jpCampos = new JPanel();
+
         //El layout de los campos será BoxLayout
         jpCampos.setLayout(new BoxLayout(jpCampos, BoxLayout.PAGE_AXIS));
         jpCampos.setBackground(Color.WHITE);
-        jpCampos.setBorder(BorderFactory.createEmptyBorder(50,0,60,0));
-        int anchuraCampo = 150;
-        int alturaCampo = 20;
+        jpCampos.setBorder(BorderFactory.createEmptyBorder(50,0,80,0));
 
         campos = new JTextField[4];
         campos[0] = new JTextField("Nickname");
-        campos[0].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[0].setBorder(null);
-        campos[0].setMargin(new Insets(0,70,0,0));
         campos[0].setBackground(color.getTEXTFIELD());
         campos[0].addFocusListener(new FocusListener() {
             @Override
@@ -104,9 +106,7 @@ public class RegisterView extends JFrame{
         });
         jpCampos.add(campos[0]);
         //We add separation space between fields
-        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[1] = new JTextField("Email");
-        campos[1].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[1].setBorder(null);
         campos[1].setBackground(color.getTEXTFIELD());
         campos[1].addFocusListener(new FocusListener() {
@@ -125,9 +125,7 @@ public class RegisterView extends JFrame{
         });
         jpCampos.add(campos[1]);
         //We add separation space between fields
-        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[2] = new JTextField("Password");
-        campos[2].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[2].setBorder(null);
         campos[2].setBackground(color.getTEXTFIELD());
         campos[2].addFocusListener(new FocusListener() {
@@ -146,9 +144,7 @@ public class RegisterView extends JFrame{
         });
         jpCampos.add(campos[2]);
         //We add separation space between fields
-        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[3] = new JTextField("Verify Password");
-        campos[3].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[3].setBorder(null);
         campos[3].setBackground(color.getTEXTFIELD());
         campos[3].addFocusListener(new FocusListener() {
