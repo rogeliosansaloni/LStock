@@ -29,9 +29,6 @@ public class NetworkManager extends Thread {
   private RegisterView registerView;
   private LoginView loginView;
 
-  // TODO: Specify the controllers as attributes
-  // TODO: Specify the views to be shown
-
   /**
    * Represents a Singleton
    * @return single and shared global instance
