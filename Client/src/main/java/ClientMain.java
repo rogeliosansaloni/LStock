@@ -11,11 +11,13 @@ import javax.swing.*;
 
 public class ClientMain {
     public static void main (String[] args) {
-        //test
         RegisterView registerView = new RegisterView();
         RegisterController registerController = new RegisterController(registerView);
         registerView.registerController(registerController);
         registerView.setVisible(true);
+
+        // Start client's connection to the server
+        NetworkManager.getInstance().startServerConnection(registerController);
 
         /*try {
             // Test for server-client connection

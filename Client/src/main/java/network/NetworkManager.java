@@ -55,20 +55,18 @@ public class NetworkManager extends Thread {
 
     //Set up views
     loginView = new LoginView();
-    registerView = new RegisterView();
     mainView = new MainView();
-
-    //TODO: Set up controllers
 
     // Set up the connection to the server
     this.serverSocket = new Socket(configuration.getIp(), configuration.getPort()); // pass ip and port from NetworkConfiguration
     oos = new ObjectOutputStream(this.serverSocket.getOutputStream());
     oos.flush();
     ois = new ObjectInputStream(this.serverSocket.getInputStream());
-    this.startServerConnection();
   }
 
-  public void startServerConnection () {
+  public void startServerConnection (RegisterController registerController) {
+    //Set up controllers
+    this.registerController = registerController;
     running = true;
     start();
   }
@@ -96,7 +94,7 @@ public class NetworkManager extends Thread {
         if (received instanceof AuthenticationInfo) {
           AuthenticationInfo info = ((AuthenticationInfo)received);
           if(info.isValidated()){
-            registerView.setVisible(false);
+            registerController.closeRegisterView();
             loginView.setVisible(true);
           }
           else {

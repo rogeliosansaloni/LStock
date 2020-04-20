@@ -30,10 +30,9 @@ public class StockManager {
 
     public AuthenticationInfo registerUser(User user) {
         UserMapperImpl mapper = new UserMapperImpl();
-        AuthenticationInfo info = new AuthenticationInfo();
         User usr = new User(user.getNickname(), user.getEmail(), user.getPassword());
         String response = userDao.createUser(usr);
-        info = mapper.userToAuthenticationInfo(usr);
+        AuthenticationInfo info = mapper.userToAuthenticationInfo(usr);
         info.setValidated(true);
         info.setResponseType(response);
         return info;

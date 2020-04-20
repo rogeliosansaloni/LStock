@@ -116,4 +116,8 @@ public class RegisterController implements ActionListener {
         }
         return NO_ERROR;
     }
+
+    public void closeRegisterView() {
+        view.setVisible(false);
+    }
 }
