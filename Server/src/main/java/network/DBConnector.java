@@ -13,7 +13,6 @@ public class DBConnector {
     private static final String BASE_URL = "jdbc:mysql://%s:%d/%s?verifyServerCertificate=false&useSSL=true";
     private String dbUsername;
     private String dbPassword;
-    private String dbName;
     private int dbPort;
     private String db;
     private String url;
@@ -29,7 +28,6 @@ public class DBConnector {
     private void initDBConfiguration() {
         JSONReader jsonReader = new JSONReader();
         this.config = jsonReader.getServerConfiguration();
-        this.url = config.getDbIp();
         this.db = config.getDbName();
         this.dbUsername = config.getDbUser();
         this.dbPassword = config.getDbPassword();

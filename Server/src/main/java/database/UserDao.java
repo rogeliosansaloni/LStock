@@ -22,7 +22,7 @@ public class UserDao {
     }
 
     /**
-     * Creates user if nickanme or email aren't taken yet.
+     * Creates user if nickname or email aren't taken yet.
      * If not, it creates an account for this user.
      * @param user the class that will be registering
      */
