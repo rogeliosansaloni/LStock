@@ -1,10 +1,14 @@
 package controller;
 
+import model.entities.AuthenticationInfo;
+import model.entities.TunnelObject;
+import network.NetworkManager;
 import view.LoginView;
 import view.RegisterView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class RegisterController implements ActionListener {
@@ -37,7 +41,12 @@ public class RegisterController implements ActionListener {
             String pass1 = view.getPassword();
             String pass2 = view.getPasswordVerification();
             if (validCredentials(nickname, email, pass1, pass2)) {
-                //TODO: Validate with server
+                TunnelObject register = new AuthenticationInfo(nickname,email,pass1, "register");
+                try {
+                    NetworkManager.getInstance().sendAuthentificationInformation(register);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         if (e.getActionCommand().equals("login")) {

@@ -13,6 +13,9 @@ public class StockManager {
     private UserDao userDao;
     private CompanyDao companyDao;
 
+    public  StockManager () {
+
+    }
     public StockManager(Company company, UserDao userDao, CompanyDao companyDao) {
         this.company = company;
         this.userDao = userDao;
@@ -20,6 +23,8 @@ public class StockManager {
     }
 
     public AuthenticationInfo registerUser(User user){
+        User usr = new User(user.getNickname(), user.getEmail(), user.getPassword());
+        userDao.createUser(usr);
         return null;
     }
     public AuthenticationInfo validateUser(User user){
