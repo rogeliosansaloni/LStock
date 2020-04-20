@@ -54,10 +54,6 @@ public class NetworkManager extends Thread {
         JSONReader jsonReader = new JSONReader();
         configuration = jsonReader.getClientConfiguration();
 
-        //Set up views
-        loginView = new LoginView();
-        mainView = new MainView();
-
         // Set up the connection to the server
         this.serverSocket = new Socket(configuration.getIp(), configuration.getPort()); // pass ip and port from NetworkConfiguration
         oos = new ObjectOutputStream(this.serverSocket.getOutputStream());
@@ -92,18 +88,27 @@ public class NetworkManager extends Thread {
                 System.out.println("Waiting for object to be received...");
                 TunnelObject received = (TunnelObject) ois.readObject();
 
-                if (received instanceof AuthenticationInfo) {
-                    AuthenticationInfo info = ((AuthenticationInfo) received);
-                    if (info.isValidated()) {
-                        registerController.closeRegisterView();
-                        loginView.setVisible(true);
-                    } else {
-                        registerView.showErrorMessages(info.getResponseType());
-                    }
-                }
+        if (received instanceof AuthenticationInfo) {
+          AuthenticationInfo info = ((AuthenticationInfo)received);
+          if (info.getAction().equals("register")) {
+            if(info.isValidated()){
+              registerController.closeRegisterView();
+              loginView = new LoginView();
+              loginController = new LoginController(loginView);
+              loginView.loginController(loginController);
+              loginView.setVisible(true);
             }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            else {
+              registerController.sendErrorMessage(info.getResponseType());
+            }
+          }
+          if (info.getAction().equals("login")) {
+
+          }
         }
+      }
+    } catch (IOException | ClassNotFoundException e) {
+      e.printStackTrace();
     }
+  }
 }

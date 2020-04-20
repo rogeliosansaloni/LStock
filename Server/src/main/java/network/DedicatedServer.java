@@ -47,7 +47,7 @@ public class DedicatedServer extends Thread {
                         oos.writeObject(info);
                     }
                     if (((AuthenticationInfo) tunnelObject).getAction().equals("login")) {
-
+                        //TODO: Get the login info
                     }
                 }
             }

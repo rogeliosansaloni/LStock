@@ -28,12 +28,23 @@ public class StockManager {
         this.companyDao = companyDao;
     }
 
+    /**
+     * Function that registers a user if the conditions are met
+     * @param user the user
+     * @return Authentification with the information we need to send for the client
+     */
     public AuthenticationInfo registerUser(User user) {
         UserMapperImpl mapper = new UserMapperImpl();
         User usr = new User(user.getNickname(), user.getEmail(), user.getPassword());
         String response = userDao.createUser(usr);
         AuthenticationInfo info = mapper.userToAuthenticationInfo(usr);
-        info.setValidated(true);
+        if (!response.equals("Register Success")) {
+            info.setValidated(false);
+        }
+        else {
+            info.setValidated(true);
+        }
+        info.setAction("register");
         info.setResponseType(response);
         return info;
     }
