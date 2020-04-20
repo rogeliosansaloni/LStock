@@ -88,27 +88,26 @@ public class NetworkManager extends Thread {
                 System.out.println("Waiting for object to be received...");
                 TunnelObject received = (TunnelObject) ois.readObject();
 
-        if (received instanceof AuthenticationInfo) {
-          AuthenticationInfo info = ((AuthenticationInfo)received);
-          if (info.getAction().equals("register")) {
-            if(info.isValidated()){
-              registerController.closeRegisterView();
-              loginView = new LoginView();
-              loginController = new LoginController(loginView);
-              loginView.loginController(loginController);
-              loginView.setVisible(true);
-            }
-            else {
-              registerController.sendErrorMessage(info.getResponseType());
-            }
-          }
-          if (info.getAction().equals("login")) {
+                if (received instanceof AuthenticationInfo) {
+                    AuthenticationInfo info = ((AuthenticationInfo) received);
+                    if (info.getAction().equals("register")) {
+                        if (info.isValidated()) {
+                            registerController.closeRegisterView();
+                            loginView = new LoginView();
+                            loginController = new LoginController(loginView);
+                            loginView.loginController(loginController);
+                            loginView.setVisible(true);
+                        } else {
+                            registerController.sendErrorMessage(info.getResponseType());
+                        }
+                    }
+                    if (info.getAction().equals("login")) {
 
-          }
+                    }
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
         }
-      }
-    } catch (IOException | ClassNotFoundException e) {
-      e.printStackTrace();
     }
-  }
 }
