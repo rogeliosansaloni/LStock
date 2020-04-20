@@ -28,7 +28,6 @@ public class DBConnector {
     private void initDBConfiguration() {
         JSONReader jsonReader = new JSONReader();
         this.config = jsonReader.getServerConfiguration();
-        this.url = config.getDbIp();
         this.db = config.getDbName();
         this.dbUsername = config.getDbUser();
         this.dbPassword = config.getDbPassword();
