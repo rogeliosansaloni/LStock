@@ -41,11 +41,15 @@ public class DedicatedServer extends Thread {
                 TunnelObject tunnelObject = (TunnelObject) ois.readObject();
 
                 if (tunnelObject instanceof AuthenticationInfo) {
-                    StockManager model = new StockManager();
-                    UserMapperImpl mapper = new UserMapperImpl();
-                    AuthenticationInfo info = model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
-                    oos.writeObject(info);
+                    if (((AuthenticationInfo) tunnelObject).getAction().equals("register")) {
+                        StockManager model = new StockManager();
+                        UserMapperImpl mapper = new UserMapperImpl();
+                        AuthenticationInfo info = model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                        oos.writeObject(info);
+                    }
+                    if (((AuthenticationInfo) tunnelObject).getAction().equals("login")) {
 
+                    }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

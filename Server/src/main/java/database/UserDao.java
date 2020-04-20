@@ -11,6 +11,11 @@ import java.sql.SQLException;
 public class UserDao {
 
     private DBConnector dbConnector;
+    private static final String REGISTER_MESSAGE_1 = "Register Success";
+    private static final String REGISTER_MESSAGE_2 = "Email Taken";
+    private static final String REGISTER_MESSAGE_3 = "Nickname Taken";
+
+
 
     public UserDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
@@ -21,30 +26,28 @@ public class UserDao {
      * If not, it creates an account for this user.
      * @param user the class that will be registering
      */
-    public int createUser (User user) {
-        int userExist = 0;
+    public String createUser (User user) {
+        String message = REGISTER_MESSAGE_1;
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
 
         try {
             while (verify.next()) {
                 if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user)) {
-                    System.out.println("This email has an account already.");
-                    userExist = 1;
+                    message = REGISTER_MESSAGE_2;
                 }
                 else {
                     if (verifyNickname(user.getNickname(), verify.getObject("nickname").toString(),user)) {
-                        System.out.println("This username is already taken.");
-                        userExist = 2;
+                        message = REGISTER_MESSAGE_3;
                     }
                 }
             }
-            if(userExist == 0){
+            if(message.equals(REGISTER_MESSAGE_1)){
                 dbConnector.insertQuery("INSERT INTO User (nickname,email,password) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getPassword() + "')");
             }
         }catch (SQLException e) {
             System.out.println("Error Creating User");
         }
-        return userExist;
+        return message;
     }
 
 

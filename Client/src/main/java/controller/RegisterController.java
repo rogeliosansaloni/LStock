@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class RegisterController implements ActionListener {
-    private static final int NO_ERROR = 0;
-    private static final int ERROR_1 = 1;
-    private static final int ERROR_2 = 2;
-    private static final int ERROR_3 = 3;
-    private static final int ERROR_4 = 4;
-    private static final int ERROR_5 = 5;
-    private static final int ERROR_6 = 6;
+    private static final String NO_ERROR = "No Error";
+    private static final String ERROR_1 = "Fields Required";
+    private static final String ERROR_2 = "Fields Empty";
+    private static final String ERROR_3 = "Email Error";
+    private static final String ERROR_4 = "Password Match";
+    private static final String ERROR_5 = "Password Length";
+    private static final String ERROR_6 = "Password Format";
     private static final String REGEX_EMAIL = "^[a-zA-Z0-9_+&*-]+(?:\\."+ "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$";
     private static final String REGEX_PASSWORD = "^(?=.*[A-Z])(?=.*[0-9]).*$";
 
@@ -91,8 +91,8 @@ public class RegisterController implements ActionListener {
                 view.showErrorMessages(ERROR_4);
                 return false;
             }
-            int error = validatePassword(pass1);
-            if (error != NO_ERROR) {
+            String error = validatePassword(pass1);
+            if (!error.equals(NO_ERROR)) {
                 view.showErrorMessages(error);
                 return false;
             }
@@ -106,7 +106,7 @@ public class RegisterController implements ActionListener {
      * @param password the password
      * @return the corresponding error message
      */
-    public int validatePassword(String password) {
+    public String validatePassword(String password) {
         if (password.length() < 8) {
             return ERROR_5;
         }

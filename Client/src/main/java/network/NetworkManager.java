@@ -27,7 +27,7 @@ public class NetworkManager extends Thread {
   private RegisterController registerController;
   private MainView mainView;
   private RegisterView registerView;
-  private LoginView loginViewM;
+  private LoginView loginView;
 
   // TODO: Specify the controllers as attributes
   // TODO: Specify the views to be shown
@@ -53,14 +53,20 @@ public class NetworkManager extends Thread {
     JSONReader jsonReader = new JSONReader();
     configuration = jsonReader.getClientConfiguration();
 
+    //Set up views
+    loginView = new LoginView();
+    registerView = new RegisterView();
+    mainView = new MainView();
+
+    //TODO: Set up controllers
+
     // Set up the connection to the server
     this.running = false;
     this.serverSocket = new Socket(configuration.getIp(), configuration.getPort()); // pass ip and port from NetworkConfiguration
     oos = new ObjectOutputStream(this.serverSocket.getOutputStream());
     oos.flush();
     ois = new ObjectInputStream(this.serverSocket.getInputStream());
-
-    this.start();
+    this.startServerConnection();
   }
 
   public void startServerConnection () {
@@ -87,23 +93,16 @@ public class NetworkManager extends Thread {
       while (running) {
         System.out.println("Waiting for object to be received...");
         TunnelObject received = (TunnelObject) ois.readObject();
+
         if (received instanceof AuthenticationInfo) {
           AuthenticationInfo info = ((AuthenticationInfo)received);
-          oos.writeObject(info);
-
-
           if(info.isValidated()){
-            MainView mainView = new MainView();
-            mainView.setVisible(true);
-
-          }else{
-            //RegisterView registerView = new RegisterView();
-            //error perteneciente
-            System.out.println("Error validating user");
+            registerView.setVisible(false);
           }
-
+          else {
+            registerView.showErrorMessages(info.getResponseType());
+          }
         }
-        //TODO: Tratar lo que ha recibido --> AuthenticationInfo
       }
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();
