@@ -97,6 +97,7 @@ public class NetworkManager extends Thread {
           AuthenticationInfo info = ((AuthenticationInfo)received);
           if(info.isValidated()){
             registerView.setVisible(false);
+            loginView.setVisible(true);
           }
           else {
             registerView.showErrorMessages(info.getResponseType());
