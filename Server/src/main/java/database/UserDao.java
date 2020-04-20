@@ -116,7 +116,7 @@ public class UserDao {
      * @return boolean email verified
      */
     public boolean verifyEmail (String email, String dbEmail, User user) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR email LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()) {
