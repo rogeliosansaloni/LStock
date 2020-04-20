@@ -5,8 +5,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import controller.LoginController;
+import controller.MainController;
+import controller.RegisterController;
+import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
 import utils.JSONReader;
+import view.LoginView;
+import view.MainView;
+import view.RegisterView;
 
 public class NetworkManager extends Thread {
   private Socket serverSocket;
@@ -15,6 +22,13 @@ public class NetworkManager extends Thread {
   private boolean running;
   private static NetworkManager instance = null;
   private NetworkConfiguration configuration;
+  private MainController mainController;
+  private LoginController loginController;
+  private RegisterController registerController;
+  private MainView mainView;
+  private RegisterView registerView;
+  private LoginView loginViewM;
+
   // TODO: Specify the controllers as attributes
   // TODO: Specify the views to be shown
 
@@ -72,7 +86,23 @@ public class NetworkManager extends Thread {
     try {
       while (running) {
         System.out.println("Waiting for object to be received...");
-        TunnelObject recibido = (TunnelObject) ois.readObject();
+        TunnelObject received = (TunnelObject) ois.readObject();
+        if (received instanceof AuthenticationInfo) {
+          AuthenticationInfo info = ((AuthenticationInfo)received);
+          oos.writeObject(info);
+
+
+          if(info.isValidated()){
+            MainView mainView = new MainView();
+            mainView.setVisible(true);
+
+          }else{
+            //RegisterView registerView = new RegisterView();
+            //error perteneciente
+            System.out.println("Error validating user");
+          }
+
+        }
         //TODO: Tratar lo que ha recibido --> AuthenticationInfo
       }
     } catch (IOException | ClassNotFoundException e) {
