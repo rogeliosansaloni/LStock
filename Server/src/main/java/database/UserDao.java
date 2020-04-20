@@ -70,7 +70,7 @@ public class UserDao {
      * @param user User information
      */
     public void updateUser (User user){
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR email LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()){
@@ -91,7 +91,7 @@ public class UserDao {
      */
     public User getUserInfo(User user){
         User userData = new User();
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR email LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()){
