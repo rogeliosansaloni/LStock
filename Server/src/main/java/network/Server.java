@@ -39,6 +39,7 @@ public class Server extends Thread {
     public void stopServer() {
         // Stop main server thread
         isOn = false;
+        stopListening();
         //model.disconnectFromDatabase();
         this.interrupt();
     }

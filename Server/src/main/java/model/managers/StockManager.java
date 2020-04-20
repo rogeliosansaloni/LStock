@@ -16,19 +16,19 @@ public class StockManager {
     private UserDao userDao;
     private CompanyDao companyDao;
 
-    public  StockManager () {
+    public StockManager() {
         connector = new DBConnector();
         userDao = new UserDao(connector);
         connector.connect();
-
     }
+
     public StockManager(Company company, UserDao userDao, CompanyDao companyDao) {
         this.company = company;
         this.userDao = userDao;
         this.companyDao = companyDao;
     }
 
-    public AuthenticationInfo registerUser(User user){
+    public AuthenticationInfo registerUser(User user) {
         UserMapperImpl mapper = new UserMapperImpl();
         AuthenticationInfo info = new AuthenticationInfo();
         User usr = new User(user.getNickname(), user.getEmail(), user.getPassword());
@@ -38,11 +38,13 @@ public class StockManager {
         info.setResponseType(response);
         return info;
     }
-    public AuthenticationInfo validateUser(User user){
+
+    public AuthenticationInfo validateUser(User user) {
         return null;
     }
-    public ArrayList<Company> listAllCompanies(){
-        return  null;
+
+    public ArrayList<Company> listAllCompanies() {
+        return null;
     }
 }
 

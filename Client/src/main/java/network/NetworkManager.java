@@ -61,7 +61,6 @@ public class NetworkManager extends Thread {
     //TODO: Set up controllers
 
     // Set up the connection to the server
-    this.running = false;
     this.serverSocket = new Socket(configuration.getIp(), configuration.getPort()); // pass ip and port from NetworkConfiguration
     oos = new ObjectOutputStream(this.serverSocket.getOutputStream());
     oos.flush();

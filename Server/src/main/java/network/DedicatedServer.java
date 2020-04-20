@@ -7,7 +7,6 @@ import java.net.Socket;
 
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
-import model.entities.User;
 import model.managers.StockManager;
 import utils.UserMapperImpl;
 
@@ -52,8 +51,13 @@ public class DedicatedServer extends Thread {
                     }
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            stopServerConnection();
+            System.out.println("Stopped client connection to the server...");
+            e.printStackTrace();
+
         }
 
     }
