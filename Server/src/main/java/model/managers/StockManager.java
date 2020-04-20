@@ -5,15 +5,20 @@ import database.UserDao;
 import model.entities.AuthenticationInfo;
 import model.entities.Company;
 import model.entities.User;
+import network.DBConnector;
 
 import java.util.ArrayList;
 
 public class StockManager {
+    private DBConnector connector;
     private Company company;
     private UserDao userDao;
     private CompanyDao companyDao;
 
     public  StockManager () {
+        connector = new DBConnector();
+        userDao = new UserDao(connector);
+        connector.connect();
 
     }
     public StockManager(Company company, UserDao userDao, CompanyDao companyDao) {

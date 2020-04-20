@@ -1,5 +1,7 @@
 package network;
 
+import utils.JSONReader;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -17,12 +19,21 @@ public class DBConnector {
     private String url;
     private static Connection conn = null;
     private static Statement s;
+    private ServerConfiguration config;
 
+    public DBConnector () {
+        config = new ServerConfiguration();
+        initDBConfiguration();
+    }
 
-    public DBConnector(String url, String dbUsername, String dbPassword, String db, int dbPort){
-        this.dbUsername = dbUsername;
-        this.dbPassword = dbPassword;
-        this.dbPort = dbPort;
+    private void initDBConfiguration() {
+        JSONReader jsonReader = new JSONReader();
+        this.config = jsonReader.getServerConfiguration();
+        this.url = config.getDbIp();
+        this.db = config.getDbName();
+        this.dbUsername = config.getDbUser();
+        this.dbPassword = config.getDbPassword();
+        this.dbPort = config.getDbPort();
         this.url = String.format(BASE_URL, url, dbPort, db);
     }
 

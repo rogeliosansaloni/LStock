@@ -14,8 +14,6 @@ public class Server extends Thread {
     private boolean isOn;
     private LinkedList<DedicatedServer> clients;
     private ServerConfiguration serverConfiguration;
-    private DBConnector dbConnector;
-
 
     public Server() throws IOException {
         this.serverConfiguration = new ServerConfiguration();
@@ -23,12 +21,6 @@ public class Server extends Thread {
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
         this.clients = new LinkedList<DedicatedServer>();
-    }
-
-    public void connectDBconnector(){
-        this.dbConnector = new DBConnector(serverConfiguration.getDbIp(), serverConfiguration.getDbUser(), serverConfiguration.getDbPassword(),
-                serverConfiguration.getDbName(),serverConfiguration.getDbPort());
-        this.dbConnector.connect();
     }
 
     private void initServerConfiguration() {
@@ -41,7 +33,6 @@ public class Server extends Thread {
     public void startServer() {
         // Start main server thread
         isOn = true;
-        connectDBconnector();
         this.start();
     }
 
