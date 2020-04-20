@@ -129,9 +129,10 @@ public class RegisterController implements ActionListener {
 
     /**
      * Proc that sends the error message to the view
+     *
      * @param message that contains what error it is dealing with
      */
-    public void sendErrorMessage (String message) {
+    public void sendErrorMessage(String message) {
         view.showErrorMessages(message);
     }
 }
