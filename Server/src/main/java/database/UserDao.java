@@ -17,7 +17,8 @@ public class UserDao {
     }
 
     /**
-     * It create a user when it registered
+     * Creates user if nickanme or email aren't taken yet.
+     * If not, it creates an account for this user.
      * @param user the class that will be registering
      */
     public void createUser (User user) {
@@ -38,12 +39,11 @@ public class UserDao {
                 }
             }
             if(!userExist){
-                dbConnector.insertQuery("INSERT INTO User (nickname,email,password,description,total_balance) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getDescription() + "','" + user.getTotalBalance() + "')");
+                dbConnector.insertQuery("INSERT INTO User (nickname,email,password) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getPassword() + "')");
             }
         }catch (SQLException e) {
             System.out.println("Error Creating User");
         }
-
     }
 
 
