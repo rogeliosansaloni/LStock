@@ -113,9 +113,10 @@ public class LoginView extends JFrame {
             }
         });
         jpCenter.add(campos[1]);
-        JLabel relleno2 = new JLabel();
-        relleno2.setPreferredSize(new Dimension(200, 1));
-        jpCenter.add(relleno2);
+        //Añadimos una fila de relleno con un JLabel vacío para separar los campos y los botones
+        JLabel relleno = new JLabel();
+        relleno.setPreferredSize(new Dimension(200, 1));
+        jpCenter.add(relleno);
 
         jpBotones = new JPanel(new GridLayout(1,2, 30 ,0));
         jpBotones.setBackground(Color.WHITE);
