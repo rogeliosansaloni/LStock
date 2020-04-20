@@ -19,6 +19,10 @@ public class RegisterView extends JFrame{
     private static final String ERROR_MESSAGE_4 = "Password doesn't match.";
     private static final String ERROR_MESSAGE_5 = "Password must have at least 8 characters.";
     private static final String ERROR_MESSAGE_6 = "Password must have at least one capital letter and one number";
+    private static final String ERROR_TYPE_0 = "Succesful Registration!";
+    private static final String ERROR_TYPE_1 = "This email has an account already.";
+    private static final String ERROR_TYPE_2 = "This username is already taken.";
+
 
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
