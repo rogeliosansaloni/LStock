@@ -14,7 +14,7 @@ public class NetworkManager extends Thread {
   private ObjectOutputStream oos;
   private boolean running;
   private static NetworkManager instance = null;
-  private NetworkConfiguration configuaration;
+  private NetworkConfiguration configuration;
   // TODO: Specify the controllers as attributes
   // TODO: Specify the views to be shown
 
@@ -37,11 +37,11 @@ public class NetworkManager extends Thread {
   private NetworkManager() throws IOException {
     // Get Network configuration from JSON
     JSONReader jsonReader = new JSONReader();
-    configuaration = jsonReader.getClientConfiguration();
+    configuration = jsonReader.getClientConfiguration();
 
     // Set up the connection to the server
     this.running = false;
-    this.serverSocket = new Socket(configuaration.getIp(), configuaration.getPort()); // pass ip and port from NetworkConfiguration
+    this.serverSocket = new Socket(configuration.getIp(), configuration.getPort()); // pass ip and port from NetworkConfiguration
     oos = new ObjectOutputStream(this.serverSocket.getOutputStream());
     oos.flush();
     ois = new ObjectInputStream(this.serverSocket.getInputStream());
@@ -73,6 +73,7 @@ public class NetworkManager extends Thread {
       while (running) {
         System.out.println("Waiting for object to be received...");
         TunnelObject recibido = (TunnelObject) ois.readObject();
+        //TODO: Tratar lo que ha recibido --> AuthenticationInfo
       }
     } catch (IOException | ClassNotFoundException e) {
       e.printStackTrace();

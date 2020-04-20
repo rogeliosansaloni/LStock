@@ -5,6 +5,7 @@ public class AuthenticationInfo extends TunnelObject {
     private String email;
     private String password;
     private String action;
+    private int responseType;
     private boolean validated;
 
     public AuthenticationInfo() { }
@@ -54,5 +55,13 @@ public class AuthenticationInfo extends TunnelObject {
 
     public void setValidated(boolean validated) {
         this.validated = validated;
+    }
+
+    public int getResponseType() {
+        return responseType;
+    }
+
+    public void setResponseType(int responseType) {
+        this.responseType = responseType;
     }
 }
