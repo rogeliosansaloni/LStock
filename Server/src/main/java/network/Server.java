@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
+
 import utils.JSONReader;
 
 
@@ -45,7 +46,7 @@ public class Server extends Thread {
     }
 
     public void run() {
-        while(isOn) {
+        while (isOn) {
             try {
                 // Wait for petitions to accept them
                 // Block the execution

@@ -8,7 +8,8 @@ public class AuthenticationInfo extends TunnelObject {
     private String responseType;
     private boolean validated;
 
-    public AuthenticationInfo() { }
+    public AuthenticationInfo() {
+    }
 
     public AuthenticationInfo(String nickname, String email, String password, String action) {
         this.nickname = nickname;

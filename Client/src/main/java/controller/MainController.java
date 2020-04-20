@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 public class MainController implements ActionListener {
     private final MainView view;
 
-    public MainController (MainView view) {
+    public MainController(MainView view) {
         this.view = view;
     }
 

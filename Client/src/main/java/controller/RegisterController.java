@@ -19,7 +19,7 @@ public class RegisterController implements ActionListener {
     private static final String ERROR_4 = "Password Match";
     private static final String ERROR_5 = "Password Length";
     private static final String ERROR_6 = "Password Format";
-    private static final String REGEX_EMAIL = "^[a-zA-Z0-9_+&*-]+(?:\\."+ "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$";
+    private static final String REGEX_EMAIL = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$";
     private static final String REGEX_PASSWORD = "^(?=.*[A-Z])(?=.*[0-9]).*$";
 
 
@@ -31,17 +31,18 @@ public class RegisterController implements ActionListener {
 
     /**
      * Proc that captures any event in the register view
+     *
      * @param e the actionEvent
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("register")) {
-            String nickname =  view.getNickname();
+            String nickname = view.getNickname();
             String email = view.getEmail();
             String pass1 = view.getPassword();
             String pass2 = view.getPasswordVerification();
             if (validCredentials(nickname, email, pass1, pass2)) {
-                TunnelObject register = new AuthenticationInfo(nickname,email,pass1, "register");
+                TunnelObject register = new AuthenticationInfo(nickname, email, pass1, "register");
                 try {
                     NetworkManager.getInstance().sendAuthentificationInformation(register);
                 } catch (IOException ex) {
@@ -60,13 +61,14 @@ public class RegisterController implements ActionListener {
 
     /**
      * Function that checks each field of the register form.
+     *
      * @param nickname the nickname
-     * @param email the email
-     * @param pass1 the password
-     * @param pass2 repeated password
+     * @param email    the email
+     * @param pass1    the password
+     * @param pass2    repeated password
      * @return true if the fields are all valid
      */
-    public boolean validCredentials (String nickname, String email, String pass1, String pass2) {
+    public boolean validCredentials(String nickname, String email, String pass1, String pass2) {
         //If all fields are empty
         if (nickname.equals("Nickname") && email.equals("Email") && pass1.equals("Password") && pass2.equals("Verify Password")) {
             view.showErrorMessages(ERROR_1);
@@ -103,6 +105,7 @@ public class RegisterController implements ActionListener {
     /**
      * Function that validates a password. It must be at least 8 characters with a capital letter and a digit.
      * The pattern is made from a regex.
+     *
      * @param password the password
      * @return the corresponding error message
      */

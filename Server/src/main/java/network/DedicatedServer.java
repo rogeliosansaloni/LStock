@@ -36,7 +36,7 @@ public class DedicatedServer extends Thread {
             ois = new ObjectInputStream(sClient.getInputStream());
             oos = new ObjectOutputStream(sClient.getOutputStream());
 
-            while(isOn) {
+            while (isOn) {
                 TunnelObject tunnelObject = (TunnelObject) ois.readObject();
 
                 if (tunnelObject instanceof AuthenticationInfo) {
