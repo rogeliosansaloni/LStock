@@ -17,6 +17,7 @@ public class LoginView extends JFrame {
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
+    private JLabel labelStock;
     protected JPanel jpNorth;
     private JPanel jpCenter;
     private JPanel jpCampos;
@@ -46,7 +47,7 @@ public class LoginView extends JFrame {
         jpLogin.setBackground(Color.WHITE);
 
         //Header
-        jpNorth = new JPanel();
+        jpNorth = new JPanel(new BorderLayout());
         jpNorth.setBackground(Color.WHITE);
         URL url = getClass().getResource(PATH_LOGO);
         ImageIcon imageIcon = new ImageIcon(url);
@@ -55,7 +56,11 @@ public class LoginView extends JFrame {
         labelLogo = new JLabel(imageIcon);
         //TODO: Add label under the logo
         jpNorth.add(labelLogo, BorderLayout.CENTER);
-        jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,100,0));
+        labelStock = new JLabel("StockLS", SwingConstants.CENTER);
+        Font fuenteLogo = new Font("Calibri", Font.PLAIN, 30);
+        labelStock.setFont(fuenteLogo);
+        jpNorth.add(labelStock, BorderLayout.SOUTH);
+        jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,40,0));
         jpLogin.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the bottons

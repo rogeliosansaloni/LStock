@@ -23,6 +23,7 @@ public class RegisterView extends JFrame{
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
+    private JLabel labelStock;
     protected JPanel jpNorth;
     private JPanel jpCenter;
     private JPanel jpCampos;
@@ -52,7 +53,7 @@ public class RegisterView extends JFrame{
         jpRegister.setBackground(Color.WHITE);
 
         //Header
-        jpNorth = new JPanel();
+        jpNorth = new JPanel(new BorderLayout());
         jpNorth.setBackground(Color.WHITE);
         URL url = getClass().getResource(PATH_LOGO);
         ImageIcon imageIcon = new ImageIcon(url);
@@ -61,6 +62,10 @@ public class RegisterView extends JFrame{
         labelLogo = new JLabel(imageIcon);
         //TODO: Add label under the logo
         jpNorth.add(labelLogo, BorderLayout.CENTER);
+        labelStock = new JLabel("StockLS", SwingConstants.CENTER);
+        Font fuenteLogo = new Font("Calibri", Font.PLAIN, 30);
+        labelStock.setFont(fuenteLogo);
+        jpNorth.add(labelStock, BorderLayout.SOUTH);
         jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
         jpRegister.add(jpNorth, BorderLayout.NORTH);
 
