@@ -28,6 +28,12 @@ public class User extends TunnelObject {
         this.company = company;
     }
 
+    public User (String nickname, String email, String password) {
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+    }
+
     public User() {
 
     }

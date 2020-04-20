@@ -12,6 +12,9 @@ public class StockManager {
     private UserDao userDao;
     private CompanyDao companyDao;
 
+    public StockManager(){
+    }
+
     public StockManager(Company company, UserDao userDao, CompanyDao companyDao) {
         this.company = company;
         this.userDao = userDao;
@@ -22,8 +25,10 @@ public class StockManager {
         return null;
     }
     public AuthenticationInfo validateUser(User user){
+        User usr = new User(user.getNickname(), user.getEmail(), user.getPassword());
+        boolean usrValid = userDao.validateUser(usr);
         return null;
-    }*/
+    }
     public ArrayList<Company> listAllCompanies(){
         return  null;
     }
