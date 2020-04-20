@@ -52,11 +52,6 @@ public class NetworkManager extends Thread {
     // Get Network configuration from JSON
     JSONReader jsonReader = new JSONReader();
     configuration = jsonReader.getClientConfiguration();
-
-    //Set up views
-    loginView = new LoginView();
-    mainView = new MainView();
-
     // Set up the connection to the server
     this.serverSocket = new Socket(configuration.getIp(), configuration.getPort()); // pass ip and port from NetworkConfiguration
     oos = new ObjectOutputStream(this.serverSocket.getOutputStream());
@@ -93,12 +88,20 @@ public class NetworkManager extends Thread {
 
         if (received instanceof AuthenticationInfo) {
           AuthenticationInfo info = ((AuthenticationInfo)received);
-          if(info.isValidated()){
-            registerController.closeRegisterView();
-            loginView.setVisible(true);
+          if (info.getAction().equals("register")) {
+            if(info.isValidated()){
+              registerController.closeRegisterView();
+              loginView = new LoginView();
+              loginController = new LoginController(loginView);
+              loginView.loginController(loginController);
+              loginView.setVisible(true);
+            }
+            else {
+              registerController.sendErrorMessage(info.getResponseType());
+            }
           }
-          else {
-            registerView.showErrorMessages(info.getResponseType());
+          if (info.getAction().equals("login")) {
+
           }
         }
       }
