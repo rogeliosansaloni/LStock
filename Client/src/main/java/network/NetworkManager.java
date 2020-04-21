@@ -102,7 +102,7 @@ public class NetworkManager extends Thread {
                         }
                     }
                     if (info.getAction().equals("login")) {
-
+                        loginController.closeLoginView();
                     }
                 }
             }

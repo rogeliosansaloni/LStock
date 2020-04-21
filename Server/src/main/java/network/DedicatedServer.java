@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
+import model.managers.BotManager;
 import model.managers.StockManager;
 import utils.UserMapperImpl;
 
@@ -15,6 +16,8 @@ public class DedicatedServer extends Thread {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private Socket sClient;
+    private StockManager stockModel;
+    private UserMapperImpl mapper;
 
     /**
      * DedicatedServer constructor
@@ -22,6 +25,8 @@ public class DedicatedServer extends Thread {
      */
     public DedicatedServer(Socket sClient) {
         this.sClient = sClient;
+        this.stockModel = new StockManager();
+        this.mapper = new UserMapperImpl();
     }
 
     /**
@@ -57,18 +62,14 @@ public class DedicatedServer extends Thread {
                     AuthenticationInfo info = ((AuthenticationInfo) tunnelObject);
                     // Check if the object is for registering users
                     if (info.getAction().equals("register")) {
-                        StockManager model = new StockManager();
-                        UserMapperImpl mapper = new UserMapperImpl();
                         AuthenticationInfo authInfoRegister =
-                                model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                                stockModel.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
                         oos.writeObject(authInfoRegister);
                     } else {
                         // Check if we need user validation for login
                         if (info.getAction().equals("login")) {
-                            StockManager model = new StockManager();
-                            UserMapperImpl mapper = new UserMapperImpl();
                             AuthenticationInfo authInfoLogin =
-                                    model.validateUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                                    stockModel.validateUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
                             oos.writeObject(authInfoLogin);
                         }
                     }

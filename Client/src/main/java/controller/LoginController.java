@@ -52,4 +52,9 @@ public class LoginController implements ActionListener {
         }
         return true;
     }
+
+    /**
+     * Closes the login view
+     */
+    public void closeLoginView() { view.setVisible(false);}
 }

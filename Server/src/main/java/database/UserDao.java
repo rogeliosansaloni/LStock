@@ -52,24 +52,21 @@ public class UserDao {
 
     /**
      * It will validate the user data
-     * @param usr the class that will be validating
+     * @param user the class that will be validating
      */
-    public boolean validateUser(User usr) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ usr.getNickname() + "%' OR email LIKE '%" + usr.getEmail() + "%';");
+    public boolean validateUser(User user) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
 
         try {
             while (verify.next()) {
-                if (verifyEmail(usr.getEmail(), verify.getObject("email").toString(), usr) && verifyNickname(usr.getNickname(), verify.getObject("nickname").toString(), usr)) {
-                        System.out.println("User already exists.");
-                        return true;
-                }else{
-                    System.out.println("User does not exist in the database.");
+                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user) && verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
+                        return false;
                 }
             }
         }catch (SQLException e) {
             System.out.println("Error Validating User");
         }
-        return false;
+        return true;
     }
 
 
