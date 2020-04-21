@@ -12,6 +12,18 @@ public class User {
     private float totalBalance;
     private ArrayList<Company> company;
 
+    /**
+     * It willl create a user
+     *
+     * @param userId  identification
+     * @param nickname user nickname
+     * @param email user email
+     * @param password  user password
+     * @param stockValue stock value of the user
+     * @param description
+     * @param totalBalance user available balance
+     * @param company companies the user participates
+     */
 
     public User(int userId, String nickname, String email, String password, float stockValue, String description, float totalBalance, ArrayList<Company> company) {
         this.userId = userId;
@@ -23,6 +35,14 @@ public class User {
         this.totalBalance = totalBalance;
         this.company = company;
     }
+
+    /**
+     * Creates a user with the specified information
+     *
+     * @param nickname user nickname
+     * @param email user email
+     * @param password  user password
+     */
 
     public User (String nickname, String email, String password) {
         this.nickname = nickname;

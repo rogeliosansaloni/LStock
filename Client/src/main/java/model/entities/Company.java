@@ -2,6 +2,8 @@ package model.entities;
 
 import java.util.ArrayList;
 
+
+
 public class Company {
     private int companyId;
     private String name;
@@ -9,6 +11,16 @@ public class Company {
     private int shares;
     private User user;
     private ArrayList<Bot> bots;
+
+    /**
+     * It willl create a company
+     *
+     * @param companyId  identification
+     * @param name company name
+     * @param value current company price
+     * @param shares  number of shares available to the user
+     * @param user user who has shares in that company
+     */
 
     public Company(int companyId, String name, float value, int shares, User user) {
         this.companyId = companyId;
