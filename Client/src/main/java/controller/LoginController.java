@@ -1,10 +1,14 @@
 package controller;
 
+import model.entities.AuthenticationInfo;
+import model.entities.TunnelObject;
+import network.NetworkManager;
 import view.LoginView;
 import view.RegisterView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class LoginController implements ActionListener {
     private static final int ERROR_1 = 1;
@@ -21,7 +25,12 @@ public class LoginController implements ActionListener {
             String user = view.getNicknameEmail();
             String password = view.getPassword();
             if (validCredentials(user, password)) {
-                //TODO: Send to server
+                TunnelObject login = new AuthenticationInfo(user, user, password, "login");
+                try {
+                    NetworkManager.getInstance().sendAuthentificationInformation(login);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         if (e.getActionCommand().equals("register")) {

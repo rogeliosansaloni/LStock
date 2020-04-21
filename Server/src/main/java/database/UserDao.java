@@ -59,14 +59,21 @@ public class UserDao {
 
         try {
             while (verify.next()) {
-                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user) && verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
-                        return false;
+                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user)) {
+                    user.setNickname(verify.getObject("nickname").toString());
+                } else {
+                    if (verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
+                        user.setEmail(verify.getObject("email").toString());
+                    }
+                }
+                if (user.getPassword().equals(verify.getObject("password"))){
+                    return true;
                 }
             }
-        }catch (SQLException e) {
-            System.out.println("Error Validating User");
+        } catch (SQLException e) {
+            System.out.println("Error Login User");
         }
-        return true;
+        return false;
     }
 
 
