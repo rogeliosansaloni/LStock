@@ -1,6 +1,6 @@
 package model.entities;
 
-public class Bot extends Thread{
+public class Bot extends Thread {
     private int botId;
     private float activeTime;
     private float probability;
