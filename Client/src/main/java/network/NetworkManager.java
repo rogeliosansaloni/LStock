@@ -106,7 +106,6 @@ public class NetworkManager extends Thread {
                         loginController.closeLoginView();
                         mainView = new MainView();
                         mainController = new MainController(mainView);
-                        mainView.initUI();
                         mainView.setVisible(true);
                     }
                 }
