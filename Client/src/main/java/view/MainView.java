@@ -47,7 +47,6 @@ public class MainView extends JFrame{
         jpCard = new JPanel(new CardLayout());
         this.add(jpCard, BorderLayout.CENTER);
 
-
     }
 
 }
