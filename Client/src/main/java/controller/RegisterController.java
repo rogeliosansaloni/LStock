@@ -54,7 +54,7 @@ public class RegisterController implements ActionListener {
             view.setVisible(false);
             LoginView loginView = new LoginView();
             LoginController controller = new LoginController(loginView);
-            loginView.loginController(controller);
+            loginView.registerController(controller);
             loginView.setVisible(true);
         }
     }

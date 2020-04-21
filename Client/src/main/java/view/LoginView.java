@@ -152,7 +152,7 @@ public class LoginView extends JFrame {
      * Proc thats adds listener to textfields and buttons.
      * @param listener an ActionListener
      */
-    public void loginController (ActionListener listener) {
+    public void registerController(ActionListener listener) {
         campos[0].addActionListener(listener);
         campos[0].setActionCommand("user");
         campos[1].addActionListener(listener);
