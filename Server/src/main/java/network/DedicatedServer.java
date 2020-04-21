@@ -7,7 +7,6 @@ import java.net.Socket;
 
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
-import model.entities.User;
 import model.managers.StockManager;
 import utils.UserMapperImpl;
 
@@ -37,25 +36,28 @@ public class DedicatedServer extends Thread {
             ois = new ObjectInputStream(sClient.getInputStream());
             oos = new ObjectOutputStream(sClient.getOutputStream());
 
-            while(isOn) {
+            while (isOn) {
                 TunnelObject tunnelObject = (TunnelObject) ois.readObject();
 
                 if (tunnelObject instanceof AuthenticationInfo) {
                     AuthenticationInfo info = ((AuthenticationInfo) tunnelObject);
+                    // Check if the object is for registering users
                     if (info.getAction().equals("register")) {
                         StockManager model = new StockManager();
                         UserMapperImpl mapper = new UserMapperImpl();
-                        AuthenticationInfo info = model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
-                        oos.writeObject(info);
+                        AuthenticationInfo authInfoRegister =
+                                model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                        oos.writeObject(authInfoRegister);
+                    } else {
+                        // Check if we need user validation for login
+                        if (info.getAction().equals("login")) {
+                            StockManager model = new StockManager();
+                            UserMapperImpl mapper = new UserMapperImpl();
+                            AuthenticationInfo authInfoLogin =
+                                    model.validateUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                            oos.writeObject(authInfoLogin);
+                        }
                     }
-
-                }
-                // When receiving tunnel object, we need to check its type
-                if (tunnelObject instanceof AuthenticationInfo) {
-                    StockManager model = new StockManager();
-                    UserMapperImpl mapper = new UserMapperImpl();
-                    AuthenticationInfo info = model.validateUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
-                    oos.writeObject(info);
 
                 }
             }
