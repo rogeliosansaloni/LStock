@@ -18,9 +18,11 @@ public class UserMapperImpl implements UserMapper {
     @Override
     public AuthenticationInfo userToAuthenticationInfo(User user) {
         AuthenticationInfo auth = new AuthenticationInfo();
+        auth.setId(user.getUserId());
         auth.setNickname(user.getNickname());
         auth.setEmail(user.getEmail());
         auth.setPassword(user.getPassword());
+        auth.setTotal_balance(user.getTotalBalance());
         return auth;
     }
 

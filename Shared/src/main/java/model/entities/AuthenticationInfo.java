@@ -1,9 +1,11 @@
 package model.entities;
 
 public class AuthenticationInfo extends TunnelObject {
+    private int id;
     private String nickname;
     private String email;
     private String password;
+    private float total_balance;
     private String action;
     private String responseType;
     private boolean validated;
@@ -64,5 +66,21 @@ public class AuthenticationInfo extends TunnelObject {
 
     public void setResponseType(String responseType) {
         this.responseType = responseType;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public float getTotal_balance() {
+        return total_balance;
+    }
+
+    public void setTotal_balance(float total_balance) {
+        this.total_balance = total_balance;
     }
 }

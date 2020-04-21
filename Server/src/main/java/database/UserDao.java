@@ -15,9 +15,10 @@ public class UserDao {
     private static final String REGISTER_MESSAGE_1 = "Register Success";
     private static final String REGISTER_MESSAGE_2 = "Email Taken";
     private static final String REGISTER_MESSAGE_3 = "Nickname Taken";
+    private static final String REGISTER_MESSAGE_4 = "Error Creating User";
     private static final String LOGIN_MESSAGE_1 = "Login Success";
-    private static final String LOGIN_MESSAGE_2 = "Login Error";
-    private static final String LOGIN_MESSAGE_3 = "User Not Found";
+    private static final String LOGIN_MESSAGE_2 = "Error logging in";
+    private static final String LOGIN_MESSAGE_3 = "Login Error";
 
 
     public UserDao(DBConnector dbConnector) {
@@ -48,7 +49,7 @@ public class UserDao {
                 dbConnector.insertQuery("INSERT INTO User (nickname,email,password) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getPassword() + "')");
             }
         } catch (SQLException e) {
-            System.out.println("Error Creating User");
+            message = REGISTER_MESSAGE_4;
         }
         return message;
     }
@@ -62,15 +63,18 @@ public class UserDao {
         String message = LOGIN_MESSAGE_3;
         try {
             while (result.next()) {
-                if (result.getString("email").equals(user.getEmail())) {
-                    user.setNickname(result.getObject("nickname").toString());
+                if (result.getString("email").equals(user.getEmail()) && user.getPassword().equals(result.getObject("password"))) {
+                    user.setUserId(result.getInt("user_id"));
+                    user.setNickname(result.getString("nickname"));
+                    user.setTotalBalance(result.getFloat("total_balance"));
+                    return LOGIN_MESSAGE_1;
                 } else {
-                    if (result.getString("nickname").equals(user.getNickname())) {
-                        user.setEmail(result.getObject("email").toString());
+                    if (result.getString("nickname").equals(user.getNickname()) && user.getPassword().equals(result.getObject("password"))) {
+                        user.setUserId(result.getInt("user_id"));
+                        user.setEmail(result.getString("email"));
+                        user.setTotalBalance(result.getFloat("total_balance"));
+                        return LOGIN_MESSAGE_1;
                     }
-                }
-                if (!user.getPassword().equals(result.getObject("password"))){
-                    message = LOGIN_MESSAGE_1;
                 }
             }
         } catch (SQLException e) {
