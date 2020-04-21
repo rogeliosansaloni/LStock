@@ -64,6 +64,9 @@ public class NetworkManager extends Thread {
     public void startServerConnection(RegisterController registerController) {
         //Set up controllers
         this.registerController = registerController;
+        this.loginView = new LoginView();
+        this.loginController = new LoginController(loginView);
+
         running = true;
         start();
     }
@@ -93,8 +96,6 @@ public class NetworkManager extends Thread {
                     if (info.getAction().equals("register")) {
                         if (info.isValidated()) {
                             registerController.closeRegisterView();
-                            loginView = new LoginView();
-                            loginController = new LoginController(loginView);
                             loginView.loginController(loginController);
                             loginView.setVisible(true);
                         } else {
@@ -102,7 +103,10 @@ public class NetworkManager extends Thread {
                         }
                     }
                     if (info.getAction().equals("login")) {
-
+                        loginController.closeLoginView();
+                        mainView = new MainView();
+                        mainController = new MainController(mainView);
+                        mainView.setVisible(true);
                     }
                 }
             }

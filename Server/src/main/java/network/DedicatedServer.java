@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
+import model.managers.BotManager;
 import model.managers.StockManager;
 import utils.UserMapperImpl;
 
@@ -15,21 +16,39 @@ public class DedicatedServer extends Thread {
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private Socket sClient;
+    private StockManager stockModel;
+    private UserMapperImpl mapper;
 
+    /**
+     * DedicatedServer constructor
+     * @param sClient client socket
+     */
     public DedicatedServer(Socket sClient) {
         this.sClient = sClient;
+        this.stockModel = new StockManager();
+        this.mapper = new UserMapperImpl();
     }
 
+    /**
+     * Stops the connection to the server
+     */
     public void stopServerConnection() {
         this.isOn = false;
         this.interrupt();
     }
 
+    /**
+     * Starts the connection to the server
+     */
     public void startServerConnection() {
         this.isOn = true;
         this.start();
     }
 
+    /**
+     * Main dedicated server thread that sends and receives information to and from the client side. It handles
+     * each object received.
+     */
     public void run() {
         try {
             // Create the communication channels
@@ -40,14 +59,19 @@ public class DedicatedServer extends Thread {
                 TunnelObject tunnelObject = (TunnelObject) ois.readObject();
 
                 if (tunnelObject instanceof AuthenticationInfo) {
-                    if (((AuthenticationInfo) tunnelObject).getAction().equals("register")) {
-                        StockManager model = new StockManager();
-                        UserMapperImpl mapper = new UserMapperImpl();
-                        AuthenticationInfo info = model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
-                        oos.writeObject(info);
-                    }
-                    if (((AuthenticationInfo) tunnelObject).getAction().equals("login")) {
-                        //TODO: Get the login info
+                    AuthenticationInfo info = ((AuthenticationInfo) tunnelObject);
+                    // Check if the object is for registering users
+                    if (info.getAction().equals("register")) {
+                        AuthenticationInfo authInfoRegister =
+                                stockModel.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                        oos.writeObject(authInfoRegister);
+                    } else {
+                        // Check if we need user validation for login
+                        if (info.getAction().equals("login")) {
+                            AuthenticationInfo authInfoLogin =
+                                    stockModel.validateUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                            oos.writeObject(authInfoLogin);
+                        }
                     }
                 }
             }
@@ -57,8 +81,6 @@ public class DedicatedServer extends Thread {
             stopServerConnection();
             System.out.println("Stopped client connection to the server...");
             e.printStackTrace();
-
         }
-
     }
 }

@@ -15,10 +15,12 @@ public class StockManager {
     private Company company;
     private UserDao userDao;
     private CompanyDao companyDao;
+    private UserMapperImpl mapper;
 
     public StockManager() {
         connector = new DBConnector();
         userDao = new UserDao(connector);
+        mapper = new UserMapperImpl();
         connector.connect();
     }
 
@@ -34,10 +36,8 @@ public class StockManager {
      * @return Authentification with the information we need to send for the client
      */
     public AuthenticationInfo registerUser(User user) {
-        UserMapperImpl mapper = new UserMapperImpl();
-        User usr = new User(user.getNickname(), user.getEmail(), user.getPassword());
-        String response = userDao.createUser(usr);
-        AuthenticationInfo info = mapper.userToAuthenticationInfo(usr);
+        String response = userDao.createUser(user);
+        AuthenticationInfo info = mapper.userToAuthenticationInfo(user);
         if (!response.equals("Register Success")) {
             info.setValidated(false);
         }
@@ -50,7 +50,16 @@ public class StockManager {
     }
 
     public AuthenticationInfo validateUser(User user) {
-        return null;
+        String response = userDao.validateUser(user);
+        AuthenticationInfo info = mapper.userToAuthenticationInfo(user);
+        if(response.equals("Login Success")){
+            info.setValidated(true);
+        }else{
+            info.setValidated(false);
+        }
+        info.setAction("login");
+        info.setResponseType(response);
+        return info;
     }
 
     public ArrayList<Company> listAllCompanies() {

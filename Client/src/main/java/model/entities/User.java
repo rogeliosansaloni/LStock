@@ -11,6 +11,7 @@ public class User {
     private String description;
     private float totalBalance;
     private ArrayList<Company> company;
+
     /**
      * It willl create a user
      *
@@ -34,6 +35,7 @@ public class User {
         this.totalBalance = totalBalance;
         this.company = company;
     }
+
     /**
      * Creates a user with the specified information
      *
@@ -41,7 +43,8 @@ public class User {
      * @param email user email
      * @param password  user password
      */
-    public User(String nickname, String email, String password) {
+
+    public User (String nickname, String email, String password) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
@@ -53,7 +56,7 @@ public class User {
 
     /**
      * Getters
-     **/
+     * **/
     public int getUserId() {
         return userId;
     }
@@ -88,7 +91,7 @@ public class User {
 
     /**
      * Setters
-     **/
+     * **/
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -121,4 +124,3 @@ public class User {
         this.company = company;
     }
 }
-
