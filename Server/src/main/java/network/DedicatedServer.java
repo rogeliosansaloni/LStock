@@ -16,20 +16,34 @@ public class DedicatedServer extends Thread {
     private ObjectOutputStream oos;
     private Socket sClient;
 
+    /**
+     * DedicatedServer constructor
+     * @param sClient client socket
+     */
     public DedicatedServer(Socket sClient) {
         this.sClient = sClient;
     }
 
+    /**
+     * Stops the connection to the server
+     */
     public void stopServerConnection() {
         this.isOn = false;
         this.interrupt();
     }
 
+    /**
+     * Starts the connection to the server
+     */
     public void startServerConnection() {
         this.isOn = true;
         this.start();
     }
 
+    /**
+     * Main dedicated server thread that sends and receives information to and from the client side. It handles
+     * each object received.
+     */
     public void run() {
         try {
             // Create the communication channels
@@ -58,7 +72,6 @@ public class DedicatedServer extends Thread {
                             oos.writeObject(authInfoLogin);
                         }
                     }
-
                 }
             }
         } catch (ClassNotFoundException e) {
@@ -67,8 +80,6 @@ public class DedicatedServer extends Thread {
             stopServerConnection();
             System.out.println("Stopped client connection to the server...");
             e.printStackTrace();
-
         }
-
     }
 }

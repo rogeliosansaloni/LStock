@@ -59,7 +59,7 @@ public class UserDao {
 
         try {
             while (verify.next()) {
-                if (verifyEmail(usr.getEmail(), verify.getObject("email").toString(), usr) && verifyNickname(usr.getNickname(), verify.getObject("nickname").toString(),usr)) {
+                if (verifyEmail(usr.getEmail(), verify.getObject("email").toString(), usr) && verifyNickname(usr.getNickname(), verify.getObject("nickname").toString(), usr)) {
                         System.out.println("User already exists.");
                         return true;
                 }else{
