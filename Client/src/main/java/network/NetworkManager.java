@@ -29,9 +29,6 @@ public class NetworkManager extends Thread {
     private RegisterView registerView;
     private LoginView loginView;
 
-    // TODO: Specify the controllers as attributes
-    // TODO: Specify the views to be shown
-
     /**
      * Represents a Singleton
      *
@@ -61,14 +58,35 @@ public class NetworkManager extends Thread {
         ois = new ObjectInputStream(this.serverSocket.getInputStream());
     }
 
-    public void startServerConnection(RegisterController registerController) {
-        //Set up controllers
-        this.registerController = registerController;
-        this.loginView = new LoginView();
-        this.loginController = new LoginController(loginView);
+    public void startServerConnection() {
+        // Initialize views
+        initRegisterView();
+        initLoginView();
+        initMainView();
 
+        // Start main client thread
         running = true;
         start();
+    }
+
+    private void initMainView() {
+        this.mainView = new MainView();
+        this.mainController = new MainController(mainView);
+        //this.mainView.registerController(mainController);
+    }
+
+    private void initLoginView() {
+        this.loginView = new LoginView();
+        this.loginController = new LoginController(loginView);
+        loginView.registerController(loginController);
+        loginView.setVisible(true);
+    }
+
+    private void initRegisterView() {
+        this.registerView = new RegisterView();
+        this.registerController = new RegisterController(registerView);
+        registerView.registerController(registerController);
+        registerView.setVisible(true);
     }
 
     public void stopServerConnection() {
@@ -96,7 +114,6 @@ public class NetworkManager extends Thread {
                     if (info.getAction().equals("register")) {
                         if (info.isValidated()) {
                             registerController.closeRegisterView();
-                            loginView.loginController(loginController);
                             loginView.setVisible(true);
                         } else {
                             registerController.sendErrorMessage(info.getResponseType());
@@ -104,8 +121,6 @@ public class NetworkManager extends Thread {
                     }
                     if (info.getAction().equals("login")) {
                         loginController.closeLoginView();
-                        mainView = new MainView();
-                        mainController = new MainController(mainView);
                         mainView.setVisible(true);
                     }
                 }
