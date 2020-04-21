@@ -1,6 +1,7 @@
-package model;
+package model.managers;
 
 import database.BotDao;
+import model.entities.Bot;
 import network.DedicatedServer;
 
 public class BotManager {

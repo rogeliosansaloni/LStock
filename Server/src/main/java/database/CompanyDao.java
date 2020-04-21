@@ -1,11 +1,10 @@
 package database;
 
 
-import model.Company;
+import model.entities.Company;
 import network.DBConnector;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -28,8 +27,8 @@ public class CompanyDao {
 
         try {
             while (verify.next()) {
-                    System.out.println("This company already exists.");
-                    companyExist = true;
+                System.out.println("This company already exists.");
+                companyExist = true;
             }
             if(!companyExist){
                 dbConnector.insertQuery("INSERT INTO Company (name) VALUES ('" + company.getName() + "')");
@@ -44,7 +43,7 @@ public class CompanyDao {
      * It will get all the companies in the LStock
      * @return  ArrayList<String> all companies name
      */
-        public ArrayList<String> getAllCompanies () {
+    public ArrayList<String> getAllCompanies () {
         ResultSet getCompany = dbConnector.selectQuery("SELECT * FROM Company;");
         ArrayList<String> companies = null;
         try {

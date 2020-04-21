@@ -1,20 +1,16 @@
-package model;
-
-import model.entities.TunnelObject;
+package model.entities;
 
 import java.util.ArrayList;
-import network.DedicatedServer;
 
-public class User extends TunnelObject {
-    protected int userId;
-    protected String nickname;
-    protected String email;
-    protected String password;
-    protected float stockValue;
-    protected String description;
-    protected float totalBalance;
-    protected DedicatedServer dedicatedServer;
-    protected ArrayList<Company> company;
+public class User {
+    private int userId;
+    private String nickname;
+    private String email;
+    private String password;
+    private float stockValue;
+    private String description;
+    private float totalBalance;
+    private ArrayList<Company> company;
 
 
     public User(int userId, String nickname, String email, String password, float stockValue, String description, float totalBalance, ArrayList<Company> company) {
@@ -37,13 +33,6 @@ public class User extends TunnelObject {
     public User() {
 
     }
-
-
-    public void lisTopCompanies(){}
-    public void purchaseShared(){}
-    public void updateBalance(){}
-    public void loadBalance(){}
-
 
     /**
      * Getters

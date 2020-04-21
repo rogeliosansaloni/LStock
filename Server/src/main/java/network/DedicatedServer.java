@@ -5,11 +5,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import model.StockManager;
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
+import model.entities.User;
+import model.managers.StockManager;
 import utils.UserMapperImpl;
-
 
 public class DedicatedServer extends Thread {
     private boolean isOn;
@@ -22,13 +22,13 @@ public class DedicatedServer extends Thread {
     }
 
     public void stopServerConnection() {
-        this.isOn = true;
-        this.start();
+        this.isOn = false;
+        this.interrupt();
     }
 
     public void startServerConnection() {
-        this.isOn = false;
-        this.interrupt();
+        this.isOn = true;
+        this.start();
     }
 
     public void run() {
@@ -40,6 +40,16 @@ public class DedicatedServer extends Thread {
             while(isOn) {
                 TunnelObject tunnelObject = (TunnelObject) ois.readObject();
 
+                if (tunnelObject instanceof AuthenticationInfo) {
+                    AuthenticationInfo info = ((AuthenticationInfo) tunnelObject);
+                    if (info.getAction().equals("register")) {
+                        StockManager model = new StockManager();
+                        UserMapperImpl mapper = new UserMapperImpl();
+                        AuthenticationInfo info = model.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                        oos.writeObject(info);
+                    }
+
+                }
                 // When receiving tunnel object, we need to check its type
                 if (tunnelObject instanceof AuthenticationInfo) {
                     StockManager model = new StockManager();
