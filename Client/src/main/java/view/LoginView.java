@@ -15,8 +15,9 @@ public class LoginView extends JFrame {
     private static final String ERROR_MESSAGE_1 = "All fields are required.";
     private static final String ERROR_MESSAGE_2 = "Fields can't be empty.";
     private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 768;
+    private static final int alturaPanel = 740;
     private JLabel labelLogo;
+    private JLabel labelStock;
     protected JPanel jpNorth;
     private JPanel jpCenter;
     private JPanel jpCampos;
@@ -30,10 +31,11 @@ public class LoginView extends JFrame {
         color = new StockColors();
         this.setTitle(TITLE);
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
-        this.setSize(1024, 768);
+        this.setSize(anchuraPanel, alturaPanel);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
+        this.setResizable(false);
         initUI();
     }
 
@@ -46,7 +48,7 @@ public class LoginView extends JFrame {
         jpLogin.setBackground(Color.WHITE);
 
         //Header
-        jpNorth = new JPanel();
+        jpNorth = new JPanel(new BorderLayout());
         jpNorth.setBackground(Color.WHITE);
         URL url = getClass().getResource(PATH_LOGO);
         ImageIcon imageIcon = new ImageIcon(url);
@@ -55,26 +57,24 @@ public class LoginView extends JFrame {
         labelLogo = new JLabel(imageIcon);
         //TODO: Add label under the logo
         jpNorth.add(labelLogo, BorderLayout.CENTER);
-        jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,100,0));
+        labelStock = new JLabel("StockLS", SwingConstants.CENTER);
+        Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
+        labelStock.setFont(fuenteLogo);
+        jpNorth.add(labelStock, BorderLayout.SOUTH);
+        jpNorth.setBorder(BorderFactory.createEmptyBorder(70,0,80,0));
         jpLogin.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the bottons
         jpCenter = new JPanel();
-        jpCenter = new JPanel(new BorderLayout());
+        jpCenter = new JPanel(new GridLayout(4,1, 0 ,15));
         jpCenter.setBackground(Color.WHITE);
-        jpCampos = new JPanel();
 
-        jpCampos.setLayout(new BoxLayout(jpCampos, BoxLayout.PAGE_AXIS));
-        jpCampos.setBackground(Color.WHITE);
-        jpCampos.setBorder(BorderFactory.createEmptyBorder(50,0,60,0));
-        int anchuraCampo = 150;
-        int alturaCampo = 20;
-
+        Font fuenteCampo = new Font("Segoe UI", Font.ITALIC, 20);
         campos = new JTextField[2];
         campos[0] = new JTextField("Nickname or Email");
-        campos[0].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[0].setBorder(null);
-        campos[0].setMargin(new Insets(0,70,0,0));
+        campos[0].setFont(fuenteCampo);
+        campos[0].setForeground(Color.GRAY);
         campos[0].setBackground(color.getTEXTFIELD());
         campos[0].addFocusListener(new FocusListener() {
             @Override
@@ -91,11 +91,11 @@ public class LoginView extends JFrame {
                 }
             }
         });
-        jpCampos.add(campos[0]);
         //We add separation space between fields
-        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
+        jpCenter.add(campos[0]);
         campos[1] = new JTextField("Password");
-        campos[1].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
+        campos[1].setFont(fuenteCampo);
+        campos[1].setForeground(Color.GRAY);
         campos[1].setBorder(null);
         campos[1].setBackground(color.getTEXTFIELD());
         campos[1].addFocusListener(new FocusListener() {
@@ -112,30 +112,37 @@ public class LoginView extends JFrame {
                 }
             }
         });
-        jpCampos.add(campos[1]);
+        jpCenter.add(campos[1]);
 
-        jpCenter.add(jpCampos, BorderLayout.CENTER);
+        //We create a filler row to separate the buttons and the login fields
+        JLabel relleno = new JLabel();
+        relleno.setPreferredSize(new Dimension(200, 1));
+        jpCenter.add(relleno);
 
         jpBotones = new JPanel(new GridLayout(1,2, 30 ,0));
         jpBotones.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;
 
+        Font fuenteBotones = new Font("Segoe UI Semibold", Font.PLAIN, 20);
         jbLogin = new JButton("Login");
+        jbLogin.setFont(fuenteBotones);
+        jbLogin.setForeground(Color.BLACK);
         jbLogin.setBorder(null);
         jbLogin.setBackground(color.getYELLOW());
         jbLogin.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
         jbRegister = new JButton("Register");
+        jbRegister.setFont(fuenteBotones);
+        jbRegister.setForeground(Color.BLACK);
         jbRegister.setBorder(null);
         jbRegister.setBackground(color.getLightGrey());
         jbRegister.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
         jpBotones.add(jbLogin);
         jpBotones.add(jbRegister);
-
-        jpCenter.add(jpBotones, BorderLayout.SOUTH);
-        jpCenter.setBorder(BorderFactory.createEmptyBorder(0,250,150,250));
+        jpCenter.add(jpBotones);
+        jpCenter.setBorder(BorderFactory.createEmptyBorder(0,300,100,300));
 
         jpLogin.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpLogin);

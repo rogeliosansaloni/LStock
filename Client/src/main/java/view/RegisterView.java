@@ -21,8 +21,9 @@ public class RegisterView extends JFrame{
     private static final String ERROR_MESSAGE_6 = "Password must have at least one capital letter and one number";
 
     private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 768;
+    private static final int alturaPanel = 740;
     private JLabel labelLogo;
+    private JLabel labelStock;
     protected JPanel jpNorth;
     private JPanel jpCenter;
     private JPanel jpCampos;
@@ -36,10 +37,11 @@ public class RegisterView extends JFrame{
         color = new StockColors();
         this.setTitle(TITLE);
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
-        this.setSize(1024, 768);
+        this.setSize(anchuraPanel, alturaPanel);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
+        this.setResizable(false);
         initUI();
     }
 
@@ -52,35 +54,34 @@ public class RegisterView extends JFrame{
         jpRegister.setBackground(Color.WHITE);
 
         //Header
-        jpNorth = new JPanel();
+        jpNorth = new JPanel(new BorderLayout());
         jpNorth.setBackground(Color.WHITE);
         URL url = getClass().getResource(PATH_LOGO);
         ImageIcon imageIcon = new ImageIcon(url);
         Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
+
         //TODO: Add label under the logo
         jpNorth.add(labelLogo, BorderLayout.CENTER);
-        jpNorth.setBorder(BorderFactory.createEmptyBorder(50,0,0,0));
+        labelStock = new JLabel("StockLS", SwingConstants.CENTER);
+        Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
+        labelStock.setFont(fuenteLogo);
+        jpNorth.add(labelStock, BorderLayout.SOUTH);
+        jpNorth.setBorder(BorderFactory.createEmptyBorder(40,0,35,0));
         jpRegister.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the bottons
         jpCenter = new JPanel();
-        jpCenter = new JPanel(new BorderLayout());
+        jpCenter = new JPanel(new GridLayout(6,1, 0 ,15));
         jpCenter.setBackground(Color.WHITE);
-        jpCampos = new JPanel();
-        //El layout de los campos será BoxLayout
-        jpCampos.setLayout(new BoxLayout(jpCampos, BoxLayout.PAGE_AXIS));
-        jpCampos.setBackground(Color.WHITE);
-        jpCampos.setBorder(BorderFactory.createEmptyBorder(50,0,60,0));
-        int anchuraCampo = 150;
-        int alturaCampo = 20;
 
+        Font fuenteCampo = new Font("Segoe UI", Font.ITALIC, 20);
         campos = new JTextField[4];
         campos[0] = new JTextField("Nickname");
-        campos[0].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[0].setBorder(null);
-        campos[0].setMargin(new Insets(0,70,0,0));
+        campos[0].setFont(fuenteCampo);
+        campos[0].setForeground(Color.GRAY);
         campos[0].setBackground(color.getTEXTFIELD());
         campos[0].addFocusListener(new FocusListener() {
             @Override
@@ -97,12 +98,12 @@ public class RegisterView extends JFrame{
                 }
             }
         });
-        jpCampos.add(campos[0]);
+        jpCenter.add(campos[0]);
         //We add separation space between fields
-        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[1] = new JTextField("Email");
-        campos[1].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[1].setBorder(null);
+        campos[1].setFont(fuenteCampo);
+        campos[1].setForeground(Color.GRAY);
         campos[1].setBackground(color.getTEXTFIELD());
         campos[1].addFocusListener(new FocusListener() {
             @Override
@@ -118,12 +119,12 @@ public class RegisterView extends JFrame{
                 }
             }
         });
-        jpCampos.add(campos[1]);
+        jpCenter.add(campos[1]);
         //We add separation space between fields
-        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[2] = new JTextField("Password");
-        campos[2].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[2].setBorder(null);
+        campos[2].setFont(fuenteCampo);
+        campos[2].setForeground(Color.GRAY);
         campos[2].setBackground(color.getTEXTFIELD());
         campos[2].addFocusListener(new FocusListener() {
             @Override
@@ -139,12 +140,12 @@ public class RegisterView extends JFrame{
                 }
             }
         });
-        jpCampos.add(campos[2]);
+        jpCenter.add(campos[2]);
         //We add separation space between fields
-        jpCampos.add(Box.createRigidArea(new Dimension(anchuraCampo, 20)));
         campos[3] = new JTextField("Verify Password");
-        campos[3].setPreferredSize(new Dimension(anchuraCampo,alturaCampo));
         campos[3].setBorder(null);
+        campos[3].setFont(fuenteCampo);
+        campos[3].setForeground(Color.GRAY);
         campos[3].setBackground(color.getTEXTFIELD());
         campos[3].addFocusListener(new FocusListener() {
             @Override
@@ -160,30 +161,37 @@ public class RegisterView extends JFrame{
                 }
             }
         });
-        jpCampos.add(campos[3]);
+        jpCenter.add(campos[3]);
 
-        jpCenter.add(jpCampos, BorderLayout.CENTER);
+        //We create a filler row to separate the buttons and the register fields
+        JLabel relleno = new JLabel();
+        relleno.setPreferredSize(new Dimension(200, 1));
+        jpCenter.add(relleno);
 
         jpBotones = new JPanel(new GridLayout(1,2, 30 ,0));
         jpBotones.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;
 
+        Font fuenteBotones = new Font("Segoe UI Semibold", Font.PLAIN, 20);
         jbLogin = new JButton("Login");
+        jbLogin.setFont(fuenteBotones);
+        jbLogin.setForeground(Color.BLACK);
         jbLogin.setBorder(null);
         jbLogin.setBackground(color.getLightGrey());
         jbLogin.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
         jbRegister = new JButton("Register");
+        jbRegister.setFont(fuenteBotones);
+        jbRegister.setForeground(Color.BLACK);
         jbRegister.setBorder(null);
         jbRegister.setBackground(color.getYELLOW());
         jbRegister.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
         jpBotones.add(jbRegister);
         jpBotones.add(jbLogin);
-
-        jpCenter.add(jpBotones, BorderLayout.SOUTH);
-        jpCenter.setBorder(BorderFactory.createEmptyBorder(0,250,150,250));
+        jpCenter.add(jpBotones);
+        jpCenter.setBorder(BorderFactory.createEmptyBorder(0,250,50,250));
 
         jpRegister.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpRegister);
