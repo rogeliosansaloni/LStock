@@ -120,8 +120,12 @@ public class NetworkManager extends Thread {
                         }
                     }
                     if (info.getAction().equals("login")) {
-                        loginController.closeLoginView();
-                        mainView.setVisible(true);
+                        if (info.isValidated()) {
+                            loginController.closeLoginView();
+                            mainView.setVisible(true);
+                        } else {
+                            loginController.sendErrorMessage(info.getResponseType());
+                        }
                     }
                 }
             }
