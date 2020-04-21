@@ -6,6 +6,14 @@ public class Bot extends Thread {
     private float probability;
     private Company company;
 
+    /**
+     * It willl create a bot
+     *
+     * @param activeTime the time the bot have to be active
+     * @param probability Defines the probability of being bought or sold.
+     * @param company   company the bot works for
+     */
+
     public Bot(float activeTime, float probability, Company company) {
         this.activeTime = activeTime;
         this.probability = probability;

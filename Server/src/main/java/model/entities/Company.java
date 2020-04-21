@@ -10,6 +10,16 @@ public class Company {
     private User user;
     private ArrayList<Bot> bot;
 
+    /**
+     * It willl create a company
+     *
+     * @param companyId  identification
+     * @param name company name
+     * @param value current company price
+     * @param shares  number of shares available to the user
+     * @param user user who has shares in that company
+     */
+
     public Company(int companyId, String name, float value, int shares, User user, ArrayList<Bot> bot) {
         this.companyId = companyId;
         this.name = name;
