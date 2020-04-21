@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
+
 import utils.JSONReader;
 
 
@@ -14,8 +15,6 @@ public class Server extends Thread {
     private boolean isOn;
     private LinkedList<DedicatedServer> clients;
     private ServerConfiguration serverConfiguration;
-    private DBConnector dbConnector;
-
 
     public Server() throws IOException {
         this.serverConfiguration = new ServerConfiguration();
@@ -23,12 +22,6 @@ public class Server extends Thread {
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
         this.clients = new LinkedList<DedicatedServer>();
-    }
-
-    public void connectDBconnector(){
-        this.dbConnector = new DBConnector(serverConfiguration.getDbIp(), serverConfiguration.getDbUser(), serverConfiguration.getDbPassword(),
-                serverConfiguration.getDbName(),serverConfiguration.getDbPort());
-        this.dbConnector.connect();
     }
 
     private void initServerConfiguration() {
@@ -41,19 +34,19 @@ public class Server extends Thread {
     public void startServer() {
         // Start main server thread
         isOn = true;
-        connectDBconnector();
         this.start();
     }
 
     public void stopServer() {
         // Stop main server thread
         isOn = false;
+        stopListening();
         //model.disconnectFromDatabase();
         this.interrupt();
     }
 
     public void run() {
-        while(isOn) {
+        while (isOn) {
             try {
                 // Wait for petitions to accept them
                 // Block the execution

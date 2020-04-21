@@ -13,12 +13,23 @@ public class RegisterView extends JFrame{
 
     private static final String PATH_LOGO = "/stock.png";
     private static final String TITLE = "StockLS - C2";
+    private static final String ERROR_CASE_1 = "Fields Required";
+    private static final String ERROR_CASE_2 = "Fields Empty";
+    private static final String ERROR_CASE_3 = "Email Error";
+    private static final String ERROR_CASE_4 = "Password Match";
+    private static final String ERROR_CASE_5 = "Password Length";
+    private static final String ERROR_CASE_6 = "Password Format";
+    private static final String ERROR_CASE_7 = "Email Taken";
+    private static final String ERROR_CASE_8 = "Nickname Taken";
     private static final String ERROR_MESSAGE_1 = "All fields are required.";
     private static final String ERROR_MESSAGE_2 = "Fields can't be empty.";
     private static final String ERROR_MESSAGE_3 = "Email is not valid.";
     private static final String ERROR_MESSAGE_4 = "Password doesn't match.";
     private static final String ERROR_MESSAGE_5 = "Password must have at least 8 characters.";
     private static final String ERROR_MESSAGE_6 = "Password must have at least one capital letter and one number";
+    private static final String ERROR_REGISTER_1 = "This email has an account already.";
+    private static final String ERROR_REGISTER_2 = "This username is already taken.";
+
 
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 740;
@@ -220,25 +231,31 @@ public class RegisterView extends JFrame{
      * Proc that shows a pop-up window with an error message
      * @param error message to be shown
      */
-    public void showErrorMessages (int error) {
+    public void showErrorMessages (String error) {
         switch (error) {
-            case 1:
+            case ERROR_CASE_1:
                 JOptionPane.showMessageDialog(null,ERROR_MESSAGE_1);
                 break;
-            case 2:
+            case ERROR_CASE_2:
                 JOptionPane.showMessageDialog(null,ERROR_MESSAGE_2);
                 break;
-            case 3:
+            case ERROR_CASE_3:
                 JOptionPane.showMessageDialog(null,ERROR_MESSAGE_3);
                 break;
-            case 4:
+            case ERROR_CASE_4:
                 JOptionPane.showMessageDialog(null,ERROR_MESSAGE_4);
                 break;
-            case 5:
+            case ERROR_CASE_5:
                 JOptionPane.showMessageDialog(null,ERROR_MESSAGE_5);
                 break;
-            case 6:
+            case ERROR_CASE_6:
                 JOptionPane.showMessageDialog(null,ERROR_MESSAGE_6);
+                break;
+            case ERROR_CASE_7:
+                JOptionPane.showMessageDialog(null,ERROR_REGISTER_1);
+                break;
+            case ERROR_CASE_8:
+                JOptionPane.showMessageDialog(null,ERROR_REGISTER_2);
                 break;
         }
     }

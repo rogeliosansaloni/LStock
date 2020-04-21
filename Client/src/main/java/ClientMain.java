@@ -17,5 +17,22 @@ public class ClientMain {
         LoginController loginController = new LoginController(loginView);
         loginView.loginController(loginController);
         loginView.setVisible(true);
+        RegisterView registerView = new RegisterView();
+        RegisterController registerController = new RegisterController(registerView);
+        registerView.registerController(registerController);
+        registerView.setVisible(true);
+
+        // Start client's connection to the server
+        NetworkManager.getInstance().startServerConnection(registerController);
+
+        /*try {
+            // Test for server-client connection
+            TunnelObject testOjbect = new TunnelObject();
+            NetworkManager.getInstance().sendTunnelObject(testOjbect);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        //test
+
     }
 }

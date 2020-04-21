@@ -2,6 +2,7 @@ package database;
 
 
 import java.util.ArrayList;
+
 import network.DBConnector;
 import model.entities.User;
 
@@ -11,44 +12,48 @@ import java.sql.SQLException;
 public class UserDao {
 
     private DBConnector dbConnector;
+    private static final String REGISTER_MESSAGE_1 = "Register Success";
+    private static final String REGISTER_MESSAGE_2 = "Email Taken";
+    private static final String REGISTER_MESSAGE_3 = "Nickname Taken";
+
 
     public UserDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
     /**
-     * It create a user when it registered
+     * Creates user if nickname or email aren't taken yet.
+     * If not, it creates an account for this user.
+     *
      * @param user the class that will be registering
      */
-    public void createUser (User user) {
-        boolean userExist = false;
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+    public String createUser(User user) {
+        String message = REGISTER_MESSAGE_1;
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
 
         try {
             while (verify.next()) {
                 if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user)) {
-                    System.out.println("This email has an account already.");
-                    userExist = true;
-                }
-                else {
-                    if (verifyNickname(user.getNickname(), verify.getObject("nickname").toString(),user)) {
-                        System.out.println("This username is already taken.");
-                        userExist = true;
+                    message = REGISTER_MESSAGE_2;
+                } else {
+                    if (verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
+                        message = REGISTER_MESSAGE_3;
                     }
                 }
             }
-            if(!userExist){
-                dbConnector.insertQuery("INSERT INTO User (nickname,email,password,description,total_balance) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getDescription() + "','" + user.getTotalBalance() + "')");
+            if (message.equals(REGISTER_MESSAGE_1)) {
+                dbConnector.insertQuery("INSERT INTO User (nickname,email,password) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getPassword() + "')");
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error Creating User");
         }
-
+        return message;
     }
 
 
     /**
      * It will get all the users registered in LStock
+     *
      * @return ArrayList<String> all users registered
      */
     public ArrayList<String> getAllUsers() {
@@ -56,7 +61,7 @@ public class UserDao {
         ArrayList<String> users = null;
         try {
             users = new ArrayList<String>();
-            while (getUsers.next()){
+            while (getUsers.next()) {
                 users.add((getUsers.getObject("nickname")).toString());
             }
         } catch (SQLException e) {
@@ -65,16 +70,18 @@ public class UserDao {
         return users;
 
     }
+
     /**
      * It will update the information of one user
+     *
      * @param user User information
      */
-    public void updateUser (User user){
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+    public void updateUser(User user) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR email LIKE '" + user.getEmail() + "');");
 
         try {
-            while (verify.next()){
-                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user) || verifyNickname(user.getNickname(), verify.getObject("nickname").toString(),user)) {
+            while (verify.next()) {
+                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user) || verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
                     dbConnector.insertQuery("UPDATE User SET (description) VALUES ('" + user.getDescription() + "');");
 
                 }
@@ -86,15 +93,16 @@ public class UserDao {
 
     /**
      * It will get all the information of one user
-     * @param user  User information
+     *
+     * @param user User information
      * @return user  User infromation
      */
-    public User getUserInfo(User user){
+    public User getUserInfo(User user) {
         User userData = new User();
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR email LIKE '" + user.getEmail() + "');");
 
         try {
-            while (verify.next()){
+            while (verify.next()) {
                 if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user) || verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
                     userData.setEmail(verify.getObject("email").toString());
                     userData.setNickname(verify.getObject("nickname").toString());
@@ -111,12 +119,13 @@ public class UserDao {
 
     /**
      * It permits to verify that the email hasn't arealdy exist.
-     * @param  email Email to verify
-     * @param  dbEmail Email from database to compare
+     *
+     * @param email   Email to verify
+     * @param dbEmail Email from database to compare
      * @return boolean email verified
      */
-    public boolean verifyEmail (String email, String dbEmail, User user) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+    public boolean verifyEmail(String email, String dbEmail, User user) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR email LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()) {
@@ -125,7 +134,7 @@ public class UserDao {
                     return true;
                 }
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error getting email");
         }
         return false;
@@ -133,12 +142,13 @@ public class UserDao {
 
     /**
      * It permits to verify that the nickname hasn't arealdy exist.
-     * @param  nickname Nickname to verify
-     * @param  dbNickname Nickname from database to compare
+     *
+     * @param nickname   Nickname to verify
+     * @param dbNickname Nickname from database to compare
      * @return boolean nickname verified
      */
-    public boolean verifyNickname (String nickname, String dbNickname, User user) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR correo LIKE '" + user.getEmail() + "');");
+    public boolean verifyNickname(String nickname, String dbNickname, User user) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE (nickname LIKE '" + user.getNickname() + "' OR email LIKE '" + user.getEmail() + "');");
 
         try {
             while (verify.next()) {
@@ -146,7 +156,7 @@ public class UserDao {
                     return true;
                 }
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error getting nickname");
         }
         return false;
