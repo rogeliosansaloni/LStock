@@ -15,6 +15,9 @@ public class UserDao {
     private static final String REGISTER_MESSAGE_1 = "Register Success";
     private static final String REGISTER_MESSAGE_2 = "Email Taken";
     private static final String REGISTER_MESSAGE_3 = "Nickname Taken";
+    private static final String LOGIN_MESSAGE_1 = "Login Success";
+    private static final String LOGIN_MESSAGE_2 = "Login Error";
+    private static final String LOGIN_MESSAGE_3 = "User Not Found";
 
 
     public UserDao(DBConnector dbConnector) {
@@ -54,9 +57,9 @@ public class UserDao {
      * It will validate the user data
      * @param user the class that will be validating
      */
-    public boolean validateUser(User user) {
+    public String validateUser(User user) {
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
-
+        String message = LOGIN_MESSAGE_3;
         try {
             while (verify.next()) {
                 if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user)) {
@@ -67,13 +70,13 @@ public class UserDao {
                     }
                 }
                 if (user.getPassword().equals(verify.getObject("password"))){
-                    return true;
+                    message = LOGIN_MESSAGE_1;
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error Login User");
+            message = LOGIN_MESSAGE_2;
         }
-        return false;
+        return message;
     }
 
 

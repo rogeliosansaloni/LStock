@@ -103,6 +103,10 @@ public class NetworkManager extends Thread {
                     }
                     if (info.getAction().equals("login")) {
                         loginController.closeLoginView();
+                        mainView = new MainView();
+                        mainController = new MainController(mainView);
+                        mainView.initUI();
+                        mainView.setVisible(true);
                     }
                 }
             }

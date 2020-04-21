@@ -50,7 +50,16 @@ public class StockManager {
     }
 
     public AuthenticationInfo validateUser(User user) {
-        return null;
+        String response = userDao.validateUser(user);
+        AuthenticationInfo info = mapper.userToAuthenticationInfo(user);
+        if(response.equals("Login Success")){
+            info.setValidated(true);
+        }else{
+            info.setValidated(false);
+        }
+        info.setAction("login");
+        info.setResponseType(response);
+        return info;
     }
 
     public ArrayList<Company> listAllCompanies() {
