@@ -58,18 +58,18 @@ public class UserDao {
      * @param user the class that will be validating
      */
     public String validateUser(User user) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
         String message = LOGIN_MESSAGE_3;
         try {
-            while (verify.next()) {
-                if (verifyEmail(user.getEmail(), verify.getObject("email").toString(), user)) {
-                    user.setNickname(verify.getObject("nickname").toString());
+            while (result.next()) {
+                if (result.getString("email").equals(user.getEmail())) {
+                    user.setNickname(result.getObject("nickname").toString());
                 } else {
-                    if (verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
-                        user.setEmail(verify.getObject("email").toString());
+                    if (result.getString("nickname").equals(user.getNickname())) {
+                        user.setEmail(result.getObject("email").toString());
                     }
                 }
-                if (user.getPassword().equals(verify.getObject("password"))){
+                if (!user.getPassword().equals(result.getObject("password"))){
                     message = LOGIN_MESSAGE_1;
                 }
             }
