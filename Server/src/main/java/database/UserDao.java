@@ -32,14 +32,14 @@ public class UserDao {
      */
     public String createUser(User user) {
         String message = REGISTER_MESSAGE_1;
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
         try {
-            while (verify.next()) {
-                if (verify.getString("email").equals(user.getEmail())) {
+            while (result.next()) {
+                if (result.getString("email").equals(user.getEmail())) {
                     message = REGISTER_MESSAGE_2;
                 }
                 else {
-                    if (verify.getString("nickname").equals(user.getNickname())) {
+                    if (result.getString("nickname").equals(user.getNickname())) {
                         message = REGISTER_MESSAGE_3;
                     }
                 }
