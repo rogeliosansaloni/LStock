@@ -30,7 +30,7 @@ public class UserDao {
      *
      * @param user the class that will be registering
      */
-    public String createUser(User user) {
+    public String createUser_deprecated (User user) {
         String message = REGISTER_MESSAGE_1;
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
 
@@ -40,6 +40,29 @@ public class UserDao {
                     message = REGISTER_MESSAGE_2;
                 } else {
                     if (verifyNickname(user.getNickname(), verify.getObject("nickname").toString(), user)) {
+                        message = REGISTER_MESSAGE_3;
+                    }
+                }
+            }
+            if (message.equals(REGISTER_MESSAGE_1)) {
+                dbConnector.insertQuery("INSERT INTO User (nickname,email,password) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getPassword() + "')");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error Creating User");
+        }
+        return message;
+    }
+
+    public String createUser(User user) {
+        String message = REGISTER_MESSAGE_1;
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        try {
+            while (verify.next()) {
+                if (verify.getString("email").equals(user.getEmail())) {
+                    message = REGISTER_MESSAGE_2;
+                }
+                else {
+                    if (verify.getString("nickname").equals(user.getNickname())) {
                         message = REGISTER_MESSAGE_3;
                     }
                 }
