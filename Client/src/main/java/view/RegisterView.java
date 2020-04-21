@@ -163,7 +163,7 @@ public class RegisterView extends JFrame{
         });
         jpCenter.add(campos[3]);
 
-        //Añadimos una fila de relleno con un JLabel vacío para separar los campos y los botones
+        //We create a filler row to separate the buttons and the register fields
         JLabel relleno = new JLabel();
         relleno.setPreferredSize(new Dimension(200, 1));
         jpCenter.add(relleno);
