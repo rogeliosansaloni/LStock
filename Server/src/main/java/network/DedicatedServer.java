@@ -7,7 +7,6 @@ import java.net.Socket;
 
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
-import model.managers.BotManager;
 import model.managers.StockManager;
 import utils.UserMapperImpl;
 

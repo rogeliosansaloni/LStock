@@ -72,7 +72,7 @@ public class NetworkManager extends Thread {
     private void initMainView() {
         this.mainView = new MainView();
         this.mainController = new MainController(mainView);
-        //this.mainView.registerController(mainController);
+        this.mainView.registerController(mainController);
     }
 
     private void initLoginView() {
@@ -86,7 +86,6 @@ public class NetworkManager extends Thread {
         this.registerView = new RegisterView();
         this.registerController = new RegisterController(registerView);
         registerView.registerController(registerController);
-        registerView.setVisible(true);
     }
 
     public void stopServerConnection() {
