@@ -1,6 +1,6 @@
 package model.entities;
 
-public class Bot extends Thread{
+public class Bot extends Thread {
     private int botId;
     private float activeTime;
     private float probability;
@@ -12,10 +12,12 @@ public class Bot extends Thread{
         this.company = company;
     }
 
-    public boolean checkBuySell(){
+    public boolean checkBuySell() {
         return false;
     }
-    public void makeTransaction(){}
+
+    public void makeTransaction() {
+    }
 
 
     /**

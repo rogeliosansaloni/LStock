@@ -13,15 +13,16 @@ public class ShareDao {
 
     private DBConnector dbConnector;
 
-    public ShareDao (DBConnector dbConnector){
+    public ShareDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
     /**
      * It willl create a share in the database
+     *
      * @param share the share to create
      */
-    public void createShare (Share share, Company company) {
+    public void createShare(Share share, Company company) {
         ResultSet verify = dbConnector.selectQuery("SELECT * FROM Share WHERE share_id = " + share.getIdShare() + " AND company_id =" + company.getCompanyId() + ";");
         //falta para resolver
         try {
@@ -33,7 +34,7 @@ public class ShareDao {
                 }
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error creating shares");
         }
 
@@ -42,17 +43,18 @@ public class ShareDao {
 
     /**
      * It will get all the shares in the LStock
+     *
      * @return ArrayList<Share> all shares
      */
     //TENGO DUDA LO QUE SE TIENE QUE DEVOLVER AQUI
-    public ArrayList<Share> getAllShares () {
+    public ArrayList<Share> getAllShares() {
         ResultSet getShares = dbConnector.selectQuery("SELECT * FROM Shares;");
         ArrayList<Share> shares = null;
         try {
             shares = new ArrayList<Share>();
-            while (getShares.next()){
+            while (getShares.next()) {
                 //No tengo muy claro que se tiene que coger
-                Share s = new Share((float)getShares.getObject("share_id"));
+                Share s = new Share((float) getShares.getObject("share_id"));
                 shares.add(s);
             }
         } catch (SQLException e) {
