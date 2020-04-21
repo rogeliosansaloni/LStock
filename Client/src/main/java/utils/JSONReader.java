@@ -5,6 +5,7 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+
 import network.NetworkConfiguration;
 
 public class JSONReader {
@@ -12,11 +13,11 @@ public class JSONReader {
     private NetworkConfiguration clientConfiguration;
     private Gson gson;
 
-    public JSONReader () {
+    public JSONReader() {
         gson = new Gson();
     }
 
-    public NetworkConfiguration getClientConfiguration () {
+    public NetworkConfiguration getClientConfiguration() {
         JsonReader reader;
         try {
             reader = new JsonReader(new FileReader(PATH));

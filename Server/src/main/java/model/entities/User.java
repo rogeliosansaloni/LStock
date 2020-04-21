@@ -24,7 +24,7 @@ public class User {
         this.company = company;
     }
 
-    public User (String nickname, String email, String password) {
+    public User(String nickname, String email, String password) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
@@ -36,7 +36,7 @@ public class User {
 
     /**
      * Getters
-     * **/
+     **/
     public int getUserId() {
         return userId;
     }
@@ -71,7 +71,7 @@ public class User {
 
     /**
      * Setters
-     * **/
+     **/
     public void setUserId(int userId) {
         this.userId = userId;
     }

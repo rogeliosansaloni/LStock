@@ -20,7 +20,7 @@ public class DBConnector {
     private static Statement s;
     private ServerConfiguration config;
 
-    public DBConnector () {
+    public DBConnector() {
         config = new ServerConfiguration();
         initDBConfiguration();
     }
@@ -32,7 +32,7 @@ public class DBConnector {
         this.dbUsername = config.getDbUser();
         this.dbPassword = config.getDbPassword();
         this.dbPort = config.getDbPort();
-        this.url = String.format(BASE_URL, url, dbPort, db);
+        this.url = String.format(BASE_URL, config.getDbIp(), dbPort, db);
     }
 
     public void connect() {
@@ -42,19 +42,17 @@ public class DBConnector {
             if (conn != null) {
                 System.out.println("Connecting database " + url + " ... OK");
             }
-        }
-        catch(SQLException ex) {
+        } catch (SQLException ex) {
             System.out.println("Connecting database" + url + " ... KO");
-        }
-        catch(ClassNotFoundException ex) {
+        } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
 
     }
 
-    public void insertQuery(String query){
+    public void insertQuery(String query) {
         try {
-            s =(Statement) conn.createStatement();
+            s = (Statement) conn.createStatement();
             s.executeUpdate(query);
 
         } catch (SQLException ex) {
@@ -64,9 +62,9 @@ public class DBConnector {
         }
     }
 
-    public void updateQuery(String query){
+    public void updateQuery(String query) {
         try {
-            s =(Statement) conn.createStatement();
+            s = (Statement) conn.createStatement();
             s.executeUpdate(query);
 
         } catch (SQLException ex) {
@@ -77,11 +75,11 @@ public class DBConnector {
     }
 
 
-    public ResultSet selectQuery(String query){
+    public ResultSet selectQuery(String query) {
         ResultSet rs = null;
         try {
-            s =(Statement) conn.createStatement();
-            rs = s.executeQuery (query);
+            s = (Statement) conn.createStatement();
+            rs = s.executeQuery(query);
 
         } catch (SQLException ex) {
             System.out.println("Data Recovery KO" + ex.getSQLState());
@@ -92,7 +90,7 @@ public class DBConnector {
     }
 
 
-    public void disconnect(){
+    public void disconnect() {
         try {
             conn.close();
         } catch (SQLException ex) {
@@ -100,9 +98,6 @@ public class DBConnector {
             System.err.println(ex);
         }
     }
-
-
-
 
 
 }

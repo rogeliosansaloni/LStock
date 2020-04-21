@@ -11,6 +11,10 @@ public class BotManager {
     public BotManager(BotDao botDao) {
         this.botDao = botDao;
     }
-    public void createBot(Bot bot){}
-    public void configureBot(String company, int id){}
+
+    public void createBot(Bot bot) {
+    }
+
+    public void configureBot(String company, int id) {
+    }
 }

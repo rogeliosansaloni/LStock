@@ -61,8 +61,13 @@ public class DedicatedServer extends Thread {
 
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            stopServerConnection();
+            System.out.println("Stopped client connection to the server...");
+            e.printStackTrace();
+
         }
 
     }

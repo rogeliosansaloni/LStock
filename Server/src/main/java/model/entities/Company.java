@@ -23,11 +23,12 @@ public class Company {
 
     }
 
-    public void  listBots(){}
+    public void listBots() {
+    }
 
     /**
      * Getters
-     * **/
+     **/
     public int getCompanyId() {
         return companyId;
     }
@@ -54,7 +55,7 @@ public class Company {
 
     /**
      * Setters
-     * **/
+     **/
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
