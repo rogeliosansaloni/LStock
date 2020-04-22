@@ -60,8 +60,7 @@ public class NetworkManager extends Thread {
 
     public void startServerConnection() {
         // Initialize views
-        initRegisterView();
-        initLoginView();
+        initLoginRegisterView();
         initMainView();
 
         // Start main client thread
@@ -76,17 +75,16 @@ public class NetworkManager extends Thread {
         this.mainView.setVisible(false);
     }
 
-    private void initLoginView() {
+    private void initLoginRegisterView() {
         this.loginView = new LoginView();
-        this.loginController = new LoginController(loginView);
-        loginView.registerController(loginController);
-        loginView.setVisible(true);
-    }
-
-    private void initRegisterView() {
         this.registerView = new RegisterView();
-        this.registerController = new RegisterController(registerView);
+        this.loginController = new LoginController(loginView, registerView);
+        this.registerController = new RegisterController(registerView, loginView);
+        loginView.registerController(loginController);
         registerView.registerController(registerController);
+
+        // We only show the login view as the first screen
+        loginView.setVisible(true);
     }
 
     public void stopServerConnection() {

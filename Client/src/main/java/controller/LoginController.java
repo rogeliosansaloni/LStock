@@ -13,17 +13,19 @@ import java.io.IOException;
 public class LoginController implements ActionListener {
     private static final int ERROR_1 = 1;
     private static final int ERROR_2 = 2;
-    private LoginView view;
+    private LoginView loginView;
+    private RegisterView registerView;
 
-    public LoginController(LoginView view) {
-        this.view = view;
+    public LoginController(LoginView loginView, RegisterView registerView) {
+        this.loginView = loginView;
+        this.registerView = registerView;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("login")) {
-            String user = view.getNicknameEmail();
-            String password = view.getPassword();
+            String user = loginView.getNicknameEmail();
+            String password = loginView.getPassword();
             if (validCredentials(user, password)) {
                 TunnelObject login = new AuthenticationInfo(user, user, password, "login");
                 try {
@@ -34,10 +36,7 @@ public class LoginController implements ActionListener {
             }
         }
         if (e.getActionCommand().equals("register")) {
-            view.setVisible(false);
-            RegisterView registerView = new RegisterView();
-            RegisterController controller = new RegisterController(registerView);
-            registerView.registerController(controller);
+            loginView.setVisible(false);
             registerView.setVisible(true);
         }
 
@@ -52,11 +51,11 @@ public class LoginController implements ActionListener {
      */
     public boolean validCredentials(String user, String password) {
         if (user.equals("Nickname or Email") && password.equals("Password")) {
-            view.showErrorMessage(ERROR_1);
+            loginView.showErrorMessage(ERROR_1);
             return false;
         }
         if (user.equals("Nickname or Email") || password.equals("Password")) {
-            view.showErrorMessage(ERROR_2);
+            loginView.showErrorMessage(ERROR_2);
             return false;
         }
         return true;
@@ -65,7 +64,7 @@ public class LoginController implements ActionListener {
     /**
      * Closes the login view
      */
-    public void closeLoginView() { view.setVisible(false);}
+    public void closeLoginView() { loginView.setVisible(false);}
 
     /**
      * Proc that sends the error message to the view
@@ -73,6 +72,6 @@ public class LoginController implements ActionListener {
      * @param message that contains what error it is dealing with
      */
     public void sendErrorMessage(String message) {
-        view.showLoginFailure(message);
+        loginView.showLoginFailure(message);
     }
 }
