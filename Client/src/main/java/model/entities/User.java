@@ -13,14 +13,14 @@ public class User {
     private ArrayList<Company> company;
 
     /**
-     * It willl create a user
+     * It will create a user
      *
      * @param userId  identification
      * @param nickname user nickname
      * @param email user email
      * @param password  user password
      * @param stockValue stock value of the user
-     * @param description
+     * @param description additional user information
      * @param totalBalance user available balance
      * @param company companies the user participates
      */

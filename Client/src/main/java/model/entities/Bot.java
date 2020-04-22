@@ -7,7 +7,7 @@ public class Bot extends Thread {
     private Company company;
 
     /**
-     * It willl create a bot
+     * It will create a bot
      *
      * @param activeTime the time the bot have to be active
      * @param probability Defines the probability of being bought or sold.
