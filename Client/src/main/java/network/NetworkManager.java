@@ -46,6 +46,10 @@ public class NetworkManager extends Thread {
         return null;
     }
 
+    /**
+     * Constructor that initializes all the elements for server connection
+     * @throws IOException
+     */
     private NetworkManager() throws IOException {
         // Get Network configuration from JSON
         JSONReader jsonReader = new JSONReader();
@@ -58,6 +62,9 @@ public class NetworkManager extends Thread {
         ois = new ObjectInputStream(this.serverSocket.getInputStream());
     }
 
+    /**
+     * Starts the connection to the server. Initializes the main views and its controllers for the Client.
+     */
     public void startServerConnection() {
         // Initialize views
         initLoginRegisterView();
@@ -68,6 +75,9 @@ public class NetworkManager extends Thread {
         start();
     }
 
+    /**
+     * Initializes the main view and its controller
+     */
     private void initMainView() {
         this.mainView = new MainView();
         this.mainController = new MainController(mainView);
@@ -75,6 +85,9 @@ public class NetworkManager extends Thread {
         this.mainView.setVisible(false);
     }
 
+    /**
+     * Initializes the login and register views, and their controllers
+     */
     private void initLoginRegisterView() {
         this.loginView = new LoginView();
         this.registerView = new RegisterView();
@@ -87,19 +100,35 @@ public class NetworkManager extends Thread {
         loginView.setVisible(true);
     }
 
+    /**
+     * Stops the connection to the server and interrupts the client thread
+     */
     public void stopServerConnection() {
         running = false;
         interrupt();
     }
 
+    /**
+     * Send a generic object through the sockets.
+     * @param object the object to be sent to the server
+     * @throws IOException
+     */
     public void sendTunnelObject(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
+    /**
+     * Sends information for login or registering a user
+     * @param object object that contains user information for login or registering in the system
+     * @throws IOException
+     */
     public void sendAuthentificationInformation(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
+    /**
+     * Runs the main client thread and receives objects coming from the server
+     */
     @Override
     public void run() {
         try {

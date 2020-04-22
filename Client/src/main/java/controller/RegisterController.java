@@ -118,14 +118,14 @@ public class RegisterController implements ActionListener {
     }
 
     /**
-     * Proc to close the register view
+     * Closes the register view
      */
     public void closeRegisterView() {
         registerView.setVisible(false);
     }
 
     /**
-     * Proc that sends the error message to the view
+     * Sends the error message to the view
      *
      * @param message that contains what error it is dealing with
      */
