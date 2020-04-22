@@ -13,7 +13,7 @@ public class Company {
     private ArrayList<Bot> bots;
 
     /**
-     * It willl create a company
+     * It will create a company
      *
      * @param companyId  identification
      * @param name company name
