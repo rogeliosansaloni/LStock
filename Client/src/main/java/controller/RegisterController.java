@@ -65,7 +65,7 @@ public class RegisterController implements ActionListener {
      * @param pass2    repeated password
      * @return true if the fields are all valid
      */
-    public boolean validCredentials(String nickname, String email, String pass1, String pass2) {
+    private boolean validCredentials(String nickname, String email, String pass1, String pass2) {
         //If all fields are empty
         if (nickname.equals("Nickname") && email.equals("Email") && pass1.equals("Password") && pass2.equals("Verify Password")) {
             registerView.showErrorMessages(ERROR_1);
@@ -106,7 +106,7 @@ public class RegisterController implements ActionListener {
      * @param password the password
      * @return the corresponding error message
      */
-    public String validatePassword(String password) {
+    private String validatePassword(String password) {
         if (password.length() < 8) {
             return ERROR_5;
         }
