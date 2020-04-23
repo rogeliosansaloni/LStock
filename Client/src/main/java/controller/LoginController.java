@@ -49,7 +49,7 @@ public class LoginController implements ActionListener {
      * @param password the password
      * @return true if all the fields are filled up correctly
      */
-    public boolean validCredentials(String user, String password) {
+    private boolean validCredentials(String user, String password) {
         if (user.equals("Nickname or Email") && password.equals("Password")) {
             loginView.showErrorMessage(ERROR_1);
             return false;
