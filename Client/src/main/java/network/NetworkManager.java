@@ -46,6 +46,10 @@ public class NetworkManager extends Thread {
         return null;
     }
 
+    /**
+     * Constructor that initializes all the elements for server connection
+     * @throws IOException
+     */
     private NetworkManager() throws IOException {
         // Get Network configuration from JSON
         JSONReader jsonReader = new JSONReader();
@@ -58,10 +62,12 @@ public class NetworkManager extends Thread {
         ois = new ObjectInputStream(this.serverSocket.getInputStream());
     }
 
+    /**
+     * Starts the connection to the server. Initializes the main views and its controllers for the Client.
+     */
     public void startServerConnection() {
         // Initialize views
-        initRegisterView();
-        initLoginView();
+        initLoginRegisterView();
         initMainView();
 
         // Start main client thread
@@ -69,39 +75,60 @@ public class NetworkManager extends Thread {
         start();
     }
 
+    /**
+     * Initializes the main view and its controller
+     */
     private void initMainView() {
         this.mainView = new MainView();
         this.mainController = new MainController(mainView);
-        //this.mainView.registerController(mainController);
+        this.mainView.registerController(mainController);
+        this.mainView.setVisible(false);
     }
 
-    private void initLoginView() {
+    /**
+     * Initializes the login and register views, and their controllers
+     */
+    private void initLoginRegisterView() {
         this.loginView = new LoginView();
-        this.loginController = new LoginController(loginView);
+        this.registerView = new RegisterView();
+        this.loginController = new LoginController(loginView, registerView);
+        this.registerController = new RegisterController(registerView, loginView);
         loginView.registerController(loginController);
+        registerView.registerController(registerController);
+
+        // We only show the login view as the first screen
         loginView.setVisible(true);
     }
 
-    private void initRegisterView() {
-        this.registerView = new RegisterView();
-        this.registerController = new RegisterController(registerView);
-        registerView.registerController(registerController);
-        registerView.setVisible(true);
-    }
-
+    /**
+     * Stops the connection to the server and interrupts the client thread
+     */
     public void stopServerConnection() {
         running = false;
         interrupt();
     }
 
+    /**
+     * Send a generic object through the sockets.
+     * @param object the object to be sent to the server
+     * @throws IOException
+     */
     public void sendTunnelObject(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
+    /**
+     * Sends information for login or registering a user
+     * @param object object that contains user information for login or registering in the system
+     * @throws IOException
+     */
     public void sendAuthentificationInformation(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
+    /**
+     * Runs the main client thread and receives objects coming from the server
+     */
     @Override
     public void run() {
         try {
@@ -114,16 +141,18 @@ public class NetworkManager extends Thread {
                     if (info.getAction().equals("register")) {
                         if (info.isValidated()) {
                             registerController.closeRegisterView();
-                            loginView = new LoginView();
-                            loginController = new LoginController(loginView);
-                            loginView.registerController(loginController);
                             loginView.setVisible(true);
                         } else {
                             registerController.sendErrorMessage(info.getResponseType());
                         }
                     }
                     if (info.getAction().equals("login")) {
-
+                        if (info.isValidated()) {
+                            loginController.closeLoginView();
+                            mainView.setVisible(true);
+                        } else {
+                            loginController.sendErrorMessage(info.getResponseType());
+                        }
                     }
                 }
             }

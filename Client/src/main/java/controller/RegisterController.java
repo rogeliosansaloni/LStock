@@ -21,12 +21,12 @@ public class RegisterController implements ActionListener {
     private static final String ERROR_6 = "Password Format";
     private static final String REGEX_EMAIL = "^[a-zA-Z0-9_+&*-]+(?:\\." + "[a-zA-Z0-9_+&*-]+)*@" + "(?:[a-zA-Z0-9-]+\\.)+[a-z" + "A-Z]{2,7}$";
     private static final String REGEX_PASSWORD = "^(?=.*[A-Z])(?=.*[0-9]).*$";
+    private RegisterView registerView;
+    private LoginView loginView;
 
-
-    private RegisterView view;
-
-    public RegisterController(RegisterView view) {
-        this.view = view;
+    public RegisterController(RegisterView registerView, LoginView loginView) {
+        this.registerView = registerView;
+        this.loginView = loginView;
     }
 
     /**
@@ -37,10 +37,10 @@ public class RegisterController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("register")) {
-            String nickname = view.getNickname();
-            String email = view.getEmail();
-            String pass1 = view.getPassword();
-            String pass2 = view.getPasswordVerification();
+            String nickname = registerView.getNickname();
+            String email = registerView.getEmail();
+            String pass1 = registerView.getPassword();
+            String pass2 = registerView.getPasswordVerification();
             if (validCredentials(nickname, email, pass1, pass2)) {
                 TunnelObject register = new AuthenticationInfo(nickname, email, pass1, "register");
                 try {
@@ -51,10 +51,7 @@ public class RegisterController implements ActionListener {
             }
         }
         if (e.getActionCommand().equals("login")) {
-            view.setVisible(false);
-            LoginView loginView = new LoginView();
-            LoginController controller = new LoginController(loginView);
-            loginView.registerController(controller);
+            registerView.setVisible(false);
             loginView.setVisible(true);
         }
     }
@@ -71,31 +68,31 @@ public class RegisterController implements ActionListener {
     public boolean validCredentials(String nickname, String email, String pass1, String pass2) {
         //If all fields are empty
         if (nickname.equals("Nickname") && email.equals("Email") && pass1.equals("Password") && pass2.equals("Verify Password")) {
-            view.showErrorMessages(ERROR_1);
+            registerView.showErrorMessages(ERROR_1);
             return false;
         }
         //If some field is empty, show the corresponding message
         if (nickname.equals("Nickname") || email.equals("Email") || pass1.equals("Password") || pass2.equals("Verify Password")) {
-            view.showErrorMessages(ERROR_2);
+            registerView.showErrorMessages(ERROR_2);
             return false;
         }
         //If email field isn't empty check if it's valid
         if (!email.equals("Email")) {
             Pattern emailPattern = Pattern.compile(REGEX_EMAIL);
             if (!emailPattern.matcher(email).matches()) {
-                view.showErrorMessages(ERROR_3);
+                registerView.showErrorMessages(ERROR_3);
                 return false;
             }
         }
         //If password fields aren't empty, check if they're the same
         if (!pass1.equals("Password") && !pass2.equals("Verify Password")) {
             if (!pass1.equals(pass2)) {
-                view.showErrorMessages(ERROR_4);
+                registerView.showErrorMessages(ERROR_4);
                 return false;
             }
             String error = validatePassword(pass1);
             if (!error.equals(NO_ERROR)) {
-                view.showErrorMessages(error);
+                registerView.showErrorMessages(error);
                 return false;
             }
         }
@@ -121,18 +118,18 @@ public class RegisterController implements ActionListener {
     }
 
     /**
-     * Proc to close the register view
+     * Closes the register view
      */
     public void closeRegisterView() {
-        view.setVisible(false);
+        registerView.setVisible(false);
     }
 
     /**
-     * Proc that sends the error message to the view
+     * Sends the error message to the view
      *
      * @param message that contains what error it is dealing with
      */
     public void sendErrorMessage(String message) {
-        view.showErrorMessages(message);
+        registerView.showErrorMessages(message);
     }
 }

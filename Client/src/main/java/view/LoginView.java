@@ -170,10 +170,10 @@ public class LoginView extends JFrame {
     public void showErrorMessage (int error) {
         switch (error) {
             case 1:
-                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_1);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_1);
                 break;
             case 2:
-                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_2);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_2);
                 break;
         }
     }
@@ -188,4 +188,8 @@ public class LoginView extends JFrame {
      * @return introduced password
      */
     public String getPassword () { return campos[1].getText(); }
+
+    public void showLoginFailure(String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
 }

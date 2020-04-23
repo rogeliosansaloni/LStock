@@ -4,6 +4,12 @@ public class Share {
     private int idShare;
     private float price;
 
+    /**
+     * It will create a share
+     *
+     * @param price share value
+     */
+
     public Share(float price) {
         this.price = price;
     }

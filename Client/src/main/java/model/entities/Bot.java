@@ -20,12 +20,10 @@ public class Bot extends Thread {
         this.company = company;
     }
 
-    public boolean checkBuySell() {
+    public boolean checkBuySell(){
         return false;
     }
-
-    public void makeTransaction() {
-    }
+    public void makeTransaction(){}
 
 
     /**

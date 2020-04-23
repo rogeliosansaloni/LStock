@@ -5,6 +5,7 @@ import utils.StockColors;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.net.URL;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -49,4 +50,7 @@ public class MainView extends JFrame{
 
     }
 
+    public void registerController (ActionListener actionListener) {
+        // TODO: Add the action listener to the buttons
+    }
 }
