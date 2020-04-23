@@ -1,0 +1,9 @@
+{
+  "ip": "127.0.0.1",
+  "port": 1311,
+  "db_ip": "15.236.105.133",
+  "db_port": 3306,
+  "db_name": "stock_c2",
+  "db_user": "root",
+  "db_password" : "admin"
+}
