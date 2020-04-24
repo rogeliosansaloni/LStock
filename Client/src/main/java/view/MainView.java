@@ -28,6 +28,7 @@ public class MainView extends JFrame{
     protected JPanel jpLogo;
     protected JPanel jpOptions;
     protected JPanel jpMenu;
+    protected JPanel jpCenter;
     private JMenuBar menuBar;
     private JMenu menuOptions;
     private JMenuItem option1,option2,option3, option4;
@@ -100,6 +101,12 @@ public class MainView extends JFrame{
 
         jpHeader.setBorder(BorderFactory.createEmptyBorder(30,50,15,50));
         jpMain.add(jpHeader, BorderLayout.NORTH);
+
+        //Here we edit the jpCenter depending on the view the create
+        jpCenter = new JPanel();
+        jpCenter.setLayout(new BorderLayout());
+        jpCenter.setBackground(color.getBLACK());
+        jpMain.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpMain);
 
     }
