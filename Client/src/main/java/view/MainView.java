@@ -105,6 +105,7 @@ public class MainView extends JFrame{
         //Here we edit the jpCenter depending on the view the create
         jpCenter = new JPanel();
         jpCenter.setLayout(new BorderLayout());
+
         jpCenter.setBackground(color.getBLACK());
         jpMain.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpMain);
