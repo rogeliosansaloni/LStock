@@ -7,5 +7,6 @@ public class ClientMain {
         //NetworkManager.getInstance().startServerConnection();
         MainView mainView = new MainView();
         mainView.setVisible(true);
+        
     }
 }
