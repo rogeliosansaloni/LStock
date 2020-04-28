@@ -2,6 +2,9 @@ package model.entities;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a company
+ */
 public class Company {
     private int companyId;
     private String name;

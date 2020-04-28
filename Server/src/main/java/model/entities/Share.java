@@ -1,5 +1,8 @@
 package model.entities;
 
+/**
+ * Represents a share
+ */
 public class Share {
     private int idShare;
     private float price;

@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
+/**
+ * Represents the DAO for the Share table
+ */
 public class ShareDao {
 
     private DBConnector dbConnector;

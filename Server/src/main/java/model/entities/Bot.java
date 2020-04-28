@@ -1,5 +1,8 @@
 package model.entities;
 
+/**
+ * Represents a Bot
+ */
 public class Bot extends Thread {
     private int botId;
     private float activeTime;
