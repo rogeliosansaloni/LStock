@@ -2,6 +2,9 @@ package model.entities;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a user
+ */
 public class User {
     private int userId;
     private String nickname;

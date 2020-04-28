@@ -1,5 +1,8 @@
 package model.entities;
 
+/**
+ * Represents the DTO that contains company details
+ */
 public class CompanyDetails extends TunnelObject {
     private int companyId;
     private String name;

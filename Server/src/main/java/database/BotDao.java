@@ -9,7 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
+/**
+ * Represents the DAO for the Bot table
+ */
 public class BotDao {
 
     private DBConnector dbConnector;
