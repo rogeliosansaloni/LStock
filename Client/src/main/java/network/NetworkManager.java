@@ -10,6 +10,7 @@ import controller.MainController;
 import controller.RegisterController;
 import model.entities.AuthenticationInfo;
 import model.entities.CompanyInfo;
+import model.entities.ShareTrade;
 import model.entities.TunnelObject;
 import utils.JSONReader;
 import view.LoginView;
@@ -133,6 +134,10 @@ public class NetworkManager extends Thread {
      * @throws IOException
      */
     public void sendCompanyDetails(CompanyInfo object) throws IOException {
+        oos.writeObject(object);
+    }
+
+    public void sendShareTrade(ShareTrade object) throws IOException {
         oos.writeObject(object);
     }
 
