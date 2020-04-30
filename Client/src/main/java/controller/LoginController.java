@@ -27,7 +27,7 @@ public class LoginController implements ActionListener {
             String user = loginView.getNicknameEmail();
             String password = loginView.getPassword();
             if (validCredentials(user, password)) {
-                TunnelObject login = new AuthenticationInfo(user, user, password, "login");
+                AuthenticationInfo login = new AuthenticationInfo(user, user, password, "login");
                 try {
                     NetworkManager.getInstance().sendAuthentificationInformation(login);
                 } catch (IOException ex) {
