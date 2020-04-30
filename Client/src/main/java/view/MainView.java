@@ -1,5 +1,6 @@
 package view;
 
+import controller.CompanyDetailController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -17,22 +18,23 @@ public class MainView extends JFrame{
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
-    protected JLabel labelStock;
-    protected JLabel labelUserPhoto;
-    protected JLabel labelViewName;
-    protected JLabel labelBalance;
-    protected JLabel labelArrow;
-    protected String userName = "Peter Fox";
-    protected String userBalance = "00.00";
-    protected JPanel jpHeader;
-    protected JPanel jpLogo;
-    protected JPanel jpOptions;
-    protected JPanel jpMenu;
-    protected JPanel jpCenter;
+    private JLabel labelStock;
+    private JLabel labelUserPhoto;
+    private JLabel labelViewName;
+    private JLabel labelBalance;
+    private JLabel labelArrow;
+    private String userName = "Peter Fox";
+    private String userBalance = "00.00";
+    private JPanel jpHeader;
+    private JPanel jpLogo;
+    private JPanel jpOptions;
+    private JPanel jpMenu;
+    private JPanel jpCenter;
     private JMenuBar menuBar;
     private JMenu menuOptions;
     private JMenuItem option1,option2,option3, option4;
-    protected StockColors color;
+    private StockColors color;
+    private CompanyDetailView jpCompanyDetailsView;
 
     public MainView () {
         color = new StockColors();
@@ -43,6 +45,11 @@ public class MainView extends JFrame{
         this.setResizable(false);
         this.setBackground(color.getBLACK());
         initUI();
+    }
+
+    public void initAllViews() {
+        jpCompanyDetailsView = new CompanyDetailView();
+        jpCompanyDetailsView.registerController(new CompanyDetailController());
     }
 
     public void initUI () {
