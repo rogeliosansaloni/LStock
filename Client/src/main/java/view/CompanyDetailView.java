@@ -22,8 +22,8 @@ public class CompanyDetailView extends JPanel {
         jbBuy.setActionCommand("buyShare");
     }
 
-    public void updateShares(Company company, User user) {
-
+    public void updateNumberShares(User user) {
+        jlMyShares.setText(Integer.toString(user.getShares().size()));
     }
 
     public void showErrorMessages(String error) {
