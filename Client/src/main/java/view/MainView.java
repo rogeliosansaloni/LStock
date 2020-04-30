@@ -12,7 +12,7 @@ public class MainView extends JFrame{
     //logo de stock
     private static final String PATH_LOGO = "/Images/stock.png";
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
-    private static final String PATH_ARROW_ICON = "/Images/iconoDesplegable.png";
+    private static final String PATH_ARROW_ICON = "/Images/dropdown-grey.png";
     private static final String TITLE = "StockLS - C2";
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
@@ -104,7 +104,7 @@ public class MainView extends JFrame{
 
         //Here we edit the jpCenter depending on the view the create
         jpCenter = new JPanel();
-        jpCenter.setLayout(new BorderLayout());
+        jpCenter.setLayout(new CardLayout());
 
         jpCenter.setBackground(color.getBLACK());
         jpMain.add(jpCenter, BorderLayout.CENTER);
