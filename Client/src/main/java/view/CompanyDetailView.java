@@ -7,7 +7,7 @@ import org.jfree.chart.JFreeChart;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
-public class CompanyDetailView extends MainView {
+public class CompanyDetailView extends JPanel {
     private static final String TITLE = "Company Shares";
     private JButton jbBuy;
     private JButton jbSell;
