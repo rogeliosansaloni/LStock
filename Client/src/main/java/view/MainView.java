@@ -176,4 +176,20 @@ public class MainView extends JFrame{
     public void registerController (ActionListener actionListener) {
         // TODO: Add the action listener to the buttons
     }
+    /*
+    /**
+     * Proc that verifys if the users really wants to logout
+
+    public void showErrorMessage () {
+
+        JDialog frame = JOptionPane.WARNING_MESSAGE( );
+        frame.setLayout(new BorderLayout());
+        frame.add(new TestPane());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+
+
+    }
+    */
 }
