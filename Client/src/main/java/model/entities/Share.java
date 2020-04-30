@@ -11,21 +11,17 @@ public class Share {
 
 
     public float calculateTotalValue (){
+        float value = 0;
 
+        return value;
     }
 
-    /**
-     * @return
-     * Getter
-     */
+
     public float getPrice() {
         return price;
     }
 
-    /**
-     * @param price
-     * Setter
-     */
+
     public void setPrice(float price) {
         this.price = price;
     }
