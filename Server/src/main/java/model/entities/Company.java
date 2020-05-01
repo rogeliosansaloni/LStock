@@ -47,6 +47,16 @@ public class Company {
         this.bots.add(bot);
     }
 
+    public void recalculateValue(String action) {
+        if (action.equals("buy")) {
+            this.value += (this.value * 0.01f);
+        } else {
+            if (action.equals("sell")) {
+                this.value -= (this.value * 0.01f);
+            }
+        }
+    }
+
     /**
      * Getters
      **/
