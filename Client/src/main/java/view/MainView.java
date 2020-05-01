@@ -1,5 +1,6 @@
 package view;
 
+import controller.MainController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -137,6 +138,7 @@ public class MainView extends JFrame{
         menuBar = new JMenuBar();
         menuBar.setBackground(color.getDarkGreyHeader());
         menuBar.setBorder(null);
+        menuBar.setBorderPainted(false);
         //Here we put the name of the user
         menuOptions = new JMenu(userName);
         menuOptions.setFont(fontName);
@@ -180,11 +182,13 @@ public class MainView extends JFrame{
     }
 
     public void registerController (ActionListener actionListener) {
-
-    }
-
-    public static void main(String[] args) {
-        MainView view = new MainView();
-        view.setVisible(true);
+        option1.addActionListener(actionListener);
+        option1.setActionCommand("profile");
+        option2.addActionListener(actionListener);
+        option2.setActionCommand("shares");
+        option3.addActionListener(actionListener);
+        option3.setActionCommand("load");
+        option4.addActionListener(actionListener);
+        option4.setActionCommand("logout");
     }
 }
