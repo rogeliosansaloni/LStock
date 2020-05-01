@@ -1,15 +1,19 @@
 package controller;
 
+import view.LoginView;
 import view.MainView;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainController implements ActionListener {
     private final MainView view;
+    private final LoginView loginView;
 
-    public MainController(MainView view) {
+    public MainController(MainView view, LoginView loginView) {
         this.view = view;
+        this.loginView = loginView;
     }
 
     @Override
@@ -25,9 +29,18 @@ public class MainController implements ActionListener {
                 //TODO: Load Balance
                 break;
             case "logout":
-                //TODO: Log out
+
+                if(logOut() == 0){
+                    loginView.setVisible(true);
+                    view.setVisible(false);
+                }
                 break;
 
         }
+
+    }
+    public int logOut(){
+        int verify = JOptionPane.showConfirmDialog(null, "Do you want to logout really?","Log Out", JOptionPane.YES_NO_OPTION);
+        return verify;
     }
 }

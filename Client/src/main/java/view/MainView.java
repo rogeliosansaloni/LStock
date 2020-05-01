@@ -184,4 +184,5 @@ public class MainView extends JFrame{
         option4.addActionListener(actionListener);
         option4.setActionCommand("logout");
     }
+
 }
