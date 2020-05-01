@@ -62,8 +62,8 @@ public class StockManager {
         return info;
     }
 
-    public ArrayList<Company> listAllCompanies() {
-        return null;
+    public ArrayList<Company> getCompanies() {
+        return companies;
     }
 }
 
