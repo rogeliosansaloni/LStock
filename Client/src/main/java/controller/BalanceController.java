@@ -16,7 +16,7 @@ public class BalanceController implements ActionListener {
         if (e.getActionCommand().equals("load")) {
             String amountStr = view.getBalanceAmount().replace("$","");
             float amount = Float.parseFloat(amountStr);
-            System.out.println(amount);
+            //TODO: NetWorkManager
         }
 
     }
