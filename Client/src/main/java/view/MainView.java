@@ -31,7 +31,8 @@ public class MainView extends JFrame{
     private JMenuBar menuBar;
     private JMenu menuOptions;
     private JMenuItem option1,option2,option3, option4;
-    protected StockColors color;
+    private StockColors color;
+    private CompanyDetailView jpCompanyDetailsView;
 
     public MainView () {
         color = new StockColors();
@@ -42,6 +43,11 @@ public class MainView extends JFrame{
         this.setResizable(false);
         this.setBackground(color.getBLACK());
         initUI();
+        initAllViews();
+    }
+
+    public void initAllViews() {
+        jpCompanyDetailsView = new CompanyDetailView();
     }
 
     public void initUI () {
@@ -174,7 +180,7 @@ public class MainView extends JFrame{
         jpOptions.add(jpMenu, BorderLayout.CENTER);
     }
 
-    public void registerController (ActionListener actionListener) {
+    public void registerMainController (ActionListener actionListener) {
         option1.addActionListener(actionListener);
         option1.setActionCommand("profile");
         option2.addActionListener(actionListener);
@@ -183,5 +189,9 @@ public class MainView extends JFrame{
         option3.setActionCommand("load");
         option4.addActionListener(actionListener);
         option4.setActionCommand("logout");
+    }
+
+    public void registerCompanyDetailViewController(ActionListener controller) {
+        jpCompanyDetailsView.registerController(controller);
     }
 }

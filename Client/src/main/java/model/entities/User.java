@@ -11,6 +11,7 @@ public class User {
     private String description;
     private float totalBalance;
     private ArrayList<Company> company;
+    private ArrayList<Share> shares;
 
     /**
      * It will create a user
@@ -89,6 +90,10 @@ public class User {
         return company;
     }
 
+    public ArrayList<Share> getShares() {
+        return shares;
+    }
+
     /**
      * Setters
      * **/
@@ -122,5 +127,9 @@ public class User {
 
     public void setCompany(ArrayList<Company> company) {
         this.company = company;
+    }
+
+    public void setShares(ArrayList<Share> shares) {
+        this.shares = shares;
     }
 }

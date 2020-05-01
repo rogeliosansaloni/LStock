@@ -7,9 +7,11 @@ import java.awt.event.ActionListener;
 
 public class MainController implements ActionListener {
     private final MainView view;
+    private CompanyDetailController companyDetailController;
 
     public MainController(MainView view) {
         this.view = view;
+        this.companyDetailController = new CompanyDetailController();
     }
 
     @Override
@@ -29,5 +31,9 @@ public class MainController implements ActionListener {
                 break;
 
         }
+    }
+
+    public CompanyDetailController getCompanyDetailController() {
+        return companyDetailController;
     }
 }
