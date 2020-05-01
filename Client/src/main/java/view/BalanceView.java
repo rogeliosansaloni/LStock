@@ -1,0 +1,32 @@
+package view;
+
+import utils.StockColors;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class BalanceView extends JPanel {
+    private JLabel jlCurrent;
+    private JButton jbLoad;
+    private JComboBox<String> jcbAmount;
+    protected StockColors color;
+
+    public BalanceView () {
+        color = new StockColors();
+        //TODO: BalanceView
+        this.setBackground(color.getBLACK());
+        String amount[] = {"10.00$", "20.00$", "30.00$", "40.00$"};
+        this.setLayout(new GridLayout(3,1));
+        jlCurrent = new JLabel("You have: 00.00$");
+        JPanel jpAmount = new JPanel(new GridLayout(1, 2));
+        JLabel jLabel = new JLabel("Amount to Load: ");
+        jcbAmount = new JComboBox<>(amount);
+        jpAmount.add(jLabel);
+        jpAmount.add(jcbAmount);
+        jbLoad = new JButton("Load");
+
+        this.add(jlCurrent);
+        this.add(jpAmount);
+        this.add(jbLoad);
+    }
+}
