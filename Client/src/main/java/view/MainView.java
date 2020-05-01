@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainView extends JFrame{
 
@@ -21,7 +23,7 @@ public class MainView extends JFrame{
     protected JLabel labelUserPhoto;
     protected JLabel labelViewName;
     protected JLabel labelBalance;
-    protected JLabel labelArrow;
+    protected JButton jbDropDown;
     protected String userName = "Peter Fox";
     protected String userBalance = "00.00";
     protected JPanel jpHeader;
@@ -125,8 +127,12 @@ public class MainView extends JFrame{
                 PATH_ARROW_ICON));
         Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
-        labelArrow = new JLabel(imageArrow);
-        jpMenu.add(labelArrow, BorderLayout.EAST);
+        jbDropDown = new JButton(imageArrow);
+        jbDropDown.setOpaque(false);
+        jbDropDown.setContentAreaFilled(false);
+        jbDropDown.setBorderPainted(false);
+        jbDropDown.setFocusPainted(false);
+        jpMenu.add(jbDropDown, BorderLayout.EAST);
 
         menuBar = new JMenuBar();
         menuBar.setBackground(color.getDarkGreyHeader());
@@ -174,6 +180,11 @@ public class MainView extends JFrame{
     }
 
     public void registerController (ActionListener actionListener) {
-        // TODO: Add the action listener to the buttons
+
+    }
+
+    public static void main(String[] args) {
+        MainView view = new MainView();
+        view.setVisible(true);
     }
 }
