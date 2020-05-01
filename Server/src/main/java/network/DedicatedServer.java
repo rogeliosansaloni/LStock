@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import model.entities.AuthenticationInfo;
+import model.entities.ShareTrade;
 import model.entities.TunnelObject;
 import model.managers.StockManager;
 import utils.UserMapperImpl;
@@ -72,6 +73,10 @@ public class DedicatedServer extends Thread {
                             oos.writeObject(authInfoLogin);
                         }
                     }
+                }
+
+                if (tunnelObject instanceof ShareTrade) {
+
                 }
             }
         } catch (ClassNotFoundException e) {
