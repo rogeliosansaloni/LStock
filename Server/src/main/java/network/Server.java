@@ -17,7 +17,6 @@ public class Server extends Thread {
     private ServerConfiguration serverConfiguration;
 
     public Server() throws IOException {
-        this.serverConfiguration = new ServerConfiguration();
         initServerConfiguration();
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
