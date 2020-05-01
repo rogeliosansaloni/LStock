@@ -3,20 +3,31 @@ package controller;
 import model.entities.Company;
 import model.entities.ShareTrade;
 import model.entities.User;
+import network.NetworkManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class CompanyDetailController implements ActionListener {
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("buyShare")) {
-            // TODO: Handle buying of shares
+    public void actionPerformed(ActionEvent evt) {
+        if (evt.getActionCommand().equals("buyShare")) {
+            /* TODO: Handle buying of shares
+            1. Check if the user has enough money
+            2. If the user doesn't have enough money, show error
+            3. If the user has enough money, send the petition to update ddbb
+             */
             // Send petition to buy shares
-            ShareTrade shareTrade = new ShareTrade();
+            ShareTrade shareTrade = new ShareTrade(0.01f, "buy");
+            try {
+                NetworkManager.getInstance().sendShareTrade(shareTrade);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        if (e.getActionCommand().equals("sellShare")) {
+        if (evt.getActionCommand().equals("sellShare")) {
             // TODO: Handle selling of shares
         }
     }
