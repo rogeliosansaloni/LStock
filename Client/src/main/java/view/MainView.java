@@ -178,12 +178,12 @@ public class MainView extends JFrame{
 
     }
 
-    /*/**
+    /**
      * Proc that verifys if the users really wants to logout
-     **
+     **/
     public void showErrorMessage () {
         int confirmDialog = JOptionPane.showConfirmDialog(null, "Logout Verification");
 
-    }*/
+    }
 
 }
