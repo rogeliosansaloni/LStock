@@ -45,11 +45,11 @@ public class MainView extends JFrame{
         this.setResizable(false);
         this.setBackground(color.getBLACK());
         initUI();
+        initAllViews();
     }
 
     public void initAllViews() {
         jpCompanyDetailsView = new CompanyDetailView();
-        jpCompanyDetailsView.registerController(new CompanyDetailController());
     }
 
     public void initUI () {
@@ -180,7 +180,11 @@ public class MainView extends JFrame{
         jpOptions.add(jpMenu, BorderLayout.CENTER);
     }
 
-    public void registerController (ActionListener actionListener) {
+    public void registerMainController(ActionListener actionListener) {
         // TODO: Add the action listener to the buttons
+    }
+
+    public void registerCompanyDetailViewController(CompanyDetailController controller) {
+        jpCompanyDetailsView.registerController(controller);
     }
 }
