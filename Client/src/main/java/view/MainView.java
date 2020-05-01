@@ -187,9 +187,4 @@ public class MainView extends JFrame{
         option4.addActionListener(actionListener);
         option4.setActionCommand("logout");
     }
-
-    public static void main (String[] args) {
-        MainView view = new MainView();
-        view.setVisible(true);
-    }
 }
