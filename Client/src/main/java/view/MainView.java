@@ -1,6 +1,5 @@
 package view;
 
-import controller.CompanyDetailController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -18,18 +17,17 @@ public class MainView extends JFrame{
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
-    private JLabel labelStock;
-    private JLabel labelUserPhoto;
-    private JLabel labelViewName;
-    private JLabel labelBalance;
-    private JLabel labelArrow;
-    private String userName = "Peter Fox";
-    private String userBalance = "00.00";
-    private JPanel jpHeader;
-    private JPanel jpLogo;
-    private JPanel jpOptions;
-    private JPanel jpMenu;
-    private JPanel jpCenter;
+    protected JLabel labelStock;
+    protected JLabel labelUserPhoto;
+    protected JLabel labelViewName;
+    protected JLabel labelBalance;
+    protected String userName = "Peter Fox";
+    protected String userBalance = "00.00";
+    protected JPanel jpHeader;
+    protected JPanel jpLogo;
+    protected JPanel jpOptions;
+    protected JPanel jpMenu;
+    protected JPanel jpCenter;
     private JMenuBar menuBar;
     private JMenu menuOptions;
     private JMenuItem option1,option2,option3, option4;
@@ -132,14 +130,16 @@ public class MainView extends JFrame{
                 PATH_ARROW_ICON));
         Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
-        labelArrow = new JLabel(imageArrow);
-        jpMenu.add(labelArrow, BorderLayout.EAST);
 
         menuBar = new JMenuBar();
         menuBar.setBackground(color.getDarkGreyHeader());
         menuBar.setBorder(null);
+        menuBar.setBorderPainted(false);
         //Here we put the name of the user
         menuOptions = new JMenu(userName);
+        menuOptions.setIcon(imageArrow);
+        menuOptions.setIconTextGap(10);
+        menuOptions.setHorizontalTextPosition(SwingConstants.LEFT);
         menuOptions.setFont(fontName);
         menuOptions.setForeground(color.getDarkGreyText());
         menuOptions.setBorder(null);
@@ -180,11 +180,18 @@ public class MainView extends JFrame{
         jpOptions.add(jpMenu, BorderLayout.CENTER);
     }
 
-    public void registerMainController(ActionListener actionListener) {
-        // TODO: Add the action listener to the buttons
+    public void registerMainController (ActionListener actionListener) {
+        option1.addActionListener(actionListener);
+        option1.setActionCommand("profile");
+        option2.addActionListener(actionListener);
+        option2.setActionCommand("shares");
+        option3.addActionListener(actionListener);
+        option3.setActionCommand("load");
+        option4.addActionListener(actionListener);
+        option4.setActionCommand("logout");
     }
 
-    public void registerCompanyDetailViewController(CompanyDetailController controller) {
+    public void registerCompanyDetailViewController(ActionListener controller) {
         jpCompanyDetailsView.registerController(controller);
     }
 }
