@@ -12,7 +12,7 @@ public class MainView extends JFrame{
     //logo de stock
     private static final String PATH_LOGO = "/Images/stock.png";
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
-    private static final String PATH_ARROW_ICON = "/Images/iconoDesplegable.png";
+    private static final String PATH_ARROW_ICON = "/Images/dropdown-grey.png";
     private static final String TITLE = "StockLS - C2";
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
@@ -21,7 +21,6 @@ public class MainView extends JFrame{
     protected JLabel labelUserPhoto;
     protected JLabel labelViewName;
     protected JLabel labelBalance;
-    protected JLabel labelArrow;
     protected String userName = "Peter Fox";
     protected String userBalance = "00.00";
     protected JPanel jpHeader;
@@ -104,7 +103,7 @@ public class MainView extends JFrame{
 
         //Here we edit the jpCenter depending on the view the create
         jpCenter = new JPanel();
-        jpCenter.setLayout(new BorderLayout());
+        jpCenter.setLayout(new CardLayout());
 
         jpCenter.setBackground(color.getBLACK());
         jpMain.add(jpCenter, BorderLayout.CENTER);
@@ -125,14 +124,16 @@ public class MainView extends JFrame{
                 PATH_ARROW_ICON));
         Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
-        labelArrow = new JLabel(imageArrow);
-        jpMenu.add(labelArrow, BorderLayout.EAST);
 
         menuBar = new JMenuBar();
         menuBar.setBackground(color.getDarkGreyHeader());
         menuBar.setBorder(null);
+        menuBar.setBorderPainted(false);
         //Here we put the name of the user
         menuOptions = new JMenu(userName);
+        menuOptions.setIcon(imageArrow);
+        menuOptions.setIconTextGap(10);
+        menuOptions.setHorizontalTextPosition(SwingConstants.LEFT);
         menuOptions.setFont(fontName);
         menuOptions.setForeground(color.getDarkGreyText());
         menuOptions.setBorder(null);
@@ -174,16 +175,13 @@ public class MainView extends JFrame{
     }
 
     public void registerController (ActionListener actionListener) {
-        // TODO: Add the action listener to the buttons
-
+        option1.addActionListener(actionListener);
+        option1.setActionCommand("profile");
+        option2.addActionListener(actionListener);
+        option2.setActionCommand("shares");
+        option3.addActionListener(actionListener);
+        option3.setActionCommand("load");
+        option4.addActionListener(actionListener);
+        option4.setActionCommand("logout");
     }
-
-    /**
-     * Proc that verifys if the users really wants to logout
-     **/
-    public void showErrorMessage () {
-        int confirmDialog = JOptionPane.showConfirmDialog(null, "Logout Verification");
-
-    }
-
 }

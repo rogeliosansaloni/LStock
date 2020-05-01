@@ -8,7 +8,7 @@ public class Company {
     private float value;
     private int shares;
     private User user;
-    private ArrayList<Bot> bot;
+    private ArrayList<Bot> bots;
 
     /**
      * It will create a company
@@ -26,14 +26,25 @@ public class Company {
         this.value = value;
         this.shares = shares;
         this.user = user;
-        this.bot = bot;
+        this.bots = bot;
+    }
+
+    public Company(String name, float value, int shares) {
+        this.name = name;
+        this.value = value;
+        this.shares = shares;
+        this.bots = new ArrayList<Bot>();
     }
 
     public Company() {
-
+        this.bots = new ArrayList<Bot>();
     }
 
     public void listBots() {
+    }
+
+    public void addBot(Bot bot) {
+        this.bots.add(bot);
     }
 
     /**
@@ -59,8 +70,8 @@ public class Company {
         return user;
     }
 
-    public ArrayList<Bot> getBot() {
-        return bot;
+    public ArrayList<Bot> getBots() {
+        return bots;
     }
 
     /**
@@ -86,7 +97,7 @@ public class Company {
         this.user = user;
     }
 
-    public void setBot(ArrayList<Bot> bot) {
-        this.bot = bot;
+    public void setBots(ArrayList<Bot> bots) {
+        this.bots = bots;
     }
 }

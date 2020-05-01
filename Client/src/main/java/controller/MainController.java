@@ -14,6 +14,20 @@ public class MainController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()) {
+            case "profile":
+                //TODO: Profile
+                break;
+            case "shares":
+                //TODO: Shares
+                break;
+            case "load":
+                //TODO: Load Balance
+                break;
+            case "logout":
+                //TODO: Log out
+                break;
 
+        }
     }
 }
