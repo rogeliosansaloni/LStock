@@ -24,7 +24,6 @@ public class MainView extends JFrame{
     protected JLabel labelUserPhoto;
     protected JLabel labelViewName;
     protected JLabel labelBalance;
-    protected JButton jbDropDown;
     protected String userName = "Peter Fox";
     protected String userBalance = "00.00";
     protected JPanel jpHeader;
@@ -128,12 +127,6 @@ public class MainView extends JFrame{
                 PATH_ARROW_ICON));
         Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
-        jbDropDown = new JButton(imageArrow);
-        jbDropDown.setOpaque(false);
-        jbDropDown.setContentAreaFilled(false);
-        jbDropDown.setBorderPainted(false);
-        jbDropDown.setFocusPainted(false);
-        jpMenu.add(jbDropDown, BorderLayout.EAST);
 
         menuBar = new JMenuBar();
         menuBar.setBackground(color.getDarkGreyHeader());
@@ -141,6 +134,9 @@ public class MainView extends JFrame{
         menuBar.setBorderPainted(false);
         //Here we put the name of the user
         menuOptions = new JMenu(userName);
+        menuOptions.setIcon(imageArrow);
+        menuOptions.setIconTextGap(10);
+        menuOptions.setHorizontalTextPosition(SwingConstants.LEFT);
         menuOptions.setFont(fontName);
         menuOptions.setForeground(color.getDarkGreyText());
         menuOptions.setBorder(null);
@@ -190,5 +186,10 @@ public class MainView extends JFrame{
         option3.setActionCommand("load");
         option4.addActionListener(actionListener);
         option4.setActionCommand("logout");
+    }
+
+    public static void main (String[] args) {
+        MainView view = new MainView();
+        view.setVisible(true);
     }
 }
