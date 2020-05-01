@@ -4,6 +4,7 @@ import utils.StockColors;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class BalanceView extends JPanel {
     private JLabel jlCurrent;
@@ -28,5 +29,14 @@ public class BalanceView extends JPanel {
         this.add(jlCurrent);
         this.add(jpAmount);
         this.add(jbLoad);
+    }
+
+    public void registerController(ActionListener actionListener) {
+        jbLoad.addActionListener(actionListener);
+        jbLoad.setActionCommand("load");
+    }
+
+    public String getAmount() {
+        return jcbAmount.getSelectedItem().toString();
     }
 }
