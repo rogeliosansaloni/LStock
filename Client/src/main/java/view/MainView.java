@@ -243,6 +243,10 @@ public class MainView extends JFrame{
         }
     }
 
+    /**
+     * Gets amount selected from the Load Balance view
+     * @return amount selected
+     */
     public String getBalanceAmount() {
         return jpBalanceView.getAmount();
     }
