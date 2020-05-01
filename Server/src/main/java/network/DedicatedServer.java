@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import model.entities.AuthenticationInfo;
+import model.entities.Share;
 import model.entities.ShareTrade;
 import model.entities.TunnelObject;
 import model.managers.StockManager;
@@ -76,7 +77,14 @@ public class DedicatedServer extends Thread {
                 }
 
                 if (tunnelObject instanceof ShareTrade) {
-
+                    ShareTrade shareTrade = (ShareTrade) tunnelObject;
+                    if (shareTrade.getActionToDo().equals("buy")) {
+                        stockModel.updateCompanyValue(shareTrade.getCompanyId(), "buy");
+                    } else {
+                        if (shareTrade.getActionToDo().equals("sell")) {
+                            stockModel.updateCompanyValue(shareTrade.getCompanyId(), "sell");
+                        }
+                    }
                 }
             }
         } catch (ClassNotFoundException e) {

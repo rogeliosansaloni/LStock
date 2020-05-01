@@ -65,5 +65,13 @@ public class StockManager {
     public ArrayList<Company> getCompanies() {
         return companies;
     }
+
+    public void updateCompanyValue(int companyId, String action) {
+        for(Company c : companies) {
+            if (c.getCompanyId() == companyId) {
+                c.recalculateValue(action);
+            }
+        }
+    }
 }
 
