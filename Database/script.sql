@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS Bots (
 	company_id BIGINT,
 	active_time INT,
 	probability FLOAT, 
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+	modified_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	PRIMARY KEY (bot_id, company_id),
 	FOREIGN KEY (company_id) REFERENCES Company(company_id)
 );
