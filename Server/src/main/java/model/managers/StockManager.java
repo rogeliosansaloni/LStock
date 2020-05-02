@@ -5,6 +5,7 @@ import database.UserDao;
 import model.entities.AuthenticationInfo;
 import model.entities.Company;
 import model.entities.User;
+import model.entities.UserProfileInfo;
 import network.DBConnector;
 import utils.UserMapperImpl;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 public class StockManager {
     private DBConnector connector;
-    private Company company;
+    private ArrayList<Company> companies;
     private UserDao userDao;
     private CompanyDao companyDao;
     private UserMapperImpl mapper;
@@ -24,10 +25,10 @@ public class StockManager {
         connector.connect();
     }
 
-    public StockManager(Company company, UserDao userDao, CompanyDao companyDao) {
-        this.company = company;
+    public StockManager(UserDao userDao, CompanyDao companyDao) {
         this.userDao = userDao;
         this.companyDao = companyDao;
+        this.companies = new ArrayList<Company>();
     }
 
     /**
@@ -49,6 +50,11 @@ public class StockManager {
         return info;
     }
 
+    /**
+     * Validates the user
+     * @param user The user
+     * @return AuthenticationInfo with the validated users information
+     */
     public AuthenticationInfo validateUser(User user) {
         String response = userDao.validateUser(user);
         AuthenticationInfo info = mapper.userToAuthenticationInfo(user);
@@ -62,8 +68,40 @@ public class StockManager {
         return info;
     }
 
-    public ArrayList<Company> listAllCompanies() {
-        return null;
+    /**
+     * Updates the user new balanace
+     * @param user The user
+     * @return UserProfileInfo with the updated information of the user
+     */
+    public UserProfileInfo updateUserBalance(User user) {
+        userDao.updateUserBalance(user);
+        UserProfileInfo info = mapper.userToUserProfileInfo(user);
+        info.setAction("balance");
+        return info;
+    }
+
+    /**
+     * Updates the users description, for now.
+     * @param user The user
+     * @return UserProfileInfo with the the update information of the user
+     */
+    public UserProfileInfo updateUserInformation(User user) {
+        userDao.updateUserInformation(user);
+        UserProfileInfo info = mapper.userToUserProfileInfo(user);
+        info.setAction("information");
+        return info;
+    }
+
+    public ArrayList<Company> getCompanies() {
+        return companies;
+    }
+
+    public void updateCompanyValue(int companyId, String action) {
+        for(Company c : companies) {
+            if (c.getCompanyId() == companyId) {
+                c.recalculateValue(action);
+            }
+        }
     }
 }
 
