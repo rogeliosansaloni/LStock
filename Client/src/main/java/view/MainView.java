@@ -1,6 +1,8 @@
 package view;
 
+import controller.BalanceController;
 import controller.MainController;
+import controller.RegisterController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -219,6 +221,10 @@ public class MainView extends JFrame{
         option4.setActionCommand("logout");
     }
 
+    public void registerBalanceController(BalanceController controller) {
+        jpBalanceView.registerController(controller);
+    }
+
     /**
      * Shows desired view
      * @param card
@@ -235,6 +241,13 @@ public class MainView extends JFrame{
                 cardLayout.show(jpCenter, CARD_BALANCE);
                 break;
         }
+    }
 
+    /**
+     * Gets amount selected from the Load Balance view
+     * @return amount selected
+     */
+    public String getBalanceAmount() {
+        return jpBalanceView.getAmount();
     }
 }
