@@ -5,6 +5,7 @@ import database.UserDao;
 import model.entities.AuthenticationInfo;
 import model.entities.Company;
 import model.entities.User;
+import model.entities.UserProfileInfo;
 import network.DBConnector;
 import utils.UserMapperImpl;
 
@@ -49,6 +50,11 @@ public class StockManager {
         return info;
     }
 
+    /**
+     * Validates the user
+     * @param user The user
+     * @return AuthenticationInfo with the validated users information
+     */
     public AuthenticationInfo validateUser(User user) {
         String response = userDao.validateUser(user);
         AuthenticationInfo info = mapper.userToAuthenticationInfo(user);
@@ -59,6 +65,30 @@ public class StockManager {
         }
         info.setAction("login");
         info.setResponseType(response);
+        return info;
+    }
+
+    /**
+     * Updates the user new balanace
+     * @param user The user
+     * @return UserProfileInfo with the updated information of the user
+     */
+    public UserProfileInfo updateUserBalance(User user) {
+        userDao.updateUser(user);
+        UserProfileInfo info = mapper.userToUserProfileInfo(user);
+        info.setAction("balance");
+        return info;
+    }
+
+    /**
+     * Updates the users description, for now.
+     * @param user The user
+     * @return UserProfileInfo with the the update information of the user
+     */
+    public UserProfileInfo updateUserInformation(User user) {
+        userDao.updateUser(user);
+        UserProfileInfo info = mapper.userToUserProfileInfo(user);
+        info.setAction("information");
         return info;
     }
 
