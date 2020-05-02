@@ -89,6 +89,18 @@ public class DBConnector {
         return rs;
     }
 
+    public void deleteQuery(String query){
+        try {
+            s =(Statement) conn.createStatement();
+            s.executeUpdate(query);
+
+        } catch (SQLException ex) {
+            System.out.println("Delete KO" + ex.getSQLState());
+            System.out.println("Query: " + query);
+            System.err.println(ex);
+        }
+
+    }
 
     public void disconnect() {
         try {
