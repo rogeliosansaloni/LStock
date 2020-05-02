@@ -30,7 +30,7 @@ public class MainController implements ActionListener {
                 break;
             case "logout":
 
-                if(logOut() == 0){
+                if(view.confirmLogOutWindow() == 0){
                     loginView.setVisible(true);
                     view.setVisible(false);
                 }
@@ -39,8 +39,5 @@ public class MainController implements ActionListener {
         }
 
     }
-    public int logOut(){
-        int verify = JOptionPane.showConfirmDialog(null, "Do you want to logout really?","Log Out", JOptionPane.YES_NO_OPTION);
-        return verify;
-    }
+
 }

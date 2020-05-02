@@ -184,5 +184,9 @@ public class MainView extends JFrame{
         option4.addActionListener(actionListener);
         option4.setActionCommand("logout");
     }
+    public int  confirmLogOutWindow(){
+        int verify = JOptionPane.showConfirmDialog(null, "Do you really want to logout?","Log Out", JOptionPane.YES_NO_OPTION);
+        return verify;
+    }
 
 }
