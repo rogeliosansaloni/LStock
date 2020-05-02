@@ -74,7 +74,7 @@ public class StockManager {
      * @return UserProfileInfo with the updated information of the user
      */
     public UserProfileInfo updateUserBalance(User user) {
-        userDao.updateUser(user);
+        userDao.updateUserBalance(user);
         UserProfileInfo info = mapper.userToUserProfileInfo(user);
         info.setAction("balance");
         return info;
@@ -86,7 +86,7 @@ public class StockManager {
      * @return UserProfileInfo with the the update information of the user
      */
     public UserProfileInfo updateUserInformation(User user) {
-        userDao.updateUser(user);
+        userDao.updateUserInformation(user);
         UserProfileInfo info = mapper.userToUserProfileInfo(user);
         info.setAction("information");
         return info;
