@@ -250,4 +250,13 @@ public class MainView extends JFrame{
     public String getBalanceAmount() {
         return jpBalanceView.getAmount();
     }
+
+    public void initHeaderInformation (String nickname, float totalBalance) {
+        menuOptions.setText(nickname);
+        labelBalance.setText("Balance: " + String.valueOf(totalBalance) + " $");
+    }
+
+    public void updateTotalBalance (float totalBalance) {
+        labelBalance.setText("Balance: " + String.valueOf(totalBalance) + " $");
+    }
 }

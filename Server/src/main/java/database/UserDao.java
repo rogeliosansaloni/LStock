@@ -115,7 +115,7 @@ public class UserDao {
      * @param user User information
      */
     public void updateUserBalance(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
             while (result.next()) {
@@ -133,7 +133,7 @@ public class UserDao {
      * @param user The user
      */
     public void updateUserInformation(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
             while (result.next()) {
