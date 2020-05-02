@@ -7,6 +7,7 @@ import java.net.Socket;
 
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
+import model.entities.UserProfileInfo;
 import model.managers.StockManager;
 import utils.UserMapperImpl;
 
@@ -72,6 +73,21 @@ public class DedicatedServer extends Thread {
                             oos.writeObject(authInfoLogin);
                         }
                     }
+                }
+                // Check if the object is for updating the users balance or description
+                if (tunnelObject instanceof UserProfileInfo) {
+                    UserProfileInfo userInfo = ((UserProfileInfo) tunnelObject);
+                    if (userInfo.getAction().equals("balance")) {
+                        UserProfileInfo userProfileInfo = stockModel.updateUserBalance(mapper.userProfileInfoToUser((UserProfileInfo) tunnelObject));
+                        oos.writeObject(userProfileInfo);
+                    }
+                    else {
+                        if (userInfo.getAction().equals("information")) {
+                            UserProfileInfo userProfileInfo = stockModel.updateUserInformation(mapper.userProfileInfoToUser((UserProfileInfo) tunnelObject));
+                            oos.writeObject(userProfileInfo);
+                        }
+                    }
+
                 }
             }
         } catch (ClassNotFoundException e) {
