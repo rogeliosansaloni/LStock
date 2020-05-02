@@ -23,9 +23,6 @@ public class UserDao {
     private static final String PROFILE_MESSAGE_2 = "Error updating the user information";
     private static final String BALANCE_MESSAGE_1 = "Error updating the user total balance";
 
-
-
-
     public UserDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
@@ -43,8 +40,7 @@ public class UserDao {
             while (result.next()) {
                 if (result.getString("email").equals(user.getEmail())) {
                     message = REGISTER_MESSAGE_2;
-                }
-                else {
+                } else {
                     if (result.getString("nickname").equals(user.getNickname())) {
                         message = REGISTER_MESSAGE_3;
                     }
@@ -61,10 +57,11 @@ public class UserDao {
 
     /**
      * Validates user if it exists in the database
+     *
      * @param user the User to be validated
      */
     public String validateUser(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
         String message = LOGIN_MESSAGE_3;
         try {
             while (result.next()) {
@@ -130,6 +127,7 @@ public class UserDao {
 
     /**
      * Updates users description for now
+     *
      * @param user The user
      */
     public void updateUserInformation(User user) {
