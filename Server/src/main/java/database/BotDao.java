@@ -49,13 +49,18 @@ public class BotDao {
     /**
      * It will get all the bots in the LStock
      */
-    public ArrayList<String> getAllBots() {
-        ResultSet getBots = dbConnector.selectQuery("SELECT * FROM Bots;");
-        ArrayList<String> bots = null;
+    public ArrayList<Bot> getAllBots() {
+        ResultSet retrievedBots = dbConnector.selectQuery("SELECT * FROM Bots;");
+        ArrayList<Bot> bots = null;
         try {
-            bots = new ArrayList<String>();
-            while (getBots.next()) {
-                bots.add(getBots.getObject("name").toString());
+            bots = new ArrayList<Bot>();
+            while (retrievedBots.next()) {
+                Bot bot = new Bot();
+                bot.setBotId(Integer.getInteger(retrievedBots.getObject("id").toString()));
+                bot.setActiveTime(Float.parseFloat(retrievedBots.getObject("active_time").toString()));
+                bot.setProbability(Float.parseFloat(retrievedBots.getObject("probability").toString()));
+                bot.setCompany(new Company(Integer.getInteger(retrievedBots.getObject("company_id").toString())));
+                bots.add(bot);
             }
         } catch (SQLException e) {
             System.out.println("Error getting all bots");
