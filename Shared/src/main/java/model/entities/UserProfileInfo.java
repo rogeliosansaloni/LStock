@@ -5,6 +5,7 @@ public class UserProfileInfo extends TunnelObject {
     private String email;
     private String description;
     private float totalBalance;
+    private String action;
 
     public UserProfileInfo() {}
 
@@ -38,5 +39,13 @@ public class UserProfileInfo extends TunnelObject {
 
     public void setTotalBalance(float totalBalance) {
         this.totalBalance = totalBalance;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 }
