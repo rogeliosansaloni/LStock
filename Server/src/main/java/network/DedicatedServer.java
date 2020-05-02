@@ -61,19 +61,34 @@ public class DedicatedServer extends Thread {
 
                 if (tunnelObject instanceof AuthenticationInfo) {
                     AuthenticationInfo info = ((AuthenticationInfo) tunnelObject);
+                    User user = mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject);
                     // Check if the object is for registering users
                     if (info.getAction().equals("register")) {
-                        AuthenticationInfo authInfoRegister =
-                                stockModel.registerUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                        AuthenticationInfo authInfoRegister = stockModel.registerUser(user);
                         oos.writeObject(authInfoRegister);
                     } else {
                         // Check if we need user validation for login
                         if (info.getAction().equals("login")) {
-                            AuthenticationInfo authInfoLogin =
-                                    stockModel.validateUser(mapper.authenticationInfoToUser((AuthenticationInfo) tunnelObject));
+                            AuthenticationInfo authInfoLogin = stockModel.validateUser(user);
                             oos.writeObject(authInfoLogin);
                         }
                     }
+                }
+                // Check if the object is for updating the users balance or description
+                if (tunnelObject instanceof UserProfileInfo) {
+                    UserProfileInfo userInfo = ((UserProfileInfo) tunnelObject);
+                    User user = mapper.userProfileInfoToUser((UserProfileInfo) tunnelObject);
+                    if (userInfo.getAction().equals("balance")) {
+                        UserProfileInfo userProfileInfo = stockModel.updateUserBalance(user);
+                        oos.writeObject(userProfileInfo);
+                    }
+                    else {
+                        if (userInfo.getAction().equals("information")) {
+                            UserProfileInfo userProfileInfo = stockModel.updateUserInformation(user);
+                            oos.writeObject(userProfileInfo);
+                        }
+                    }
+
                 }
 
                 if (tunnelObject instanceof ShareTrade) {
