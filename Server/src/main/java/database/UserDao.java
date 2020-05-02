@@ -128,6 +128,10 @@ public class UserDao {
         }
     }
 
+    /**
+     * Updates users description for now
+     * @param user The user
+     */
     public void updateUserInformation(User user) {
         ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
 
