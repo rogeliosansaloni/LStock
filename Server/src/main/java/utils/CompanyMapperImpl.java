@@ -23,6 +23,15 @@ public class CompanyMapperImpl implements CompanyMapper {
 
     @Override
     public CompanyList convertToCompanyList(ArrayList<Company> companies) {
-        return null;
+        CompanyList companyList = new CompanyList(companies.size());
+        int i = 0;
+        for (Company c : companies) {
+            companyList.setCompanyId(i, c.getCompanyId());
+            companyList.setCompanyName(i, c.getName());
+            companyList.setCompanyValue(i, c.getValue());
+            companyList.setCompanyShares(i, c.getShares());
+            i++;
+        }
+        return companyList;
     }
 }

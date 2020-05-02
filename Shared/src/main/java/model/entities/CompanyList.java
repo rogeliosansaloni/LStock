@@ -17,31 +17,31 @@ public class CompanyList extends TunnelObject {
         return companyId;
     }
 
-    public void setCompanyId(int[] companyId) {
-        this.companyId = companyId;
-    }
-
     public String[] getCompanyName() {
         return companyName;
-    }
-
-    public void setCompanyName(String[] companyName) {
-        this.companyName = companyName;
     }
 
     public float[] getCompanyValue() {
         return companyValue;
     }
 
-    public void setCompanyValue(float[] companyValue) {
-        this.companyValue = companyValue;
-    }
-
     public int[] getCompanyShares() {
         return companyShares;
     }
 
-    public void setCompanyShares(int[] companyShares) {
-        this.companyShares = companyShares;
+    public void setCompanyId(int i, int companyId) {
+        this.companyId[i] = companyId;
+    }
+
+    public void setCompanyName(int i, String companyName) {
+        this.companyName[i] = companyName;
+    }
+
+    public void setCompanyValue(int i, float companyValue) {
+        this.companyValue[i] = companyValue;
+    }
+
+    public void setCompanyShares(int i, int companyShares) {
+        this.companyShares[i] = companyShares;
     }
 }
