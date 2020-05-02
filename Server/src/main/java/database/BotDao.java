@@ -68,21 +68,21 @@ public class BotDao {
 
     /**
      * Erases a bot
-     * @param bot bot to erase
+     * @param botId id of bot to erase
      */
-    public boolean deleteBot(Bot bot) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Bots WHERE bot_id = " + bot.getBotId() + ";");
+    public boolean deleteBot(int botId) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Bots WHERE bot_id = " + botId + ";");
         try {
             while (verify.next()) {
                 if (verify.getObject("bot_id") != null) {
-                    dbConnector.deleteQuery("DELETE FROM Bots WHERE bot_id = " + bot.getBotId() + ";");
-                    System.out.println("Bot " + bot.getBotId() + " deleted");
+                    dbConnector.deleteQuery("DELETE FROM Bots WHERE bot_id = " + botId + ";");
+                    System.out.println("Bot " + botId + " deleted");
                     return true;
                 }
             }
 
         }catch (SQLException e) {
-            System.out.println("Error deleting bot with id " + bot.getBotId());
+            System.out.println("Error deleting bot with id " + botId);
         }
         return false;
     }
