@@ -16,7 +16,7 @@ public class Share {
         return value;
     }
 
-
+ 
     public float getPrice() {
         return price;
     }
