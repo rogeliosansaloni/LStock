@@ -5,11 +5,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-import model.entities.AuthenticationInfo;
-import model.entities.TunnelObject;
-import model.entities.User;
-import model.entities.UserProfileInfo;
+import model.entities.*;
 import model.managers.StockManager;
+import utils.CompanyMapperImpl;
 import utils.UserMapperImpl;
 
 public class DedicatedServer extends Thread {
@@ -19,6 +17,7 @@ public class DedicatedServer extends Thread {
     private Socket sClient;
     private StockManager stockModel;
     private UserMapperImpl mapper;
+    private CompanyMapperImpl companyMapper;
 
     /**
      * DedicatedServer constructor
@@ -28,6 +27,7 @@ public class DedicatedServer extends Thread {
         this.sClient = sClient;
         this.stockModel = new StockManager();
         this.mapper = new UserMapperImpl();
+        this.companyMapper = new CompanyMapperImpl();
     }
 
     /**
@@ -89,6 +89,18 @@ public class DedicatedServer extends Thread {
                         }
                     }
 
+                }
+
+                if (tunnelObject instanceof ShareTrade) {
+                    ShareTrade shareTrade = (ShareTrade) tunnelObject;
+                    if (shareTrade.getActionToDo().equals("buy")) {
+                        stockModel.updateCompanyValue(shareTrade.getCompanyId(), "buy");
+                    } else {
+                        if (shareTrade.getActionToDo().equals("sell")) {
+                            stockModel.updateCompanyValue(shareTrade.getCompanyId(), "sell");
+                        }
+                    }
+                    oos.writeObject(companyMapper.convertToCompanyList(stockModel.getCompanies()));
                 }
             }
         } catch (ClassNotFoundException e) {

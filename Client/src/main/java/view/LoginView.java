@@ -55,7 +55,7 @@ public class LoginView extends JFrame {
         Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
-        //TODO: Add label under the logo
+
         jpNorth.add(labelLogo, BorderLayout.CENTER);
         labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);

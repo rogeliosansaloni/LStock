@@ -1,5 +1,8 @@
 package view;
 
+import controller.BalanceController;
+import controller.MainController;
+import controller.RegisterController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -14,6 +17,10 @@ public class MainView extends JFrame{
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
     private static final String PATH_ARROW_ICON = "/Images/dropdown-grey.png";
     private static final String TITLE = "StockLS - C2";
+    private static final String CARD_COMPANY = "Companies";
+    private static final String CARD_PROFILE = "My Profile";
+    private static final String CARD_SHARES = "Shares";
+    private static final String CARD_BALANCE = "Load Balance";
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
@@ -21,7 +28,6 @@ public class MainView extends JFrame{
     protected JLabel labelUserPhoto;
     protected JLabel labelViewName;
     protected JLabel labelBalance;
-    protected JLabel labelArrow;
     protected String userName = "Peter Fox";
     protected String userBalance = "00.00";
     protected JPanel jpHeader;
@@ -33,6 +39,7 @@ public class MainView extends JFrame{
     private JMenu menuOptions;
     private JMenuItem option1,option2,option3, option4;
     protected StockColors color;
+    private BalanceView jpBalanceView;
 
     public MainView () {
         color = new StockColors();
@@ -43,8 +50,29 @@ public class MainView extends JFrame{
         this.setResizable(false);
         this.setBackground(color.getBLACK());
         initUI();
+        initAllViews();
     }
 
+    /**
+     * Initializes all views
+     */
+    public void initAllViews() {
+        jpBalanceView = new BalanceView();
+        //TODO: Add the rest of views
+        addToCardLayout();
+    }
+
+    /**
+     * Add diferent views to layout
+     */
+    private void addToCardLayout() {
+        jpCenter.add(jpBalanceView, CARD_BALANCE);
+        //TODO: Add the rest of views
+    }
+
+    /**
+     * Initializes UI
+     */
     public void initUI () {
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new BorderLayout());
@@ -112,6 +140,9 @@ public class MainView extends JFrame{
 
     }
 
+    /**
+     * Creates Menu Bar
+     */
     public void createMenuBar(){
 
         Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
@@ -125,14 +156,16 @@ public class MainView extends JFrame{
                 PATH_ARROW_ICON));
         Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
-        labelArrow = new JLabel(imageArrow);
-        jpMenu.add(labelArrow, BorderLayout.EAST);
 
         menuBar = new JMenuBar();
         menuBar.setBackground(color.getDarkGreyHeader());
         menuBar.setBorder(null);
+        menuBar.setBorderPainted(false);
         //Here we put the name of the user
         menuOptions = new JMenu(userName);
+        menuOptions.setIcon(imageArrow);
+        menuOptions.setIconTextGap(10);
+        menuOptions.setHorizontalTextPosition(SwingConstants.LEFT);
         menuOptions.setFont(fontName);
         menuOptions.setForeground(color.getDarkGreyText());
         menuOptions.setBorder(null);
@@ -173,7 +206,48 @@ public class MainView extends JFrame{
         jpOptions.add(jpMenu, BorderLayout.CENTER);
     }
 
+    /**
+     * Register controllers to Menu Bar
+     * @param actionListener ActionLister
+     */
     public void registerController (ActionListener actionListener) {
-        // TODO: Add the action listener to the buttons
+        option1.addActionListener(actionListener);
+        option1.setActionCommand("profile");
+        option2.addActionListener(actionListener);
+        option2.setActionCommand("shares");
+        option3.addActionListener(actionListener);
+        option3.setActionCommand("load");
+        option4.addActionListener(actionListener);
+        option4.setActionCommand("logout");
+    }
+
+    public void registerBalanceController(BalanceController controller) {
+        jpBalanceView.registerController(controller);
+    }
+
+    /**
+     * Shows desired view
+     * @param card
+     */
+    public void updateView(String card) {
+        CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
+        switch (card) {
+            case CARD_PROFILE:
+                break;
+            case CARD_SHARES:
+                break;
+            case CARD_BALANCE:
+                labelViewName.setText(CARD_BALANCE);
+                cardLayout.show(jpCenter, CARD_BALANCE);
+                break;
+        }
+    }
+
+    /**
+     * Gets amount selected from the Load Balance view
+     * @return amount selected
+     */
+    public String getBalanceAmount() {
+        return jpBalanceView.getAmount();
     }
 }
