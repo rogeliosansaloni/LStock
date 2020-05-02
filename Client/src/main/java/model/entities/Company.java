@@ -31,6 +31,14 @@ public class Company {
         this.bots = new ArrayList<Bot>();
     }
 
+    public Company(int companyId, String name, float value, int shares) {
+        this.companyId = companyId;
+        this.name = name;
+        this.value = value;
+        this.shares = shares;
+        this.bots = new ArrayList<Bot>();
+    }
+
     public Company() {
 
     }

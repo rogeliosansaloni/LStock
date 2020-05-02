@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class StockManager {
     private DBConnector connector;
-    private Company company;
+    private ArrayList<Company> companies;
     private UserDao userDao;
     private CompanyDao companyDao;
     private UserMapperImpl mapper;
@@ -24,10 +24,10 @@ public class StockManager {
         connector.connect();
     }
 
-    public StockManager(Company company, UserDao userDao, CompanyDao companyDao) {
-        this.company = company;
+    public StockManager(UserDao userDao, CompanyDao companyDao) {
         this.userDao = userDao;
         this.companyDao = companyDao;
+        this.companies = new ArrayList<Company>();
     }
 
     /**
@@ -62,8 +62,16 @@ public class StockManager {
         return info;
     }
 
-    public ArrayList<Company> listAllCompanies() {
-        return null;
+    public ArrayList<Company> getCompanies() {
+        return companies;
+    }
+
+    public void updateCompanyValue(int companyId, String action) {
+        for(Company c : companies) {
+            if (c.getCompanyId() == companyId) {
+                c.recalculateValue(action);
+            }
+        }
     }
 }
 
