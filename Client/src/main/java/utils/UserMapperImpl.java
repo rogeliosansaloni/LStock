@@ -29,6 +29,7 @@ public class UserMapperImpl implements UserMapper {
     @Override
     public User userProfileInfoToUser(UserProfileInfo userProfile) {
         User user = new User();
+        user.setUserId(userProfile.getUserId());
         user.setNickname(userProfile.getNickname());
         user.setEmail(userProfile.getEmail());
         user.setDescription(userProfile.getDescription());

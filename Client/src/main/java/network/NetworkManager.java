@@ -85,12 +85,21 @@ public class NetworkManager extends Thread {
     /**
      * Initializes the main view and its controller
      */
+    private void initMainView_deprecated() {
+        this.mainView = new MainView();
+        this.mainController = new MainController(mainView, model);
+        this.mainView.registerController(mainController);
+        this.mainView.registerBalanceController(this.mainController.getBalanceController(model));
+        this.mainView.setVisible(false);
+    }
+
     private void initMainView() {
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model);
         this.mainView.registerController(mainController);
-        this.mainView.registerBalanceController(this.mainController.getBalanceController());
-        this.mainView.setVisible(false);
+        this.mainView.registerBalanceController(this.mainController.getBalanceController(model));
+        this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
+        this.mainView.setVisible(true);
     }
 
     /**
@@ -138,10 +147,6 @@ public class NetworkManager extends Thread {
         oos.writeObject(object);
     }
 
-    private void setModel (StockManager model) {
-        this.mainController.setModel(model);
-    }
-
     /**
      * Runs the main client thread and receives objects coming from the server
      */
@@ -166,11 +171,9 @@ public class NetworkManager extends Thread {
                         if (info.isValidated()) {
                             User user = mapper.authenticationInfoToUser((AuthenticationInfo) received);
                             model = new StockManager(user);
-                            setModel(model);
                             loginController.closeLoginView();
-                            mainView.initHeaderInformation(user.getNickname(), user.getTotalBalance());
-                            //mainView.registerController(this.mainController.getBalanceController());
-                            mainView.setVisible(true);
+                            //Temporal
+                            initMainView();
                         } else {
                             loginController.sendErrorMessage(info.getResponseType());
                         }

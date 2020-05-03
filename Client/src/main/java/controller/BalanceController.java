@@ -23,9 +23,9 @@ public class BalanceController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("load")) {
             String amountStr = view.getBalanceAmount().replace("$","");
-            float amount = Float.parseFloat(amountStr);
+            float newAmount = Float.parseFloat(amountStr);
             int userId = model.getUser().getUserId();
-            TunnelObject info = new UserProfileInfo(userId, amount, "balance");
+            TunnelObject info = new UserProfileInfo(userId, newAmount, "balance");
             try {
                 NetworkManager.getInstance().sendUserProfileInfo(info);
             } catch (IOException ex) {

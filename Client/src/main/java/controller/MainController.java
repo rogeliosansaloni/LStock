@@ -43,12 +43,9 @@ public class MainController implements ActionListener {
         }
     }
 
-    public BalanceController getBalanceController() {
-        this.balanceController.setModel(model);
+    public BalanceController getBalanceController(StockManager model) {
+        this.model = model;
         return balanceController;
     }
 
-    public void setModel (StockManager model) {
-        this.model = model;
-    }
 }
