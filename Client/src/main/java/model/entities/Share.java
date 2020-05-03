@@ -1,8 +1,13 @@
 package main.java.model.entities;
 
+/**
+ * Create Share Class
+ */
 public class Share {
 
     private float price;
+
+
 
     public Share(float price){
 
@@ -16,7 +21,11 @@ public class Share {
         return value;
     }
 
- 
+
+    /**
+     * getters and setters
+     * @return
+     */
     public float getPrice() {
         return price;
     }
