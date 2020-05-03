@@ -7,7 +7,7 @@ public class Bot extends Thread {
     private Company company;
 
     /**
-     * It will create a bot
+     * Bot constructor
      *
      * @param activeTime the time the bot have to be active
      * @param probability Defines the probability of being bought or sold.
@@ -18,6 +18,13 @@ public class Bot extends Thread {
         this.activeTime = activeTime;
         this.probability = probability;
         this.company = company;
+    }
+
+    /**
+     * Default bot constructor
+     */
+    public Bot() {
+
     }
 
     public boolean checkBuySell() {
