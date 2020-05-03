@@ -48,6 +48,10 @@ public class Company {
         this.bots = new ArrayList<Bot>();
     }
 
+    public Company(int companyId) {
+        this.companyId = companyId;
+    }
+
     public void listBots() {
     }
 
