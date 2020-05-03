@@ -1,6 +1,7 @@
 package model.managers;
 
 import database.BotDao;
+import database.CompanyDao;
 import model.entities.Bot;
 import model.entities.Company;
 import network.DedicatedServer;
@@ -8,19 +9,22 @@ import network.DedicatedServer;
 public class BotManager {
     private DedicatedServer dedicatedServer;
     private BotDao botDao;
+    private CompanyDao companyDao;
 
-    public BotManager(BotDao botDao) {
+    public BotManager(BotDao botDao, CompanyDao companyDao) {
         this.botDao = botDao;
+        this.companyDao = companyDao;
     }
 
     /**
      * Creates a bot
      * @param bot bot to be created
-     * @param company company to which the bot is associated to
      * @return
      */
-    public int createBot(Bot bot, Company company) {
-        return botDao.createBot(bot, company);
+    public int createBot(Bot bot) {
+        Company company = companyDao.getCompanyByName(bot.getCompany().getName());
+        bot.setCompany(company);
+        return botDao.createBot(bot);
     }
 
     /**
@@ -28,6 +32,8 @@ public class BotManager {
      * @param botId id of the bot to be configured
      */
     public void configureBot(int botId) {
+        Bot bot = botDao.getBotById(botId);
+        botDao.updateBot(bot);
     }
 
     /**

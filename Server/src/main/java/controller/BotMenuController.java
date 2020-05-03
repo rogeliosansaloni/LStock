@@ -1,5 +1,6 @@
 package controller;
 
+import model.entities.Bot;
 import model.managers.BotManager;
 import view.*;
 
@@ -20,7 +21,9 @@ public class BotMenuController implements ActionListener {
         String mode = e.getActionCommand();
         switch (mode) {
             case "createBot":
-                // TODO: Handle bot creation
+                Bot bot = new Bot();
+                // TODO: Get bot information from view
+                model.createBot(bot);
                 break;
             case "editBot":
                 // TODO: Handle bot update

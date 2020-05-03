@@ -20,10 +20,9 @@ public class BotDao {
      * Creates a bot associated to a company
      *
      * @param bot     bot to be created
-     * @param company company to which the bot belongs to
      * @return id of the newly created bot. It will return -1 in case there is an error.
      */
-    public int createBot(Bot bot, Company company) {
+    public int createBot(Bot bot) {
         final String insertQuery = "INSERT INTO Bots (company_id, active_time, probability, activity_status) " +
                 "VALUES (%d, %f, %f, TRUE);";
         final String selectQuery = "SELECT * FROM Bots WHERE company_id = %d ORDER BY created_at DESC LIMIT 1;";
@@ -31,17 +30,17 @@ public class BotDao {
         final String errorMessage = "Error in creating bot for %s";
 
         // Create the new bot for the specified company
-        dbConnector.insertQuery(String.format(insertQuery, company.getCompanyId(), bot.getActiveTime(),
+        dbConnector.insertQuery(String.format(insertQuery, bot.getCompany().getCompanyId(), bot.getActiveTime(),
                 bot.getProbability()));
 
         // Get the latest bot created for the specified company
-        ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, company.getCompanyId()));
+        ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, bot.getCompany().getCompanyId()));
         try {
             int botId = Integer.parseInt(verify.getObject("bot_id").toString());
             System.out.println(String.format(successMessage, botId));
             return botId;
         } catch (SQLException e) {
-            System.out.println(String.format(errorMessage, company.getName()));
+            System.out.println(String.format(errorMessage, bot.getCompany().getCompanyId()));
         }
         return -1;
     }

@@ -1,6 +1,7 @@
 package database;
 
 
+import model.entities.Bot;
 import model.entities.Company;
 
 import java.sql.ResultSet;
@@ -56,6 +57,39 @@ public class CompanyDao {
             System.out.println("Error getting all companies");
         }
         return companies;
+    }
+
+    /**
+     * Retrieves a company by name
+     * @param companyName name of the company
+     * @return Company object with all the information retrieved from the database
+     */
+    public Company getCompanyByName(String companyName) {
+        final String selectQuery = "SELECT * FROM Company WHERE name = %s;";
+        final String errorMessage = "Error in getting company information for %s";
+
+        ResultSet resultSet = dbConnector.selectQuery(String.format(selectQuery, companyName));
+        try {
+            while (resultSet.next()) {
+                return toCompany(resultSet);
+            }
+        } catch (SQLException e) {
+            System.out.println(String.format(errorMessage, companyName));
+        }
+        return null;
+    }
+
+    /**
+     * Converts retrieved information to Company object
+     * @param resultSet information retrieved from the database
+     * @return Company object with all the information
+     * @throws SQLException
+     */
+    private Company toCompany(ResultSet resultSet) throws SQLException {
+        Company company = new Company();
+        company.setCompanyId(resultSet.getInt("company_id"));
+        company.setName(resultSet.getString("name"));
+        return company;
     }
 
     /**

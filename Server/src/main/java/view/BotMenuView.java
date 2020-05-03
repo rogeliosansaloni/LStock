@@ -59,4 +59,36 @@ public class BotMenuView extends JPanel {
         jbEnable.addActionListener(controller);
         jbDisable.addActionListener(controller);
     }
+
+    public BotsCreateView getBotsCreateView() {
+        return botsCreateView;
+    }
+
+    public void setBotsCreateView(BotsCreateView botsCreateView) {
+        this.botsCreateView = botsCreateView;
+    }
+
+    public BotsEditView getBotsEditView() {
+        return botsEditView;
+    }
+
+    public void setBotsEditView(BotsEditView botsEditView) {
+        this.botsEditView = botsEditView;
+    }
+
+    public BotsRemoveView getBotsRemoveView() {
+        return botsRemoveView;
+    }
+
+    public void setBotsRemoveView(BotsRemoveView botsRemoveView) {
+        this.botsRemoveView = botsRemoveView;
+    }
+
+    public BotsListView getBotsListView() {
+        return botsListView;
+    }
+
+    public void setBotsListView(BotsListView botsListView) {
+        this.botsListView = botsListView;
+    }
 }
