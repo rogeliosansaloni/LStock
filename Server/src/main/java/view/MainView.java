@@ -1,5 +1,6 @@
 package view;
 
+import controller.HomeController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -27,6 +28,7 @@ public class MainView extends JFrame {
     private JMenu menuOptions;
     private JMenuItem option1,option2, option3;
     private StockColors color;
+    private HomeView jpHomeView;
 
     public MainView() {
         color = new StockColors();
@@ -46,6 +48,7 @@ public class MainView extends JFrame {
      * Initializes all views
      */
     public void initAllViews() {
+        jpHomeView = new HomeView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -54,6 +57,7 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
+        jpCenter.add(jpHomeView, CARD_HOME);
         //TODO: Add the rest of views
     }
 
@@ -153,6 +157,10 @@ public class MainView extends JFrame {
         option3.setActionCommand(CARD_BOTS);
     }
 
+    public void registerHomeController(HomeController controller) {
+        jpHomeView.registerController(controller);
+    }
+
     /**
      * Shows desired view
      * @param card
@@ -161,6 +169,7 @@ public class MainView extends JFrame {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
         switch (card) {
             case CARD_HOME:
+                cardLayout.show(jpCenter, CARD_HOME);
                 break;
             case CARD_USERS:
                 break;
