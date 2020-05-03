@@ -1,5 +1,6 @@
-package network;
+package database;
 
+import network.ServerConfiguration;
 import utils.JSONReader;
 
 import java.sql.Connection;

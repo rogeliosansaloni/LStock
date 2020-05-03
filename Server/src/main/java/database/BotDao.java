@@ -3,7 +3,6 @@ package database;
 
 import model.entities.Bot;
 import model.entities.Company;
-import network.DBConnector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -43,6 +42,17 @@ public class BotDao {
         return -1;
     }
 
+    public Bot getBotById(int botId) {
+        ResultSet retrievedBot = dbConnector.selectQuery("SELECT * FROM Bots WHERE bot_id = " + botId + ";");
+        try {
+            while(retrievedBot.next()) {
+                return toBot(retrievedBot);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getting bot information for bot with " + botId);
+        }
+        return null;
+    }
 
     /**
      * It will get all the bots in the LStock
@@ -53,17 +63,21 @@ public class BotDao {
         try {
             bots = new ArrayList<Bot>();
             while (retrievedBots.next()) {
-                Bot bot = new Bot();
-                bot.setBotId(Integer.parseInt(retrievedBots.getObject("id").toString()));
-                bot.setActiveTime(Float.parseFloat(retrievedBots.getObject("active_time").toString()));
-                bot.setProbability(Float.parseFloat(retrievedBots.getObject("probability").toString()));
-                bot.setCompany(new Company(Integer.parseInt(retrievedBots.getObject("company_id").toString())));
-                bots.add(bot);
+                bots.add(toBot(retrievedBots));
             }
         } catch (SQLException e) {
             System.out.println("Error getting all bots");
         }
         return bots;
+    }
+
+    private Bot toBot(ResultSet resultSet) throws SQLException {
+        Bot bot = new Bot();
+        bot.setBotId(Integer.parseInt(resultSet.getObject("id").toString()));
+        bot.setActiveTime(Float.parseFloat(resultSet.getObject("active_time").toString()));
+        bot.setProbability(Float.parseFloat(resultSet.getObject("probability").toString()));
+        bot.setCompany(new Company(Integer.parseInt(resultSet.getObject("company_id").toString())));
+        return bot;
     }
 
     /**
