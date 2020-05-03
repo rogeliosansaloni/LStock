@@ -68,7 +68,7 @@ public class BotDao {
     }
 
     /**
-     * It will get all the bots in the LStock
+     * Gets all existing bots
      */
     public ArrayList<Bot> getAllBots() {
         ResultSet retrievedBots = dbConnector.selectQuery("SELECT * FROM Bots;");
@@ -122,17 +122,22 @@ public class BotDao {
                     return true;
                 }
             }
-
         } catch (SQLException e) {
             System.out.println(String.format(errorMessage, botId));
         }
         return false;
     }
 
+    /**
+     * Updates bot information
+     * @param bot bot that contains the new information
+     * @return true if the update is successful. If not, false.
+     */
     public boolean updateBot(Bot bot) {
         final String updateQuery = "UPDATE Bots SET company_id = %d, active_time = %f, probability = %f WHERE " +
                 "bot_id = %d;";
         final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
+        final String errorMessage = "Error updating bot with id %d";
 
         // Consult the database to get information on the bot to be updated
         ResultSet result = dbConnector.selectQuery(String.format(selectQuery, bot.getBotId()));
@@ -146,7 +151,7 @@ public class BotDao {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error updating bot with id " + bot.getBotId());
+            System.out.println(String.format(errorMessage, bot.getBotId()));
         }
         return false;
     }
