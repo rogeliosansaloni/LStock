@@ -13,6 +13,6 @@ public class BotsListView extends JPanel {
 
     public void registerController(ActionListener controller) {
         this.jbReturn.addActionListener(controller);
-        this.jbReturn.setActionCommand("return");
+        this.jbReturn.setActionCommand("cancelBotList");
     }
 }

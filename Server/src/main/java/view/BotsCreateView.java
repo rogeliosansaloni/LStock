@@ -19,7 +19,7 @@ public class BotsCreateView extends JPanel {
         this.jbCreate.addActionListener(controller);
         this.jbCreate.setActionCommand("createNewBot");
         this.jbCancel.addActionListener(controller);
-        this.jbCancel.setActionCommand("cancelCreate");
+        this.jbCancel.setActionCommand("cancelBotCreation");
     }
 
     public String getBotName() {
