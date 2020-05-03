@@ -41,7 +41,6 @@ public class Server extends Thread {
         // Stop main server thread
         isOn = false;
         stopListening();
-        //model.disconnectFromDatabase();
         this.interrupt();
     }
 
@@ -68,14 +67,13 @@ public class Server extends Thread {
         }
     }
 
+    /**
+     * Stop listening and stop server connection for each dedicated server
+     */
     public void stopListening() {
-        // Paramos todos los servidores dedicados creados cuando ya no atendemos más peticiones
+        // Stop all dedicated servers when we are not listening to petitions
         for (DedicatedServer client : clients) {
             client.stopServerConnection();
         }
-    }
-
-    public ServerConfiguration getServerConfiguration() {
-        return serverConfiguration;
     }
 }
