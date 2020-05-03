@@ -13,8 +13,9 @@ public class BotsEditView extends JPanel {
         // TODO: Implement edit view
     }
 
-    public String getBotName() {
-        return jcbBot.getSelectedItem().toString();
+    public int getBotId() {
+        String name = jcbBot.getSelectedItem().toString();
+        return Integer.parseInt(name.replaceAll("[^0-9]", ""));
     }
 
     public String getCompany() {
