@@ -10,18 +10,16 @@ import java.util.ArrayList;
 
 
 public class BotDao {
-
     private DBConnector dbConnector;
 
     public BotDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
-
     /**
      * Creates a bot associated to a company
      *
-     * @param bot bot to be created
+     * @param bot     bot to be created
      * @param company company to which the bot belongs to
      * @return id of the newly created bot. It will return -1 in case there is an error.
      */
@@ -49,6 +47,7 @@ public class BotDao {
 
     /**
      * Retrieves bot information by its id
+     *
      * @param botId id of the bot
      * @return a Bot object that contains all the information of the bot
      */
