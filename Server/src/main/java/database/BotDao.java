@@ -20,7 +20,8 @@ public class BotDao {
 
     /**
      * Creates a bot associated to a company
-     * @param bot bot to be created
+     *
+     * @param bot     bot to be created
      * @param company company to which the bot belongs to
      * @return id of the newly created bot. It will return -1 in case there is an error.
      */
@@ -45,7 +46,7 @@ public class BotDao {
     public Bot getBotById(int botId) {
         ResultSet retrievedBot = dbConnector.selectQuery("SELECT * FROM Bots WHERE bot_id = " + botId + ";");
         try {
-            while(retrievedBot.next()) {
+            while (retrievedBot.next()) {
                 return toBot(retrievedBot);
             }
         } catch (SQLException e) {
@@ -71,6 +72,13 @@ public class BotDao {
         return bots;
     }
 
+    /**
+     * Converts retrieved information into a Bot
+     *
+     * @param resultSet result set from database
+     * @return a Bot object containing the information retrieved from the database
+     * @throws SQLException
+     */
     private Bot toBot(ResultSet resultSet) throws SQLException {
         Bot bot = new Bot();
         bot.setBotId(Integer.parseInt(resultSet.getObject("id").toString()));
@@ -82,6 +90,7 @@ public class BotDao {
 
     /**
      * Erases a bot
+     *
      * @param botId id of bot to erase
      */
     public boolean deleteBot(int botId) {
@@ -95,10 +104,31 @@ public class BotDao {
                 }
             }
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error deleting bot with id " + botId);
         }
         return false;
     }
 
+    public boolean updateBot(Bot bot) {
+        final String updateQuery = "UPDATE Bots SET company_id = %d, active_time = %f, probability = %f WHERE " +
+                "bot_id = %d";
+        final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
+
+        // Consult the database to get information on the bot to be updated
+        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, bot.getBotId()));
+        try {
+            while (result.next()) {
+                // If the bot exists, update the information
+                if (result.getInt("bot_id") == bot.getBotId()) {
+                    dbConnector.updateQuery(String.format(updateQuery, bot.getCompany().getCompanyId(),
+                            bot.getActiveTime(), bot.getProbability(), bot.getBotId()));
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error updating bot with id " + bot.getBotId());
+        }
+        return false;
+    }
 }
