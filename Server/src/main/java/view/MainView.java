@@ -164,6 +164,7 @@ public class MainView extends JFrame {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
         switch (card) {
             case CARD_HOME:
+                cardLayout.show(jpCenter, CARD_HOME);
                 break;
             case CARD_USERS:
                 break;

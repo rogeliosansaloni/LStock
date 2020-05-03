@@ -21,18 +21,18 @@ public class HomeView extends JPanel {
         int alturaBoton = 40;
 
         Font fuenteBotones = new Font("Segoe UI Semibold", Font.PLAIN, 20);
-        jbUsers = new JButton("Login");
+        jbUsers = new JButton("Users");
         jbUsers.setFont(fuenteBotones);
         jbUsers.setForeground(Color.BLACK);
         jbUsers.setBorder(null);
         jbUsers.setBackground(color.getYELLOW());
         jbUsers.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
-        jbBots = new JButton("Register");
+        jbBots = new JButton("Manage Bots");
         jbBots.setFont(fuenteBotones);
         jbBots.setForeground(Color.BLACK);
         jbBots.setBorder(null);
-        jbBots.setBackground(color.getLightGrey());
+        jbBots.setBackground(color.getYELLOW());
         jbBots.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
         jpButtons.add(jbUsers);
