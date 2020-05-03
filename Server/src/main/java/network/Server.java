@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 
+import controller.MainController;
 import utils.JSONReader;
 import view.MainView;
 
@@ -17,6 +18,7 @@ public class Server extends Thread {
     private LinkedList<DedicatedServer> clients;
     private ServerConfiguration serverConfiguration;
     private MainView mainView;
+    private MainController mainController;
 
     public Server() throws IOException {
         this.serverConfiguration = new ServerConfiguration();
@@ -62,7 +64,8 @@ public class Server extends Thread {
      */
     public void initMainView () {
         this.mainView = new MainView();
-        //TODO: Add controller
+        this.mainController = new MainController(mainView);
+        mainView.registerController(mainController);
         this.mainView.setVisible(true);
     }
 
