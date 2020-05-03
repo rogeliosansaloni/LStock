@@ -93,10 +93,10 @@ public class BotDao {
      */
     private Bot toBot(ResultSet resultSet) throws SQLException {
         Bot bot = new Bot();
-        bot.setBotId(Integer.parseInt(resultSet.getObject("id").toString()));
-        bot.setActiveTime(Float.parseFloat(resultSet.getObject("active_time").toString()));
-        bot.setProbability(Float.parseFloat(resultSet.getObject("probability").toString()));
-        bot.setCompany(new Company(Integer.parseInt(resultSet.getObject("company_id").toString())));
+        bot.setBotId(resultSet.getInt("bot_id"));
+        bot.setActiveTime(resultSet.getFloat("active_time"));
+        bot.setProbability(resultSet.getFloat("probability"));
+        bot.setCompany(new Company(resultSet.getInt("company_id")));
         return bot;
     }
 
