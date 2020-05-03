@@ -64,7 +64,10 @@ public class LoginController implements ActionListener {
     /**
      * Closes the login view
      */
-    public void closeLoginView() { loginView.setVisible(false);}
+    public void closeLoginView() {
+        loginView.setVisible(false);
+        loginView.flushCredentials();
+    }
 
     /**
      * Proc that sends the error message to the view

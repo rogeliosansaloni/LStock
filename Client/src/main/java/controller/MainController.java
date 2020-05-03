@@ -1,5 +1,6 @@
 package controller;
 
+import view.LoginView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -11,11 +12,13 @@ public class MainController implements ActionListener {
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
     private final MainView view;
+    private final LoginView loginView;
     private BalanceController balanceController;
 
-    public MainController(MainView view) {
+    public MainController(MainView view, LoginView loginView) {
         this.view = view;
         this.balanceController = new BalanceController(view);
+        this.loginView = loginView;
     }
 
     @Override
@@ -34,7 +37,11 @@ public class MainController implements ActionListener {
                 //TODO: Load Balance
                 break;
             case "logout":
-                //TODO: Log out
+
+                if(view.confirmLogOutWindow() == 0){
+                    loginView.setVisible(true);
+                    view.setVisible(false);
+                }
                 break;
 
         }
