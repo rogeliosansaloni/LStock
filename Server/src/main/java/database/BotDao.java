@@ -130,6 +130,7 @@ public class BotDao {
 
     /**
      * Updates bot information
+     *
      * @param bot bot that contains the new information
      * @return true if the update is successful. If not, false.
      */
@@ -158,7 +159,8 @@ public class BotDao {
 
     /**
      * Activates or deactivates a bot
-     * @param botId id of the bot
+     *
+     * @param botId    id of the bot
      * @param activity new bot activity status
      * @return true if the bot status has been updated. If not, false.
      */
@@ -169,17 +171,16 @@ public class BotDao {
 
         ResultSet resultSet = dbConnector.selectQuery(String.format(selectQuery, botId));
         try {
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 if (resultSet.getInt("bot_id") == botId) {
-                    if(activity) {
+                    if (activity) {
                         // Activate bot
                         dbConnector.updateQuery(String.format(updateQuery, "TRUE", botId));
-                        return true;
                     } else {
                         // Deactivate bot
                         dbConnector.updateQuery(String.format(updateQuery, "FALSE", botId));
-                        return true;
                     }
+                    return true;
                 }
             }
         } catch (SQLException e) {
