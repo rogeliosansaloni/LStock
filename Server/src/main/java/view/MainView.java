@@ -5,14 +5,16 @@ import utils.StockColors;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class MainView extends JFrame {
 
     private static final String PATH_LOGO = "/Images/stock.png";
     private static final String PATH_ARROW_ICON = "/Images/dropdown.png";
     private static final String TITLE = "StockLS - C2";
-    private static final String ERROR_MESSAGE_1 = "All fields are required.";
-    private static final String ERROR_MESSAGE_2 = "Fields can't be empty.";
+    private static final String CARD_HOME = "Home";
+    private static final String CARD_USERS = "List of Users";
+    private static final String CARD_BOTS = "Manage Bots";
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 740;
     private JLabel labelLogo;
@@ -36,6 +38,23 @@ public class MainView extends JFrame {
         this.setLayout(new BorderLayout());
         this.setResizable(false);
         initUI();
+        initAllViews();
+
+    }
+
+    /**
+     * Initializes all views
+     */
+    public void initAllViews() {
+        //TODO: Add the rest of views
+        addToCardLayout();
+    }
+
+    /**
+     * Add diferent views to layout
+     */
+    private void addToCardLayout() {
+        //TODO: Add the rest of views
     }
 
     /**
@@ -119,6 +138,36 @@ public class MainView extends JFrame {
         jpCenter.setBackground(Color.WHITE);
         jpMain.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpMain);
+    }
+
+    /**
+     * Register controllers to Menu Bar
+     * @param actionListener ActionLister
+     */
+    public void registerController (ActionListener actionListener) {
+        option1.addActionListener(actionListener);
+        option1.setActionCommand(CARD_HOME);
+        option2.addActionListener(actionListener);
+        option2.setActionCommand(CARD_USERS);
+        option3.addActionListener(actionListener);
+        option3.setActionCommand(CARD_BOTS);
+    }
+
+    /**
+     * Shows desired view
+     * @param card
+     */
+    public void updateView(String card) {
+        CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
+        switch (card) {
+            case CARD_HOME:
+                break;
+            case CARD_USERS:
+                break;
+            case CARD_BOTS:
+                cardLayout.show(jpCenter, CARD_BOTS);
+                break;
+        }
     }
 }
 
