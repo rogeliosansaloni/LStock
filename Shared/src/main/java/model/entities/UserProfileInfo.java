@@ -1,6 +1,7 @@
 package model.entities;
 
 public class UserProfileInfo extends TunnelObject {
+    private int userId;
     private String nickname;
     private String email;
     private String description;
@@ -8,6 +9,20 @@ public class UserProfileInfo extends TunnelObject {
     private String action;
 
     public UserProfileInfo() {}
+
+    public UserProfileInfo(int userId, float totalBalance, String action) {
+        this.userId = userId;
+        this.totalBalance = totalBalance;
+        this.action = action;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getNickname() {
         return nickname;
