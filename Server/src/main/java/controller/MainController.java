@@ -10,10 +10,12 @@ public class MainController implements ActionListener {
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
     private final MainView view;
+    private HomeController homeController;
     //TODO: Add the rest con controllers
 
     public MainController(MainView view) {
         this.view = view;
+        this.homeController = new HomeController(view);
         //TODO: Initialize controllers
     }
 
@@ -28,5 +30,9 @@ public class MainController implements ActionListener {
             case CARD_BOTS:
                 break;
         }
+    }
+
+    public HomeController getHomeController() {
+        return homeController;
     }
 }

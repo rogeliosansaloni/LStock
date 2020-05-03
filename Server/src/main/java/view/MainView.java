@@ -1,5 +1,6 @@
 package view;
 
+import controller.HomeController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -154,6 +155,10 @@ public class MainView extends JFrame {
         option2.setActionCommand(CARD_USERS);
         option3.addActionListener(actionListener);
         option3.setActionCommand(CARD_BOTS);
+    }
+
+    public void registerHomeController(HomeController controller) {
+        jpHomeView.registerController(controller);
     }
 
     /**
