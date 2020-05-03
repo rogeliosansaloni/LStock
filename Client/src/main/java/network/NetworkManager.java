@@ -85,14 +85,6 @@ public class NetworkManager extends Thread {
     /**
      * Initializes the main view and its controller
      */
-    private void initMainView_deprecated() {
-        this.mainView = new MainView();
-        this.mainController = new MainController(mainView, model);
-        this.mainView.registerController(mainController);
-        this.mainView.registerBalanceController(this.mainController.getBalanceController(model));
-        this.mainView.setVisible(false);
-    }
-
     private void initMainView() {
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model);
