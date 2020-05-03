@@ -6,7 +6,7 @@ import model.entities.AuthenticationInfo;
 import model.entities.Company;
 import model.entities.User;
 import model.entities.UserProfileInfo;
-import network.DBConnector;
+import database.DBConnector;
 import utils.UserMapperImpl;
 
 import java.util.ArrayList;
