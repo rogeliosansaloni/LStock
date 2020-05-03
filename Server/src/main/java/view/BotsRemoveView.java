@@ -11,7 +11,7 @@ public class BotsRemoveView extends JPanel {
     private JButton jbCancel;
 
     public BotsRemoveView() {
-
+        // TODO: Implement remove view
     }
 
     public void registerController(ActionListener controller) {

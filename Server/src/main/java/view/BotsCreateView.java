@@ -12,7 +12,7 @@ public class BotsCreateView extends JPanel {
     private JButton jbCancel;
 
     public BotsCreateView() {
-
+        // TODO: Implement create view
     }
 
     public void registerController(ActionListener controller) {

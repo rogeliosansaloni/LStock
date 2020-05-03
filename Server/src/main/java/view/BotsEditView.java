@@ -10,7 +10,7 @@ public class BotsEditView extends JPanel {
     private JButton jbDeactivate;
 
     public BotsEditView() {
-
+        // TODO: Implement edit view
     }
 
     public String getBotName() {

@@ -8,7 +8,7 @@ public class BotsListView extends JPanel {
     private JButton jbReturn;
 
     public BotsListView() {
-
+        // TODO: Implement list view
     }
 
     public void registerController(ActionListener controller) {
