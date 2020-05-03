@@ -71,8 +71,6 @@ public class NetworkManager extends Thread {
         init();
         // Initialize views
         initLoginRegisterView();
-        initMainView();
-
         // Start main client thread
         running = true;
         start();

@@ -267,5 +267,7 @@ public class MainView extends JFrame{
      */
     public void updateTotalBalance (float totalBalance) {
         labelBalance.setText("Balance: " + String.valueOf(totalBalance) + " $");
+        jpBalanceView.updateCurrentBalance(String.valueOf(totalBalance));
     }
+
 }

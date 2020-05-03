@@ -18,8 +18,6 @@ public class BalanceView extends JPanel {
 
     public BalanceView () {
         color = new StockColors();
-        //TODO: BalanceView
-
         //Balance
         this.setBackground(color.getBLACK());
         this.setLayout(new GridLayout(3,1));
@@ -81,5 +79,9 @@ public class BalanceView extends JPanel {
      */
     public String getAmount() {
         return jcbAmount.getSelectedItem().toString();
+    }
+
+    public void updateCurrentBalance (String amount) {
+        jlCurrent.setText("You have: " + amount + "$");
     }
 }
