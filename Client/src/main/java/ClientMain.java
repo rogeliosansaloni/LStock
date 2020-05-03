@@ -1,4 +1,5 @@
 import network.NetworkManager;
+import view.MainView;
 
 public class ClientMain {
     public static void main(String[] args) {

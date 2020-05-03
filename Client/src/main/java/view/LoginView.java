@@ -10,7 +10,7 @@ import java.awt.event.FocusListener;
 import java.net.URL;
 
 public class LoginView extends JFrame {
-    private static final String PATH_LOGO = "/stock.png";
+    private static final String PATH_LOGO = "/Images/stock.png";
     private static final String TITLE = "StockLS - C2";
     private static final String ERROR_MESSAGE_1 = "All fields are required.";
     private static final String ERROR_MESSAGE_2 = "Fields can't be empty.";
@@ -55,7 +55,7 @@ public class LoginView extends JFrame {
         Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
-        //TODO: Add label under the logo
+
         jpNorth.add(labelLogo, BorderLayout.CENTER);
         labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
