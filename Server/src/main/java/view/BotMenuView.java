@@ -6,14 +6,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class BotMenuView extends JFrame {
-    private static final String TITLE = "StockLS - C2";
+public class BotMenuView extends JPanel {
     private static final String CARD_CREATE = "Create Bot";
     private static final String CARD_EDIT = "Configure Bot";
     private static final String CARD_REMOVE = "Remove Bot";
     private static final String CARD_LIST = "Bots";
-    private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 768;
     private StockColors color;
 
     // Main views for each menu option
@@ -34,13 +31,8 @@ public class BotMenuView extends JFrame {
 
     public BotMenuView() {
         color = new StockColors();
-        this.setTitle(TITLE);
-        this.setSize(anchuraPanel, alturaPanel);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setResizable(false);
-        this.setBackground(color.getBLACK());
         initViews();
+        initUI();
     }
 
     private void initViews() {
