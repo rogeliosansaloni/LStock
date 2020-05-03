@@ -24,8 +24,9 @@ public class BotDao {
      * @return id of the newly created bot. It will return -1 in case there is an error.
      */
     public int createBot(Bot bot, Company company) {
-        final String insertQuery = "INSERT INTO Bot (company_id, active_time, probability) VALUES (%d, %f, %f);";
-        final String selectQuery = "SELECT * FROM Bot WHERE company_id = %d ORDER BY created_at DESC LIMIT 1;";
+        final String insertQuery = "INSERT INTO Bots (company_id, active_time, probability, activity_status) " +
+                "VALUES (%d, %f, %f, TRUE);";
+        final String selectQuery = "SELECT * FROM Bots WHERE company_id = %d ORDER BY created_at DESC LIMIT 1;";
         final String successMessage = "New bot with id %d has been created";
         final String errorMessage = "Error in creating bot for %s";
 
@@ -130,7 +131,7 @@ public class BotDao {
 
     public boolean updateBot(Bot bot) {
         final String updateQuery = "UPDATE Bots SET company_id = %d, active_time = %f, probability = %f WHERE " +
-                "bot_id = %d";
+                "bot_id = %d;";
         final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
 
         // Consult the database to get information on the bot to be updated
