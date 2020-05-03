@@ -43,14 +43,22 @@ public class BotDao {
         return -1;
     }
 
+    /**
+     * Retrieves bot information by its id
+     * @param botId id of the bot
+     * @return a Bot object that contains all the information of the bot
+     */
     public Bot getBotById(int botId) {
-        ResultSet retrievedBot = dbConnector.selectQuery("SELECT * FROM Bots WHERE bot_id = " + botId + ";");
+        final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
+        final String errorMessage = "Error in getting bot information for bot with %d";
+
+        ResultSet retrievedBot = dbConnector.selectQuery(String.format(selectQuery, botId));
         try {
             while (retrievedBot.next()) {
                 return toBot(retrievedBot);
             }
         } catch (SQLException e) {
-            System.out.println("Error in getting bot information for bot with " + botId);
+            System.out.println(String.format(errorMessage, botId));
         }
         return null;
     }
