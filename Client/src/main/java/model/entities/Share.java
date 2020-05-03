@@ -1,35 +1,23 @@
-package main.java.model.entities;
+package model.entities;
 
 /**
- * Create Share Class
+ * Represents a share bought by a User from a specific Company
  */
 public class Share {
-
     private float price;
 
-
-
-    public Share(float price){
-
+    public Share(float price) {
         this.price = price;
     }
 
-
-    public float calculateTotalValue (){
+    public float calculateTotalValue() {
         float value = 0;
-
         return value;
     }
 
-
-    /**
-     * getters and setters
-     * @return
-     */
     public float getPrice() {
         return price;
     }
-
 
     public void setPrice(float price) {
         this.price = price;
