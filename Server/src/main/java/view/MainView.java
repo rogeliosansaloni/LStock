@@ -27,6 +27,7 @@ public class MainView extends JFrame {
     private JMenu menuOptions;
     private JMenuItem option1,option2, option3;
     private StockColors color;
+    private HomeView jpHomeView;
 
     public MainView() {
         color = new StockColors();
@@ -46,6 +47,7 @@ public class MainView extends JFrame {
      * Initializes all views
      */
     public void initAllViews() {
+        jpHomeView = new HomeView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -54,6 +56,7 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
+        jpCenter.add(jpHomeView, CARD_HOME);
         //TODO: Add the rest of views
     }
 
