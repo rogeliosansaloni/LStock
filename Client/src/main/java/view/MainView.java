@@ -38,7 +38,7 @@ public class MainView extends JFrame{
     private JMenuBar menuBar;
     private JMenu menuOptions;
     private JMenuItem option1,option2,option3, option4;
-    protected StockColors color;
+    private StockColors color;
     private BalanceView jpBalanceView;
 
     public MainView () {
