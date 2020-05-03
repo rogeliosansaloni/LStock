@@ -155,4 +155,36 @@ public class BotDao {
         }
         return false;
     }
+
+    /**
+     * Activates or deactivates a bot
+     * @param botId id of the bot
+     * @param activity new bot activity status
+     * @return true if the bot status has been updated. If not, false.
+     */
+    public boolean updateBotActivity(int botId, boolean activity) {
+        final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
+        final String updateQuery = "UPDATE Bots SET activity_status = %s WHERE bot_id = %d;";
+        final String errorMessage = "Error updating bot activity of bot %d";
+
+        ResultSet resultSet = dbConnector.selectQuery(String.format(selectQuery, botId));
+        try {
+            while(resultSet.next()) {
+                if (resultSet.getInt("bot_id") == botId) {
+                    if(activity) {
+                        // Activate bot
+                        dbConnector.updateQuery(String.format(updateQuery, "TRUE", botId));
+                        return true;
+                    } else {
+                        // Deactivate bot
+                        dbConnector.updateQuery(String.format(updateQuery, "FALSE", botId));
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(String.format(errorMessage, botId));
+        }
+        return false;
+    }
 }
