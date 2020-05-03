@@ -94,18 +94,25 @@ public class BotDao {
      * @param botId id of bot to erase
      */
     public boolean deleteBot(int botId) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Bots WHERE bot_id = " + botId + ";");
+        final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
+        final String deleteQuery = "DELETE FROM Bots WHERE bot_id = %d;";
+        final String successMessage = "Bot %d deleted";
+        final String errorMessage = "Error deleting the bot with id %d";
+
+        // Consult the database for the bot to be deleted
+        ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, botId));
         try {
             while (verify.next()) {
-                if (verify.getObject("bot_id") != null) {
-                    dbConnector.deleteQuery("DELETE FROM Bots WHERE bot_id = " + botId + ";");
-                    System.out.println("Bot " + botId + " deleted");
+                // If the bot exists, delete it
+                if (verify.getInt("bot_id") == botId) {
+                    dbConnector.deleteQuery(String.format(deleteQuery, botId));
+                    System.out.println(String.format(successMessage, botId));
                     return true;
                 }
             }
 
         } catch (SQLException e) {
-            System.out.println("Error deleting bot with id " + botId);
+            System.out.println(String.format(errorMessage, botId));
         }
         return false;
     }
