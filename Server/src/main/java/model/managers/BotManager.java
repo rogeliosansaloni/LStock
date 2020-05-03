@@ -6,6 +6,8 @@ import model.entities.Bot;
 import model.entities.Company;
 import network.DedicatedServer;
 
+import java.util.ArrayList;
+
 public class BotManager {
     private DedicatedServer dedicatedServer;
     private BotDao botDao;
@@ -42,5 +44,9 @@ public class BotManager {
      */
     public void deleteBot(int botId) {
         botDao.deleteBot(botId);
+    }
+
+    public ArrayList<Bot> getAllBots() {
+        return botDao.getAllBots();
     }
 }

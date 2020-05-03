@@ -26,15 +26,17 @@ public class BotMenuController implements ActionListener {
                 model.createBot(bot);
                 break;
             case "editBot":
-                int botId = view.getBotsEditView().getBotId();
+                int botToBeEdited = view.getBotsEditView().getBotId();
                 // TODO: Get bot information from view
-                model.configureBot(botId);
+                model.configureBot(botToBeEdited);
                 break;
             case "deleteBot":
-                // TODO: Handle bot deletion
+                int botToBeDeleted = view.getBotsRemoveView().getBotId();
+                // TODO: Get bot information from view
+                model.deleteBot(botToBeDeleted);
                 break;
             case "listBots":
-                // TODO: Handle bot list
+                view.getBotsListView().showBotsInTable(model.getAllBots());
                 break;
         }
     }

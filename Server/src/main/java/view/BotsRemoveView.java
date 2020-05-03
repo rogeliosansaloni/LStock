@@ -21,7 +21,8 @@ public class BotsRemoveView extends JPanel {
         this.jbCancel.setActionCommand("cancelBotRemoval");
     }
 
-    public String getBotName() {
-        return jcbBot.getSelectedItem().toString();
+    public int getBotId() {
+        String name = jcbBot.getSelectedItem().toString();
+        return Integer.parseInt(name.replaceAll("[^0-9]", ""));
     }
 }
