@@ -40,6 +40,7 @@ public class MainView extends JFrame{
     private JMenuItem option1,option2,option3, option4;
     protected StockColors color;
     private BalanceView jpBalanceView;
+    private CompanyView jpCompanyView;
 
     public MainView () {
         color = new StockColors();
@@ -58,6 +59,7 @@ public class MainView extends JFrame{
      */
     public void initAllViews() {
         jpBalanceView = new BalanceView();
+        jpCompanyView = new CompanyView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -66,7 +68,8 @@ public class MainView extends JFrame{
      * Add diferent views to layout
      */
     private void addToCardLayout() {
-        jpCenter.add(jpBalanceView, CARD_BALANCE);
+        //jpCenter.add(jpBalanceView, CARD_BALANCE);
+        jpCenter.add(jpCompanyView, CARD_COMPANY);
         //TODO: Add the rest of views
     }
 
