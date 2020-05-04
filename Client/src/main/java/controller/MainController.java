@@ -14,6 +14,7 @@ public class MainController implements ActionListener {
     private final MainView view;
     private final LoginView loginView;
     private BalanceController balanceController;
+    private CompanyController companyController;
 
     public MainController(MainView view, LoginView loginView) {
         this.view = view;
@@ -53,4 +54,9 @@ public class MainController implements ActionListener {
     public BalanceController getBalanceController() {
         return balanceController;
     }
+
+    public CompanyController getCompanyController() {
+        return companyController;
+    }
+
 }

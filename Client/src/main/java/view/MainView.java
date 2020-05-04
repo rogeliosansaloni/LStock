@@ -18,6 +18,7 @@ public class MainView extends JFrame {
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
+    private static final String CARD_COMPANY_DETAILS = "Company Details";
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
@@ -256,6 +257,10 @@ public class MainView extends JFrame {
 
     public void registerBalanceController(ActionListener controller) {
         jpBalanceView.registerController(controller);
+    }
+
+    public void registerCompanyController(ActionListener controller) {
+        jpCompanyView.registerController(controller);
     }
 
     /**
