@@ -5,7 +5,7 @@ package model.entities;
  */
 public class ShareTrade extends TunnelObject {
     private int companyId;
-    private int shareIf;
+    private int shareId;
     private float sharePrice;
     private String actionToDo;
 
@@ -45,11 +45,11 @@ public class ShareTrade extends TunnelObject {
         this.companyId = companyId;
     }
 
-    public int getShareIf() {
-        return shareIf;
+    public int getShareId() {
+        return shareId;
     }
 
-    public void setShareIf(int shareIf) {
-        this.shareIf = shareIf;
+    public void setShareIf(int shareId) {
+        this.shareId = shareId;
     }
 }

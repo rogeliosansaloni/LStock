@@ -2,7 +2,6 @@ package database;
 
 import model.entities.Company;
 import model.entities.Share;
-import network.DBConnector;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

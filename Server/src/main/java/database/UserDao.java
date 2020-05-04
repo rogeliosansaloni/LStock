@@ -21,6 +21,7 @@ public class UserDao {
     private static final String LOGIN_MESSAGE_3 = "Login Error";
     private static final String PROFILE_MESSAGE_1 = "Error getting the user information";
     private static final String PROFILE_MESSAGE_2 = "Error updating the user information";
+    private static final String BALANCE_MESSAGE_1 = "Error updating the user total balance";
 
     /**
      * Represents the DAO for the User table
@@ -42,8 +43,7 @@ public class UserDao {
             while (result.next()) {
                 if (result.getString("email").equals(user.getEmail())) {
                     message = REGISTER_MESSAGE_2;
-                }
-                else {
+                } else {
                     if (result.getString("nickname").equals(user.getNickname())) {
                         message = REGISTER_MESSAGE_3;
                     }
@@ -60,10 +60,11 @@ public class UserDao {
 
     /**
      * Validates user if it exists in the database
+     *
      * @param user the User to be validated
      */
     public String validateUser(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
         String message = LOGIN_MESSAGE_3;
         try {
             while (result.next()) {
@@ -113,7 +114,26 @@ public class UserDao {
      *
      * @param user User information
      */
-    public void updateUser(User user) {
+    public void updateUserBalance(User user) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+
+        try {
+            while (result.next()) {
+                if (result.getInt("user_id") == user.getUserId()) {
+                    dbConnector.insertQuery("UPDATE User SET total_balance = '" + user.getTotalBalance() + "' WHERE user_id = " + user.getUserId() + ";");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(BALANCE_MESSAGE_1);
+        }
+    }
+
+    /**
+     * Updates users description for now
+     *
+     * @param user The user
+     */
+    public void updateUserInformation(User user) {
         ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
 
         try {

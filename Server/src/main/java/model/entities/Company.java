@@ -48,8 +48,20 @@ public class Company {
         this.shares = new ArrayList<Share>();
     }
 
+    public Company(int companyId, String name, float value, int shares) {
+        this.companyId = companyId;
+        this.name = name;
+        this.value = value;
+        this.shares = shares;
+        this.bots = new ArrayList<Bot>();
+    }
+
     public Company() {
         this.bots = new ArrayList<Bot>();
+    }
+
+    public Company(int companyId) {
+        this.companyId = companyId;
     }
 
     public void listBots() {
@@ -57,6 +69,16 @@ public class Company {
 
     public void addBot(Bot bot) {
         this.bots.add(bot);
+    }
+
+    public void recalculateValue(String action) {
+        if (action.equals("buy")) {
+            this.value += (this.value * 0.01f);
+        } else {
+            if (action.equals("sell")) {
+                this.value -= (this.value * 0.01f);
+            }
+        }
     }
 
     /**
