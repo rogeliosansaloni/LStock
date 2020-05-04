@@ -29,6 +29,7 @@ public class MainView extends JFrame {
     private JMenuItem option1,option2, option3;
     private StockColors color;
     private HomeView jpHomeView;
+    private SharesListView jpSharesView;
 
     public MainView() {
         color = new StockColors();
@@ -49,6 +50,7 @@ public class MainView extends JFrame {
      */
     public void initAllViews() {
         jpHomeView = new HomeView();
+        jpSharesView = new SharesListView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -58,6 +60,7 @@ public class MainView extends JFrame {
      */
     private void addToCardLayout() {
         jpCenter.add(jpHomeView, CARD_HOME);
+        jpCenter.add(jpSharesView, CARD_USERS);
         //TODO: Add the rest of views
     }
 
@@ -172,6 +175,7 @@ public class MainView extends JFrame {
                 cardLayout.show(jpCenter, CARD_HOME);
                 break;
             case CARD_USERS:
+                cardLayout.show(jpCenter, CARD_USERS);
                 break;
             case CARD_BOTS:
                 cardLayout.show(jpCenter, CARD_BOTS);

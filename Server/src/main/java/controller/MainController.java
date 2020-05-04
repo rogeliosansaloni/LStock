@@ -26,6 +26,7 @@ public class MainController implements ActionListener {
                 view.updateView(CARD_HOME);
                 break;
             case CARD_USERS:
+                view.updateView(CARD_USERS);
                 break;
             case CARD_BOTS:
                 break;
