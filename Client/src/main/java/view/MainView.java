@@ -1,8 +1,5 @@
 package view;
 
-import controller.BalanceController;
-import controller.MainController;
-import controller.RegisterController;
 import utils.StockColors;
 
 import javax.swing.*;
