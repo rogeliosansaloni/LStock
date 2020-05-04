@@ -40,7 +40,7 @@ public class CompanyView extends JPanel {
      * @param actionListener ActionListener
      */
     public void registerController(ActionListener actionListener) {
-
+        //We add an actionListener for each company
     }
 
     public void createWhiteLabel(String text, int type){
