@@ -71,7 +71,7 @@ public class Company {
         this.bots.add(bot);
     }
 
-    public void recalculateValue(String action) {
+    public float recalculateValue(String action) {
         if (action.equals("buy")) {
             this.value += (this.value * 0.01f);
         } else {
@@ -79,6 +79,7 @@ public class Company {
                 this.value -= (this.value * 0.01f);
             }
         }
+        return this.value;
     }
 
     /**
