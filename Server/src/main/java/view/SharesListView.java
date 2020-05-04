@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 
 
 public class SharesListView extends JPanel{
-
     private static final String[] columnNames = { "Users", "Email", "Stock Value", "Total Balance"};
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
