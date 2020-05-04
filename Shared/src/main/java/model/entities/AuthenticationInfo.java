@@ -1,5 +1,8 @@
 package model.entities;
 
+/**
+ * Represents the DTO that contains the user infomation needed for authentication
+ */
 public class AuthenticationInfo extends TunnelObject {
     private int id;
     private String nickname;
@@ -10,9 +13,20 @@ public class AuthenticationInfo extends TunnelObject {
     private String responseType;
     private boolean validated;
 
+    /**
+     * Default constructor
+     */
     public AuthenticationInfo() {
     }
 
+    /**
+     * Constructor for DTO
+     *
+     * @param nickname user nickname
+     * @param email    user email
+     * @param password user password
+     * @param action   action to be done: register or login
+     */
     public AuthenticationInfo(String nickname, String email, String password, String action) {
         this.nickname = nickname;
         this.email = email;

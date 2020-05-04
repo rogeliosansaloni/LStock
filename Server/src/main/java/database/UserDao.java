@@ -22,6 +22,9 @@ public class UserDao {
     private static final String PROFILE_MESSAGE_2 = "Error updating the user information";
     private static final String BALANCE_MESSAGE_1 = "Error updating the user total balance";
 
+    /**
+     * Represents the DAO for the User table
+     */
     public UserDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }

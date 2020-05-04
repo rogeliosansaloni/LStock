@@ -19,6 +19,7 @@ public class BalanceController implements ActionListener {
         this.view = view;
         this.model = model;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("load")) {

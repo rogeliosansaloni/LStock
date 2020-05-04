@@ -5,10 +5,12 @@ package model.entities;
  */
 public class ShareTrade extends TunnelObject {
     private int companyId;
+    private int shareId;
     private float sharePrice;
     private String actionToDo;
 
     /**
+     * @param companyId  id of the company associated with the share
      * @param sharePrice price of the share
      * @param actionToDo action to do with the share: buy or sell
      */
@@ -16,7 +18,6 @@ public class ShareTrade extends TunnelObject {
         this.companyId = companyId;
         this.sharePrice = sharePrice;
         this.actionToDo = actionToDo;
-
     }
 
     // Getters and setters
@@ -42,5 +43,13 @@ public class ShareTrade extends TunnelObject {
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
+    }
+
+    public int getShareId() {
+        return shareId;
+    }
+
+    public void setShareIf(int shareId) {
+        this.shareId = shareId;
     }
 }

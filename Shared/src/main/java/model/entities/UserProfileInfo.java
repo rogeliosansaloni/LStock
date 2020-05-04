@@ -1,5 +1,8 @@
 package model.entities;
 
+/**
+ * Represents the DTO that contains user details for profile page
+ */
 public class UserProfileInfo extends TunnelObject {
     private int userId;
     private String nickname;
@@ -8,7 +11,8 @@ public class UserProfileInfo extends TunnelObject {
     private float totalBalance;
     private String action;
 
-    public UserProfileInfo() {}
+    public UserProfileInfo() {
+    }
 
     public UserProfileInfo(int userId, float totalBalance, String action) {
         this.userId = userId;

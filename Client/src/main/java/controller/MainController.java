@@ -13,12 +13,15 @@ public class MainController implements ActionListener {
     private static final String CARD_BALANCE = "Load Balance";
     private final MainView view;
     private StockManager model;
+    private CompanyDetailController companyDetailController;
     private BalanceController balanceController;
 
     public MainController(MainView view, StockManager model) {
         this.view = view;
         this.model = model;
         this.balanceController = new BalanceController(view, model);
+        this.companyDetailController = new CompanyDetailController();
+
     }
 
     @Override
@@ -43,9 +46,12 @@ public class MainController implements ActionListener {
         }
     }
 
+    public CompanyDetailController getCompanyDetailController() {
+        return companyDetailController;
+    }
+
     public BalanceController getBalanceController(StockManager model) {
         this.model = model;
         return balanceController;
     }
-
 }
