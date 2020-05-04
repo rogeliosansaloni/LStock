@@ -210,7 +210,7 @@ public class MainView extends JFrame {
      *
      * @param actionListener ActionLister
      */
-    public void registerMainController(ActionListener actionListener) {
+    public void registerController(ActionListener actionListener) {
         option1.addActionListener(actionListener);
         option1.setActionCommand("profile");
         option2.addActionListener(actionListener);
