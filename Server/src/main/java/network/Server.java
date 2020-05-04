@@ -21,7 +21,6 @@ public class Server extends Thread {
     private MainController mainController;
 
     public Server() throws IOException {
-        this.serverConfiguration = new ServerConfiguration();
         initServerConfiguration();
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
