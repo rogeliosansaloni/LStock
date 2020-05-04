@@ -8,6 +8,7 @@ import java.net.Socket;
 import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
 import model.managers.StockManager;
+import model.managers.UserManager;
 import utils.UserMapperImpl;
 
 public class DedicatedServer extends Thread {
@@ -16,6 +17,7 @@ public class DedicatedServer extends Thread {
     private ObjectOutputStream oos;
     private Socket sClient;
     private StockManager stockModel;
+    private UserManager userModel;
     private UserMapperImpl mapper;
 
     /**
@@ -26,6 +28,7 @@ public class DedicatedServer extends Thread {
         this.sClient = sClient;
         this.stockModel = new StockManager();
         this.mapper = new UserMapperImpl();
+        this.userModel = new UserManager();
     }
 
     /**

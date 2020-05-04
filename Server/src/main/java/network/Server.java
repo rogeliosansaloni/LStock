@@ -5,7 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 
+import controller.SharesListController;
 import utils.JSONReader;
+import view.SharesListView;
 
 
 public class Server extends Thread {
@@ -15,6 +17,8 @@ public class Server extends Thread {
     private boolean isOn;
     private LinkedList<DedicatedServer> clients;
     private ServerConfiguration serverConfiguration;
+    private SharesListController sharesListController;
+    private SharesListView sharesListView;
 
     public Server() throws IOException {
         this.serverConfiguration = new ServerConfiguration();
@@ -33,6 +37,7 @@ public class Server extends Thread {
 
     public void startServer() {
         // Start main server thread
+        initShareView();
         isOn = true;
         this.start();
     }
@@ -43,6 +48,13 @@ public class Server extends Thread {
         stopListening();
         //model.disconnectFromDatabase();
         this.interrupt();
+    }
+
+    public void initShareView () {
+        this.sharesListView = new SharesListView();
+        this.sharesListController = new SharesListController(sharesListView);
+        sharesListView.registerController(sharesListController);
+        this.sharesListView.registerController(this.sharesListController);
     }
 
     public void run() {

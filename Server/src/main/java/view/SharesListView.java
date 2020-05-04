@@ -1,20 +1,21 @@
 package view;
 
+import model.entities.User;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
-import java.awt.event.ActionListener;
-
+import java.awt.event.*;
 
 public class SharesListView extends JFrame{
-
     private final static String TITLE = "StockLS - C2 - Server";
     private static final String PATH_LOGO = "resources/stock.png";
     private static final String[] columnNames = { "Users", "Email", "Stock Value", "Total Balance"};
+    private String[][] userList = {{ "", "", "", ""}};
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     protected StockColors color;
@@ -25,7 +26,9 @@ public class SharesListView extends JFrame{
     private JLabel labelStock;
     private JPanel jpCenter;
     private JPanel jpSouth;
+    JScrollPane scrollPane;
     private ListSelectionModel selectionModel;
+    public int selectedRow;
 
     public SharesListView () {
         color = new StockColors();
@@ -35,9 +38,12 @@ public class SharesListView extends JFrame{
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         initUI();
-        getRow();
+        getRowListener();
     }
 
+    /**
+     * Creates the UI of the SharesList View
+     */
     private void initUI() {
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new BorderLayout());
@@ -57,28 +63,16 @@ public class SharesListView extends JFrame{
         jpNorth.setBorder(BorderFactory.createEmptyBorder(70,0,80,0));
         this.add(jpNorth,BorderLayout.NORTH);
 
-        //Center panel with data table
+        //Center panel with table
         jpCenter = new JPanel(new BorderLayout());
         jpCenter.setBackground(Color.WHITE);
-        String[][] userRow = {
-                { "User1", "user1@gmail.com", "1234", "12345"},
-                { "User2", "user2@gmail.com", "1234", "12345"},
-                { "User3", "user3@gmail.com", "1234", "12345"},
-                { "User4", "user4@gmail.com", "1234", "12345"},
-                { "User5", "user5@gmail.com", "1234", "12345"},
-                { "User6", "user6@gmail.com", "1234", "12345"},
-                { "User7", "user7@gmail.com", "1234", "12345"},
-                { "User8", "user8@gmail.com", "1234", "12345"},
-                { "User9", "user9@gmail.com", "1234", "12345"},
-                { "User10", "user10@gmail.com", "1234", "12345"}
-        };
 
-
-        jtSharesList = new JTable(userRow,columnNames);
+        //User list table
+        jtSharesList = new JTable(userList,columnNames);
         jtSharesList.setRowHeight(40);
         jtSharesList.setBackground(Color.WHITE);
         selectionModel = jtSharesList.getSelectionModel();
-        JScrollPane scrollPane = new JScrollPane(jtSharesList);
+        scrollPane = new JScrollPane(jtSharesList);
         scrollPane.setBackground(color.getWHITE());
         scrollPane.getVerticalScrollBar().setUnitIncrement(14);
         JTableHeader tableHeader = jtSharesList.getTableHeader();
@@ -110,18 +104,69 @@ public class SharesListView extends JFrame{
     public void registerController (ActionListener actionListener) {
         jbReturn.addActionListener(actionListener);
         jbReturn.setActionCommand("return");
+        jtSharesList.addMouseListener((MouseListener) actionListener);
     }
 
-    private void getRow() {
+    /**
+     *  Sets the last selected table row
+     */
+    private void getRowListener() {
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent listSelectionEvent) {
+                selectedRow = -1;
                 if (! selectionModel.isSelectionEmpty()){
-                    int selecRow = selectionModel.getMinSelectionIndex();
-                    System.out.println("selected row: "+selecRow);
+                    selectedRow = selectionModel.getMinSelectionIndex();
                 }
             }
         });
     }
 
+    /**
+     * Returns the selected row index
+     *
+     * @return value of selected row index
+     */
+    public int getSelectedRow() {
+        return selectedRow;
+    }
+
+    /**
+     * Returns the selected user data
+     *
+     * @return user data selected
+     */
+    public User getSelectedUser(){
+        User user = new User();
+        user.setNickname(jtSharesList.getModel().getValueAt(selectedRow, 0).toString());
+        user.setEmail(jtSharesList.getModel().getValueAt(selectedRow, 1).toString());
+        user.setStockValue(Float.parseFloat(jtSharesList.getModel().getValueAt(selectedRow, 2).toString()));
+        user.setTotalBalance(Float.parseFloat(jtSharesList.getModel().getValueAt(selectedRow, 3).toString()));
+        return user;
+    }
+
+    /**
+     * Sets the new data for the table and updates it
+     *
+     * @param userList String list with data
+     */
+    public void setUserList(String[][] userList) {
+        this.userList = userList;
+        fillData();
+    }
+
+    /**
+     *  Fills table with userList and columnNames
+     */
+    public void fillData() {
+        this.jtSharesList.setModel(new DefaultTableModel());
+        DefaultTableModel tablemodel = new DefaultTableModel();
+        for (String col : columnNames) {
+            tablemodel.addColumn(col);
+        }
+        for (String[] row : userList) {
+            tablemodel.addRow(row);
+        }
+        this.jtSharesList.setModel(tablemodel);
+    }
 }
