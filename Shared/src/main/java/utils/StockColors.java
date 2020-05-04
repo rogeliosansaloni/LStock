@@ -65,11 +65,11 @@ public class StockColors {
         return LIGHT_LIGHT_GREY;
     }
 
-    public static Color getGreenTable() {
+    public Color getGreenTable() {
         return GREEN_TABLE;
     }
 
-    public static Color getRedTable() {
+    public Color getRedTable() {
         return RED_TABLE;
     }
 }

@@ -9,6 +9,7 @@ import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
 import model.entities.AuthenticationInfo;
+import model.entities.CompanyList;
 import model.entities.TunnelObject;
 import utils.JSONReader;
 import view.LoginView;
@@ -151,6 +152,7 @@ public class NetworkManager extends Thread {
                     if (info.getAction().equals("login")) {
                         if (info.isValidated()) {
                             loginController.closeLoginView();
+                            NetworkManager.getInstance().sendTunnelObject(new CompanyList());
                             mainView.setVisible(true);
                         } else {
                             loginController.sendErrorMessage(info.getResponseType());
