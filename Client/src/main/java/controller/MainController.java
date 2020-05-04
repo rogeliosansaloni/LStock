@@ -24,6 +24,9 @@ public class MainController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
+            case "company":
+                view.updateView(CARD_COMPANY);
+                break;
             case "profile":
                 view.updateView(CARD_PROFILE);
                 //TODO: Profile
