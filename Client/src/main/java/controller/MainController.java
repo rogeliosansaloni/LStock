@@ -14,16 +14,21 @@ public class MainController implements ActionListener {
     private final MainView view;
     private final LoginView loginView;
     private BalanceController balanceController;
+    private CompanyController companyController;
 
     public MainController(MainView view, LoginView loginView) {
         this.view = view;
         this.balanceController = new BalanceController(view);
+        this.companyController = new CompanyController(view);
         this.loginView = loginView;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
+            case "company":
+                view.updateView(CARD_COMPANY);
+                break;
             case "profile":
                 view.updateView(CARD_PROFILE);
                 //TODO: Profile
@@ -50,4 +55,9 @@ public class MainController implements ActionListener {
     public BalanceController getBalanceController() {
         return balanceController;
     }
+
+    public CompanyController getCompanyController() {
+        return companyController;
+    }
+
 }

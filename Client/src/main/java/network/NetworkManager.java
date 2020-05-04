@@ -83,6 +83,7 @@ public class NetworkManager extends Thread {
         this.mainController = new MainController(mainView, loginView);
         this.mainView.registerController(mainController);
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
+        this.mainView.registerCompanyController(this.mainController.getCompanyController());
         this.mainView.setVisible(false);
     }
 

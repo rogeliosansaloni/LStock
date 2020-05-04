@@ -18,6 +18,7 @@ public class MainView extends JFrame {
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
+    private static final String CARD_COMPANY_DETAILS = "Company Details";
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
@@ -34,7 +35,7 @@ public class MainView extends JFrame {
     protected JPanel jpCenter;
     private JMenuBar menuBar;
     private JMenu menuOptions;
-    private JMenuItem option1, option2, option3, option4;
+    private JMenuItem optionProfile, optionShares, optionBalance, optionCompany, optionLogout;
     protected StockColors color;
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
@@ -55,8 +56,8 @@ public class MainView extends JFrame {
      * Initializes all views
      */
     public void initAllViews() {
-        jpBalanceView = new BalanceView();
         jpCompanyView = new CompanyView();
+        jpBalanceView = new BalanceView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -65,8 +66,8 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
-        //jpCenter.add(jpBalanceView, CARD_BALANCE);
         jpCenter.add(jpCompanyView, CARD_COMPANY);
+        jpCenter.add(jpBalanceView, CARD_BALANCE);
         //TODO: Add the rest of views
     }
 
@@ -145,10 +146,7 @@ public class MainView extends JFrame {
      */
     public void createMenuBar() {
 
-        Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
         Font fontName = new Font("Segoe UI", Font.BOLD, 30);
-        Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
-
         jpMenu = new JPanel(new BorderLayout());
         jpMenu.setBackground(color.getDarkGreyHeader());
 
@@ -170,40 +168,66 @@ public class MainView extends JFrame {
         menuOptions.setForeground(color.getDarkGreyText());
         menuOptions.setBorder(null);
         menuBar.add(menuOptions);
-        //Option1
-        option1 = new JMenuItem("My Profile");
-        option1.setHorizontalAlignment(SwingConstants.CENTER);
-        option1.setBackground(color.getDarkGreyHeader());
-        option1.setBorder(bordeOptions);
-        option1.setForeground(color.getDarkGreyText());
-        option1.setFont(fontOptions);
-        menuOptions.add(option1);
-        //Option2
-        option2 = new JMenuItem("Shares");
-        option2.setHorizontalAlignment(SwingConstants.CENTER);
-        option2.setBackground(color.getDarkGreyHeader());
-        option2.setBorder(bordeOptions);
-        option2.setForeground(color.getDarkGreyText());
-        option2.setFont(fontOptions);
-        menuOptions.add(option2);
-        //Option3
-        option3 = new JMenuItem("Load Balance");
-        option3.setHorizontalAlignment(SwingConstants.CENTER);
-        option3.setBackground(color.getDarkGreyHeader());
-        option3.setBorder(bordeOptions);
-        option3.setForeground(color.getDarkGreyText());
-        option3.setFont(fontOptions);
-        menuOptions.add(option3);
-        //Option4
-        option4 = new JMenuItem("Log out");
-        option4.setHorizontalAlignment(SwingConstants.CENTER);
-        option4.setBackground(color.getDarkGreyHeader());
-        option4.setBorder(bordeOptions);
-        option4.setForeground(color.getDarkGreyText());
-        option4.setFont(fontOptions);
-        menuOptions.add(option4);
+        initializeOptions();
+        updateOptionsCompany();
         jpMenu.add(menuBar, BorderLayout.CENTER);
         jpOptions.add(jpMenu, BorderLayout.CENTER);
+    }
+
+    public void initializeOptions(){
+        //Option Companies
+        optionCompany = new JMenuItem("Companies list");
+        //Option Profile
+        optionProfile = new JMenuItem("My Profile");
+        //Option Shares
+        optionShares = new JMenuItem("Shares");
+        //Option Load Balance
+        optionBalance = new JMenuItem("Load Balance");
+        //Option Logout
+        optionLogout = new JMenuItem("Log out");
+    }
+
+    public void addOptionBar (JMenuItem option){
+        Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
+        Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
+        option.setHorizontalAlignment(SwingConstants.CENTER);
+        option.setBackground(color.getDarkGreyHeader());
+        option.setBorder(bordeOptions);
+        option.setForeground(color.getDarkGreyText());
+        option.setFont(fontOptions);
+        menuOptions.add(option);
+    }
+
+    public void updateOptionsCompany() {
+        menuOptions.removeAll();
+        addOptionBar(optionProfile);
+        addOptionBar(optionShares);
+        addOptionBar(optionBalance);
+        addOptionBar(optionLogout);
+    }
+
+    public void updateOptionsBalance() {
+        menuOptions.removeAll();
+        addOptionBar(optionProfile);
+        addOptionBar(optionCompany);
+        addOptionBar(optionShares);
+        addOptionBar(optionLogout);
+    }
+
+    public void updateOptionsShares() {
+        menuOptions.removeAll();
+        addOptionBar(optionProfile);
+        addOptionBar(optionCompany);
+        addOptionBar(optionBalance);
+        addOptionBar(optionLogout);
+    }
+
+    public void updateOptionsProfile() {
+        menuOptions.removeAll();
+        addOptionBar(optionCompany);
+        addOptionBar(optionShares);
+        addOptionBar(optionBalance);
+        addOptionBar(optionLogout);
     }
 
     /**
@@ -212,14 +236,17 @@ public class MainView extends JFrame {
      * @param actionListener ActionLister
      */
     public void registerController(ActionListener actionListener) {
-        option1.addActionListener(actionListener);
-        option1.setActionCommand("profile");
-        option2.addActionListener(actionListener);
-        option2.setActionCommand("shares");
-        option3.addActionListener(actionListener);
-        option3.setActionCommand("load");
-        option4.addActionListener(actionListener);
-        option4.setActionCommand("logout");
+        optionProfile.addActionListener(actionListener);
+        optionProfile.setActionCommand("profile");
+        optionShares.addActionListener(actionListener);
+        optionShares.setActionCommand("shares");
+        optionBalance.addActionListener(actionListener);
+        optionBalance.setActionCommand("load");
+        optionCompany.addActionListener(actionListener);
+        optionCompany.setActionCommand("company");
+        optionLogout.addActionListener(actionListener);
+        optionLogout.setActionCommand("logout");
+
     }
 
     public int confirmLogOutWindow() {
@@ -232,6 +259,10 @@ public class MainView extends JFrame {
         jpBalanceView.registerController(controller);
     }
 
+    public void registerCompanyController(ActionListener controller) {
+        jpCompanyView.registerController(controller);
+    }
+
     /**
      * Shows desired view
      *
@@ -240,13 +271,25 @@ public class MainView extends JFrame {
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
         switch (card) {
+            case CARD_COMPANY:
+                labelViewName.setText(CARD_COMPANY);
+                cardLayout.show(jpCenter, CARD_COMPANY);
+                updateOptionsCompany();
+                break;
             case CARD_PROFILE:
+                labelViewName.setText(CARD_PROFILE);
+                //cardLayout.show(jpCenter, CARD_PROFILE);
+                updateOptionsProfile();
                 break;
             case CARD_SHARES:
+                labelViewName.setText(CARD_SHARES);
+                //cardLayout.show(jpCenter, CARD_SHARES);
+                updateOptionsShares();
                 break;
             case CARD_BALANCE:
                 labelViewName.setText(CARD_BALANCE);
                 cardLayout.show(jpCenter, CARD_BALANCE);
+                updateOptionsBalance();
                 break;
         }
     }
