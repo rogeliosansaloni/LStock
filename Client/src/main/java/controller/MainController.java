@@ -21,7 +21,7 @@ public class MainController implements ActionListener {
 
     public MainController(MainView view, StockManager model, LoginView loginView) {
         this.view = view;
-        this.balanceController = new BalanceController(view);
+        this.balanceController = new BalanceController(view, model);
         this.companyController = new CompanyController(view);
         this.balanceController = new BalanceController(view, model);
         this.companyDetailController = new CompanyDetailController();
