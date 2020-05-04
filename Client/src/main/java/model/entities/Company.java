@@ -1,7 +1,4 @@
-package main.java.model.entities;
-
-import model.entities.Bot;
-import model.entities.User;
+package model.entities;
 
 import java.util.ArrayList;
 

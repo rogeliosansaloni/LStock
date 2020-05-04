@@ -1,6 +1,4 @@
-package main.java.model.entities;
-
-import model.entities.User;
+package model.entities;
 
 /**
  * Represents a share bought by a User from a specific Company
