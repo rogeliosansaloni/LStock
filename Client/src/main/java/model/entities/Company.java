@@ -13,11 +13,11 @@ public class Company {
     /**
      * It will create a company
      *
-     * @param companyId  identification
-     * @param name company name
-     * @param value current company price
-     * @param shares  number of shares available to the user
-     * @param user user who has shares in that company
+     * @param companyId identification
+     * @param name      company name
+     * @param value     current company price
+     * @param shares    number of shares available to the user
+     * @param user      user who has shares in that company
      */
 
     public Company(int companyId, String name, float value, int shares, User user) {
@@ -41,11 +41,12 @@ public class Company {
 
     }
 
-    public void  listBots(){}
+    public void listBots() {
+    }
 
     /**
      * Getters
-     * **/
+     **/
     public int getCompanyId() {
         return companyId;
     }
@@ -68,7 +69,7 @@ public class Company {
 
     /**
      * Setters
-     * **/
+     **/
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }

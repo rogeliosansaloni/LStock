@@ -9,6 +9,8 @@ import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
 import model.entities.AuthenticationInfo;
+import model.entities.CompanyInfo;
+import model.entities.ShareTrade;
 import model.entities.TunnelObject;
 import utils.JSONReader;
 import view.LoginView;
@@ -48,6 +50,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Constructor that initializes all the elements for server connection
+     *
      * @throws IOException
      */
     private NetworkManager() throws IOException {
@@ -81,8 +84,9 @@ public class NetworkManager extends Thread {
     private void initMainView() {
         this.mainView = new MainView();
         this.mainController = new MainController(mainView);
-        this.mainView.registerController(mainController);
+        this.mainView.registerMainController(mainController);
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
+        this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.setVisible(false);
     }
 
@@ -111,6 +115,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Send a generic object through the sockets.
+     *
      * @param object the object to be sent to the server
      * @throws IOException
      */
@@ -120,10 +125,25 @@ public class NetworkManager extends Thread {
 
     /**
      * Sends information for login or registering a user
+     *
      * @param object object that contains user information for login or registering in the system
      * @throws IOException
      */
-    public void sendAuthentificationInformation(TunnelObject object) throws IOException {
+    public void sendAuthentificationInformation(AuthenticationInfo object) throws IOException {
+        oos.writeObject(object);
+    }
+
+    /**
+     * Sends information of the company
+     *
+     * @param object object that contains user information for company details menu
+     * @throws IOException
+     */
+    public void sendCompanyDetails(CompanyInfo object) throws IOException {
+        oos.writeObject(object);
+    }
+
+    public void sendShareTrade(ShareTrade object) throws IOException {
         oos.writeObject(object);
     }
 

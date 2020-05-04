@@ -42,7 +42,7 @@ public class RegisterController implements ActionListener {
             String pass1 = registerView.getPassword();
             String pass2 = registerView.getPasswordVerification();
             if (validCredentials(nickname, email, pass1, pass2)) {
-                TunnelObject register = new AuthenticationInfo(nickname, email, pass1, "register");
+                AuthenticationInfo register = new AuthenticationInfo(nickname, email, pass1, "register");
                 try {
                     NetworkManager.getInstance().sendAuthentificationInformation(register);
                 } catch (IOException ex) {

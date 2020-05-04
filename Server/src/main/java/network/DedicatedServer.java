@@ -21,6 +21,7 @@ public class DedicatedServer extends Thread {
 
     /**
      * DedicatedServer constructor
+     *
      * @param sClient client socket
      */
     public DedicatedServer(Socket sClient) {
@@ -81,8 +82,7 @@ public class DedicatedServer extends Thread {
                     if (userInfo.getAction().equals("balance")) {
                         UserProfileInfo userProfileInfo = stockModel.updateUserBalance(user);
                         oos.writeObject(userProfileInfo);
-                    }
-                    else {
+                    } else {
                         if (userInfo.getAction().equals("information")) {
                             UserProfileInfo userProfileInfo = stockModel.updateUserInformation(user);
                             oos.writeObject(userProfileInfo);
