@@ -8,9 +8,9 @@ import java.net.Socket;
 import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
-import model.entities.AuthenticationInfo;
-import model.entities.TunnelObject;
+import model.entities.*;
 import utils.JSONReader;
+import utils.UserMapperImpl;
 import view.LoginView;
 import view.MainView;
 import view.RegisterView;
@@ -28,6 +28,8 @@ public class NetworkManager extends Thread {
     private MainView mainView;
     private RegisterView registerView;
     private LoginView loginView;
+    private UserMapperImpl mapper;
+    private StockManager model;
 
     /**
      * Represents a Singleton
@@ -48,6 +50,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Constructor that initializes all the elements for server connection
+     *
      * @throws IOException
      */
     private NetworkManager() throws IOException {
@@ -66,13 +69,16 @@ public class NetworkManager extends Thread {
      * Starts the connection to the server. Initializes the main views and its controllers for the Client.
      */
     public void startServerConnection() {
+        init();
         // Initialize views
         initLoginRegisterView();
-        initMainView();
-
         // Start main client thread
         running = true;
         start();
+    }
+
+    private void init() {
+        this.mapper = new UserMapperImpl();
     }
 
     /**
@@ -80,11 +86,11 @@ public class NetworkManager extends Thread {
      */
     private void initMainView() {
         this.mainView = new MainView();
-        this.mainController = new MainController(mainView, loginView);
-        this.mainView.registerController(mainController);
-        this.mainView.registerBalanceController(this.mainController.getBalanceController());
-        this.mainView.registerCompanyController(this.mainController.getCompanyController());
-        this.mainView.setVisible(false);
+        this.mainController = new MainController(mainView, model, loginView);
+        this.mainView.registerMainController(mainController);
+        this.mainView.registerBalanceController(this.mainController.getBalanceController(model));
+        this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
+        this.mainView.setVisible(true);
     }
 
     /**
@@ -112,6 +118,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Send a generic object through the sockets.
+     *
      * @param object the object to be sent to the server
      * @throws IOException
      */
@@ -121,10 +128,29 @@ public class NetworkManager extends Thread {
 
     /**
      * Sends information for login or registering a user
+     *
      * @param object object that contains user information for login or registering in the system
      * @throws IOException
      */
-    public void sendAuthentificationInformation(TunnelObject object) throws IOException {
+    public void sendAuthentificationInformation(AuthenticationInfo object) throws IOException {
+        oos.writeObject(object);
+    }
+
+    /**
+     * Sends information of the company
+     *
+     * @param object object that contains user information for company details menu
+     * @throws IOException
+     */
+    public void sendCompanyDetails(CompanyInfo object) throws IOException {
+        oos.writeObject(object);
+    }
+
+    public void sendShareTrade(ShareTrade object) throws IOException {
+        oos.writeObject(object);
+    }
+
+    public void sendUserProfileInfo (TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
@@ -150,11 +176,20 @@ public class NetworkManager extends Thread {
                     }
                     if (info.getAction().equals("login")) {
                         if (info.isValidated()) {
+                            User user = mapper.authenticationInfoToUser((AuthenticationInfo) received);
+                            model = new StockManager(user);
                             loginController.closeLoginView();
-                            mainView.setVisible(true);
+                            //Temporal
+                            initMainView();
                         } else {
                             loginController.sendErrorMessage(info.getResponseType());
                         }
+                    }
+                }
+                if (received instanceof UserProfileInfo) {
+                    UserProfileInfo info = ((UserProfileInfo) received);
+                    if (info.getAction().equals("balance")) {
+                        mainView.updateTotalBalance(info.getTotalBalance());
                     }
                 }
             }

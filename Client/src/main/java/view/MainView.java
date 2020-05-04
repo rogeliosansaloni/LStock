@@ -22,21 +22,22 @@ public class MainView extends JFrame {
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     private JLabel labelLogo;
-    protected JLabel labelStock;
-    protected JLabel labelUserPhoto;
-    protected JLabel labelViewName;
-    protected JLabel labelBalance;
-    protected String userName = "Peter Fox";
-    protected String userBalance = "00.00";
-    protected JPanel jpHeader;
-    protected JPanel jpLogo;
-    protected JPanel jpOptions;
-    protected JPanel jpMenu;
-    protected JPanel jpCenter;
+    private JLabel labelStock;
+    private JLabel labelUserPhoto;
+    private JLabel labelViewName;
+    private JLabel labelBalance;
+    private String userName = "Peter Fox";
+    private String userBalance = "00.00";
+    private JPanel jpHeader;
+    private JPanel jpLogo;
+    private JPanel jpOptions;
+    private JPanel jpMenu;
+    private JPanel jpCenter;
     private JMenuBar menuBar;
     private JMenu menuOptions;
+    private StockColors color;
+    private CompanyDetailView jpCompanyDetailsView;
     private JMenuItem optionProfile, optionShares, optionBalance, optionCompany, optionLogout;
-    protected StockColors color;
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
 
@@ -58,6 +59,7 @@ public class MainView extends JFrame {
     public void initAllViews() {
         jpCompanyView = new CompanyView();
         jpBalanceView = new BalanceView();
+        jpCompanyDetailsView = new CompanyDetailView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -254,6 +256,9 @@ public class MainView extends JFrame {
         return verify;
     }
 
+    public void registerCompanyDetailViewController(ActionListener controller) {
+        jpCompanyDetailsView.registerController(controller);
+    }
 
     public void registerBalanceController(ActionListener controller) {
         jpBalanceView.registerController(controller);
@@ -302,4 +307,26 @@ public class MainView extends JFrame {
     public String getBalanceAmount() {
         return jpBalanceView.getAmount();
     }
+
+    /**
+     * Update the total balance of the user in the header
+     * @param nickname Users nickname
+     * @param totalBalance Current balance of the user
+     */
+    public void initHeaderInformation (String nickname, float totalBalance) {
+        String strDouble = String.format("%.2f", totalBalance);
+        menuOptions.setText(nickname);
+        labelBalance.setText("Balance: " + strDouble + " $");
+    }
+
+    /**
+     * Updates total balance of the user
+     * @param totalBalance Current balance of the user
+     */
+    public void updateTotalBalance (float totalBalance) {
+        String strDouble = String.format("%.2f", totalBalance);
+        labelBalance.setText("Balance: " + strDouble + " $");
+        jpBalanceView.updateCurrentBalance(strDouble);
+    }
+
 }
