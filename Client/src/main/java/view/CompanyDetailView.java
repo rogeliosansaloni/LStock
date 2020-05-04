@@ -87,8 +87,14 @@ public class CompanyDetailView extends JPanel {
         jlMyShares.setText(Integer.toString(user.getShares().size()));
     }
 
-    public void showErrorMessages(String error) {
 
+    public int confirmAction(String message) {
+        int verify = JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.YES_NO_OPTION);
+        return verify;
+    }
+
+    public void showErrorMessage(String message){
+         JOptionPane.showMessageDialog(null, message);
     }
 
     public void registerController(ActionListener controller) {
