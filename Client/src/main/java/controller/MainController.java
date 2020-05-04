@@ -20,7 +20,7 @@ public class MainController implements ActionListener {
         this.view = view;
         this.model = model;
         this.balanceController = new BalanceController(view, model);
-        this.companyDetailController = new CompanyDetailController();
+        this.companyDetailController = new CompanyDetailController(view);
 
     }
 

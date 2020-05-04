@@ -283,4 +283,9 @@ public class MainView extends JFrame {
         jpBalanceView.updateCurrentBalance(strDouble);
     }
 
+    public int confirmAction (String message) {
+        return jpCompanyDetailsView.confirmAction(message);
+
+    }
+
 }
