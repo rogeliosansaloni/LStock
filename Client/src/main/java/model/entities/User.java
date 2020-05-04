@@ -1,5 +1,8 @@
 package model.entities;
 
+import main.java.model.entities.Share;
+import main.java.model.entities.Company;
+
 import java.util.ArrayList;
 
 public class User {
