@@ -21,6 +21,8 @@ public class BotManager {
     /**
      * Creates a bot
      * @param bot bot to be created
+     *
+     * @param bot     bot to be created
      * @return
      */
     public int createBot(Bot bot) {
@@ -31,6 +33,7 @@ public class BotManager {
 
     /**
      * Updates the bot information
+     *
      * @param botId id of the bot to be configured
      */
     public void configureBot(int botId) {
@@ -40,6 +43,7 @@ public class BotManager {
 
     /**
      * Deletes a bot
+     *
      * @param botId id of the bot to be deleted
      */
     public void deleteBot(int botId) {

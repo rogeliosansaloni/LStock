@@ -27,7 +27,7 @@ public class LoginController implements ActionListener {
             String user = loginView.getNicknameEmail();
             String password = loginView.getPassword();
             if (validCredentials(user, password)) {
-                TunnelObject login = new AuthenticationInfo(user, user, password, "login");
+                AuthenticationInfo login = new AuthenticationInfo(user, user, password, "login");
                 try {
                     NetworkManager.getInstance().sendAuthentificationInformation(login);
                 } catch (IOException ex) {
@@ -64,7 +64,9 @@ public class LoginController implements ActionListener {
     /**
      * Closes the login view
      */
-    public void closeLoginView() { loginView.setVisible(false);}
+    public void closeLoginView() {
+        loginView.setVisible(false);
+    }
 
     /**
      * Proc that sends the error message to the view

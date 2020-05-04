@@ -1,8 +1,5 @@
 package view;
 
-import controller.BalanceController;
-import controller.MainController;
-import controller.RegisterController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -10,7 +7,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class MainView extends JFrame{
+public class MainView extends JFrame {
 
     //logo de stock
     private static final String PATH_LOGO = "/Images/stock.png";
@@ -37,11 +34,12 @@ public class MainView extends JFrame{
     private JPanel jpCenter;
     private JMenuBar menuBar;
     private JMenu menuOptions;
-    private JMenuItem option1,option2,option3, option4;
+    private JMenuItem option1, option2, option3, option4;
     private StockColors color;
+    private CompanyDetailView jpCompanyDetailsView;
     private BalanceView jpBalanceView;
 
-    public MainView () {
+    public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
         this.setSize(anchuraPanel, alturaPanel);
@@ -58,6 +56,7 @@ public class MainView extends JFrame{
      */
     public void initAllViews() {
         jpBalanceView = new BalanceView();
+        jpCompanyDetailsView = new CompanyDetailView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -73,7 +72,7 @@ public class MainView extends JFrame{
     /**
      * Initializes UI
      */
-    public void initUI () {
+    public void initUI() {
         JPanel jpMain = new JPanel();
         jpMain.setLayout(new BorderLayout());
         jpMain.setBackground(color.getBLACK());
@@ -85,7 +84,7 @@ public class MainView extends JFrame{
         //Creamos la imagen del logo
         ImageIcon imageIcon = new ImageIcon(MainView.class.getResource(
                 PATH_LOGO));
-        Image scaleImage = imageIcon.getImage().getScaledInstance(120, 120,Image.SCALE_DEFAULT);
+        Image scaleImage = imageIcon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
         jpLogo.add(labelLogo, BorderLayout.CENTER);
@@ -110,7 +109,7 @@ public class MainView extends JFrame{
 
         ImageIcon imageIconUser = new ImageIcon(MainView.class.getResource(
                 PATH_USER_PHOTO));
-        Image scaleImageUser = imageIconUser.getImage().getScaledInstance(100, 100,Image.SCALE_DEFAULT);
+        Image scaleImageUser = imageIconUser.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);
         imageIconUser = new ImageIcon(scaleImageUser);
         labelUserPhoto = new JLabel(imageIconUser);
         jpOptions.add(labelUserPhoto, BorderLayout.NORTH);
@@ -123,11 +122,11 @@ public class MainView extends JFrame{
         labelBalance.setFont(fontBalance);
         labelBalance.setForeground(color.getDarkGreyText());
         jpOptions.add(labelBalance, BorderLayout.SOUTH);
-        jpOptions.setBorder(BorderFactory.createEmptyBorder(0,20,0,10));
+        jpOptions.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 10));
 
         jpHeader.add(jpOptions, BorderLayout.EAST);
 
-        jpHeader.setBorder(BorderFactory.createEmptyBorder(30,50,15,50));
+        jpHeader.setBorder(BorderFactory.createEmptyBorder(30, 50, 15, 50));
         jpMain.add(jpHeader, BorderLayout.NORTH);
 
         //Here we edit the jpCenter depending on the view the create
@@ -143,7 +142,7 @@ public class MainView extends JFrame{
     /**
      * Creates Menu Bar
      */
-    public void createMenuBar(){
+    public void createMenuBar() {
 
         Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
         Font fontName = new Font("Segoe UI", Font.BOLD, 30);
@@ -154,7 +153,7 @@ public class MainView extends JFrame{
 
         ImageIcon imageArrow = new ImageIcon(MainView.class.getResource(
                 PATH_ARROW_ICON));
-        Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT);
+        Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
 
         menuBar = new JMenuBar();
@@ -208,9 +207,10 @@ public class MainView extends JFrame{
 
     /**
      * Register controllers to Menu Bar
+     *
      * @param actionListener ActionLister
      */
-    public void registerController (ActionListener actionListener) {
+    public void registerMainController(ActionListener actionListener) {
         option1.addActionListener(actionListener);
         option1.setActionCommand("profile");
         option2.addActionListener(actionListener);
@@ -221,12 +221,17 @@ public class MainView extends JFrame{
         option4.setActionCommand("logout");
     }
 
-    public void registerBalanceController(BalanceController controller) {
+    public void registerCompanyDetailViewController(ActionListener controller) {
+        jpCompanyDetailsView.registerController(controller);
+    }
+
+    public void registerBalanceController(ActionListener controller) {
         jpBalanceView.registerController(controller);
     }
 
     /**
      * Shows desired view
+     *
      * @param card
      */
     public void updateView(String card) {
@@ -245,6 +250,7 @@ public class MainView extends JFrame{
 
     /**
      * Gets amount selected from the Load Balance view
+     *
      * @return amount selected
      */
     public String getBalanceAmount() {

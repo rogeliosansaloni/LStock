@@ -11,11 +11,13 @@ public class MainController implements ActionListener {
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
     private final MainView view;
+    private CompanyDetailController companyDetailController;
     private BalanceController balanceController;
 
     public MainController(MainView view) {
         this.view = view;
         this.balanceController = new BalanceController(view);
+        this.companyDetailController = new CompanyDetailController();
     }
 
     @Override
@@ -38,6 +40,10 @@ public class MainController implements ActionListener {
                 break;
 
         }
+    }
+
+    public CompanyDetailController getCompanyDetailController() {
+        return companyDetailController;
     }
 
     public BalanceController getBalanceController() {

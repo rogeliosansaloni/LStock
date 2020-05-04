@@ -90,9 +90,9 @@ public class DBConnector {
         return rs;
     }
 
-    public void deleteQuery(String query){
+    public void deleteQuery(String query) {
         try {
-            s =(Statement) conn.createStatement();
+            s = (Statement) conn.createStatement();
             s.executeUpdate(query);
 
         } catch (SQLException ex) {
