@@ -33,6 +33,7 @@ public class StockManager {
 
     /**
      * Function that registers a user if the conditions are met
+     *
      * @param user the user
      * @return Authentification with the information we need to send for the client
      */
@@ -41,8 +42,7 @@ public class StockManager {
         AuthenticationInfo info = mapper.userToAuthenticationInfo(user);
         if (!response.equals("Register Success")) {
             info.setValidated(false);
-        }
-        else {
+        } else {
             info.setValidated(true);
         }
         info.setAction("register");
@@ -52,15 +52,16 @@ public class StockManager {
 
     /**
      * Validates the user
+     *
      * @param user The user
      * @return AuthenticationInfo with the validated users information
      */
     public AuthenticationInfo validateUser(User user) {
         String response = userDao.validateUser(user);
         AuthenticationInfo info = mapper.userToAuthenticationInfo(user);
-        if(response.equals("Login Success")){
+        if (response.equals("Login Success")) {
             info.setValidated(true);
-        }else{
+        } else {
             info.setValidated(false);
         }
         info.setAction("login");
@@ -70,6 +71,7 @@ public class StockManager {
 
     /**
      * Updates the user new balanace
+     *
      * @param user The user
      * @return UserProfileInfo with the updated information of the user
      */
@@ -82,6 +84,7 @@ public class StockManager {
 
     /**
      * Updates the users description, for now.
+     *
      * @param user The user
      * @return UserProfileInfo with the the update information of the user
      */
@@ -97,7 +100,7 @@ public class StockManager {
     }
 
     public void updateCompanyValue(int companyId, String action) {
-        for(Company c : companies) {
+        for (Company c : companies) {
             if (c.getCompanyId() == companyId) {
                 c.recalculateValue(action);
             }
