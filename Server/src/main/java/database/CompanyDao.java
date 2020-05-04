@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
+/**
+ * Represents the DAO for the Company table
+ */
 public class CompanyDao {
 
     private DBConnector dbConnector;

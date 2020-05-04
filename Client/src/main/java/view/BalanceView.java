@@ -12,12 +12,12 @@ public class BalanceView extends JPanel {
     private JComboBox<String> jcbAmount;
     protected StockColors color;
 
-    public BalanceView () {
+    public BalanceView() {
         color = new StockColors();
         //TODO: BalanceView
         this.setBackground(color.getBLACK());
         String amount[] = {"10.00$", "20.00$", "30.00$", "40.00$"};
-        this.setLayout(new GridLayout(3,1));
+        this.setLayout(new GridLayout(3, 1));
         jlCurrent = new JLabel("You have: 00.00$");
         JPanel jpAmount = new JPanel(new GridLayout(1, 2));
         JLabel jLabel = new JLabel("Amount to Load: ");
@@ -33,6 +33,7 @@ public class BalanceView extends JPanel {
 
     /**
      * Adds actionListener to load button
+     *
      * @param actionListener ActionListener
      */
     public void registerController(ActionListener actionListener) {
@@ -42,6 +43,7 @@ public class BalanceView extends JPanel {
 
     /**
      * Gets the amount selected
+     *
      * @return amount selected
      */
     public String getAmount() {
