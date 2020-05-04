@@ -3,7 +3,6 @@ package database;
 
 import java.util.ArrayList;
 
-import network.DBConnector;
 import model.entities.User;
 
 import java.sql.ResultSet;
@@ -21,10 +20,11 @@ public class UserDao {
     private static final String LOGIN_MESSAGE_3 = "Login Error";
     private static final String PROFILE_MESSAGE_1 = "Error getting the user information";
     private static final String PROFILE_MESSAGE_2 = "Error updating the user information";
+    private static final String BALANCE_MESSAGE_1 = "Error updating the user total balance";
 
-
-
-
+    /**
+     * Represents the DAO for the User table
+     */
     public UserDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
@@ -60,10 +60,11 @@ public class UserDao {
 
     /**
      * Validates user if it exists in the database
+     *
      * @param user the User to be validated
      */
     public String validateUser(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%"+ user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
         String message = LOGIN_MESSAGE_3;
         try {
             while (result.next()) {
@@ -138,8 +139,29 @@ public class UserDao {
      *
      * @param user User information
      */
-    public void updateUser(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+    public void updateUserBalance(User user) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
+
+        try {
+            while (result.next()) {
+                if (result.getInt("user_id") == user.getUserId()) {
+                    float totalAmount = result.getFloat("total_balance") + user.getTotalBalance();
+                    dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
+                    user.setTotalBalance(totalAmount);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(BALANCE_MESSAGE_1);
+        }
+    }
+
+    /**
+     * Updates users description for now
+     *
+     * @param user The user
+     */
+    public void updateUserInformation(User user) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
             while (result.next()) {

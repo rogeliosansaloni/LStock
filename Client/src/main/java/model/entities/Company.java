@@ -3,7 +3,6 @@ package model.entities;
 import java.util.ArrayList;
 
 
-
 public class Company {
     private int companyId;
     private String name;
@@ -15,11 +14,11 @@ public class Company {
     /**
      * It will create a company
      *
-     * @param companyId  identification
-     * @param name company name
-     * @param value current company price
-     * @param shares  number of shares available to the user
-     * @param user user who has shares in that company
+     * @param companyId identification
+     * @param name      company name
+     * @param value     current company price
+     * @param shares    number of shares available to the user
+     * @param user      user who has shares in that company
      */
 
     public Company(int companyId, String name, float value, int shares, User user) {
@@ -31,15 +30,24 @@ public class Company {
         this.bots = new ArrayList<Bot>();
     }
 
+    public Company(int companyId, String name, float value, int shares) {
+        this.companyId = companyId;
+        this.name = name;
+        this.value = value;
+        this.shares = shares;
+        this.bots = new ArrayList<Bot>();
+    }
+
     public Company() {
 
     }
 
-    public void  listBots(){}
+    public void listBots() {
+    }
 
     /**
      * Getters
-     * **/
+     **/
     public int getCompanyId() {
         return companyId;
     }
@@ -62,7 +70,7 @@ public class Company {
 
     /**
      * Setters
-     * **/
+     **/
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }

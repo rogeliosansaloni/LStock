@@ -1,6 +1,5 @@
 package view;
 
-import model.entities.User;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -9,11 +8,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.*;
 
-public class SharesListView extends JFrame{
-    private final static String TITLE = "StockLS - C2 - Server";
-    private static final String PATH_LOGO = "resources/stock.png";
+
+public class SharesListView extends JPanel{
     private static final String[] columnNames = { "Users", "Email", "Stock Value", "Total Balance"};
     private String[][] userList = {{ "", "", "", ""}};
     private static final int anchuraPanel = 1080;
@@ -32,43 +31,32 @@ public class SharesListView extends JFrame{
 
     public SharesListView () {
         color = new StockColors();
-        this.setTitle(TITLE);
-        this.setSize(anchuraPanel, alturaPanel);
-        this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setResizable(false);
         initUI();
         getRowListener();
     }
 
-    /**
-     * Creates the UI of the SharesList View
-     */
     private void initUI() {
-        JPanel jpMain = new JPanel();
-        jpMain.setLayout(new BorderLayout());
-        jpMain.setBackground(Color.WHITE);
-        this.getContentPane().add(jpMain);
+        //Main Panel
+        this.setLayout(new BorderLayout());
+        this.setBackground(color.getWHITE());
 
-        //Header
-        jpNorth = new JPanel(new BorderLayout());
-        jpNorth.setBackground(Color.WHITE);
-
-        //TODO Add App Logo
-
-        labelStock = new JLabel("List of Users", SwingConstants.CENTER);
-        Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
-        labelStock.setFont(fuenteLogo);
-        jpNorth.add(labelStock, BorderLayout.SOUTH);
-        jpNorth.setBorder(BorderFactory.createEmptyBorder(70,0,80,0));
-        this.add(jpNorth,BorderLayout.NORTH);
-
-        //Center panel with table
+        //Center panel with data table
         jpCenter = new JPanel(new BorderLayout());
-        jpCenter.setBackground(Color.WHITE);
+        jpCenter.setBackground(color.getWHITE());
+        String[][] userRow = {
+                { "User1", "user1@gmail.com", "1234", "12345"},
+                { "User2", "user2@gmail.com", "1234", "12345"},
+                { "User3", "user3@gmail.com", "1234", "12345"},
+                { "User4", "user4@gmail.com", "1234", "12345"},
+                { "User5", "user5@gmail.com", "1234", "12345"},
+                { "User6", "user6@gmail.com", "1234", "12345"},
+                { "User7", "user7@gmail.com", "1234", "12345"},
+                { "User8", "user8@gmail.com", "1234", "12345"},
+                { "User9", "user9@gmail.com", "1234", "12345"},
+                { "User10", "user10@gmail.com", "1234", "12345"}
+        };
 
-        //User list table
-        jtSharesList = new JTable(userList,columnNames);
+        jtSharesList = new JTable(userRow,columnNames);
         jtSharesList.setRowHeight(40);
         jtSharesList.setBackground(Color.WHITE);
         selectionModel = jtSharesList.getSelectionModel();
@@ -80,7 +68,7 @@ public class SharesListView extends JFrame{
         tableHeader.setFont(new Font("Segoe UI", Font.BOLD, 18));
         jpCenter.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         jpCenter.add(scrollPane);
-        jpMain.add(jpCenter, BorderLayout.CENTER);
+        this.add(jpCenter, BorderLayout.CENTER);
 
         //Return button
         jpSouth = new JPanel();
@@ -96,9 +84,8 @@ public class SharesListView extends JFrame{
         jpSouth.add(jbReturn);
         jpSouth.setBackground(Color.WHITE);
         jpSouth.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
-        jpMain.add(jpSouth, BorderLayout.SOUTH);
+        this.add(jpSouth, BorderLayout.SOUTH);
 
-        this.getContentPane().add(jpMain);
     }
 
     public void registerController (ActionListener actionListener) {
@@ -136,14 +123,14 @@ public class SharesListView extends JFrame{
      *
      * @return user data selected
      */
-    public User getSelectedUser(){
-        User user = new User();
-        user.setNickname(jtSharesList.getModel().getValueAt(selectedRow, 0).toString());
-        user.setEmail(jtSharesList.getModel().getValueAt(selectedRow, 1).toString());
-        user.setStockValue(Float.parseFloat(jtSharesList.getModel().getValueAt(selectedRow, 2).toString()));
-        user.setTotalBalance(Float.parseFloat(jtSharesList.getModel().getValueAt(selectedRow, 3).toString()));
-        return user;
-    }
+//    public User getSelectedUser(){
+//        User user = new User();
+//        user.setNickname(jtSharesList.getModel().getValueAt(selectedRow, 0).toString());
+//        user.setEmail(jtSharesList.getModel().getValueAt(selectedRow, 1).toString());
+//        user.setStockValue(Float.parseFloat(jtSharesList.getModel().getValueAt(selectedRow, 2).toString()));
+//        user.setTotalBalance(Float.parseFloat(jtSharesList.getModel().getValueAt(selectedRow, 3).toString()));
+//        return user;
+//    }
 
     /**
      * Sets the new data for the table and updates it

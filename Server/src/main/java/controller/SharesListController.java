@@ -26,10 +26,10 @@ public class SharesListController extends MouseAdapter implements ActionListener
     @Override
     public void mouseClicked(MouseEvent e) {
         this.currentView = 1;
-        User user = view.getSelectedUser();
+//        User user = view.getSelectedUser();
         //get user data company shares
-        String [][] s = {{ view.getSelectedUser().getNickname(), "111", "222", "333"}};
-        loadUserList(currentView, s);
+//        String [][] s = {{ view.getSelectedUser().getNickname(), "111", "222", "333"}};
+//        loadUserList(currentView, s);
     }
 
     @Override
@@ -49,9 +49,9 @@ public class SharesListController extends MouseAdapter implements ActionListener
         if (currentView == 0) {
             this.view.setUserList(data);
         }
-        if (currentView == 1) {
-            String [][] s = {{ view.getSelectedUser().getNickname(), "111", "222", "333"}};
-            this.view.setUserList(data);
-        }
+//        if (currentView == 1) {
+//            String [][] s = {{ view.getSelectedUser().getNickname(), "111", "222", "333"}};
+//            this.view.setUserList(data);
+//        }
     }
 }

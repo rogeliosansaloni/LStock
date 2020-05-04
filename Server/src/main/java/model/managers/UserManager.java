@@ -1,8 +1,8 @@
 package model.managers;
 
+import database.DBConnector;
 import database.UserDao;
 import model.entities.User;
-import network.DBConnector;
 
 import java.util.ArrayList;
 

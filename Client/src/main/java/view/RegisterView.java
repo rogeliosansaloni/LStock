@@ -9,9 +9,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.net.URL;
 
-public class RegisterView extends JFrame{
-
-    private static final String PATH_LOGO = "/stock.png";
+public class RegisterView extends JFrame {
+    private static final String PATH_LOGO = "/Images/stock.png";
     private static final String TITLE = "StockLS - C2";
     private static final String ERROR_CASE_1 = "Fields Required";
     private static final String ERROR_CASE_2 = "Fields Empty";
@@ -30,7 +29,6 @@ public class RegisterView extends JFrame{
     private static final String ERROR_REGISTER_1 = "This email has an account already.";
     private static final String ERROR_REGISTER_2 = "This username is already taken.";
 
-
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 740;
     private JLabel labelLogo;
@@ -44,7 +42,7 @@ public class RegisterView extends JFrame{
     private JButton jbRegister;
     private StockColors color;
 
-    public RegisterView () {
+    public RegisterView() {
         color = new StockColors();
         this.setTitle(TITLE);
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
@@ -59,7 +57,7 @@ public class RegisterView extends JFrame{
     /**
      * Creates the UI of the register form
      */
-    public void initUI () {
+    public void initUI() {
         JPanel jpRegister = new JPanel();
         jpRegister.setLayout(new BorderLayout());
         jpRegister.setBackground(Color.WHITE);
@@ -69,7 +67,7 @@ public class RegisterView extends JFrame{
         jpNorth.setBackground(Color.WHITE);
         URL url = getClass().getResource(PATH_LOGO);
         ImageIcon imageIcon = new ImageIcon(url);
-        Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
+        Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
 
@@ -79,12 +77,12 @@ public class RegisterView extends JFrame{
         Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
         labelStock.setFont(fuenteLogo);
         jpNorth.add(labelStock, BorderLayout.SOUTH);
-        jpNorth.setBorder(BorderFactory.createEmptyBorder(40,0,35,0));
+        jpNorth.setBorder(BorderFactory.createEmptyBorder(40, 0, 35, 0));
         jpRegister.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the bottons
         jpCenter = new JPanel();
-        jpCenter = new JPanel(new GridLayout(6,1, 0 ,15));
+        jpCenter = new JPanel(new GridLayout(6, 1, 0, 15));
         jpCenter.setBackground(Color.WHITE);
 
         Font fuenteCampo = new Font("Segoe UI", Font.ITALIC, 20);
@@ -123,6 +121,7 @@ public class RegisterView extends JFrame{
                     campos[1].setText("");
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (campos[1].getText().equals("")) {
@@ -144,6 +143,7 @@ public class RegisterView extends JFrame{
                     campos[2].setText("");
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (campos[2].getText().equals("")) {
@@ -165,6 +165,7 @@ public class RegisterView extends JFrame{
                     campos[3].setText("");
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (campos[3].getText().equals("")) {
@@ -179,7 +180,7 @@ public class RegisterView extends JFrame{
         relleno.setPreferredSize(new Dimension(200, 1));
         jpCenter.add(relleno);
 
-        jpBotones = new JPanel(new GridLayout(1,2, 30 ,0));
+        jpBotones = new JPanel(new GridLayout(1, 2, 30, 0));
         jpBotones.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;
@@ -202,7 +203,7 @@ public class RegisterView extends JFrame{
         jpBotones.add(jbRegister);
         jpBotones.add(jbLogin);
         jpCenter.add(jpBotones);
-        jpCenter.setBorder(BorderFactory.createEmptyBorder(0,250,50,250));
+        jpCenter.setBorder(BorderFactory.createEmptyBorder(0, 250, 50, 250));
 
         jpRegister.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpRegister);
@@ -210,9 +211,10 @@ public class RegisterView extends JFrame{
 
     /**
      * Proc that adds an actionListener to fields and buttons.
+     *
      * @param actionListener the actionListener
      */
-    public void registerController (ActionListener actionListener) {
+    public void registerController(ActionListener actionListener) {
         campos[0].addActionListener(actionListener);
         campos[0].setActionCommand("nickname");
         campos[1].addActionListener(actionListener);
@@ -229,59 +231,72 @@ public class RegisterView extends JFrame{
 
     /**
      * Proc that shows a pop-up window with an error message
+     *
      * @param error message to be shown
      */
-    public void showErrorMessages (String error) {
+    public void showErrorMessages(String error) {
         switch (error) {
             case ERROR_CASE_1:
-                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_1);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_1);
                 break;
             case ERROR_CASE_2:
-                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_2);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_2);
                 break;
             case ERROR_CASE_3:
-                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_3);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_3);
                 break;
             case ERROR_CASE_4:
-                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_4);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_4);
                 break;
             case ERROR_CASE_5:
-                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_5);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_5);
                 break;
             case ERROR_CASE_6:
-                JOptionPane.showMessageDialog(null,ERROR_MESSAGE_6);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_6);
                 break;
             case ERROR_CASE_7:
-                JOptionPane.showMessageDialog(null,ERROR_REGISTER_1);
+                JOptionPane.showMessageDialog(null, ERROR_REGISTER_1);
                 break;
             case ERROR_CASE_8:
-                JOptionPane.showMessageDialog(null,ERROR_REGISTER_2);
+                JOptionPane.showMessageDialog(null, ERROR_REGISTER_2);
                 break;
         }
     }
 
     /**
      * Function that returns the nickname typed in the nickname field
+     *
      * @return Nickname
      */
-    public String getNickname () { return campos[0].getText();}
+    public String getNickname() {
+        return campos[0].getText();
+    }
 
     /**
      * Function that returns the email typed in the email field
+     *
      * @return Email
      */
-    public String getEmail () { return campos[1].getText();}
+    public String getEmail() {
+        return campos[1].getText();
+    }
 
     /**
      * Function that returns the password typed in the password field
+     *
      * @return Password
      */
-    public String getPassword () { return campos[2].getText();}
+    public String getPassword() {
+        return campos[2].getText();
+    }
 
     /**
      * Function that returns the password typed in the verify password field
+     *
      * @return Repeated password
      */
-    public String getPasswordVerification () { return campos[3].getText();}
+    public String getPasswordVerification() {
+        return campos[3].getText();
+    }
 
 }

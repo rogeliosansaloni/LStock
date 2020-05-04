@@ -5,9 +5,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 
-import controller.SharesListController;
+import controller.MainController;
 import utils.JSONReader;
-import view.SharesListView;
+import view.MainView;
 
 
 public class Server extends Thread {
@@ -17,17 +17,19 @@ public class Server extends Thread {
     private boolean isOn;
     private LinkedList<DedicatedServer> clients;
     private ServerConfiguration serverConfiguration;
-    private SharesListController sharesListController;
-    private SharesListView sharesListView;
+    private MainView mainView;
+    private MainController mainController;
 
     public Server() throws IOException {
-        this.serverConfiguration = new ServerConfiguration();
         initServerConfiguration();
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
         this.clients = new LinkedList<DedicatedServer>();
     }
 
+    /**
+     * Initializes servers configuration
+     */
     private void initServerConfiguration() {
         JSONReader jsonReader = new JSONReader();
         this.serverConfiguration = jsonReader.getServerConfiguration();
@@ -35,13 +37,19 @@ public class Server extends Thread {
         this.port = serverConfiguration.getPort();
     }
 
+    /**
+     * Starts the connection and initializes the servers main view
+     */
     public void startServer() {
+        initMainView();
         // Start main server thread
-        initShareView();
         isOn = true;
         this.start();
     }
 
+    /**
+     * Stops connection
+     */
     public void stopServer() {
         // Stop main server thread
         isOn = false;
@@ -50,11 +58,15 @@ public class Server extends Thread {
         this.interrupt();
     }
 
-    public void initShareView () {
-        this.sharesListView = new SharesListView();
-        this.sharesListController = new SharesListController(sharesListView);
-        sharesListView.registerController(sharesListController);
-        this.sharesListView.registerController(this.sharesListController);
+    /**
+     * Initializes main view
+     */
+    public void initMainView () {
+        this.mainView = new MainView();
+        this.mainController = new MainController(mainView);
+        mainView.registerController(mainController);
+        this.mainView.registerHomeController(this.mainController.getHomeController());
+        this.mainView.setVisible(true);
     }
 
     public void run() {
@@ -85,9 +97,5 @@ public class Server extends Thread {
         for (DedicatedServer client : clients) {
             client.stopServerConnection();
         }
-    }
-
-    public ServerConfiguration getServerConfiguration() {
-        return serverConfiguration;
     }
 }
