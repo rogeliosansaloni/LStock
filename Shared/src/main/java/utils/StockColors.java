@@ -17,6 +17,9 @@ public class StockColors {
     // Used for buttons and text
     private static final Color LIGHT_GREY = new Color(196, 196, 196);
     private static final Color LIGHT_LIGHT_GREY = new Color(229, 229, 229);
+    //Used for table cells
+    private static final Color GREEN_TABLE = new Color(20, 160, 20);
+    private static final Color RED_TABLE = new Color(205, 0, 0);
 
     public Color getWHITE() {
         return WHITE;
@@ -60,5 +63,13 @@ public class StockColors {
 
     public Color getLightLightGrey() {
         return LIGHT_LIGHT_GREY;
+    }
+
+    public static Color getGreenTable() {
+        return GREEN_TABLE;
+    }
+
+    public static Color getRedTable() {
+        return RED_TABLE;
     }
 }

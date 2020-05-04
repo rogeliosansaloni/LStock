@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 public class CompanyView extends JPanel {
     private JPanel jpCenter;
     private JPanel jpTable;
+    private JButton[][] jlCompanies;
+    private String[] companiesNames = {"Company 1", "Company 2", "Company 3", "Company 4"};;
     protected StockColors color;
 
     public CompanyView() {
@@ -17,16 +19,18 @@ public class CompanyView extends JPanel {
         this.setLayout(new BorderLayout());
         jpTable = new JPanel();
         jpTable.setLayout(new GridLayout(5, 4, 20, 20));
-        createWhiteLabel("COMPANY", Font.BOLD);
-        createWhiteLabel("PRICE 1", Font.BOLD);
-        createWhiteLabel("CHANGE (5 min)", Font.BOLD);
-        createWhiteLabel("% CHANGE (5 min)", Font.BOLD);
-
-        for(int i=0; i<4; i++){
-            createWhiteLabel("COMPANY" + (i+1), Font.PLAIN);
-            createWhiteLabel( i*30 + "€", Font.PLAIN);
-            createWhiteLabel(i*30 + "€", Font.PLAIN);
-            createWhiteLabel("0.5€", Font.PLAIN);
+        createColumnLabel("COMPANY");
+        createColumnLabel("PRICE 1");
+        createColumnLabel("CHANGE (5 min)");
+        createColumnLabel("% CHANGE (5 min)");
+        
+        jlCompanies = new JButton[companiesNames.length][4];
+        //We create a row for each company available.
+        for(int i=0; i<companiesNames.length; i++){
+            creatDataLabel("COMPANY " + (i+1), color.getWHITE(), i, 0);
+            creatDataLabel( (i+1)*100 + "€", color.getGreenTable(), i, 1);
+            creatDataLabel((i+1)*30 + "€", color.getRedTable(), i, 2);
+            creatDataLabel("0.5€", color.getGreenTable(), i, 3);
         }
 
         jpTable.setBackground(color.getBLACK());
@@ -41,18 +45,38 @@ public class CompanyView extends JPanel {
      */
     public void registerController(ActionListener actionListener) {
         //We add an actionListener for each company
+        for(int i=0; i<jlCompanies.length; i++){
+            for(int j=0; j<4; j++){
+                jlCompanies[i][j].addActionListener(actionListener);
+                jlCompanies[i][j].setActionCommand(companiesNames[i]);
+            }
+        }
     }
 
-    public void createWhiteLabel(String text, int type){
+    public void createColumnLabel(String text){
         JLabel label = new JLabel(text);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBackground(color.getWHITE());
         label.setForeground(color.getBLACK());
         label.setOpaque(true);
-        Font font = new Font("Roboto", type, 25);
+        Font font = new Font("Roboto", Font.BOLD, 25);
         label.setFont(font);
         jpTable.add(label);
+    }
 
+    public void creatDataLabel(String text, Color c, int i, int j){
+        jlCompanies[i][j] = new JButton(text);
+        jlCompanies[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+        jlCompanies[i][j].setBackground(c);
+        if(c == color.getWHITE()){
+            jlCompanies[i][j].setForeground(color.getBLACK());
+        } else{
+            jlCompanies[i][j].setForeground(color.getWHITE());
+        }
+        jlCompanies[i][j].setBorderPainted(false);
+        Font font = new Font("Roboto", Font.PLAIN, 25);
+        jlCompanies[i][j].setFont(font);
+        jpTable.add(jlCompanies[i][j]);
     }
 
     /**
