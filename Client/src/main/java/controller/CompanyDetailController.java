@@ -38,7 +38,7 @@ public class CompanyDetailController implements ActionListener {
                 float shareValue = 200;
                 int companyId = 3; //stockers
                 if (model.getUser().getTotalBalance() >= shareValue) {
-                    ShareTrade shareTrade = new ShareTrade(model.getUser().getUserId(), companyId, shareValue, BUY_ACTION);
+                    ShareTrade shareTrade = new ShareTrade(model.getUser().getUserId(), model.getUser().getTotalBalance(), companyId, shareValue, BUY_ACTION);
                     try {
                         NetworkManager.getInstance().sendShareTrade(shareTrade);
                     } catch (IOException e1) {

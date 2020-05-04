@@ -94,6 +94,7 @@ public class DedicatedServer extends Thread {
                 if (tunnelObject instanceof ShareTrade) {
                     ShareTrade shareTrade = (ShareTrade) tunnelObject;
                     if (shareTrade.getActionToDo().equals("buy")) {
+                        //Update users total balance
                         stockModel.updateCompanyValue(shareTrade.getCompanyId(), "buy");
                     } else {
                         if (shareTrade.getActionToDo().equals("sell")) {

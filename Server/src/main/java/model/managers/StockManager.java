@@ -2,10 +2,7 @@ package model.managers;
 
 import database.CompanyDao;
 import database.UserDao;
-import model.entities.AuthenticationInfo;
-import model.entities.Company;
-import model.entities.User;
-import model.entities.UserProfileInfo;
+import model.entities.*;
 import database.DBConnector;
 import utils.UserMapperImpl;
 
@@ -93,6 +90,14 @@ public class StockManager {
         UserProfileInfo info = mapper.userToUserProfileInfo(user);
         info.setAction("information");
         return info;
+    }
+
+    public void updateUserCompanySharePurchase (int userId, int companyId, float userBalance, float companyValue) {
+        //Update user totalBalance
+
+        //Update company new value
+
+
     }
 
     public ArrayList<Company> getCompanies() {
