@@ -11,7 +11,6 @@ import java.util.ArrayList;
  * Represents the DAO for the Company table
  */
 public class CompanyDao {
-
     private DBConnector dbConnector;
 
     public CompanyDao(DBConnector dbConnector) {
@@ -19,7 +18,7 @@ public class CompanyDao {
     }
 
     /**
-     * It willl create a company in the database
+     * Creates a company in the database
      *
      * @param company the company to create
      */
@@ -42,17 +41,17 @@ public class CompanyDao {
 
 
     /**
-     * It will get all the companies in the LStock
+     * Gets all the companies in the LStock
      *
      * @return ArrayList<String> all companies name
      */
-    public ArrayList<String> getAllCompanies() {
-        ResultSet getCompany = dbConnector.selectQuery("SELECT * FROM Company;");
-        ArrayList<String> companies = null;
+    public ArrayList<Company> getAllCompanies() {
+        ResultSet retrieved = dbConnector.selectQuery("SELECT * FROM Company;");
+        ArrayList<Company> companies = null;
         try {
-            companies = new ArrayList<String>();
-            while (getCompany.next()) {
-                companies.add(getCompany.getObject("name").toString());
+            companies = new ArrayList<Company>();
+            while (retrieved.next()) {
+                companies.add(toCompany(retrieved));
             }
         } catch (SQLException e) {
             System.out.println("Error getting all companies");
@@ -61,19 +60,33 @@ public class CompanyDao {
     }
 
     /**
-     * It will get the information of one company
+     * Converts retrieved information into a company
      *
-     * @param company Company where will get the information from.
-     * @return companyData Company Information
+     * @param resultSet result set from database
+     * @return a Company object containing the information retrieved from the database.
+     * @throws SQLException
      */
-    public Company getCompanyInfo(Company company) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getName() + "%';");
+    private Company toCompany(ResultSet resultSet) throws SQLException {
+        Company company = new Company();
+        company.setCompanyId(resultSet.getInt("company_id"));
+        company.setName(resultSet.getString("name"));
+        return company;
+    }
+
+    /**
+     * Gets all the information of a company
+     *
+     * @param companyName Company where will get the information from.
+     * @return a Company object that contains all the information of a specific company
+     */
+    public Company getCompanyByName(String companyName) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + companyName + "%';");
         Company companyData = new Company();
 
         try {
             while (verify.next()) {
-                if (company.getName().equals(verify.getObject("name").toString())) {
-                    companyData.setName(verify.getObject("name").toString());
+                if (companyName.equals(verify.getObject("name").toString())) {
+                    companyData = toCompany(verify);
                 }
             }
             return companyData;
