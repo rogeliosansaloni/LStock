@@ -114,12 +114,14 @@ public class UserDao {
      * @param user User information
      */
     public void updateUserBalance(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
             while (result.next()) {
                 if (result.getInt("user_id") == user.getUserId()) {
-                    dbConnector.insertQuery("UPDATE User SET total_balance = '" + user.getTotalBalance() + "' WHERE user_id = " + user.getUserId() + ";");
+                    float totalAmount = result.getFloat("total_balance") + user.getTotalBalance();
+                    dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
+                    user.setTotalBalance(totalAmount);
                 }
             }
         } catch (SQLException e) {
@@ -133,7 +135,7 @@ public class UserDao {
      * @param user The user
      */
     public void updateUserInformation(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
             while (result.next()) {
