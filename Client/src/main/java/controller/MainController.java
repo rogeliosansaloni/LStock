@@ -20,7 +20,7 @@ public class MainController implements ActionListener {
         this.view = view;
         this.model = model;
         this.balanceController = new BalanceController(view, model);
-        this.companyDetailController = new CompanyDetailController(view);
+        this.companyDetailController = new CompanyDetailController(view, model);
 
     }
 
@@ -47,11 +47,12 @@ public class MainController implements ActionListener {
     }
 
     public CompanyDetailController getCompanyDetailController() {
+        this.model = model;
         return companyDetailController;
     }
 
-    public BalanceController getBalanceController(StockManager model) {
-        this.model = model;
+    public BalanceController getBalanceController() {
+        //this.model = model;
         return balanceController;
     }
 }

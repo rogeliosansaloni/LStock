@@ -283,9 +283,18 @@ public class MainView extends JFrame {
         jpBalanceView.updateCurrentBalance(strDouble);
     }
 
+    /**
+     * Shows a window to confirm action
+     * @param message the message
+     * @return true if confirmed
+     */
     public int confirmAction (String message) {
         return jpCompanyDetailsView.confirmAction(message);
 
+    }
+
+    public void showNoEnoughBalanceErrorMessage (String message) {
+        jpCompanyDetailsView.showErrorMessage(message);
     }
 
 }

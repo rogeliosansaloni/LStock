@@ -4,6 +4,7 @@ package model.entities;
  * Represents the DTO that contains the action to do with company shares
  */
 public class ShareTrade extends TunnelObject {
+    private int userId;
     private int companyId;
     private int shareId;
     private float sharePrice;
@@ -14,7 +15,8 @@ public class ShareTrade extends TunnelObject {
      * @param sharePrice price of the share
      * @param actionToDo action to do with the share: buy or sell
      */
-    public ShareTrade(int companyId, float sharePrice, String actionToDo) {
+    public ShareTrade(int userId, int companyId, float sharePrice, String actionToDo) {
+        this.userId = userId;
         this.companyId = companyId;
         this.sharePrice = sharePrice;
         this.actionToDo = actionToDo;
