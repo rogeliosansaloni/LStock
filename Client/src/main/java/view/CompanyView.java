@@ -25,7 +25,7 @@ public class CompanyView extends JPanel {
         createColumnLabel("% CHANGE (5 min)");
 
         jlCompanies = new JButton[companiesNames.length][4];
-        //We create a row for each company available.
+        // Create a row for each company available
         for (int i = 0; i < companiesNames.length; i++) {
             createDataLabel("COMPANY " + (i + 1), color.getWHITE(), i, 0);
             createDataLabel((i + 1) * 100 + "€", color.getGreenTable(), i, 1);
@@ -45,7 +45,7 @@ public class CompanyView extends JPanel {
      * @param actionListener ActionListener
      */
     public void registerController(ActionListener actionListener) {
-        //We add an actionListener for each company
+        // Add an actionListener for each company
         for (int i = 0; i < jlCompanies.length; i++) {
             for (int j = 0; j < 4; j++) {
                 jlCompanies[i][j].addActionListener(actionListener);
