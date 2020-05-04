@@ -65,7 +65,7 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
-        //jpCenter.add(jpBalanceView, CARD_BALANCE);
+        jpCenter.add(jpBalanceView, CARD_BALANCE);
         jpCenter.add(jpCompanyView, CARD_COMPANY);
         //TODO: Add the rest of views
     }
@@ -240,9 +240,17 @@ public class MainView extends JFrame {
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
         switch (card) {
+            case CARD_COMPANY:
+                labelViewName.setText(CARD_COMPANY);
+                cardLayout.show(jpCenter, CARD_COMPANY);
+                break;
             case CARD_PROFILE:
+                labelViewName.setText(CARD_PROFILE);
+                cardLayout.show(jpCenter, CARD_PROFILE);
                 break;
             case CARD_SHARES:
+                labelViewName.setText(CARD_SHARES);
+                cardLayout.show(jpCenter, CARD_SHARES);
                 break;
             case CARD_BALANCE:
                 labelViewName.setText(CARD_BALANCE);
