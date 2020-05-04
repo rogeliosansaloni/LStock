@@ -1,7 +1,5 @@
 package database;
 
-
-import model.entities.Bot;
 import model.entities.Company;
 
 import java.sql.ResultSet;
