@@ -85,7 +85,8 @@ public class MainView extends JFrame {
         jpHeader = new JPanel(new BorderLayout());
         jpHeader.setBackground(color.getDarkGreyHeader());
         jpLogo = new JPanel(new BorderLayout());
-        //Creamos la imagen del logo
+
+        // Create logo
         ImageIcon imageIcon = new ImageIcon(MainView.class.getResource(
                 PATH_LOGO));
         Image scaleImage = imageIcon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT);
@@ -121,6 +122,7 @@ public class MainView extends JFrame {
         createMenuBar();
 
         Font fontBalance = new Font("Segoe UI", Font.PLAIN, 25);
+
         //Here we put the user's balance
         labelBalance = new JLabel("Balance: " + userBalance + " $");
         labelBalance.setFont(fontBalance);
