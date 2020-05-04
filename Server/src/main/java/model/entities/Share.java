@@ -15,6 +15,10 @@ public class Share {
         this.price = price;
     }
 
+    public Share() {
+
+    }
+
     public float calculteTotalValue() {
         return 1;
     }

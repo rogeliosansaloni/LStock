@@ -50,6 +50,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Constructor that initializes all the elements for server connection
+     *
      * @throws IOException
      */
     private NetworkManager() throws IOException {
@@ -114,6 +115,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Send a generic object through the sockets.
+     *
      * @param object the object to be sent to the server
      * @throws IOException
      */
@@ -123,6 +125,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Sends information for login or registering a user
+     *
      * @param object object that contains user information for login or registering in the system
      * @throws IOException
      */
@@ -132,6 +135,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Sends information of the company
+     *
      * @param object object that contains user information for company details menu
      * @throws IOException
      */

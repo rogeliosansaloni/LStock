@@ -20,7 +20,7 @@ public class CompanyDetailController implements ActionListener {
             3. If the user has enough money, send the petition to update ddbb
              */
             // Send petition to buy shares
-            ShareTrade shareTrade = new ShareTrade(0.01f, "buy");
+            ShareTrade shareTrade = new ShareTrade(1, 0.01f, "buy");
             try {
                 NetworkManager.getInstance().sendShareTrade(shareTrade);
             } catch (IOException e) {

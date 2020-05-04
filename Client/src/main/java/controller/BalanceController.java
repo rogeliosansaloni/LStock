@@ -11,10 +11,11 @@ public class BalanceController implements ActionListener {
     public BalanceController(MainView view) {
         this.view = view;
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("load")) {
-            String amountStr = view.getBalanceAmount().replace("$","");
+            String amountStr = view.getBalanceAmount().replace("$", "");
             float amount = Float.parseFloat(amountStr);
             //TODO: NetWorkManager
         }

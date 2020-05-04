@@ -10,7 +10,8 @@ public class UserProfileInfo extends TunnelObject {
     private float totalBalance;
     private String action;
 
-    public UserProfileInfo() {}
+    public UserProfileInfo() {
+    }
 
     public String getNickname() {
         return nickname;

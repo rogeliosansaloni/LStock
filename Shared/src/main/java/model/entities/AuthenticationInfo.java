@@ -21,10 +21,11 @@ public class AuthenticationInfo extends TunnelObject {
 
     /**
      * Constructor for DTO
+     *
      * @param nickname user nickname
-     * @param email user email
+     * @param email    user email
      * @param password user password
-     * @param action action to be done: register or login
+     * @param action   action to be done: register or login
      */
     public AuthenticationInfo(String nickname, String email, String password, String action) {
         this.nickname = nickname;

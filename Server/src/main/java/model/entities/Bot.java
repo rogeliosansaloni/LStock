@@ -12,9 +12,9 @@ public class Bot extends Thread {
     /**
      * Bot constructor
      *
-     * @param activeTime the time the bot have to be active
+     * @param activeTime  the time the bot have to be active
      * @param probability Defines the probability of being bought or sold.
-     * @param company   company the bot works for
+     * @param company     company the bot works for
      */
 
     public Bot(float activeTime, float probability, Company company) {

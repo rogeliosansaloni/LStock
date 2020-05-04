@@ -10,7 +10,7 @@ public class ShareTrade extends TunnelObject {
     private String actionToDo;
 
     /**
-     * @param companyId id of the company associated with the share
+     * @param companyId  id of the company associated with the share
      * @param sharePrice price of the share
      * @param actionToDo action to do with the share: buy or sell
      */

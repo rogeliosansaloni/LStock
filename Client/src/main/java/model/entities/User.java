@@ -16,14 +16,14 @@ public class User {
     /**
      * It will create a user
      *
-     * @param userId  identification
-     * @param nickname user nickname
-     * @param email user email
-     * @param password  user password
-     * @param stockValue stock value of the user
-     * @param description additional user information
+     * @param userId       identification
+     * @param nickname     user nickname
+     * @param email        user email
+     * @param password     user password
+     * @param stockValue   stock value of the user
+     * @param description  additional user information
      * @param totalBalance user available balance
-     * @param company companies the user participates
+     * @param company      companies the user participates
      */
 
     public User(int userId, String nickname, String email, String password, float stockValue, String description, float totalBalance, ArrayList<Company> company) {
@@ -41,11 +41,11 @@ public class User {
      * Creates a user with the specified information
      *
      * @param nickname user nickname
-     * @param email user email
-     * @param password  user password
+     * @param email    user email
+     * @param password user password
      */
 
-    public User (String nickname, String email, String password) {
+    public User(String nickname, String email, String password) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
@@ -57,7 +57,7 @@ public class User {
 
     /**
      * Getters
-     * **/
+     **/
     public int getUserId() {
         return userId;
     }
@@ -96,7 +96,7 @@ public class User {
 
     /**
      * Setters
-     * **/
+     **/
     public void setUserId(int userId) {
         this.userId = userId;
     }

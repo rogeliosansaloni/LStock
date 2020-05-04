@@ -17,11 +17,11 @@ public class Company {
     /**
      * It will create a company
      *
-     * @param companyId  identification
-     * @param name company name
-     * @param value current company price
-     * @param numShares  number of shares available to the user
-     * @param user user who has shares in that company
+     * @param companyId identification
+     * @param name      company name
+     * @param value     current company price
+     * @param numShares number of shares available to the user
+     * @param user      user who has shares in that company
      */
 
     public Company(int companyId, String name, float value, int numShares, User user, ArrayList<Bot> bot) {
@@ -48,11 +48,11 @@ public class Company {
         this.shares = new ArrayList<Share>();
     }
 
-    public Company(int companyId, String name, float value, int shares) {
+    public Company(int companyId, String name, float value, int numShares) {
         this.companyId = companyId;
         this.name = name;
         this.value = value;
-        this.shares = shares;
+        this.numShares = numShares;
         this.bots = new ArrayList<Bot>();
     }
 
