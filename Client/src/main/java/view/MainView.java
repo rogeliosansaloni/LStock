@@ -257,8 +257,9 @@ public class MainView extends JFrame{
      * @param totalBalance Current balance of the user
      */
     public void initHeaderInformation (String nickname, float totalBalance) {
+        String strDouble = String.format("%.2f", totalBalance);
         menuOptions.setText(nickname);
-        labelBalance.setText("Balance: " + String.valueOf(totalBalance) + " $");
+        labelBalance.setText("Balance: " + strDouble + " $");
     }
 
     /**
@@ -266,8 +267,9 @@ public class MainView extends JFrame{
      * @param totalBalance Current balance of the user
      */
     public void updateTotalBalance (float totalBalance) {
-        labelBalance.setText("Balance: " + String.valueOf(totalBalance) + " $");
-        jpBalanceView.updateCurrentBalance(String.valueOf(totalBalance));
+        String strDouble = String.format("%.2f", totalBalance);
+        labelBalance.setText("Balance: " + strDouble + " $");
+        jpBalanceView.updateCurrentBalance(strDouble);
     }
 
 }

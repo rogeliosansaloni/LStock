@@ -21,7 +21,7 @@ public class BalanceView extends JPanel {
         //Balance
         this.setBackground(color.getBLACK());
         this.setLayout(new GridLayout(3,1));
-        jlCurrent = new JLabel("You have: 00.00$", CENTER);
+        jlCurrent = new JLabel("Select Amount: ", CENTER);
         Font font = new Font("Segoe UI", Font.PLAIN, 30);
         jlCurrent.setFont(font);
         jlCurrent.setForeground(color.getWHITE());
@@ -29,8 +29,6 @@ public class BalanceView extends JPanel {
         //Amount
         JPanel jpAmount = new JPanel(new FlowLayout());
         jpAmount.setBackground(color.getBLACK());
-        JLabel jLabel = new JLabel("Amount to Load: ");
-        jLabel.setFont(font);
 
         JPanel jpMoney = new JPanel(new FlowLayout());
         jpMoney.setBackground(color.getBLACK());
@@ -41,7 +39,6 @@ public class BalanceView extends JPanel {
         jcbAmount.setPreferredSize(new Dimension(150,50));
 
         jpMoney.add(jcbAmount);
-        jpAmount.add(jLabel);
         jpAmount.add(jpMoney);
 
         //Load
