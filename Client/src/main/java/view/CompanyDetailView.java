@@ -87,6 +87,9 @@ public class CompanyDetailView extends JPanel {
         jlMyShares.setText(Integer.toString(user.getShares().size()));
     }
 
+    public void updateValue (String value) {
+
+    }
 
     public int confirmAction(String message) {
         int verify = JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.YES_NO_OPTION);

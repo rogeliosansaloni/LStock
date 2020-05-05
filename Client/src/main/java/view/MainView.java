@@ -283,4 +283,36 @@ public class MainView extends JFrame {
         jpBalanceView.updateCurrentBalance(strDouble);
     }
 
+    /**
+     * Shows a window to confirm action
+     * @param message the message
+     * @return true if confirmed
+     */
+    public int confirmAction (String message) {
+        return jpCompanyDetailsView.confirmAction(message);
+
+    }
+
+    /**
+     * Shows error message when user doesn't have enough money
+     *
+     * @param message the error message
+     */
+    public void showNoEnoughBalanceErrorMessage (String message) {
+        jpCompanyDetailsView.showErrorMessage(message);
+    }
+
+    /**
+     * Update the user and the company new values in the view
+     *
+     * @param totalBalance new balance of the user
+     * @param value new value of the company
+     */
+    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
+        String strBalance = String.format("%.2f", totalBalance);
+        String strValue = String.format("%.2f", value);
+        jpBalanceView.updateCurrentBalance(strBalance);
+        jpCompanyDetailsView.updateValue(strValue);
+    }
+
 }

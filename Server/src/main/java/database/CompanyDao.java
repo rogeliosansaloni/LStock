@@ -13,33 +13,13 @@ import java.util.ArrayList;
 public class CompanyDao {
 
     private DBConnector dbConnector;
+    private static final String SHARE_INFORMATION_ERROR = "Error getting information from the company share";
+    private static final String INFORMATION_ERROR = "Error getting information from the company";
+    private static final String GETTING_COMPANIES_ERROR = "Error getting all companies";
 
     public CompanyDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
-
-    /**
-     * It willl create a company in the database
-     *
-     * @param company the company to create
-     */
-    public void createCompany(Company company) {
-        boolean companyExist = false;
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getName() + "%';");
-
-        try {
-            while (verify.next()) {
-                System.out.println("This company already exists.");
-                companyExist = true;
-            }
-            if (!companyExist) {
-                dbConnector.insertQuery("INSERT INTO Company (name) VALUES ('" + company.getName() + "')");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error creating" + company.getName() + ".");
-        }
-    }
-
 
     /**
      * It will get all the companies in the LStock
@@ -55,7 +35,7 @@ public class CompanyDao {
                 companies.add(getCompany.getObject("name").toString());
             }
         } catch (SQLException e) {
-            System.out.println("Error getting all companies");
+            System.out.println(GETTING_COMPANIES_ERROR);
         }
         return companies;
     }
@@ -78,9 +58,28 @@ public class CompanyDao {
             }
             return companyData;
         } catch (SQLException e) {
-            System.out.println("Error getting information from the company");
+            System.out.println(INFORMATION_ERROR);
         }
         return null;
+    }
+
+    /**
+     * Inserts company recalculated value
+     *
+     * @param company the company
+     */
+    public void insertCompanyNewShare (Company company) {
+        dbConnector.insertQuery("INSERT INTO Share (company_id, price) VALUES (" + company.getCompanyId() + ", " + company.getValue() + ");");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM Share WHERE company_id = " + company.getCompanyId() + " AND price = " + company.getValue() + ";");
+        try {
+            while (result.next()) {
+                if (company.getCompanyId() == result.getInt("company_id") && company.getValue() == result.getFloat("price")) {
+                    company.setShareId(result.getInt("share_id"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(SHARE_INFORMATION_ERROR);
+        }
     }
 
 
