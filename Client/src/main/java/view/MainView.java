@@ -297,4 +297,11 @@ public class MainView extends JFrame {
         jpCompanyDetailsView.showErrorMessage(message);
     }
 
+    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
+        String strBalance = String.format("%.2f", totalBalance);
+        String strValue = String.format("%.2f", value);
+        jpBalanceView.updateCurrentBalance(strBalance);
+        jpCompanyDetailsView.updateValue(strValue);
+    }
+
 }

@@ -193,6 +193,11 @@ public class NetworkManager extends Thread {
                         mainView.updateTotalBalance(info.getTotalBalance());
                     }
                 }
+                if (received instanceof ShareTrade) {
+                    ShareTrade info = ((ShareTrade) received);
+                    mainView.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
+                    //TODO: Update our model new information
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
