@@ -34,8 +34,4 @@ public class BalanceController implements ActionListener {
             }
         }
     }
-
-    public void setModel (StockManager model) {
-        this.model = model;
-    }
 }
