@@ -91,6 +91,7 @@ public class LoginView extends JFrame {
                 }
             }
         });
+
         //We add separation space between fields
         jpCenter.add(campos[0]);
         campos[1] = new JTextField("Password");
