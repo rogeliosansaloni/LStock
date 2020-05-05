@@ -1,6 +1,8 @@
 import java.io.IOException;
 
+import model.entities.Share;
 import network.Server;
+import view.SharesListView;
 
 public class ServerMain {
     public static void main(String[] args) {
