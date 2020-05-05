@@ -23,7 +23,7 @@ public class BalanceController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("load")) {
-            String amountStr = view.getBalanceAmount().replace("$","");
+            String amountStr = view.getBalanceAmount().replace("$", "");
             float newAmount = Float.parseFloat(amountStr);
             int userId = model.getUser().getUserId();
             TunnelObject info = new UserProfileInfo(userId, newAmount, "balance");
@@ -33,5 +33,14 @@ public class BalanceController implements ActionListener {
                 ex.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Updates the new total balance of the user
+     *
+     * @param totalBalance new total balance
+     */
+    public void updateTotalBalance(float totalBalance) {
+        view.updateTotalBalance(totalBalance);
     }
 }

@@ -24,7 +24,7 @@ public class CompanyDetailController implements ActionListener {
     private MainView view;
     private StockManager model;
 
-    public CompanyDetailController (MainView view, StockManager model) {
+    public CompanyDetailController(MainView view, StockManager model) {
         this.view = view;
         this.model = model;
     }
@@ -45,8 +45,7 @@ public class CompanyDetailController implements ActionListener {
                     } catch (IOException e1) {
                         e1.printStackTrace();
                     }
-                }
-                else {
+                } else {
                     view.showNoEnoughBalanceErrorMessage(BALANCE_ERROR);
                 }
             }
@@ -54,13 +53,19 @@ public class CompanyDetailController implements ActionListener {
         if (e.getActionCommand().equals("sellShare")) {
             // TODO: Handle selling of shares
             String message = "Do you really want to sell your shares?";
-            if(view.confirmAction(message) == CONFIRMED){
+            if (view.confirmAction(message) == CONFIRMED) {
                 //companyDetailView.updateNumberShares();
             }
         }
     }
 
-    public void updateShares(Company company, User user) {
-
+    /**
+     * Updates company and users value in the view
+     *
+     * @param totalBalance the new balance of the user
+     * @param value the new value of the company
+     */
+    public void updateCompanyUserValueAndBalance(float totalBalance, float value) {
+        view.updateCompanyUserValueAndBalance(totalBalance, value);
     }
 }
