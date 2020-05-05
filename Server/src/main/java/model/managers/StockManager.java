@@ -1,24 +1,34 @@
 package model.managers;
 
 import database.CompanyDao;
+import database.ShareDao;
 import database.UserDao;
 import model.entities.*;
 import database.DBConnector;
+import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
+import utils.mappers.ShareMapper;
 
 import java.util.ArrayList;
 
 public class StockManager {
+    private static final String BUY_ACTION = "BUY";
+    private static final String SELL_ACTION = "SELL";
     private DBConnector connector;
     private ArrayList<Company> companies;
     private UserDao userDao;
     private CompanyDao companyDao;
+    private ShareDao shareDao;
     private UserMapperImpl mapper;
+    private ShareMapperImpl shareMapper;
 
     public StockManager() {
         connector = new DBConnector();
         userDao = new UserDao(connector);
+        shareDao = new ShareDao(connector);
+        companyDao = new CompanyDao(connector);
         mapper = new UserMapperImpl();
+        shareMapper = new ShareMapperImpl();
         connector.connect();
     }
 
@@ -92,24 +102,28 @@ public class StockManager {
         return info;
     }
 
-    public void updateUserCompanySharePurchase (int userId, int companyId, float userBalance, float companyValue) {
-        //Update user totalBalance
-
-        //Update company new value
-
-
+    /**
+     * Creates a new share between company and user.
+     * @param user the user
+     * @param company the company
+     * @return ShareTrade with the new values of users total balance and company value
+     */
+    public ShareTrade createUserCompanyShare (User user, Company company) {
+        //Creates the purchased share
+        shareDao.insertPurchasedShare(user, company);
+        //Updates de the user balance
+        userDao.updateUserBalance(user, company);
+        //Recalculates the new value of the company
+        company.setValue(company.recalculateValue(BUY_ACTION, company.getValue()));
+        //Updates the company new value
+        companyDao.insertCompanyNewShare(company);
+        ShareTrade info = shareMapper.userCompanyToShareTrade(user, company);
+        info.setActionToDo(BUY_ACTION);
+        return info;
     }
 
     public ArrayList<Company> getCompanies() {
         return companies;
-    }
-
-    public void updateCompanyValue(int companyId, String action) {
-        for (Company c : companies) {
-            if (c.getCompanyId() == companyId) {
-                c.recalculateValue(action);
-            }
-        }
     }
 }
 

@@ -18,10 +18,11 @@ public class ShareTrade extends TunnelObject {
      * @param sharePrice price of the share
      * @param actionToDo action to do with the share: buy or sell
      */
-    public ShareTrade(int userId, float totalBalance, int companyId, float sharePrice, String actionToDo) {
+    public ShareTrade(int userId, float totalBalance, int companyId, int shareId, float sharePrice, String actionToDo) {
         this.userId = userId;
         this.totalBalance = totalBalance;
         this.companyId = companyId;
+        this.shareId = shareId;
         this.sharePrice = sharePrice;
         this.actionToDo = actionToDo;
     }

@@ -16,8 +16,8 @@ public class CompanyDetailController implements ActionListener {
     private static final String CONFIRM_BUY_ACTION = "Do you want to buy this share?";
     private static final String CONFIRM_SELL_ACTION = "Do you want to sell your share?";
     private static final String BALANCE_ERROR = "You don't have enough money to buy this share.";
-    private static final String BUY_ACTION = "buy";
-    private static final String SELL_ACTION = "sell";
+    private static final String BUY_ACTION = "BUY";
+    private static final String SELL_ACTION = "SELL";
     private static final int CONFIRMED = 0;
     private static final int NOT_CONFIRMED = 1;
 
@@ -37,8 +37,9 @@ public class CompanyDetailController implements ActionListener {
                 //Check if the user has enough money
                 float shareValue = 200;
                 int companyId = 3; //stockers
+                int shareId = 1;
                 if (model.getUser().getTotalBalance() >= shareValue) {
-                    ShareTrade shareTrade = new ShareTrade(model.getUser().getUserId(), model.getUser().getTotalBalance(), companyId, shareValue, BUY_ACTION);
+                    ShareTrade shareTrade = new ShareTrade(model.getUser().getUserId(), model.getUser().getTotalBalance(), companyId, shareId, shareValue, BUY_ACTION);
                     try {
                         NetworkManager.getInstance().sendShareTrade(shareTrade);
                     } catch (IOException e1) {

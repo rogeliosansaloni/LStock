@@ -6,9 +6,12 @@ import java.util.ArrayList;
  * Represents a company
  */
 public class Company {
+    private static final String BUY_ACTION = "BUY";
+    private static final String SELL_ACTION = "SELL";
     private int companyId;
     private String name;
     private float value;
+    private int shareId;
     private int numShares;
     private User user;
     private ArrayList<Bot> bots;
@@ -71,15 +74,15 @@ public class Company {
         this.bots.add(bot);
     }
 
-    public float recalculateValue(String action) {
-        if (action.equals("buy")) {
-            this.value += (this.value * 0.01f);
+    public float recalculateValue(String action, float value) {
+        if (action.equals(BUY_ACTION)) {
+            value += (value * 0.01f);
         } else {
-            if (action.equals("sell")) {
-                this.value -= (this.value * 0.01f);
+            if (action.equals(SELL_ACTION)) {
+                value -= (value * 0.01f);
             }
         }
-        return this.value;
+        return value;
     }
 
     /**
@@ -142,5 +145,13 @@ public class Company {
 
     public void setShares(ArrayList<Share> shares) {
         this.shares = shares;
+    }
+
+    public int getShareId() {
+        return shareId;
+    }
+
+    public void setShareId(int shareId) {
+        this.shareId = shareId;
     }
 }

@@ -12,4 +12,6 @@ public interface ShareMapper {
     Company shareTradeToCompany (ShareTrade shareTrade);
 
     ShareTrade companyToShareTrade (Company company);
+
+    ShareTrade userCompanyToShareTrade (User user, Company company);
 }
