@@ -185,7 +185,6 @@ public class NetworkManager extends Thread {
                             model = new StockManager(user);
                             loginController.closeLoginView();
                             NetworkManager.getInstance().sendTunnelObject(new CompanyList());
-
                         } else {
                             loginController.sendErrorMessage(info.getResponseType());
                         }
@@ -194,6 +193,7 @@ public class NetworkManager extends Thread {
                 if (received instanceof UserProfileInfo) {
                     UserProfileInfo info = (UserProfileInfo) received;
                     if (info.getAction().equals("balance")) {
+
                         mainView.updateTotalBalance(info.getTotalBalance());
                     }
                 }

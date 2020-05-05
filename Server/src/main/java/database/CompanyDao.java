@@ -46,7 +46,12 @@ public class CompanyDao {
      * @return ArrayList<String> all companies name
      */
     public ArrayList<Company> getAllCompanies() {
-        ResultSet retrieved = dbConnector.selectQuery("SELECT * FROM Company;");
+        ResultSet retrieved = dbConnector.selectQuery("SELECT t1.*, c.name\n" +
+                "FROM Share t1, Company as c\n" +
+                "WHERE t1.time = (SELECT MAX(t2.time)\n" +
+                "                 FROM Share t2\n" +
+                "                 WHERE t2.company_id = t1.company_id)\n" +
+                "AND c.name = (SELECT name FROM Company c2 WHERE c2.company_id = t1.company_id);");
         ArrayList<Company> companies = null;
         try {
             companies = new ArrayList<Company>();
@@ -66,10 +71,25 @@ public class CompanyDao {
      * @return a Company object containing the information retrieved from the database.
      * @throws SQLException
      */
+    private Company toCompanyNames(ResultSet resultSet) throws SQLException {
+        Company company = new Company();
+        company.setCompanyId(resultSet.getInt("company_id"));
+        company.setName(resultSet.getString("name"));
+        return company;
+    }
+
+    /**
+     * Converts retrieved information into a company
+     *
+     * @param resultSet result set from database
+     * @return a Company object containing the information retrieved from the database.
+     * @throws SQLException
+     */
     private Company toCompany(ResultSet resultSet) throws SQLException {
         Company company = new Company();
         company.setCompanyId(resultSet.getInt("company_id"));
         company.setName(resultSet.getString("name"));
+        company.setValue(resultSet.getFloat("price"));
         return company;
     }
 
@@ -86,7 +106,7 @@ public class CompanyDao {
         try {
             while (verify.next()) {
                 if (companyName.equals(verify.getObject("name").toString())) {
-                    companyData = toCompany(verify);
+                    companyData = toCompanyNames(verify);
                 }
             }
             return companyData;
