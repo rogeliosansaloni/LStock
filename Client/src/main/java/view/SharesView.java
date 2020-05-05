@@ -34,7 +34,7 @@ public class SharesView extends JPanel {
             jbSellShares = new JButton ("Sell all shares");
             jbSellShares.setActionCommand("sellAllShares");
             jbSellShares.setBackground(color.getWHITE());
-            jbSellShares.setPreferredSize(new Dimension(200,40));
+            jbSellShares.setPreferredSize(new Dimension(170,40));
             jbSellShares.setFont(font);
         }
 
