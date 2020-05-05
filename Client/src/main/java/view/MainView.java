@@ -15,6 +15,7 @@ public class MainView extends JFrame {
     private static final String PATH_ARROW_ICON = "/Images/dropdown-grey.png";
     private static final String TITLE = "StockLS - C2";
     private static final String CARD_COMPANY = "Companies";
+    private static final String CARD_COMPANYDETAILS = "Company Details";
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
@@ -65,6 +66,7 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
+        jpCenter.add(jpCompanyDetailsView,CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
         //TODO: Add the rest of views
     }
@@ -207,7 +209,6 @@ public class MainView extends JFrame {
 
     /**
      * Register controllers to Menu Bar
-     *
      * @param actionListener ActionLister
      */
     public void registerMainController(ActionListener actionListener) {
@@ -231,7 +232,6 @@ public class MainView extends JFrame {
 
     /**
      * Shows desired view
-     *
      * @param card
      */
     public void updateView(String card) {
@@ -245,6 +245,11 @@ public class MainView extends JFrame {
                 labelViewName.setText(CARD_BALANCE);
                 cardLayout.show(jpCenter, CARD_BALANCE);
                 break;
+            case CARD_COMPANYDETAILS:
+                labelViewName.setText(CARD_COMPANYDETAILS);
+                cardLayout.show(jpCenter, CARD_COMPANYDETAILS);
+                break;
+
         }
     }
 
@@ -276,6 +281,38 @@ public class MainView extends JFrame {
         String strDouble = String.format("%.2f", totalBalance);
         labelBalance.setText("Balance: " + strDouble + " $");
         jpBalanceView.updateCurrentBalance(strDouble);
+    }
+
+    /**
+     * Shows a window to confirm action
+     * @param message the message
+     * @return true if confirmed
+     */
+    public int confirmAction (String message) {
+        return jpCompanyDetailsView.confirmAction(message);
+
+    }
+
+    /**
+     * Shows error message when user doesn't have enough money
+     *
+     * @param message the error message
+     */
+    public void showNoEnoughBalanceErrorMessage (String message) {
+        jpCompanyDetailsView.showErrorMessage(message);
+    }
+
+    /**
+     * Update the user and the company new values in the view
+     *
+     * @param totalBalance new balance of the user
+     * @param value new value of the company
+     */
+    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
+        String strBalance = String.format("%.2f", totalBalance);
+        String strValue = String.format("%.2f", value);
+        jpBalanceView.updateCurrentBalance(strBalance);
+        jpCompanyDetailsView.updateValue(strValue);
     }
 
 }
