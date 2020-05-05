@@ -1,6 +1,7 @@
 package controller;
 
 import model.entities.StockManager;
+import view.LoginView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -12,13 +13,18 @@ public class MainController implements ActionListener {
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
     private final MainView view;
+    private final LoginView loginView;
     private StockManager model;
     private CompanyDetailController companyDetailController;
     private BalanceController balanceController;
+    private CompanyController companyController;
 
-    public MainController(MainView view, StockManager model) {
+    public MainController(MainView view, StockManager model, LoginView loginView) {
         this.view = view;
+        this.loginView = loginView;
         this.model = model;
+        this.balanceController = new BalanceController(view, model);
+        this.companyController = new CompanyController(view);
         this.balanceController = new BalanceController(view, model);
         this.companyDetailController = new CompanyDetailController(view, model);
 
@@ -27,6 +33,9 @@ public class MainController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
+            case "company":
+                view.updateView(CARD_COMPANY);
+                break;
             case "profile":
                 view.updateView(CARD_PROFILE);
                 //TODO: Profile
@@ -40,7 +49,10 @@ public class MainController implements ActionListener {
                 //TODO: Load Balance
                 break;
             case "logout":
-                //TODO: Log out
+                if(view.confirmLogOutWindow() == 0){
+                    loginView.setVisible(true);
+                    view.setVisible(false);
+                }
                 break;
 
         }
@@ -63,6 +75,11 @@ public class MainController implements ActionListener {
     public BalanceController getBalanceController() {
         return balanceController;
     }
+
+    public CompanyController getCompanyController() {
+        return companyController;
+    }
+
 
     /**
      * Updates the new total balance of the user
