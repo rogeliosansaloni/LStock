@@ -10,7 +10,10 @@ public class SharesView extends JPanel {
     private JPanel jpCenter;
     private JPanel jpTable;
     protected StockColors color;
-    JButton jbSellShares;
+    JButton jbSell1;
+    JButton jbSell2;
+    JButton jbSell3;
+    JButton jbSell4;
 
     public SharesView() {
         color = new StockColors();
@@ -31,11 +34,39 @@ public class SharesView extends JPanel {
             createWhiteLabel("0.5€", Font.PLAIN);
 
             //Sell button
-            jbSellShares = new JButton ("Sell all shares");
-            jbSellShares.setActionCommand("sellAllShares");
-            jbSellShares.setBackground(color.getWHITE());
-            jbSellShares.setPreferredSize(new Dimension(170,40));
-            jbSellShares.setFont(font);
+            switch (i) {
+                case 1:
+                    jbSell1 = new JButton("Sell all shares");
+                    jbSell1.setActionCommand("sellAllShares");
+                    jbSell1.setBackground(color.getWHITE());
+                    jbSell1.setPreferredSize(new Dimension(170, 40));
+                    jbSell1.setFont(font);
+                    break;
+                case 2:
+                    jbSell2 = new JButton("Sell all shares");
+                    jbSell2.setActionCommand("sellAllShares");
+                    jbSell2.setBackground(color.getWHITE());
+                    jbSell2.setPreferredSize(new Dimension(170, 40));
+                    jbSell2.setFont(font);
+                    break;
+                case 3:
+                    jbSell3 = new JButton("Sell all shares");
+                    jbSell3.setActionCommand("sellAllShares");
+                    jbSell3.setBackground(color.getWHITE());
+                    jbSell3.setPreferredSize(new Dimension(170, 40));
+                    jbSell3.setFont(font);
+                    break;
+                case 4:
+                    jbSell4 = new JButton("Sell all shares");
+                    jbSell4.setActionCommand("sellAllShares");
+                    jbSell4.setBackground(color.getWHITE());
+                    jbSell4.setPreferredSize(new Dimension(170, 40));
+                    jbSell4.setFont(font);
+                    break;
+
+            }
+
+
         }
 
         jpTable.setBackground(color.getBLACK());
@@ -49,7 +80,10 @@ public class SharesView extends JPanel {
      * @param actionListener ActionListener
      */
     public void registerController(ActionListener actionListener) {
-        this.jbSellShares.addActionListener(actionListener);
+        this.jbSell1.addActionListener(actionListener);
+        this.jbSell2.addActionListener(actionListener);
+        this.jbSell3.addActionListener(actionListener);
+        this.jbSell4.addActionListener(actionListener);
     }
 
     public void createWhiteLabel(String text, int type){
