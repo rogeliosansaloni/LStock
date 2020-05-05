@@ -78,7 +78,7 @@ public class CompanyDao {
         ResultSet resultSet = dbConnector.selectQuery(String.format(selectQuery, companyName));
         try {
             while (resultSet.next()) {
-                return toCompany(resultSet);
+                return toCompanyNames(resultSet);
             }
         } catch (SQLException e) {
             System.out.println(String.format(errorMessage, companyName));
@@ -113,29 +113,6 @@ public class CompanyDao {
         company.setName(resultSet.getString("name"));
         company.setValue(resultSet.getFloat("price"));
         return company;
-    }
-
-    /**
-     * Gets all the information of a company
-     *
-     * @param companyName Company where will get the information from.
-     * @return a Company object that contains all the information of a specific company
-     */
-    public Company getCompanyByName(String companyName) {
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + companyName + "%';");
-        Company companyData = new Company();
-
-        try {
-            while (verify.next()) {
-                if (companyName.equals(verify.getObject("name").toString())) {
-                    companyData = toCompanyNames(verify);
-                }
-            }
-            return companyData;
-        } catch (SQLException e) {
-            System.out.println(INFORMATION_ERROR);
-        }
-        return null;
     }
 
     /**
