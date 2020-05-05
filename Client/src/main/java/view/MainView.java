@@ -240,7 +240,7 @@ public class MainView extends JFrame {
      *
      * @param actionListener ActionLister
      */
-    public void registerController(ActionListener actionListener) {
+    public void registerMainController(ActionListener actionListener) {
         optionProfile.addActionListener(actionListener);
         optionProfile.setActionCommand("profile");
         optionShares.addActionListener(actionListener);
