@@ -190,13 +190,12 @@ public class NetworkManager extends Thread {
                 if (received instanceof UserProfileInfo) {
                     UserProfileInfo info = ((UserProfileInfo) received);
                     if (info.getAction().equals("balance")) {
-                        mainView.updateTotalBalance(info.getTotalBalance());
+                        mainController.updateTotalBalance(info.getTotalBalance());
                     }
                 }
                 if (received instanceof ShareTrade) {
                     ShareTrade info = ((ShareTrade) received);
-                    mainView.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
-                    //TODO: Update our model new information
+                    mainController.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

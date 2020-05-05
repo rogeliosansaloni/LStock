@@ -46,13 +46,42 @@ public class MainController implements ActionListener {
         }
     }
 
+    /**
+     * Returns the company detail controller of the CompanyDetailsView
+     *
+     * @return the company detail controller
+     */
     public CompanyDetailController getCompanyDetailController() {
-        this.model = model;
         return companyDetailController;
     }
 
+    /**
+     * Returns the balance controller of the BalanceView
+     *
+     * @return balance controller
+     */
     public BalanceController getBalanceController() {
-        //this.model = model;
         return balanceController;
+    }
+
+    /**
+     * Updates the new total balance of the user
+     *
+     * @param totalBalance new total balance
+     */
+    public void updateTotalBalance (float totalBalance) {
+        model.getUser().setTotalBalance(totalBalance);
+        view.updateTotalBalance(totalBalance);
+    }
+
+    /**
+     * Updates company and users value in the view
+     *
+     * @param totalBalance the new balance of the user
+     * @param value the new value of the company
+     */
+    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
+        //TODO: Update company in the model
+        view.updateCompanyUserValueAndBalance(totalBalance, value);
     }
 }
