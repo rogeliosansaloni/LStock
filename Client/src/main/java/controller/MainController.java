@@ -21,12 +21,13 @@ public class MainController implements ActionListener {
 
     public MainController(MainView view, StockManager model, LoginView loginView) {
         this.view = view;
+        this.loginView = loginView;
+        this.model = model;
         this.balanceController = new BalanceController(view, model);
         this.companyController = new CompanyController(view);
         this.balanceController = new BalanceController(view, model);
-        this.companyDetailController = new CompanyDetailController();
-        this.loginView = loginView;
-        this.model = model;
+        this.companyDetailController = new CompanyDetailController(view, model);
+
     }
 
     @Override
@@ -57,12 +58,21 @@ public class MainController implements ActionListener {
         }
     }
 
+    /**
+     * Returns the company detail controller of the CompanyDetailsView
+     *
+     * @return the company detail controller
+     */
     public CompanyDetailController getCompanyDetailController() {
         return companyDetailController;
     }
 
-    public BalanceController getBalanceController(StockManager model) {
-        this.model = model;
+    /**
+     * Returns the balance controller of the BalanceView
+     *
+     * @return balance controller
+     */
+    public BalanceController getBalanceController() {
         return balanceController;
     }
 
@@ -70,4 +80,25 @@ public class MainController implements ActionListener {
         return companyController;
     }
 
+
+    /**
+     * Updates the new total balance of the user
+     *
+     * @param totalBalance new total balance
+     */
+    public void updateTotalBalance (float totalBalance) {
+        model.getUser().setTotalBalance(totalBalance);
+        balanceController.updateTotalBalance(totalBalance);
+    }
+
+    /**
+     * Updates company and users value in the view
+     *
+     * @param totalBalance the new balance of the user
+     * @param value the new value of the company
+     */
+    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
+        //TODO: Update company in the model
+        companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
+    }
 }

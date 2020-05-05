@@ -2,6 +2,7 @@ package database;
 
 import model.entities.Company;
 import model.entities.Share;
+import model.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +17,11 @@ public class ShareDao {
 
     public ShareDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
+    }
+
+    public void insertPurchasedShare (User user, Company company) {
+        dbConnector.insertQuery("INSERT INTO Purchase (user_id, share_id, company_id, share_quantity) " + "VALUES (" + user.getUserId() + ", "
+                                + company.getShareId() + ", " + company.getCompanyId() + ", " + company.getValue() + ");");
     }
 
     /**
@@ -38,7 +44,6 @@ public class ShareDao {
         } catch (SQLException e) {
             System.out.println("Error creating shares");
         }
-
     }
 
 

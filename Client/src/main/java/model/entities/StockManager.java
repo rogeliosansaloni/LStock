@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class StockManager {
     private User user;
+    private Company company;
     private ArrayList<Company> companies;
 
     public StockManager(User user) {

@@ -92,8 +92,9 @@ public class NetworkManager extends Thread {
         model.setCompanies(companies);
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
-        this.mainView.registerController(mainController);
-        this.mainView.registerBalanceController(this.mainController.getBalanceController(model));
+        this.mainView.registerMainController(mainController);
+        this.mainView.registerBalanceController(this.mainController.getBalanceController());
+        this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
         this.mainView.setVisible(true);
     }
@@ -190,12 +191,17 @@ public class NetworkManager extends Thread {
                         }
                     }
                 }
+
                 if (received instanceof UserProfileInfo) {
                     UserProfileInfo info = (UserProfileInfo) received;
                     if (info.getAction().equals("balance")) {
-
-                        mainView.updateTotalBalance(info.getTotalBalance());
+                        mainController.updateTotalBalance(info.getTotalBalance());
                     }
+                }
+
+                if (received instanceof ShareTrade) {
+                    ShareTrade info = ((ShareTrade) received);
+                    mainController.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
                 }
 
                 if (received instanceof CompanyList) {
