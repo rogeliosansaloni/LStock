@@ -10,6 +10,7 @@ public class SharesView extends JPanel {
     private JPanel jpCenter;
     private JPanel jpTable;
     protected StockColors color;
+    JButton jbSellShares;
 
     public SharesView() {
         color = new StockColors();
@@ -17,6 +18,7 @@ public class SharesView extends JPanel {
         this.setLayout(new BorderLayout());
         jpTable = new JPanel();
         jpTable.setLayout(new GridLayout(5, 5, 20, 20));
+        Font font = new Font("Segoe UI Semibold", Font.PLAIN, 20);
         createWhiteLabel("COMPANY", Font.BOLD);
         createWhiteLabel("ACTION VALUE", Font.BOLD);
         createWhiteLabel("MY ACTIONS", Font.BOLD);
@@ -27,7 +29,13 @@ public class SharesView extends JPanel {
             createWhiteLabel( i*30 + "€", Font.PLAIN);
             createWhiteLabel(i*30 + "€", Font.PLAIN);
             createWhiteLabel("0.5€", Font.PLAIN);
-            createWhiteLabelSmall("Sell all shares", Font.PLAIN);
+
+            //Sell button
+            jbSellShares = new JButton ("Sell all shares");
+            jbSellShares.setActionCommand("sellShare");
+            jbSellShares.setBackground(color.getWHITE());
+            jbSellShares.setPreferredSize(new Dimension(200,40));
+            jbSellShares.setFont(font);
         }
 
         jpTable.setBackground(color.getBLACK());
@@ -41,7 +49,7 @@ public class SharesView extends JPanel {
      * @param actionListener ActionListener
      */
     public void registerController(ActionListener actionListener) {
-
+        this.jbSellShares.addActionListener(actionListener);
     }
 
     public void createWhiteLabel(String text, int type){
@@ -54,17 +62,6 @@ public class SharesView extends JPanel {
         label.setFont(font);
         jpTable.add(label);
 
-    }
-
-    public void createWhiteLabelSmall (String text, int type){
-        JLabel label = new JLabel(text);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setBackground(color.getWHITE());
-        label.setForeground(color.getBLACK());
-        label.setOpaque(true);
-        Font font = new Font("Roboto", type, 20);
-        label.setFont(font);
-        jpTable.add(label);
     }
 
     /**
