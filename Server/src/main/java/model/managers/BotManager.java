@@ -22,8 +22,7 @@ public class BotManager {
      * Creates a bot
      * @param bot bot to be created
      *
-     * @param bot     bot to be created
-     * @return
+     * @return id of the bot. If the bot is not created, returns -1.
      */
     public int createBot(Bot bot) {
         Company company = companyDao.getCompanyByName(bot.getCompany().getName());
