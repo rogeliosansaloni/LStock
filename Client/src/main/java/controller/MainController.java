@@ -27,7 +27,6 @@ public class MainController implements ActionListener {
         this.companyDetailController = new CompanyDetailController();
         this.loginView = loginView;
         this.model = model;
-
     }
 
     @Override

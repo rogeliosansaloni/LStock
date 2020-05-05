@@ -13,6 +13,10 @@ public class CompanyList extends TunnelObject {
         this.companyShares = new int[numCompanies];
     }
 
+    public CompanyList() {
+
+    }
+
     public int[] getCompanyId() {
         return companyId;
     }

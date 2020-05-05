@@ -21,6 +21,7 @@ public class StockManager {
     public StockManager() {
         connector = new DBConnector();
         userDao = new UserDao(connector);
+        companyDao = new CompanyDao(connector);
         mapper = new UserMapperImpl();
         connector.connect();
     }
@@ -96,6 +97,7 @@ public class StockManager {
     }
 
     public ArrayList<Company> getCompanies() {
+        companies = companyDao.getAllCompanies();
         return companies;
     }
 

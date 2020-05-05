@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
 import model.entities.*;
+import utils.CompanyMapperImpl;
 import utils.JSONReader;
 import utils.UserMapperImpl;
 import view.LoginView;
@@ -29,6 +31,7 @@ public class NetworkManager extends Thread {
     private RegisterView registerView;
     private LoginView loginView;
     private UserMapperImpl mapper;
+    private CompanyMapperImpl companyMapper;
     private StockManager model;
 
     /**
@@ -79,12 +82,14 @@ public class NetworkManager extends Thread {
 
     private void init() {
         this.mapper = new UserMapperImpl();
+        this.companyMapper = new CompanyMapperImpl();
     }
 
     /**
      * Initializes the main view and its controller
      */
-    private void initMainView() {
+    private void initMainView(ArrayList<Company> companies) {
+        model.setCompanies(companies);
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
         this.mainView.registerController(mainController);
@@ -179,17 +184,25 @@ public class NetworkManager extends Thread {
                             User user = mapper.authenticationInfoToUser((AuthenticationInfo) received);
                             model = new StockManager(user);
                             loginController.closeLoginView();
-                            //Temporal
-                            initMainView();
+                            NetworkManager.getInstance().sendTunnelObject(new CompanyList());
                         } else {
                             loginController.sendErrorMessage(info.getResponseType());
                         }
                     }
                 }
                 if (received instanceof UserProfileInfo) {
-                    UserProfileInfo info = ((UserProfileInfo) received);
+                    UserProfileInfo info = (UserProfileInfo) received;
                     if (info.getAction().equals("balance")) {
+
                         mainView.updateTotalBalance(info.getTotalBalance());
+                    }
+                }
+
+                if (received instanceof CompanyList) {
+                    CompanyList companies = (CompanyList) received;
+                    if (mainView == null) {
+                        initMainView(companyMapper.convertToCompanies(companies));
+                        mainView.setVisible(true);
                     }
                 }
             }
