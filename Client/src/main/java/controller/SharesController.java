@@ -21,18 +21,19 @@ public class SharesController implements ActionListener {
         Object jbPush = e.getSource();
         final String message = "Do you really want to sell all your shares for %s?";
         String.format(message, company.getName());
-        if (jbPush == jbSell1) {
-            //companyDetailView.updateNumberShares();
-
-        }else if(jbPush == jbSell2){
-            //companyDetailView.updateNumberShares();
-
-        }else if(jbPush == jbSell3){
-            //companyDetailView.updateNumberShares();
-
-        }else{
-            //companyDetailView.updateNumberShares();
-
+        switch (e.getActionCommand()) {
+            case "sellAllShares1":
+                System.out.println("Company 1");
+                break;
+            case "sellAllShares2":
+                System.out.println("Company 2");
+                break;
+            case "sellAllShares3":
+                System.out.println("Company 3");
+                break;
+            case "sellAllShares4":
+                System.out.println("Company 4");
+                break;
         }
 
     }

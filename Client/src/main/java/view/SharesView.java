@@ -37,28 +37,28 @@ public class SharesView extends JPanel {
             switch (i) {
                 case 1:
                     jbSell1 = new JButton("Sell all shares");
-                    jbSell1.setActionCommand("sellAllShares");
+                    jbSell1.setActionCommand("sellAllShares1");
                     jbSell1.setBackground(color.getWHITE());
                     jbSell1.setPreferredSize(new Dimension(170, 40));
                     jbSell1.setFont(font);
                     break;
                 case 2:
                     jbSell2 = new JButton("Sell all shares");
-                    jbSell2.setActionCommand("sellAllShares");
+                    jbSell2.setActionCommand("sellAllShares2");
                     jbSell2.setBackground(color.getWHITE());
                     jbSell2.setPreferredSize(new Dimension(170, 40));
                     jbSell2.setFont(font);
                     break;
                 case 3:
                     jbSell3 = new JButton("Sell all shares");
-                    jbSell3.setActionCommand("sellAllShares");
+                    jbSell3.setActionCommand("sellAllShares3");
                     jbSell3.setBackground(color.getWHITE());
                     jbSell3.setPreferredSize(new Dimension(170, 40));
                     jbSell3.setFont(font);
                     break;
                 case 4:
                     jbSell4 = new JButton("Sell all shares");
-                    jbSell4.setActionCommand("sellAllShares");
+                    jbSell4.setActionCommand("sellAllShares4");
                     jbSell4.setBackground(color.getWHITE());
                     jbSell4.setPreferredSize(new Dimension(170, 40));
                     jbSell4.setFont(font);
