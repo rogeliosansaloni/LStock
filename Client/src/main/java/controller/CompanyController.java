@@ -1,5 +1,6 @@
 package controller;
 
+import model.entities.StockManager;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -8,9 +9,11 @@ import java.awt.event.ActionListener;
 public class CompanyController implements ActionListener {
 
     private MainView view;
+    private StockManager model;
 
-    public CompanyController(MainView view) {
+    public CompanyController(MainView view, StockManager model) {
         this.view = view;
+        this.model = model;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
