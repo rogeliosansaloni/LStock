@@ -183,7 +183,6 @@ public class MainView extends JFrame {
                 cardLayout.show(jpCenter, CARD_USERS);
                 break;
             case CARD_BOTS:
-
                 cardLayout.show(jpCenter, CARD_BOTS);
                 break;
         }
