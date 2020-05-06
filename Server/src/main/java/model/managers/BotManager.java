@@ -9,7 +9,6 @@ import network.DedicatedServer;
 import java.util.ArrayList;
 
 public class BotManager {
-    private DedicatedServer dedicatedServer;
     private BotDao botDao;
     private CompanyDao companyDao;
 
