@@ -9,19 +9,30 @@ import java.awt.event.ActionListener;
 
 public class SharesController implements ActionListener {
     private MainView view;
-    private static final int CONFIRMED = 0;
+    private Company company;
 
-    public SharesController (MainView view){
+    public SharesController(MainView view, Company company){
         this.view = view;
+        this.company = company;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("sellAllShares")) {
-            String message = "Do you really want to sell all your shares?";
-          //  if () {
-                //companyDetailView.updateNumberShares();
-            //}
+        Object jbPush = e.getSource();
+        final String message = "Do you really want to sell all your shares for %s?";
+        String.format(message, company.getName());
+        if (jbPush == jbSell1) {
+            //companyDetailView.updateNumberShares();
+
+        }else if(jbPush == jbSell2){
+            //companyDetailView.updateNumberShares();
+
+        }else if(jbPush == jbSell3){
+            //companyDetailView.updateNumberShares();
+
+        }else{
+            //companyDetailView.updateNumberShares();
+
         }
 
     }
