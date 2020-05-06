@@ -74,6 +74,7 @@ public class CompanyView extends JPanel {
 
     public void showCompanies(ArrayList<Company> companies){
         // Create a row for each company available
+        System.out.println(companies);
         for (int i = 0; i < companies.size(); i++) {
             createDataLabel(companies.get(i).getName(), color.getWHITE(), i, 0);
             createDataLabel(companies.get(i).getValue() + "€", color.getGreenTable(), i, 1);

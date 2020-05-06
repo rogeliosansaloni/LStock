@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import model.entities.Company;
 
 public class MainView extends JFrame {
 
@@ -69,7 +71,7 @@ public class MainView extends JFrame {
      */
     private void addToCardLayout() {
         jpCenter.add(jpCompanyView, CARD_COMPANY);
-        jpCenter.add(jpCompanyDetailsView,CARD_COMPANYDETAILS);
+        jpCenter.add(jpCompanyDetailsView, CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
         //TODO: Add the rest of views
     }
@@ -306,6 +308,10 @@ public class MainView extends JFrame {
         }
     }
 
+    public void updateCompanyList(ArrayList<Company> companies){
+        jpCompanyView.showCompanies(companies);
+    }
+
     /**
      * Gets amount selected from the Load Balance view
      *
@@ -324,6 +330,10 @@ public class MainView extends JFrame {
         String strDouble = String.format("%.2f", totalBalance);
         menuOptions.setText(nickname);
         labelBalance.setText("Balance: " + strDouble + " $");
+    }
+
+    public void initFirstView (ArrayList<Company> companies) {
+        updateCompanyList(companies);
     }
 
     /**

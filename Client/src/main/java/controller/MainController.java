@@ -27,7 +27,6 @@ public class MainController implements ActionListener {
         this.companyController = new CompanyController(view, model);
         this.balanceController = new BalanceController(view, model);
         this.companyDetailController = new CompanyDetailController(view, model);
-
     }
 
     @Override
@@ -35,6 +34,7 @@ public class MainController implements ActionListener {
         switch (e.getActionCommand()) {
             case "company":
                 view.updateView(CARD_COMPANY);
+                updateCompanyList();
                 break;
             case "profile":
                 view.updateView(CARD_PROFILE);
@@ -54,7 +54,6 @@ public class MainController implements ActionListener {
                     view.setVisible(false);
                 }
                 break;
-
         }
     }
 
@@ -89,6 +88,10 @@ public class MainController implements ActionListener {
     public void updateTotalBalance (float totalBalance) {
         model.getUser().setTotalBalance(totalBalance);
         balanceController.updateTotalBalance(totalBalance);
+    }
+
+    public void updateCompanyList () {
+        companyController.updateCompanyList(model.getCompanies());
     }
 
     /**

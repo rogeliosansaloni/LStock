@@ -93,9 +93,11 @@ public class NetworkManager extends Thread {
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
         this.mainView.registerMainController(mainController);
+        this.mainView.registerCompanyController(this.mainController.getCompanyController());
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
+        this.mainView.initFirstView(model.getCompanies());
         this.mainView.setVisible(true);
     }
 
@@ -208,6 +210,7 @@ public class NetworkManager extends Thread {
                     CompanyList companies = (CompanyList) received;
                     if (mainView == null) {
                         initMainView(companyMapper.convertToCompanies(companies));
+                        mainController.updateCompanyList();
                         mainView.setVisible(true);
                     }
                 }

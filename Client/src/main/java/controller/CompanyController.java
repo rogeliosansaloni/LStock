@@ -5,6 +5,9 @@ import view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import model.entities.Company;
+import java.util.ArrayList;
+
 
 public class CompanyController implements ActionListener {
 
@@ -31,5 +34,9 @@ public class CompanyController implements ActionListener {
                 System.out.println("Company 4");
                 break;
         }
+    }
+
+    public void updateCompanyList (ArrayList<Company> companies){
+        this.view.updateCompanyList(companies);
     }
 }
