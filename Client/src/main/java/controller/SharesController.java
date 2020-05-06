@@ -22,16 +22,16 @@ public class SharesController implements ActionListener {
         final String message = "Do you really want to sell all your shares for %s?";
         String.format(message, company.getName());
         switch (e.getActionCommand()) {
-            case "sellAllShares1":
+            case "Sell All Shares 1":
                 System.out.println("Company 1");
                 break;
-            case "sellAllShares2":
+            case "Sell All Shares 2":
                 System.out.println("Company 2");
                 break;
-            case "sellAllShares3":
+            case "Sell All Shares 3":
                 System.out.println("Company 3");
                 break;
-            case "sellAllShares4":
+            case "Sell All Shares 4":
                 System.out.println("Company 4");
                 break;
         }

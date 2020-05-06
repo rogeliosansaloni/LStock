@@ -12,7 +12,7 @@ public class SharesView extends JPanel {
     private JButton[][] jlCompanies;
     private String[] companiesNames = {"Company 1", "Company 2", "Company 3", "Company 4"};;
     private JButton[][] jlSell;
-    private String[] sellNames = {"sell shares 1", "sell shares 2", "sell shares 3", "sell shares 4"};;
+    private String[] sellNames = {"Sell All Shares 1", "Sell All Shares 2", "Sell All Shares 3", "Sell All Shares 4"};;
     protected StockColors color;
 
     public SharesView() {
