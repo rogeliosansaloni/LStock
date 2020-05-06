@@ -8,6 +8,9 @@ import java.awt.event.*;
 
 public class BotsCreateView extends JPanel {
     private static final String PATH_ARROW_ICON = "/Images/dropdown.png";
+    private static final String NAME_LABEL = "Name";
+    private static final String BUY_PERCENTAGE_LABEL = "Buy Percentatge";
+    private static final String ACTIVATE_TIME_LABEL = "Activate time";
     private JMenu jcbCompanyOptions;
     private JMenuBar jcbCompany;
     private JTextField[] jtField;
@@ -21,7 +24,7 @@ public class BotsCreateView extends JPanel {
         jtField = new JTextField[4];
 
         //Name
-        jtField[0] = new JTextField("Name");
+        jtField[0] = new JTextField(NAME_LABEL);
         jtField[0].setBorder(null);
         jtField[0].setFont(font);
         jtField[0].setForeground(Color.GRAY);
@@ -30,11 +33,12 @@ public class BotsCreateView extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
+                jtField[0].setCaretColor(Color.BLACK);
                 jtField[0].setText("");
                 jtField[0].addFocusListener(new FocusListener() {
                     @Override
                     public void focusGained(FocusEvent e) {
-                        if (jtField[0].getText().equals("Name")) {
+                        if (jtField[0].getText().equals(NAME_LABEL)) {
                             jtField[0].setText("");
                         }
                     }
@@ -42,7 +46,8 @@ public class BotsCreateView extends JPanel {
                     @Override
                     public void focusLost(FocusEvent e) {
                         if (jtField[0].getText().equals("")) {
-                            jtField[0].setText("Name");
+                            jtField[0].setCaretColor(Color.WHITE);
+                            jtField[0].setText(NAME_LABEL);
                         }
                     }
                 });
@@ -79,7 +84,7 @@ public class BotsCreateView extends JPanel {
 
 
         //Buy Percentage
-        jtField[1] = new JTextField("Buy Percentage");
+        jtField[1] = new JTextField(BUY_PERCENTAGE_LABEL);
         jtField[1].setBorder(null);
         jtField[1].setFont(font);
         jtField[1].setForeground(Color.GRAY);
@@ -87,20 +92,20 @@ public class BotsCreateView extends JPanel {
         jtField[1].addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (jtField[1].getText().equals("Buy Percentage")) {
+                if (jtField[1].getText().equals(BUY_PERCENTAGE_LABEL)) {
                     jtField[1].setText("");
                 }
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if (jtField[1].getText().equals("")) {
-                    jtField[1].setText("Buy Percentage");
+                    jtField[1].setText(BUY_PERCENTAGE_LABEL);
                 }
             }
         });
 
         //Activation Time
-        jtField[2] = new JTextField("Activation Time");
+        jtField[2] = new JTextField(ACTIVATE_TIME_LABEL);
         jtField[2].setBorder(null);
         jtField[2].setFont(font);
         jtField[2].setForeground(Color.GRAY);
@@ -108,7 +113,7 @@ public class BotsCreateView extends JPanel {
         jtField[2].addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (jtField[2].getText().equals("Activation Time")) {
+                if (jtField[2].getText().equals(ACTIVATE_TIME_LABEL)) {
                     jtField[2].setText("");
                 }
             }
@@ -116,7 +121,7 @@ public class BotsCreateView extends JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 if (jtField[2].getText().equals("")) {
-                    jtField[2].setText("Activation Time");
+                    jtField[2].setText(ACTIVATE_TIME_LABEL);
                 }
             }
         });
