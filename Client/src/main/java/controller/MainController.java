@@ -12,10 +12,12 @@ public class MainController implements ActionListener {
     private static final String CARD_BALANCE = "Load Balance";
     private final MainView view;
     private BalanceController balanceController;
+    private SharesController sharesController;
 
     public MainController(MainView view) {
         this.view = view;
         this.balanceController = new BalanceController(view);
+        this.sharesController = new SharesController(view);
     }
 
     @Override
@@ -42,5 +44,9 @@ public class MainController implements ActionListener {
 
     public BalanceController getBalanceController() {
         return balanceController;
+    }
+
+    public SharesController getSharesController() {
+        return sharesController;
     }
 }

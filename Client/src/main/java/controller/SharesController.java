@@ -16,6 +16,10 @@ public class SharesController implements ActionListener {
         this.company = company;
     }
 
+    public SharesController(MainView view) {
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         Object jbPush = e.getSource();
