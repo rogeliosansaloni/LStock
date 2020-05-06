@@ -11,8 +11,8 @@ public class SharesView extends JPanel {
     private JPanel jpTable;
     private JButton[][] jlCompanies;
     private String[] companiesNames = {"Company 1", "Company 2", "Company 3", "Company 4"};;
-    private JButton[][] jlShares;
-    private String[] sharesNames = {"sell shares 1", "sell shares 2", "sell shares 3", "sell shares 4"};;
+    private JButton[][] jlSell;
+    private String[] sellNames = {"sell shares 1", "sell shares 2", "sell shares 3", "sell shares 4"};;
     protected StockColors color;
 
     public SharesView() {
@@ -28,14 +28,16 @@ public class SharesView extends JPanel {
             createColumnLabel("CHANGE (5 min)");
             createColumnLabel("% CHANGE (5 min)");
             jlCompanies = new JButton[companiesNames.length][4];
+            jlSell = new JButton[sellNames.length][4];
 
             //We create a row for each company available.
             for(int i=0; i<companiesNames.length; i++) {
                 creatDataLabel("COMPANY " + (i + 1), color.getWHITE(), i, 0);
                 creatDataLabel((i + 1) * 100 + "€", color.getGreenTable(), i, 1);
                 creatDataLabel((i + 1) * 30 + "€", color.getRedTable(), i, 2);
-                creatDataLabel("0.5€", color.getGreenTable(), i, 3);
-                jlShares = new JButton[sharesNames.length][4];
+                creatDataLabel("0.5%", color.getGreenTable(), i, 3);
+                createDataLabelSmall("Sell All Shares", color.getWHITE(), i, 4);
+
             }
 
             jpTable.setBackground(color.getBLACK());
@@ -58,10 +60,10 @@ public class SharesView extends JPanel {
                 }
             }
             //We add an actionListener for each sell shares button
-            for(int i=0; i<jlShares.length; i++){
+            for(int i=0; i<jlSell.length; i++){
                 for(int j=0; j<4; j++){
-                    jlShares[i][j].addActionListener(actionListener);
-                    jlShares[i][j].setActionCommand(companiesNames[i]);
+                    jlSell[i][j].addActionListener(actionListener);
+                    jlSell[i][j].setActionCommand(sellNames[i]);
                 }
             }
         }
@@ -92,6 +94,15 @@ public class SharesView extends JPanel {
         Font font = new Font("Roboto", Font.PLAIN, 25);
         jlCompanies[i][j].setFont(font);
         jpTable.add(jlCompanies[i][j]);
+    }
+    public void createDataLabelSmall(String text, Color c, int i, int j){
+        jlSell[i][j] = new JButton(text);
+        jlSell[i][j].setBackground(color.getWHITE());
+        jlSell[i][j].setPreferredSize(new Dimension(170, 40));
+        Font font = new Font("Roboto", Font.PLAIN, 25);
+        jlSell[i][j].setFont(font);
+        jpTable.add(jlSell[i][j]);
+
     }
 
     /**
