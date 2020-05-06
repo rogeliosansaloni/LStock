@@ -99,7 +99,7 @@ public class SharesView extends JPanel {
         jlSell[i][j] = new JButton(text);
         jlSell[i][j].setBackground(color.getWHITE());
         jlSell[i][j].setPreferredSize(new Dimension(170, 40));
-        Font font = new Font("Roboto", Font.PLAIN, 25);
+        Font font = new Font("Roboto", Font.PLAIN, 20);
         jlSell[i][j].setFont(font);
         jpTable.add(jlSell[i][j]);
 
