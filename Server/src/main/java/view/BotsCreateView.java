@@ -1,7 +1,5 @@
 package view;
 
-//import sun.tools.jps.Jps;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
