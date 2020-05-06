@@ -9,6 +9,10 @@ import java.awt.event.ActionListener;
 public class SharesView extends JPanel {
     private JPanel jpCenter;
     private JPanel jpTable;
+    private JButton[][] jlCompanies;
+    private String[] companiesNames = {"Company 1", "Company 2", "Company 3", "Company 4"};;
+    private JButton[][] jlShares;
+    private String[] sharesNames = {"sell shares 1", "sell shares 2", "sell shares 3", "sell shares 4"};;
     protected StockColors color;
     JButton jbSell1;
     JButton jbSell2;
@@ -92,7 +96,7 @@ public class SharesView extends JPanel {
         label.setBackground(color.getWHITE());
         label.setForeground(color.getBLACK());
         label.setOpaque(true);
-        Font font = new Font("Roboto", type, 25);
+        Font font = new Font("Roboto", Font.BOLD, 25);
         label.setFont(font);
         jpTable.add(label);
 
