@@ -14,10 +14,6 @@ public class SharesView extends JPanel {
     private JButton[][] jlShares;
     private String[] sharesNames = {"sell shares 1", "sell shares 2", "sell shares 3", "sell shares 4"};;
     protected StockColors color;
-    JButton jbSell1;
-    JButton jbSell2;
-    JButton jbSell3;
-    JButton jbSell4;
 
     public SharesView() {
         color = new StockColors();
@@ -25,72 +21,54 @@ public class SharesView extends JPanel {
         this.setLayout(new BorderLayout());
         jpTable = new JPanel();
         jpTable.setLayout(new GridLayout(5, 5, 20, 20));
-        Font font = new Font("Segoe UI Semibold", Font.PLAIN, 20);
-        createWhiteLabel("COMPANY", Font.BOLD);
-        createWhiteLabel("ACTION VALUE", Font.BOLD);
-        createWhiteLabel("MY ACTIONS", Font.BOLD);
-        createWhiteLabel("PROFIT & LOSS", Font.BOLD);
 
         for(int i=0; i<5; i++){
-            createWhiteLabel("COMPANY" + (i+1), Font.PLAIN);
-            createWhiteLabel( i*30 + "€", Font.PLAIN);
-            createWhiteLabel(i*30 + "€", Font.PLAIN);
-            createWhiteLabel("0.5€", Font.PLAIN);
+            createColumnLabel("COMPANY");
+            createColumnLabel("PRICE 1");
+            createColumnLabel("CHANGE (5 min)");
+            createColumnLabel("% CHANGE (5 min)");
+            jlCompanies = new JButton[companiesNames.length][4];
 
-            //Sell button
-            switch (i) {
-                case 1:
-                    jbSell1 = new JButton("Sell all shares");
-                    jbSell1.setActionCommand("sellAllShares1");
-                    jbSell1.setBackground(color.getWHITE());
-                    jbSell1.setPreferredSize(new Dimension(170, 40));
-                    jbSell1.setFont(font);
-                    break;
-                case 2:
-                    jbSell2 = new JButton("Sell all shares");
-                    jbSell2.setActionCommand("sellAllShares2");
-                    jbSell2.setBackground(color.getWHITE());
-                    jbSell2.setPreferredSize(new Dimension(170, 40));
-                    jbSell2.setFont(font);
-                    break;
-                case 3:
-                    jbSell3 = new JButton("Sell all shares");
-                    jbSell3.setActionCommand("sellAllShares3");
-                    jbSell3.setBackground(color.getWHITE());
-                    jbSell3.setPreferredSize(new Dimension(170, 40));
-                    jbSell3.setFont(font);
-                    break;
-                case 4:
-                    jbSell4 = new JButton("Sell all shares");
-                    jbSell4.setActionCommand("sellAllShares4");
-                    jbSell4.setBackground(color.getWHITE());
-                    jbSell4.setPreferredSize(new Dimension(170, 40));
-                    jbSell4.setFont(font);
-                    break;
-
+            //We create a row for each company available.
+            for(int i=0; i<companiesNames.length; i++) {
+                creatDataLabel("COMPANY " + (i + 1), color.getWHITE(), i, 0);
+                creatDataLabel((i + 1) * 100 + "€", color.getGreenTable(), i, 1);
+                creatDataLabel((i + 1) * 30 + "€", color.getRedTable(), i, 2);
+                creatDataLabel("0.5€", color.getGreenTable(), i, 3);
+                jlShares = new JButton[sharesNames.length][4];
             }
 
+            jpTable.setBackground(color.getBLACK());
+            this.add(jpTable, BorderLayout.CENTER);
+            this.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
+            this.setBackground(color.getBLACK());
 
         }
 
-        jpTable.setBackground(color.getBLACK());
-        this.add(jpTable, BorderLayout.CENTER);
-        this.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
-        this.setBackground(color.getBLACK());
+        /**
+         * Adds actionListener to load button
+         * @param actionListener ActionListener
+         */
+        public void registerController(ActionListener actionListener) {
+            //We add an actionListener for each company
+            for(int i=0; i<jlCompanies.length; i++){
+                for(int j=0; j<4; j++){
+                    jlCompanies[i][j].addActionListener(actionListener);
+                    jlCompanies[i][j].setActionCommand(companiesNames[i]);
+                }
+            }
+            //We add an actionListener for each sell shares button
+            for(int i=0; i<jlShares.length; i++){
+                for(int j=0; j<4; j++){
+                    jlShares[i][j].addActionListener(actionListener);
+                    jlShares[i][j].setActionCommand(companiesNames[i]);
+                }
+            }
+        }
+
     }
 
-    /**
-     * Adds actionListener to load button
-     * @param actionListener ActionListener
-     */
-    public void registerController(ActionListener actionListener) {
-        this.jbSell1.addActionListener(actionListener);
-        this.jbSell2.addActionListener(actionListener);
-        this.jbSell3.addActionListener(actionListener);
-        this.jbSell4.addActionListener(actionListener);
-    }
-
-    public void createWhiteLabel(String text, int type){
+    public void createColumnLabel(String text){
         JLabel label = new JLabel(text);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBackground(color.getWHITE());
@@ -99,12 +77,26 @@ public class SharesView extends JPanel {
         Font font = new Font("Roboto", Font.BOLD, 25);
         label.setFont(font);
         jpTable.add(label);
+    }
 
+    public void creatDataLabel(String text, Color c, int i, int j){
+        jlCompanies[i][j] = new JButton(text);
+        jlCompanies[i][j].setHorizontalAlignment(SwingConstants.CENTER);
+        jlCompanies[i][j].setBackground(c);
+        if(c == color.getWHITE()){
+            jlCompanies[i][j].setForeground(color.getBLACK());
+        } else{
+            jlCompanies[i][j].setForeground(color.getWHITE());
+        }
+        jlCompanies[i][j].setBorderPainted(false);
+        Font font = new Font("Roboto", Font.PLAIN, 25);
+        jlCompanies[i][j].setFont(font);
+        jpTable.add(jlCompanies[i][j]);
     }
 
     /**
      * Gets the amount selected
      * @return amount selected
      */
-
 }
+
