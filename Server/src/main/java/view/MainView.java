@@ -1,6 +1,5 @@
 package view;
 
-import controller.HomeController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -30,7 +29,7 @@ public class MainView extends JFrame {
     private StockColors color;
     private HomeView jpHomeView;
     private SharesListView jpSharesView;
-    private BotsCreateView jpBotsCreateView;
+    private BotMenuView jpBotMenuView;
 
     public MainView() {
         color = new StockColors();
@@ -50,7 +49,7 @@ public class MainView extends JFrame {
      * Initializes all views
      */
     public void initAllViews() {
-        jpBotsCreateView = new BotsCreateView();
+        jpBotMenuView = new BotMenuView();
         jpHomeView = new HomeView();
         jpSharesView = new SharesListView();
         //TODO: Add the rest of views
@@ -62,7 +61,7 @@ public class MainView extends JFrame {
      */
     private void addToCardLayout() {
 
-        jpCenter.add(jpBotsCreateView, CARD_BOTS);
+        jpCenter.add(jpBotMenuView, CARD_BOTS);
         jpCenter.add(jpHomeView, CARD_HOME);
         jpCenter.add(jpSharesView, CARD_USERS);
 
@@ -165,8 +164,12 @@ public class MainView extends JFrame {
         option3.setActionCommand(CARD_BOTS);
     }
 
-    public void registerHomeController(HomeController controller) {
+    public void registerHomeController(ActionListener controller) {
         jpHomeView.registerController(controller);
+    }
+
+    public void registerBotController(ActionListener controller) {
+        jpBotMenuView.registerController(controller);
     }
 
     /**

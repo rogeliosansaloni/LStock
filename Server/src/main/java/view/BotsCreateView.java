@@ -68,14 +68,6 @@ public class BotsCreateView extends JPanel {
         jcbCompanyOptions.setIconTextGap(80);
         jcbCompany.add(jcbCompanyOptions);
 
-        JMenuItem itemCompany[] = new JMenuItem[20];
-        itemCompany[1].setHorizontalAlignment(SwingConstants.CENTER);
-        itemCompany[1].setForeground(Color.GRAY);
-        itemCompany[1].setFont(font);
-        itemCompany[1] = new JMenuItem("Company1");
-        jcbCompanyOptions.add(itemCompany[1]);
-
-
         //Buy Percentage
         jtField[1] = new JTextField(BUY_PERCENTAGE_LABEL);
         jtField[1].setBorder(null);
@@ -165,11 +157,11 @@ public class BotsCreateView extends JPanel {
         JMenuItem[] itemCompany = new JMenuItem[numCompanies];
         for (int i = 0; i < numCompanies; i++) {
             Company company = (Company) companies.get(i);
+            itemCompany[i] = new JMenuItem(company.getName());
             itemCompany[i].setHorizontalAlignment(SwingConstants.CENTER);
             itemCompany[i].setForeground(Color.GRAY);
             itemCompany[i].setFont(font);
-            itemCompany[i] = new JMenuItem(company.getName());
-            jcbCompanyOptions.add(itemCompany[1]);
+            jcbCompanyOptions.add(itemCompany[i]);
         }
     }
 

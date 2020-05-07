@@ -89,7 +89,7 @@ public class BotMenuView extends JPanel {
         }
     }
 
-    public void registerControllers(ActionListener controller) {
+    public void registerController(ActionListener controller) {
         jbCreate.addActionListener(controller);
         jbRemove.addActionListener(controller);
         jbShowList.addActionListener(controller);

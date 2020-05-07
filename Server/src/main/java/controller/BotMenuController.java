@@ -14,6 +14,7 @@ public class BotMenuController implements ActionListener {
 
     public BotMenuController(BotMenuView view, BotManager model) {
         this.view = view;
+        this.view.getBotsCreateView().showCompanies(model.getCompanies());
         this.model = model;
     }
 
