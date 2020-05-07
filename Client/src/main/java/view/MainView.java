@@ -19,8 +19,8 @@ public class MainView extends JFrame {
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
-    private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 768;
+    private static final int PANEL_WIDTH = 1080;
+    private static final int PANEL_HEIGHT = 768;
     private JLabel labelLogo;
     private JLabel labelStock;
     private JLabel labelUserPhoto;
@@ -44,7 +44,7 @@ public class MainView extends JFrame {
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
-        this.setSize(anchuraPanel, alturaPanel);
+        this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
