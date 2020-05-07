@@ -4,13 +4,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import model.entities.*;
 import model.managers.StockManager;
 import utils.CompanyMapperImpl;
+import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
 
 public class DedicatedServer extends Thread {
+    private static final String BUY_ACTION = "BUY";
+    private static final String SELL_ACTION = "SELL";
     private boolean isOn;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -18,6 +22,7 @@ public class DedicatedServer extends Thread {
     private StockManager stockModel;
     private UserMapperImpl mapper;
     private CompanyMapperImpl companyMapper;
+    private ShareMapperImpl shareMapper;
 
     /**
      * DedicatedServer constructor
@@ -29,6 +34,7 @@ public class DedicatedServer extends Thread {
         this.stockModel = new StockManager();
         this.mapper = new UserMapperImpl();
         this.companyMapper = new CompanyMapperImpl();
+        this.shareMapper = new ShareMapperImpl();
     }
 
     /**
@@ -93,14 +99,22 @@ public class DedicatedServer extends Thread {
 
                 if (tunnelObject instanceof ShareTrade) {
                     ShareTrade shareTrade = (ShareTrade) tunnelObject;
-                    if (shareTrade.getActionToDo().equals("buy")) {
-                        stockModel.updateCompanyValue(shareTrade.getCompanyId(), "buy");
+                    User user = shareMapper.shareTradeToUser(shareTrade);
+                    Company company = shareMapper.shareTradeToCompany(shareTrade);
+                    if (shareTrade.getActionToDo().equals(BUY_ACTION)) {
+                        ShareTrade share = stockModel.createUserCompanyShare(user, company);
+                        oos.writeObject(share);
                     } else {
-                        if (shareTrade.getActionToDo().equals("sell")) {
-                            stockModel.updateCompanyValue(shareTrade.getCompanyId(), "sell");
+                        if (shareTrade.getActionToDo().equals(SELL_ACTION)) {
+                             //stockModel.updateCompanyValue(shareTrade.getCompanyId(), "sell");
                         }
                     }
-                    oos.writeObject(companyMapper.convertToCompanyList(stockModel.getCompanies()));
+                }
+
+                if (tunnelObject instanceof CompanyList) {
+                    ArrayList<Company> companies = stockModel.getCompanies();
+                    CompanyList companyList = companyMapper.convertToCompanyList(companies);
+                    oos.writeObject(companyList);
                 }
             }
         } catch (ClassNotFoundException e) {

@@ -4,15 +4,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
-import model.entities.AuthenticationInfo;
-import model.entities.CompanyInfo;
-import model.entities.ShareTrade;
-import model.entities.TunnelObject;
+import model.entities.*;
+import utils.CompanyMapperImpl;
 import utils.JSONReader;
+import utils.UserMapperImpl;
 import view.LoginView;
 import view.MainView;
 import view.RegisterView;
@@ -30,6 +30,9 @@ public class NetworkManager extends Thread {
     private MainView mainView;
     private RegisterView registerView;
     private LoginView loginView;
+    private UserMapperImpl mapper;
+    private CompanyMapperImpl companyMapper;
+    private StockManager model;
 
     /**
      * Represents a Singleton
@@ -69,25 +72,31 @@ public class NetworkManager extends Thread {
      * Starts the connection to the server. Initializes the main views and its controllers for the Client.
      */
     public void startServerConnection() {
+        init();
         // Initialize views
         initLoginRegisterView();
-        initMainView();
-
         // Start main client thread
         running = true;
         start();
     }
 
+    private void init() {
+        this.mapper = new UserMapperImpl();
+        this.companyMapper = new CompanyMapperImpl();
+    }
+
     /**
      * Initializes the main view and its controller
      */
-    private void initMainView() {
+    private void initMainView(ArrayList<Company> companies) {
+        model.setCompanies(companies);
         this.mainView = new MainView();
-        this.mainController = new MainController(mainView);
+        this.mainController = new MainController(mainView, model, loginView);
         this.mainView.registerMainController(mainController);
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
-        this.mainView.setVisible(false);
+        this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
+        this.mainView.setVisible(true);
     }
 
     /**
@@ -147,6 +156,10 @@ public class NetworkManager extends Thread {
         oos.writeObject(object);
     }
 
+    public void sendUserProfileInfo (TunnelObject object) throws IOException {
+        oos.writeObject(object);
+    }
+
     /**
      * Runs the main client thread and receives objects coming from the server
      */
@@ -169,11 +182,33 @@ public class NetworkManager extends Thread {
                     }
                     if (info.getAction().equals("login")) {
                         if (info.isValidated()) {
+                            User user = mapper.authenticationInfoToUser((AuthenticationInfo) received);
+                            model = new StockManager(user);
                             loginController.closeLoginView();
-                            mainView.setVisible(true);
+                            NetworkManager.getInstance().sendTunnelObject(new CompanyList());
                         } else {
                             loginController.sendErrorMessage(info.getResponseType());
                         }
+                    }
+                }
+
+                if (received instanceof UserProfileInfo) {
+                    UserProfileInfo info = (UserProfileInfo) received;
+                    if (info.getAction().equals("balance")) {
+                        mainController.updateTotalBalance(info.getTotalBalance());
+                    }
+                }
+
+                if (received instanceof ShareTrade) {
+                    ShareTrade info = ((ShareTrade) received);
+                    mainController.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
+                }
+
+                if (received instanceof CompanyList) {
+                    CompanyList companies = (CompanyList) received;
+                    if (mainView == null) {
+                        initMainView(companyMapper.convertToCompanies(companies));
+                        mainView.setVisible(true);
                     }
                 }
             }
