@@ -4,19 +4,27 @@ package model.entities;
  * Represents the DTO that contains the action to do with company shares
  */
 public class ShareTrade extends TunnelObject {
+    private int userId;
+    private float totalBalance;
     private int companyId;
+    private int shareId;
     private float sharePrice;
     private String actionToDo;
 
+    public ShareTrade () { }
+
     /**
+     * @param companyId  id of the company associated with the share
      * @param sharePrice price of the share
      * @param actionToDo action to do with the share: buy or sell
      */
-    public ShareTrade(int companyId, float sharePrice, String actionToDo) {
+    public ShareTrade(int userId, float totalBalance, int companyId, int shareId, float sharePrice, String actionToDo) {
+        this.userId = userId;
+        this.totalBalance = totalBalance;
         this.companyId = companyId;
+        this.shareId = shareId;
         this.sharePrice = sharePrice;
         this.actionToDo = actionToDo;
-
     }
 
     // Getters and setters
@@ -42,5 +50,29 @@ public class ShareTrade extends TunnelObject {
 
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
+    }
+
+    public int getShareId() {
+        return shareId;
+    }
+
+    public void setShareId(int shareId) {
+        this.shareId = shareId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public float getTotalBalance() {
+        return totalBalance;
+    }
+
+    public void setTotalBalance(float totalBalance) {
+        this.totalBalance = totalBalance;
     }
 }

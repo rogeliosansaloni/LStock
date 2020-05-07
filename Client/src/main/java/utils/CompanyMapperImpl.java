@@ -15,7 +15,7 @@ public class CompanyMapperImpl implements CompanyMapper {
         String[] names = companyList.getCompanyName();
         float[] values = companyList.getCompanyValue();
         int[] shares = companyList.getCompanyShares();
-        for(int i = 0; i < companiesLen; i++) {
+        for (int i = 0; i < companiesLen; i++) {
             companies.add(new Company(ids[i], names[i], values[i], shares[i]));
         }
         return companies;

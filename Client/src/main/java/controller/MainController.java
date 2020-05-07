@@ -1,5 +1,7 @@
 package controller;
 
+import model.entities.StockManager;
+import view.LoginView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -11,18 +13,30 @@ public class MainController implements ActionListener {
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
     private final MainView view;
+    private final LoginView loginView;
+    private StockManager model;
+    private CompanyDetailController companyDetailController;
     private BalanceController balanceController;
+    private CompanyController companyController;
     private SharesController sharesController;
 
-    public MainController(MainView view) {
+    public MainController(MainView view, StockManager model, LoginView loginView) {
         this.view = view;
-        this.balanceController = new BalanceController(view);
+        this.loginView = loginView;
+        this.model = model;
+        this.balanceController = new BalanceController(view, model);
+        this.companyController = new CompanyController(view);
+        this.balanceController = new BalanceController(view, model);
+        this.companyDetailController = new CompanyDetailController(view, model);
         this.sharesController = new SharesController(view);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
+            case "company":
+                view.updateView(CARD_COMPANY);
+                break;
             case "profile":
                 view.updateView(CARD_PROFILE);
                 //TODO: Profile
@@ -36,14 +50,57 @@ public class MainController implements ActionListener {
                 //TODO: Load Balance
                 break;
             case "logout":
-                //TODO: Log out
+                if(view.confirmLogOutWindow() == 0){
+                    loginView.setVisible(true);
+                    view.setVisible(false);
+                }
                 break;
 
         }
     }
 
+    /**
+     * Returns the company detail controller of the CompanyDetailsView
+     *
+     * @return the company detail controller
+     */
+    public CompanyDetailController getCompanyDetailController() {
+        return companyDetailController;
+    }
+
+    /**
+     * Returns the balance controller of the BalanceView
+     *
+     * @return balance controller
+     */
     public BalanceController getBalanceController() {
         return balanceController;
+    }
+
+    public CompanyController getCompanyController() {
+        return companyController;
+    }
+
+
+    /**
+     * Updates the new total balance of the user
+     *
+     * @param totalBalance new total balance
+     */
+    public void updateTotalBalance (float totalBalance) {
+        model.getUser().setTotalBalance(totalBalance);
+        balanceController.updateTotalBalance(totalBalance);
+    }
+
+    /**
+     * Updates company and users value in the view
+     *
+     * @param totalBalance the new balance of the user
+     * @param value the new value of the company
+     */
+    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
+        //TODO: Update company in the model
+        companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
     }
 
     public SharesController getSharesController() {

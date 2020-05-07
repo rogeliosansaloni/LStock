@@ -3,6 +3,7 @@ package database;
 
 import java.util.ArrayList;
 
+import model.entities.Company;
 import model.entities.User;
 
 import java.sql.ResultSet;
@@ -22,6 +23,9 @@ public class UserDao {
     private static final String PROFILE_MESSAGE_2 = "Error updating the user information";
     private static final String BALANCE_MESSAGE_1 = "Error updating the user total balance";
 
+    /**
+     * Represents the DAO for the User table
+     */
     public UserDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
@@ -111,12 +115,34 @@ public class UserDao {
      * @param user User information
      */
     public void updateUserBalance(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
             while (result.next()) {
                 if (result.getInt("user_id") == user.getUserId()) {
-                    dbConnector.insertQuery("UPDATE User SET total_balance = '" + user.getTotalBalance() + "' WHERE user_id = " + user.getUserId() + ";");
+                    float totalAmount = result.getFloat("total_balance") + user.getTotalBalance();
+                    dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
+                    user.setTotalBalance(totalAmount);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(BALANCE_MESSAGE_1);
+        }
+    }
+
+    /**
+     * Updates de the users discounted balance after buying a share from a company
+     * @param user the user
+     * @param company the company we're buying the share from
+     */
+    public void updateUserBalance (User user, Company company) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
+        try {
+            while (result.next()) {
+                if (result.getInt("user_id") == user.getUserId()) {
+                    float totalAmount = result.getFloat("total_balance") - company.getValue();
+                    dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
+                    user.setTotalBalance(totalAmount);
                 }
             }
         } catch (SQLException e) {
@@ -130,7 +156,7 @@ public class UserDao {
      * @param user The user
      */
     public void updateUserInformation(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
             while (result.next()) {

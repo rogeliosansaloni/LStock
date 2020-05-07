@@ -2,18 +2,26 @@ package database;
 
 import model.entities.Company;
 import model.entities.Share;
+import model.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
+/**
+ * Represents the DAO for the Share table
+ */
 public class ShareDao {
 
     private DBConnector dbConnector;
 
     public ShareDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
+    }
+
+    public void insertPurchasedShare (User user, Company company) {
+        dbConnector.insertQuery("INSERT INTO Purchase (user_id, share_id, company_id, share_quantity) " + "VALUES (" + user.getUserId() + ", "
+                                + company.getShareId() + ", " + company.getCompanyId() + ", " + company.getValue() + ");");
     }
 
     /**
@@ -36,7 +44,6 @@ public class ShareDao {
         } catch (SQLException e) {
             System.out.println("Error creating shares");
         }
-
     }
 
 
@@ -45,15 +52,14 @@ public class ShareDao {
      *
      * @return ArrayList<Share> all shares
      */
-    //TENGO DUDA LO QUE SE TIENE QUE DEVOLVER AQUI
     public ArrayList<Share> getAllShares() {
-        ResultSet getShares = dbConnector.selectQuery("SELECT * FROM Shares;");
+        ResultSet retrievedShare = dbConnector.selectQuery("SELECT * FROM Shares;");
         ArrayList<Share> shares = null;
         try {
             shares = new ArrayList<Share>();
-            while (getShares.next()) {
+            while (retrievedShare.next()) {
                 //No tengo muy claro que se tiene que coger
-                Share s = new Share((float) getShares.getObject("share_id"));
+                Share s = toShare(retrievedShare);
                 shares.add(s);
             }
         } catch (SQLException e) {
@@ -62,5 +68,18 @@ public class ShareDao {
         return shares;
     }
 
+    /**
+     * Converts retrieved Share information into a Share object
+     * @param resultSet information retrieved from the database
+     * @return a Share object that contains all information on the specific share
+     * @throws SQLException
+     */
+    private Share toShare(ResultSet resultSet) throws SQLException {
+        Share share = new Share();
+        share.setIdShare(resultSet.getInt("share_id"));
+        share.setPrice(resultSet.getFloat("price"));
+        share.getCompany().setCompanyId(resultSet.getInt("company_id"));
+        return share;
+    }
 
 }

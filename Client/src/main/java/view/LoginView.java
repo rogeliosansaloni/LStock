@@ -27,7 +27,7 @@ public class LoginView extends JFrame {
     private JButton jbRegister;
     private StockColors color;
 
-    public LoginView () {
+    public LoginView() {
         color = new StockColors();
         this.setTitle(TITLE);
         this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
@@ -42,7 +42,7 @@ public class LoginView extends JFrame {
     /**
      * Creates the UI of the login form
      */
-    public void initUI () {
+    public void initUI() {
         JPanel jpLogin = new JPanel();
         jpLogin.setLayout(new BorderLayout());
         jpLogin.setBackground(Color.WHITE);
@@ -52,7 +52,7 @@ public class LoginView extends JFrame {
         jpNorth.setBackground(Color.WHITE);
         URL url = getClass().getResource(PATH_LOGO);
         ImageIcon imageIcon = new ImageIcon(url);
-        Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150,Image.SCALE_DEFAULT);
+        Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
 
@@ -61,12 +61,12 @@ public class LoginView extends JFrame {
         Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
         labelStock.setFont(fuenteLogo);
         jpNorth.add(labelStock, BorderLayout.SOUTH);
-        jpNorth.setBorder(BorderFactory.createEmptyBorder(70,0,80,0));
+        jpNorth.setBorder(BorderFactory.createEmptyBorder(70, 0, 80, 0));
         jpLogin.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the bottons
         jpCenter = new JPanel();
-        jpCenter = new JPanel(new GridLayout(4,1, 0 ,15));
+        jpCenter = new JPanel(new GridLayout(4, 1, 0, 15));
         jpCenter.setBackground(Color.WHITE);
 
         Font fuenteCampo = new Font("Segoe UI", Font.ITALIC, 20);
@@ -105,6 +105,7 @@ public class LoginView extends JFrame {
                     campos[1].setText("");
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (campos[1].getText().equals("")) {
@@ -119,7 +120,7 @@ public class LoginView extends JFrame {
         relleno.setPreferredSize(new Dimension(200, 1));
         jpCenter.add(relleno);
 
-        jpBotones = new JPanel(new GridLayout(1,2, 30 ,0));
+        jpBotones = new JPanel(new GridLayout(1, 2, 30, 0));
         jpBotones.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;
@@ -142,7 +143,7 @@ public class LoginView extends JFrame {
         jpBotones.add(jbLogin);
         jpBotones.add(jbRegister);
         jpCenter.add(jpBotones);
-        jpCenter.setBorder(BorderFactory.createEmptyBorder(0,300,100,300));
+        jpCenter.setBorder(BorderFactory.createEmptyBorder(0, 300, 100, 300));
 
         jpLogin.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpLogin);
@@ -150,6 +151,7 @@ public class LoginView extends JFrame {
 
     /**
      * Proc thats adds listener to textfields and buttons.
+     *
      * @param listener an ActionListener
      */
     public void registerController(ActionListener listener) {
@@ -165,9 +167,10 @@ public class LoginView extends JFrame {
 
     /**
      * Proc that shows the corresponding error
+     *
      * @param error shows the corresponding error
      */
-    public void showErrorMessage (int error) {
+    public void showErrorMessage(int error) {
         switch (error) {
             case 1:
                 JOptionPane.showMessageDialog(null, ERROR_MESSAGE_1);
@@ -177,19 +180,33 @@ public class LoginView extends JFrame {
                 break;
         }
     }
+
     /**
      * Function that returns the introduced nickname or email
+     *
      * @return introduced nickname or email
      */
-    public String getNicknameEmail () { return campos[0].getText(); }
+    public String getNicknameEmail() {
+        return campos[0].getText();
+    }
 
     /**
      * Function that returns the introduced password
+     *
      * @return introduced password
      */
-    public String getPassword () { return campos[1].getText(); }
+    public String getPassword() {
+        return campos[1].getText();
+    }
 
     public void showLoginFailure(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
+
+    public void flushCredentials(){
+        campos[0].setText("Nickname or Email");
+        campos[1].setText("Password");
+
+    }
+
 }
