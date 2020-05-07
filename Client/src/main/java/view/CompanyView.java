@@ -19,16 +19,11 @@ public class CompanyView extends JPanel {
         this.setBackground(color.getBLACK());
         this.setLayout(new BorderLayout());
         jpTable = new JPanel();
-        jpTable.setLayout(new GridLayout(5, 4, 20, 20));
-        createColumnLabel("COMPANY");
-        createColumnLabel("PRICE 1");
-        createColumnLabel("CHANGE (5 min)");
-        createColumnLabel("% CHANGE (5 min)");
 
         jpTable.setBackground(color.getBLACK());
         jpScroll = new JScrollPane(jpTable);
         this.add(jpScroll, BorderLayout.CENTER);
-        this.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        this.setBorder(BorderFactory.createEmptyBorder(50, 20, 50, 20));
         this.setBackground(color.getBLACK());
     }
 
@@ -74,12 +69,20 @@ public class CompanyView extends JPanel {
 
     public void showCompanies(ArrayList<Company> companies){
         // Create a row for each company available
+        jpTable.removeAll();
+        jpTable.setLayout(new GridLayout(0, 4, 20, 20));
+        createColumnLabel("COMPANY");
+        createColumnLabel("PRICE 1");
+        createColumnLabel("CHANGE (5 min)");
+        createColumnLabel("% CHANGE (5 min)");
+        jlCompanies = new JButton[companies.size()][4];
         System.out.println(companies);
         for (int i = 0; i < companies.size(); i++) {
             createDataLabel(companies.get(i).getName(), color.getWHITE(), i, 0);
             createDataLabel(companies.get(i).getValue() + "€", color.getGreenTable(), i, 1);
             createDataLabel( companies.get(i).getValue() + "€", color.getRedTable(), i, 2);
-            createDataLabel(companies.get(i).getValue() + "%", color.getGreenTable(), i, 3);
+            float changePer = (companies.get(i).getValue()/ companies.get(i).getValue()) * 100;
+            createDataLabel(changePer + "%", color.getGreenTable(), i, 3);
         }
     }
 
