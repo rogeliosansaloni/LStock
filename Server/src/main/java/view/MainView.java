@@ -30,6 +30,7 @@ public class MainView extends JFrame {
     private StockColors color;
     private HomeView jpHomeView;
     private SharesListView jpSharesView;
+    private BotsCreateView jpBotsCreateView;
 
     public MainView() {
         color = new StockColors();
@@ -49,6 +50,7 @@ public class MainView extends JFrame {
      * Initializes all views
      */
     public void initAllViews() {
+        jpBotsCreateView = new BotsCreateView();
         jpHomeView = new HomeView();
         jpSharesView = new SharesListView();
         //TODO: Add the rest of views
@@ -59,8 +61,11 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
+
+        jpCenter.add(jpBotsCreateView, CARD_BOTS);
         jpCenter.add(jpHomeView, CARD_HOME);
         jpCenter.add(jpSharesView, CARD_USERS);
+
         //TODO: Add the rest of views
     }
 
