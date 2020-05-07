@@ -1,6 +1,7 @@
 package controller;
 
 import model.entities.Bot;
+import model.entities.Company;
 import model.managers.BotManager;
 import view.*;
 
@@ -20,9 +21,13 @@ public class BotMenuController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String mode = e.getActionCommand();
         switch (mode) {
-            case "createBot":
+            case "createNewBot":
                 Bot bot = new Bot();
-                // TODO: Get bot information from view
+                Company company = new Company(view.getBotsCreateView().getCompanyName());
+                bot.setCompany(company);
+                bot.setCompany(company);
+                bot.setActiveTime(view.getBotsCreateView().getActivation());
+                bot.setProbability(view.getBotsCreateView().getPercentage());
                 model.createBot(bot);
                 break;
             case "editBot":

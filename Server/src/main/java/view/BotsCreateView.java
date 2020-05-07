@@ -1,8 +1,11 @@
 package view;
 
+import model.entities.Company;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class BotsCreateView extends JPanel {
     private static final String PATH_ARROW_ICON = "/Images/dropdown.png";
@@ -16,12 +19,11 @@ public class BotsCreateView extends JPanel {
     private JButton jbCancel;
 
     public BotsCreateView() {
-        // TODO: Implement create view
 
         Font font = new Font("Segoe UI", Font.ITALIC, 20);
         jtField = new JTextField[4];
 
-        //Name
+        // Nam
         jtField[0] = new JTextField(NAME_LABEL);
         jtField[0].setBorder(null);
         jtField[0].setFont(font);
@@ -52,17 +54,13 @@ public class BotsCreateView extends JPanel {
             }
         });
 
-
-
-
         //Company
         ImageIcon imageArrow = new ImageIcon(MainView.class.getResource(PATH_ARROW_ICON));
-        Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20,Image.SCALE_DEFAULT);
+        Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
 
         jcbCompany = new JMenuBar();
-
-        jcbCompanyOptions = new JMenu ("Company");
+        jcbCompanyOptions = new JMenu("Company");
         jcbCompanyOptions.setHorizontalTextPosition(SwingConstants.LEFT);
         jcbCompanyOptions.setFont(font);
         jcbCompanyOptions.setForeground(Color.BLACK);
@@ -70,15 +68,12 @@ public class BotsCreateView extends JPanel {
         jcbCompanyOptions.setIconTextGap(80);
         jcbCompany.add(jcbCompanyOptions);
 
-
-
         JMenuItem itemCompany[] = new JMenuItem[20];
-        //for(int i = 0; i < Company.length; i++ ){}
-            itemCompany[1] = new JMenuItem("Company1");
-            itemCompany[1].setHorizontalAlignment(SwingConstants.CENTER);
-            itemCompany[1].setForeground(Color.GRAY);
-            itemCompany[1].setFont(font);
-            jcbCompanyOptions.add(itemCompany[1]);
+        itemCompany[1].setHorizontalAlignment(SwingConstants.CENTER);
+        itemCompany[1].setForeground(Color.GRAY);
+        itemCompany[1].setFont(font);
+        itemCompany[1] = new JMenuItem("Company1");
+        jcbCompanyOptions.add(itemCompany[1]);
 
 
         //Buy Percentage
@@ -94,6 +89,7 @@ public class BotsCreateView extends JPanel {
                     jtField[1].setText("");
                 }
             }
+
             @Override
             public void focusLost(FocusEvent e) {
                 if (jtField[1].getText().equals("")) {
@@ -132,16 +128,16 @@ public class BotsCreateView extends JPanel {
         jbCreate.setBackground(Color.GREEN);
         jbCreate.setFont(fontButton);
         jbCreate.setForeground(Color.BLACK);
-        jbCreate.setPreferredSize(new Dimension(150,50));
+        jbCreate.setPreferredSize(new Dimension(150, 50));
 
         //Cancel Button
         jbCancel = new JButton("CANCEL");
         jbCancel.setBackground(Color.RED);
         jbCancel.setFont(fontButton);
         jbCancel.setForeground(Color.BLACK);
-        jbCancel.setPreferredSize(new Dimension(150,50));
+        jbCancel.setPreferredSize(new Dimension(150, 50));
 
-        JPanel  jpGeneral = new JPanel(new GridLayout(5, 1, 0, 30));
+        JPanel jpGeneral = new JPanel(new GridLayout(5, 1, 0, 30));
         JPanel jpButtons = new JPanel(new FlowLayout());
 
         jpButtons.add(jbCreate);
@@ -153,7 +149,6 @@ public class BotsCreateView extends JPanel {
         jpGeneral.add(jtField[2]);
         jpGeneral.add(jpButtons);
 
-
         this.add(jpGeneral);
     }
 
@@ -164,12 +159,26 @@ public class BotsCreateView extends JPanel {
         this.jbCancel.setActionCommand("cancelBotCreation");
     }
 
+    public void showCompanies(ArrayList<Company> companies) {
+        Font font = new Font("Segoe UI", Font.ITALIC, 20);
+        int numCompanies = companies.size();
+        JMenuItem[] itemCompany = new JMenuItem[numCompanies];
+        for (int i = 0; i < numCompanies; i++) {
+            Company company = (Company) companies.get(i);
+            itemCompany[i].setHorizontalAlignment(SwingConstants.CENTER);
+            itemCompany[i].setForeground(Color.GRAY);
+            itemCompany[i].setFont(font);
+            itemCompany[i] = new JMenuItem(company.getName());
+            jcbCompanyOptions.add(itemCompany[1]);
+        }
+    }
+
     public String getBotName() {
-       return jtField[0].getText();
-   }
+        return jtField[0].getText();
+    }
 
     public String getCompanyName() {
-       return  jcbCompanyOptions.getName();
+        return jcbCompanyOptions.getName();
     }
 
     public float getPercentage() {
