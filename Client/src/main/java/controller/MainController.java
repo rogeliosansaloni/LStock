@@ -101,4 +101,5 @@ public class MainController implements ActionListener {
         //TODO: Update company in the model
         companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
     }
+
 }

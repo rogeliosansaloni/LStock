@@ -4,6 +4,7 @@ import model.entities.AuthenticationInfo;
 import model.entities.TunnelObject;
 import network.NetworkManager;
 import view.LoginView;
+import view.MainView;
 import view.RegisterView;
 
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ public class LoginController implements ActionListener {
     private static final int ERROR_2 = 2;
     private LoginView loginView;
     private RegisterView registerView;
+    private MainView view;
 
     public LoginController(LoginView loginView, RegisterView registerView) {
         this.loginView = loginView;

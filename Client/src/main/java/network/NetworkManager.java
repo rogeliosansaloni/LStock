@@ -206,10 +206,10 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof CompanyList) {
                     CompanyList companies = (CompanyList) received;
-                    if (mainView == null) {
+                    //if (mainView == null) {
                         initMainView(companyMapper.convertToCompanies(companies));
                         mainView.setVisible(true);
-                    }
+                    //}
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
