@@ -9,6 +9,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BotMenuController implements ActionListener {
+    private static final String CARD_CREATE = "Create Bot";
+    private static final String CARD_EDIT = "Configure Bot";
+    private static final String CARD_REMOVE = "Remove Bot";
+    private static final String CARD_LIST = "Bots";
     private BotMenuView view;
     private BotManager model;
 
@@ -22,6 +26,18 @@ public class BotMenuController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String mode = e.getActionCommand();
         switch (mode) {
+            case "CREATE_VIEW":
+                view.updateView(CARD_CREATE);
+                break;
+            case "LIST_VIEW":
+                view.updateView(CARD_LIST);
+                break;
+            case "REMOVE_VIEW":
+                view.updateView(CARD_REMOVE);
+                break;
+            case "ACTIVITY_VIEW":
+                view.updateView(CARD_EDIT);
+                break;
             case "createNewBot":
                 Bot bot = new Bot();
                 Company company = new Company(view.getBotsCreateView().getCompanyName());
