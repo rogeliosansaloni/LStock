@@ -57,7 +57,20 @@ public class BotManager {
         botDao.deleteBot(botId);
     }
 
+    /**
+     * Gets all existing
+     * @return a list of all existing bots
+     */
     public ArrayList<Bot> getAllBots() {
         return botDao.getAllBots();
+    }
+
+    /**
+     * Gets all bots associated to a specific company
+     * @param companyId id of the company
+     * @return a list of all bots for a specific company
+     */
+    public ArrayList<Bot> getAllBotsByCompany(int companyId) {
+        return botDao.getAllBotsByCompany(companyId);
     }
 }

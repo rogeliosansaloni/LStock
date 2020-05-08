@@ -72,9 +72,30 @@ public class BotDao {
 
     /**
      * Gets all existing bots
+     * @return a list of all existing bots
      */
     public ArrayList<Bot> getAllBots() {
         ResultSet retrievedBots = dbConnector.selectQuery("SELECT * FROM Bots;");
+        ArrayList<Bot> bots = null;
+        try {
+            bots = new ArrayList<Bot>();
+            while (retrievedBots.next()) {
+                bots.add(toBot(retrievedBots));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting all bots");
+        }
+        return bots;
+    }
+
+    /**
+     * Gets all bots for a specific company
+     * @param companyId company id
+     * @return a list of all bots associated to a company
+     */
+    public ArrayList<Bot> getAllBotsByCompany(int companyId) {
+        final String selectQuery = "SELECT * FROM Bots WHERE company_id = %d;";
+        ResultSet retrievedBots = dbConnector.selectQuery(String.format(selectQuery, companyId));
         ArrayList<Bot> bots = null;
         try {
             bots = new ArrayList<Bot>();
