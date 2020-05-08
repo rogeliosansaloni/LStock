@@ -97,6 +97,7 @@ public class BotsCreateView extends JPanel {
         jtField[2].setForeground(Color.GRAY);
         jtField[2].setBackground(Color.WHITE);
         jtField[2].addFocusListener(new FocusListener() {
+            // TODO: Remove this from the view
             @Override
             public void focusGained(FocusEvent e) {
                 if (jtField[2].getText().equals(ACTIVATE_TIME_LABEL)) {

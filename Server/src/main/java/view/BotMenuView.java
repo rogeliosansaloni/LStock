@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class BotMenuView extends JPanel {
+    private static final String CARD_MAIN = "Bot Menu";
     private static final String CARD_CREATE = "Create Bot";
     private static final String CARD_EDIT = "Configure Bot";
     private static final String CARD_REMOVE = "Remove Bot";
@@ -31,8 +32,8 @@ public class BotMenuView extends JPanel {
 
     public BotMenuView() {
         color = new StockColors();
-        initViews();
         initUI();
+        initViews();
     }
 
     private void initViews() {
@@ -40,11 +41,12 @@ public class BotMenuView extends JPanel {
         this.botsEditView = new BotsEditView();
         this.botsRemoveView = new BotsRemoveView();
         this.botsListView = new BotsListView();
+        addToCardLayout();
     }
 
     public void initUI() {
+        this.setLayout(new CardLayout());
         jpMain = new JPanel();
-        jpMain.setLayout(new CardLayout());
         jpMain.setBackground(color.getWHITE());
 
         // Main header
@@ -67,33 +69,48 @@ public class BotMenuView extends JPanel {
     }
 
     /**
+     * Add diferent views to layout
+     */
+    private void addToCardLayout() {
+        //this.add(jpMain, CARD_MAIN);
+        this.add(botsCreateView, CARD_CREATE);
+        this.add(botsEditView, CARD_EDIT);
+        this.add(botsListView, CARD_LIST);
+        this.add(botsRemoveView, CARD_REMOVE);
+    }
+
+    /**
      * Shows desired bot view
      *
      * @param card la vista que se quiere mostrar
      */
     public void updateView(String card) {
-        CardLayout cardLayout = (CardLayout) jpMain.getLayout();
+        CardLayout cardLayout = (CardLayout) this.getLayout();
         switch (card) {
             case CARD_CREATE:
-                cardLayout.show(jpMain, CARD_CREATE);
+                cardLayout.show(this, CARD_CREATE);
                 break;
             case CARD_EDIT:
-                cardLayout.show(jpMain, CARD_EDIT);
+                cardLayout.show(this, CARD_EDIT);
                 break;
             case CARD_LIST:
-                cardLayout.show(jpMain, CARD_LIST);
+                cardLayout.show(this, CARD_LIST);
                 break;
             case CARD_REMOVE:
-                cardLayout.show(jpMain, CARD_REMOVE);
+                cardLayout.show(this, CARD_REMOVE);
                 break;
         }
     }
 
     public void registerController(ActionListener controller) {
         jbCreate.addActionListener(controller);
+        jbCreate.setActionCommand("CREATE_VIEW");
         jbRemove.addActionListener(controller);
+        jbRemove.setActionCommand("REMOVE_VIEW");
         jbShowList.addActionListener(controller);
+        jbShowList.setActionCommand("LIST_VIEW");
         jbActivity.addActionListener(controller);
+        jbActivity.setActionCommand("ACTIVITY_VIEW");
     }
 
     public BotsCreateView getBotsCreateView() {
