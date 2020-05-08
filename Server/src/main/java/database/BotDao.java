@@ -38,9 +38,11 @@ public class BotDao {
         // Get the latest bot created for the specified company
         ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, bot.getCompany().getCompanyId()));
         try {
-            int botId = Integer.parseInt(verify.getObject("bot_id").toString());
-            System.out.println(String.format(successMessage, botId));
-            return botId;
+            while (verify.next()) {
+                int botId = verify.getInt("bot_id");
+                System.out.println(String.format(successMessage, botId));
+                return botId;
+            }
         } catch (SQLException e) {
             System.out.println(String.format(errorMessage, bot.getCompany().getCompanyId()));
         }

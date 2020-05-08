@@ -72,7 +72,7 @@ public class CompanyDao {
      * @return Company object with all the information retrieved from the database
      */
     public Company getCompanyByName(String companyName) {
-        final String selectQuery = "SELECT * FROM Company WHERE name = %s;";
+        final String selectQuery = "SELECT * FROM Company WHERE name = '%s';";
         final String errorMessage = "Error in getting company information for %s";
 
         ResultSet resultSet = dbConnector.selectQuery(String.format(selectQuery, companyName));
