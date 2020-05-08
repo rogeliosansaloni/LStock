@@ -161,6 +161,42 @@ public class BotDao {
     }
 
     /**
+     * Updates the activity of a bot
+     * @param botId id of the bot to be configured
+     * @param activate indicates if the bot should be enabled or disabled
+     * @return true if the bot activity has been changed. If not, false.
+     */
+    public boolean updateBot(int botId, String activate) {
+        final String updateQuery = "UPDATE Bots SET activity_status = %s WHERE " +
+                "bot_id = %d;";
+        final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
+        final String errorMessage = "Error updating bot activity with id %d";
+
+        // Determine if we should enable or disable the bot
+        String newActivity = "";
+        if (activate.equals("ENABLE")) {
+            newActivity = "TRUE";
+        } else {
+            newActivity = "FALSE";
+        }
+
+        // Consult the database to get information on the bot to be updated
+        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, botId));
+        try {
+            while (result.next()) {
+                // If the bot exists, update the information
+                if (result.getInt("bot_id") == botId) {
+                    dbConnector.updateQuery(String.format(updateQuery, newActivity, botId));
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(String.format(errorMessage, botId));
+        }
+        return false;
+    }
+
+    /**
      * Activates or deactivates a bot
      *
      * @param botId    id of the bot
