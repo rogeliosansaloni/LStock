@@ -1,5 +1,6 @@
 package controller;
 
+import model.entities.CompanyChange;
 import model.entities.StockManager;
 import view.MainView;
 
@@ -36,7 +37,7 @@ public class CompanyController implements ActionListener {
         }
     }
 
-    public void updateCompanyList (ArrayList<Company> companies){
+    public void updateCompanyList (ArrayList<CompanyChange> companies){
         this.view.updateCompanyList(companies);
     }
 }

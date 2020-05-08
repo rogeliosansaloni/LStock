@@ -2,6 +2,7 @@ package database;
 
 
 import model.entities.Company;
+import model.entities.CompanyChange;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -49,17 +50,42 @@ public class CompanyDao {
      * @return ArrayList<String> all companies name
      */
     public ArrayList<Company> getAllCompanies() {
-        ResultSet retrieved = dbConnector.selectQuery("SELECT t1.*, c.name\n" +
-                "FROM Share t1, Company as c\n" +
-                "WHERE t1.time = (SELECT MAX(t2.time)\n" +
-                "                 FROM Share t2\n" +
-                "                 WHERE t2.company_id = t1.company_id)\n" +
-                "AND c.name = (SELECT name FROM Company c2 WHERE c2.company_id = t1.company_id);");
+        ResultSet retrieved = dbConnector.selectQuery("SELECT c.name as name, s1.price as current_share, (s1.price - s2.price) as share_change, ((s1.price - s2.price)/s1.price)*100 as change_per\n" +
+                "FROM Company as c LEFT JOIN Share as s1 ON c.company_id = s1.company_id RIGHT JOIN Share as s2 ON s2.company_id = c.company_id\n" +
+                "WHERE s1.time = (SELECT MAX(s3.time) \n" +
+                "FROM Share as s3 \n" +
+                "WHERE s3.company_id = s1.company_id)\n" +
+                "AND s2.time = (SELECT MAX(s4.time) \n" +
+                "FROM Share as s4 \n" +
+                "WHERE s4.company_id = s2.company_id \n" +
+                "AND s4.time <= ADDDATE(NOW(), INTERVAL -5 MINUTE));");
         ArrayList<Company> companies = null;
         try {
             companies = new ArrayList<Company>();
             while (retrieved.next()) {
                 companies.add(toCompany(retrieved));
+            }
+        } catch (SQLException e) {
+            System.out.println(GETTING_COMPANIES_ERROR);
+        }
+        return companies;
+    }
+
+    public ArrayList<CompanyChange> getCompaniesChange() {
+        ResultSet retrieved = dbConnector.selectQuery("SELECT c.name as name, s1.price as current_share, (s1.price - s2.price) as share_change, ((s1.price - s2.price)/s1.price)*100 as change_per\n" +
+                "FROM Company as c LEFT JOIN Share as s1 ON c.company_id = s1.company_id RIGHT JOIN Share as s2 ON s2.company_id = c.company_id\n" +
+                "WHERE s1.time = (SELECT MAX(s3.time) \n" +
+                "FROM Share as s3 \n" +
+                "WHERE s3.company_id = s1.company_id)\n" +
+                "AND s2.time = (SELECT MAX(s4.time) \n" +
+                "FROM Share as s4 \n" +
+                "WHERE s4.company_id = s2.company_id \n" +
+                "AND s4.time <= ADDDATE(NOW(), INTERVAL -5 MINUTE));");
+        ArrayList<CompanyChange> companies = null;
+        try {
+            companies = new ArrayList<CompanyChange>();
+            while (retrieved.next()) {
+                companies.add(toCompanyDetail(retrieved));
             }
         } catch (SQLException e) {
             System.out.println(GETTING_COMPANIES_ERROR);
@@ -94,6 +120,15 @@ public class CompanyDao {
         company.setName(resultSet.getString("name"));
         company.setValue(resultSet.getFloat("price"));
         return company;
+    }
+
+    private CompanyChange toCompanyDetail(ResultSet resultSet) throws SQLException {
+        CompanyChange companyChange = new CompanyChange();
+        companyChange.setName(resultSet.getString("name"));
+        companyChange.setCurrentShare(resultSet.getFloat("current_share"));
+        companyChange.setChange(resultSet.getFloat("share_change"));
+        companyChange.setChangePer(resultSet.getFloat("change_per"));
+        return companyChange;
     }
 
     /**

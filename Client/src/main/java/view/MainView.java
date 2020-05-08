@@ -1,5 +1,6 @@
 package view;
 
+import model.entities.CompanyChange;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -308,7 +309,7 @@ public class MainView extends JFrame {
         }
     }
 
-    public void updateCompanyList(ArrayList<Company> companies){
+    public void updateCompanyList(ArrayList<CompanyChange> companies){
         jpCompanyView.showCompanies(companies);
     }
 
@@ -332,7 +333,7 @@ public class MainView extends JFrame {
         labelBalance.setText("Balance: " + strDouble + " $");
     }
 
-    public void initFirstView (ArrayList<Company> companies) {
+    public void initFirstView (ArrayList<CompanyChange> companies) {
         updateCompanyList(companies);
     }
 

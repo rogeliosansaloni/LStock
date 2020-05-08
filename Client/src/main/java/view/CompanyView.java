@@ -1,5 +1,6 @@
 package view;
 
+import model.entities.CompanyChange;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -41,7 +42,7 @@ public class CompanyView extends JPanel {
         }
     }
 
-    public void createColumnLabel(String text) {
+    private void createColumnLabel(String text) {
         JLabel label = new JLabel(text);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBackground(color.getWHITE());
@@ -52,7 +53,7 @@ public class CompanyView extends JPanel {
         jpTable.add(label);
     }
 
-    public void createDataLabel(String text, Color c, int i, int j) {
+    private void createDataLabel(String text, Color c, int i, int j) {
         jlCompanies[i][j] = new JButton(text);
         jlCompanies[i][j].setHorizontalAlignment(SwingConstants.CENTER);
         jlCompanies[i][j].setBackground(c);
@@ -67,7 +68,7 @@ public class CompanyView extends JPanel {
         jpTable.add(jlCompanies[i][j]);
     }
 
-    public void showCompanies(ArrayList<Company> companies){
+    public void showCompanies(ArrayList<CompanyChange> companies){
         // Create a row for each company available
         jpTable.removeAll();
         jpTable.setLayout(new GridLayout(0, 4, 20, 20));
@@ -79,10 +80,17 @@ public class CompanyView extends JPanel {
         System.out.println(companies);
         for (int i = 0; i < companies.size(); i++) {
             createDataLabel(companies.get(i).getName(), color.getWHITE(), i, 0);
-            createDataLabel(companies.get(i).getValue() + "€", color.getGreenTable(), i, 1);
-            createDataLabel( companies.get(i).getValue() + "€", color.getRedTable(), i, 2);
-            float changePer = (companies.get(i).getValue()/ companies.get(i).getValue()) * 100;
-            createDataLabel(changePer + "%", color.getGreenTable(), i, 3);
+            createDataLabel(companies.get(i).getCurrentShare() + "€", color.getGreenTable(), i, 1);
+            if(companies.get(i).getChange() < 0){
+                createDataLabel( companies.get(i).getChange() + "€", color.getRedTable(), i, 2);
+                createDataLabel(companies.get(i).getChangePer() + "%", color.getRedTable(), i, 3);
+            } else if(companies.get(i).getChange() > 0){
+                createDataLabel( companies.get(i).getChange() + "€", color.getGreenTable(), i, 2);
+                createDataLabel(companies.get(i).getChangePer() + "%", color.getGreenTable(), i, 3);
+            } else{
+                createDataLabel( companies.get(i).getChange() + "€", color.getWHITE(), i, 2);
+                createDataLabel(companies.get(i).getChangePer() + "%", color.getWHITE(), i, 3);
+            }
         }
     }
 

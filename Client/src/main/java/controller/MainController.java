@@ -91,7 +91,7 @@ public class MainController implements ActionListener {
     }
 
     public void updateCompanyList () {
-        companyController.updateCompanyList(model.getCompanies());
+        companyController.updateCompanyList(model.getCompaniesChange());
     }
 
     /**
