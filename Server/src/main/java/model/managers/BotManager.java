@@ -5,14 +5,20 @@ import database.CompanyDao;
 import database.DBConnector;
 import model.entities.Bot;
 import model.entities.Company;
-import network.DedicatedServer;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the manager that controls all operations that can be
+ * done to the bots
+ */
 public class BotManager {
     private BotDao botDao;
     private CompanyDao companyDao;
 
+    /**
+     * Creates and initializes the BotManager
+     */
     public BotManager() {
         DBConnector dbConnector = new DBConnector();
         this.botDao = new BotDao(dbConnector);
@@ -36,6 +42,7 @@ public class BotManager {
      * Updates the bot information
      *
      * @param botId id of the bot to be configured
+     * @param action indicates if we should enable or disable a bot
      */
     public void configureBot(int botId, String action) {
             botDao.updateBot(botId, action);
