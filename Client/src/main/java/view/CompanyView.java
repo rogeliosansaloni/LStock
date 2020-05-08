@@ -20,7 +20,6 @@ public class CompanyView extends JPanel {
         this.setBackground(color.getBLACK());
         this.setLayout(new BorderLayout());
         jpTable = new JPanel();
-
         jpTable.setBackground(color.getBLACK());
         jpScroll = new JScrollPane(jpTable);
         this.add(jpScroll, BorderLayout.CENTER);
@@ -98,5 +97,4 @@ public class CompanyView extends JPanel {
      * Gets the amount selected
      * @return amount selected
      */
-
 }

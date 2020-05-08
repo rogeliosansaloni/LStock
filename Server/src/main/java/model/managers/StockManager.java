@@ -122,6 +122,7 @@ public class StockManager {
         info.setActionToDo(BUY_ACTION);
         return info;
     }
+
     public ArrayList<Company> getCompanies() {
         companies = companyDao.getAllCompanies();
         return companies;
