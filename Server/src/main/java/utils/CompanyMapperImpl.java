@@ -37,6 +37,7 @@ public class CompanyMapperImpl implements CompanyMapper {
         return companyList;
     }
 
+    @Override
     public ArrayList<CompanyChange> convertToCompaniesChange(CompanyChangeList companyChangeList) {
         ArrayList<CompanyChange> companies = new ArrayList<CompanyChange>();
         int companiesLen = companyChangeList.getCompanyName().length;

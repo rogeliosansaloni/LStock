@@ -19,6 +19,10 @@ public class CompanyController implements ActionListener {
         this.view = view;
         this.model = model;
     }
+    /**
+     * The controller of the CompanyView. Depending on the company that has been selected,
+     * it will show the corresponding CompanyDetaiñView.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -36,7 +40,11 @@ public class CompanyController implements ActionListener {
                 break;
         }
     }
-
+    /**
+     * Proc that shows the companies on the view's table
+     *
+     * @param companies that contains the list of companies
+     */
     public void updateCompanyList (ArrayList<CompanyChange> companies){
         this.view.updateCompanyList(companies);
     }
