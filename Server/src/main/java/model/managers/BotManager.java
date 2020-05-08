@@ -10,12 +10,11 @@ import network.DedicatedServer;
 import java.util.ArrayList;
 
 public class BotManager {
-    private DBConnector dbConnector;
     private BotDao botDao;
     private CompanyDao companyDao;
 
     public BotManager() {
-        dbConnector = new DBConnector();
+        DBConnector dbConnector = new DBConnector();
         this.botDao = new BotDao(dbConnector);
         this.companyDao = new CompanyDao(dbConnector);
         dbConnector.connect();
