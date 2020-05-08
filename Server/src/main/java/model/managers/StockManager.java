@@ -123,6 +123,7 @@ public class StockManager {
     }
 
     public ArrayList<Company> getCompanies() {
+        companies = companyDao.getAllCompanies();
         return companies;
     }
 }

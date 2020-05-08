@@ -202,4 +202,11 @@ public class LoginView extends JFrame {
     public void showLoginFailure(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
+
+    public void flushCredentials(){
+        campos[0].setText("Nickname or Email");
+        campos[1].setText("Password");
+
+    }
+
 }

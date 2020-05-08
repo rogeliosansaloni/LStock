@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import model.entities.*;
 import model.managers.StockManager;
@@ -108,6 +109,12 @@ public class DedicatedServer extends Thread {
                              //stockModel.updateCompanyValue(shareTrade.getCompanyId(), "sell");
                         }
                     }
+                }
+
+                if (tunnelObject instanceof CompanyList) {
+                    ArrayList<Company> companies = stockModel.getCompanies();
+                    CompanyList companyList = companyMapper.convertToCompanyList(companies);
+                    oos.writeObject(companyList);
                 }
             }
         } catch (ClassNotFoundException e) {
