@@ -18,6 +18,8 @@ public class BotsCreateView extends JPanel {
     private static final String ACTIVATE_TIME_LABEL = "Activate time";
     private static final String CREATE = "CREATE";
     private static final String CANCEL = "CANCEL";
+    private static final int WIDTH = 200;
+    private static final int HEIGHT = 20;
     private JPanel jpButtons;
     private JMenu jcbCompanyOptions;
     private JMenuBar jcbCompany;
@@ -130,8 +132,6 @@ public class BotsCreateView extends JPanel {
 
         jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
         jpButtons.setBackground(color.getWHITE());
-        int width = 200;
-        int height = 20;
 
         Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
         jbCreate = new JButton(CREATE);
@@ -139,7 +139,7 @@ public class BotsCreateView extends JPanel {
         jbCreate.setForeground(color.getBLACK());
         jbCreate.setBorder(null);
         jbCreate.setBackground(color.getGREEN());
-        jbCreate.setPreferredSize(new Dimension(width, height));
+        jbCreate.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         jpButtons.add(jbCreate);
 
         jbCancel = new JButton(CANCEL);
@@ -147,7 +147,7 @@ public class BotsCreateView extends JPanel {
         jbCancel.setForeground(color.getBLACK());
         jbCancel.setBorder(null);
         jbCancel.setBackground(color.getRED());
-        jbCancel.setPreferredSize(new Dimension(width,height));
+        jbCancel.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         jpButtons.add(jbCancel);
 
         this.add(jpButtons);
