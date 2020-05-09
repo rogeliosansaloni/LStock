@@ -2,6 +2,7 @@ package model.managers;
 
 import database.BotDao;
 import database.CompanyDao;
+import database.DBConnector;
 import model.entities.Bot;
 import model.entities.Company;
 import network.DedicatedServer;
@@ -9,12 +10,16 @@ import network.DedicatedServer;
 import java.util.ArrayList;
 
 public class BotManager {
+    private ArrayList<Company> companies;
+    private DBConnector connector;
     private BotDao botDao;
     private CompanyDao companyDao;
 
-    public BotManager(BotDao botDao, CompanyDao companyDao) {
-        this.botDao = botDao;
-        this.companyDao = companyDao;
+    public BotManager() {
+        connector = new DBConnector();
+        this.botDao = new BotDao(connector);
+        this.companyDao = new CompanyDao(connector);
+        connector.connect();
     }
 
     /**
@@ -50,5 +55,10 @@ public class BotManager {
 
     public ArrayList<Bot> getAllBots() {
         return botDao.getAllBots();
+    }
+
+    public ArrayList<Company> getCompanies() {
+        companies = companyDao.getAllCompanies();
+        return companies;
     }
 }

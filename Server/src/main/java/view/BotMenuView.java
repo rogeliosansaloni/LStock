@@ -41,25 +41,14 @@ public class BotMenuView extends JPanel {
         this.botsEditView = new BotsEditView();
         this.botsRemoveView = new BotsRemoveView();
         this.botsListView = new BotsListView();
-        addToCardLayout();
-    }
-
-    private void addToCardLayout() {
-        this.add(botsCreateView, CARD_CREATE);
-        this.add(botsListView, CARD_LIST);
-        this.add(botsRemoveView, CARD_REMOVE);
-        this.add(botsEditView, CARD_EDIT);
     }
 
     public void initUI() {
-        this.setLayout(new CardLayout());
         this.setBackground(color.getWHITE());
-        this.setLayout(new CardLayout());
-
         JPanel jpCenter = new JPanel();
         jpCenter.setBackground(color.getWHITE());
 
-        jpButtons = new JPanel(new GridLayout(2,2, 30 ,0));
+        jpButtons = new JPanel(new GridLayout(2, 2, 30, 0));
         jpButtons.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;
@@ -99,10 +88,8 @@ public class BotMenuView extends JPanel {
         jpButtons.add(jbActivity);
 
         jpCenter.add(jpButtons, BorderLayout.CENTER);
-
         this.add(jpCenter);
     }
-
 
     public void registerControllers(ActionListener controller) {
         jbCreate.addActionListener(controller);

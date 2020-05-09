@@ -1,6 +1,7 @@
 package controller;
 
 import model.entities.Bot;
+import model.entities.Company;
 import model.managers.BotManager;
 import view.*;
 
@@ -17,6 +18,7 @@ public class BotMenuController implements ActionListener {
 
     public BotMenuController(MainView view, BotManager model) {
         this.view = view;
+        //this.view.getBotsCreateView().showCompanies(model.getCompanies());
         this.model = model;
     }
 
@@ -32,6 +34,11 @@ public class BotMenuController implements ActionListener {
                 view.updateView(CARD_CREATE);
                 // TODO: Get bot information from view
                 /*Bot bot = new Bot();
+                Company company = new Company(view.getBotsCreateView().getCompanyName());
+                bot.setCompany(company);
+                bot.setCompany(company);
+                bot.setActiveTime(view.getBotsCreateView().getActivation());
+                bot.setProbability(view.getBotsCreateView().getPercentage());
                 model.createBot(bot);*/
                 break;
             case CARD_EDIT:

@@ -88,11 +88,13 @@ public class NetworkManager extends Thread {
     /**
      * Initializes the main view and its controller
      */
-    private void initMainView(ArrayList<Company> companies) {
-        model.setCompanies(companies);
+    private void initMainView(ArrayList<CompanyChange> companyChange) {
+        model.setCompaniesChange(companyChange);
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
+        this.mainView.initFirstView(model.getCompaniesChange());
         this.mainView.registerMainController(mainController);
+        this.mainView.registerCompanyController(this.mainController.getCompanyController());
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
         this.mainView.registerCompanyController(this.mainController.getCompanyController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
@@ -186,7 +188,7 @@ public class NetworkManager extends Thread {
                             User user = mapper.authenticationInfoToUser((AuthenticationInfo) received);
                             model = new StockManager(user);
                             loginController.closeLoginView();
-                            NetworkManager.getInstance().sendTunnelObject(new CompanyList());
+                            NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
                         } else {
                             loginController.sendErrorMessage(info.getResponseType());
                         }
@@ -205,10 +207,11 @@ public class NetworkManager extends Thread {
                     mainController.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
                 }
 
-                if (received instanceof CompanyList) {
-                    CompanyList companies = (CompanyList) received;
+                if (received instanceof CompanyChangeList) {
+                    CompanyChangeList companies = (CompanyChangeList) received;
                     if (mainView == null) {
-                        initMainView(companyMapper.convertToCompanies(companies));
+                        initMainView(companyMapper.convertToCompaniesChange(companies));
+                        mainController.updateCompanyList();
                         mainView.setVisible(true);
                     }
                 }
