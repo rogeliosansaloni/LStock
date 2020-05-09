@@ -1,5 +1,6 @@
 package view;
 
+import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -8,12 +9,14 @@ import java.awt.event.ActionListener;
 
 public class SharesView extends JPanel {
     private JPanel jpCenter;
+    private JDialog jdCompany;
     private JPanel jpTable;
     private JButton[][] jlCompanies;
     private String[] companiesNames = {"Company 1", "Company 2", "Company 3", "Company 4"};
     private JButton[][] jlSell;
-    private String[] sellNames = {"Sell All Shares 1", "Sell All Shares 2", "Sell All Shares 3", "Sell All Shares 4"};
+    private String[] sellNames = {"sellshares_1", "sellshares_2", "sellshares_3", "sellshares_4"};
     protected StockColors color;
+
 
     public SharesView() {
         color = new StockColors();
@@ -106,6 +109,11 @@ public class SharesView extends JPanel {
         jlSell[i][j].setFont(font);
         jpTable.add(jlSell[i][j]);
 
+    }
+
+    public void showSellActionConfirmation(Company company){
+        final String message = "Do you really want to sell all your shares for %s?";
+        String.format(message, company.getName());
     }
 
     /**

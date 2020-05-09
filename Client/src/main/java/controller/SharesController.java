@@ -6,6 +6,7 @@ import view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.SplittableRandom;
 
 public class SharesController implements ActionListener {
     private MainView view;
@@ -23,8 +24,10 @@ public class SharesController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Object jbPush = e.getSource();
-        final String message = "Do you really want to sell all your shares for %s?";
-        String.format(message, company.getName());
+        SplittableRandom whichButton;
+        String[] substrings = whichButton.split("_", 2);
+        int sharesPosition = Integer.parseInt(substrings[1]);
+
         switch (e.getActionCommand()) {
             case "Sell All Shares 1":
                 System.out.println("Company 1");
