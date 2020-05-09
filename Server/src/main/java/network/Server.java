@@ -9,7 +9,6 @@ import controller.MainController;
 import utils.JSONReader;
 import view.MainView;
 
-
 public class Server extends Thread {
     private String ip;
     private int port;
@@ -88,7 +87,6 @@ public class Server extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
