@@ -66,6 +66,7 @@ public class LoginController implements ActionListener {
      */
     public void closeLoginView() {
         loginView.setVisible(false);
+        loginView.flushCredentials();
     }
 
     /**

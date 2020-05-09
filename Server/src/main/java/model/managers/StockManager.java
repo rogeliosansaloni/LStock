@@ -7,7 +7,6 @@ import model.entities.*;
 import database.DBConnector;
 import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
-import utils.mappers.ShareMapper;
 
 import java.util.ArrayList;
 
@@ -16,6 +15,7 @@ public class StockManager {
     private static final String SELL_ACTION = "SELL";
     private DBConnector connector;
     private ArrayList<Company> companies;
+    private ArrayList<CompanyChange> companiesChange;
     private UserDao userDao;
     private CompanyDao companyDao;
     private ShareDao shareDao;
@@ -36,6 +36,7 @@ public class StockManager {
         this.userDao = userDao;
         this.companyDao = companyDao;
         this.companies = new ArrayList<Company>();
+        this.companiesChange = new ArrayList<CompanyChange>();
     }
 
     /**
@@ -125,6 +126,11 @@ public class StockManager {
     public ArrayList<Company> getCompanies() {
         companies = companyDao.getAllCompanies();
         return companies;
+    }
+
+    public ArrayList<CompanyChange> getCompaniesChange() {
+        companiesChange = companyDao.getCompaniesChange();
+        return companiesChange;
     }
 }
 

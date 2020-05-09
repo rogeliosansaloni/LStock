@@ -1,6 +1,7 @@
 package database;
 
 import model.entities.Company;
+import model.entities.CompanyChange;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -45,15 +46,18 @@ public class CompanyDao {
     /**
      * Gets all the companies in the LStock
      *
-     * @return ArrayList<String> all companies name
+     * @return ArrayList<Company> with the id, name and value
      */
     public ArrayList<Company> getAllCompanies() {
-        ResultSet retrieved = dbConnector.selectQuery("SELECT t1.*, c.name\n" +
-                "FROM Share t1, Company as c\n" +
-                "WHERE t1.time = (SELECT MAX(t2.time)\n" +
-                "                 FROM Share t2\n" +
-                "                 WHERE t2.company_id = t1.company_id)\n" +
-                "AND c.name = (SELECT name FROM Company c2 WHERE c2.company_id = t1.company_id);");
+        ResultSet retrieved = dbConnector.selectQuery("SELECT c.name as name, s1.price as current_share, (s1.price - s2.price) as share_change, ((s1.price - s2.price)/s1.price)*100 as change_per\n" +
+                "FROM Company as c LEFT JOIN Share as s1 ON c.company_id = s1.company_id RIGHT JOIN Share as s2 ON s2.company_id = c.company_id\n" +
+                "WHERE s1.time = (SELECT MAX(s3.time) \n" +
+                "FROM Share as s3 \n" +
+                "WHERE s3.company_id = s1.company_id)\n" +
+                "AND s2.time = (SELECT MAX(s4.time) \n" +
+                "FROM Share as s4 \n" +
+                "WHERE s4.company_id = s2.company_id \n" +
+                "AND s4.time <= ADDDATE(NOW(), INTERVAL -5 MINUTE));");
         ArrayList<Company> companies = null;
         try {
             companies = new ArrayList<Company>();
@@ -67,23 +71,32 @@ public class CompanyDao {
     }
 
     /**
-     * Retrieves a company by name
-     * @param companyName name of the company
-     * @return Company object with all the information retrieved from the database
+     * Gets all the companies in the LStock, with their name, current share price and
+     * the difference between the current price and the one that had 5 minutes ago
+     *
+     * @return ArrayList<CompanyChange> an list of the information mentioned before
      */
-    public Company getCompanyByName(String companyName) {
-        final String selectQuery = "SELECT * FROM Company WHERE name = '%s';";
-        final String errorMessage = "Error in getting company information for %s";
 
-        ResultSet resultSet = dbConnector.selectQuery(String.format(selectQuery, companyName));
+    public ArrayList<CompanyChange> getCompaniesChange() {
+        ResultSet retrieved = dbConnector.selectQuery("SELECT c.name as name, s1.price as current_share, (s1.price - s2.price) as share_change, ((s1.price - s2.price)/s1.price)*100 as change_per\n" +
+                "FROM Company as c LEFT JOIN Share as s1 ON c.company_id = s1.company_id RIGHT JOIN Share as s2 ON s2.company_id = c.company_id\n" +
+                "WHERE s1.time = (SELECT MAX(s3.time) \n" +
+                "FROM Share as s3 \n" +
+                "WHERE s3.company_id = s1.company_id)\n" +
+                "AND s2.time = (SELECT MAX(s4.time) \n" +
+                "FROM Share as s4 \n" +
+                "WHERE s4.company_id = s2.company_id \n" +
+                "AND s4.time <= ADDDATE(NOW(), INTERVAL -5 MINUTE));");
+        ArrayList<CompanyChange> companies = null;
         try {
-            while (resultSet.next()) {
-                return toCompanyNames(resultSet);
+            companies = new ArrayList<CompanyChange>();
+            while (retrieved.next()) {
+                companies.add(toCompanyChange(retrieved));
             }
         } catch (SQLException e) {
-            System.out.println(String.format(errorMessage, companyName));
+            System.out.println(GETTING_COMPANIES_ERROR);
         }
-        return null;
+        return companies;
     }
 
     /**
@@ -113,6 +126,46 @@ public class CompanyDao {
         company.setName(resultSet.getString("name"));
         company.setValue(resultSet.getFloat("price"));
         return company;
+    }
+
+    /**
+     * Converts retrieved information into a companyChange
+     *
+     * @param resultSet result set from database
+     * @return a CompanyChange object containing the information retrieved from the database.
+     * @throws SQLException
+     */
+
+    private CompanyChange toCompanyChange(ResultSet resultSet) throws SQLException {
+        CompanyChange companyChange = new CompanyChange();
+        companyChange.setName(resultSet.getString("name"));
+        companyChange.setCurrentShare(resultSet.getFloat("current_share"));
+        companyChange.setChange(resultSet.getFloat("share_change"));
+        companyChange.setChangePer(resultSet.getFloat("change_per"));
+        return companyChange;
+    }
+
+    /**
+     * Gets all the information of a company
+     *
+     * @param companyName Company where will get the information from.
+     * @return a Company object that contains all the information of a specific company
+     */
+    public Company getCompanyByName(String companyName) {
+        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + companyName + "%';");
+        Company companyData = new Company();
+
+        try {
+            while (verify.next()) {
+                if (companyName.equals(verify.getObject("name").toString())) {
+                    companyData = toCompanyNames(verify);
+                }
+            }
+            return companyData;
+        } catch (SQLException e) {
+            System.out.println(INFORMATION_ERROR);
+        }
+        return null;
     }
 
     /**
