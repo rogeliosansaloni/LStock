@@ -92,7 +92,7 @@ public class CompanyDao {
         try {
             companies = new ArrayList<CompanyChange>();
             while (retrieved.next()) {
-                companies.add(toCompanyDetail(retrieved));
+                companies.add(toCompanyChange(retrieved));
             }
         } catch (SQLException e) {
             System.out.println(GETTING_COMPANIES_ERROR);
@@ -137,7 +137,7 @@ public class CompanyDao {
      * @throws SQLException
      */
 
-    private CompanyChange toCompanyDetail(ResultSet resultSet) throws SQLException {
+    private CompanyChange toCompanyChange(ResultSet resultSet) throws SQLException {
         CompanyChange companyChange = new CompanyChange();
         companyChange.setName(resultSet.getString("name"));
         companyChange.setCurrentShare(resultSet.getFloat("current_share"));
