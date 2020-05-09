@@ -32,32 +32,23 @@ public class BotMenuController implements ActionListener {
         switch (mode) {
             case CARD_CREATE:
                 view.updateView(CARD_CREATE);
-                // TODO: Get bot information from view
-                /*Bot bot = new Bot();
-                Company company = new Company(view.getBotsCreateView().getCompanyName());
-                bot.setCompany(company);
-                bot.setCompany(company);
-                bot.setActiveTime(view.getBotsCreateView().getActivation());
-                bot.setProbability(view.getBotsCreateView().getPercentage());
-                model.createBot(bot);*/
                 break;
             case CARD_EDIT:
+                view.updateView(CARD_EDIT);
                 //int botToBeEdited = view.getBotsEditView().getBotId();
                 // TODO: Get bot information from view
                 //model.configureBot(botToBeEdited);
                 break;
             case CARD_REMOVE:
+                view.updateView(CARD_REMOVE);
                 //int botToBeDeleted = view.getBotsRemoveView().getBotId();
                 // TODO: Get bot information from view
                 //model.deleteBot(botToBeDeleted);
                 break;
             case CARD_LIST:
+                view.updateView(CARD_LIST);
                 //view.getBotsListView().showBotsInTable(model.getAllBots());
                 break;
         }
-    }
-
-    public void validatePercentage(float percentage) {
-        // TODO: Implement validatePercentage
     }
 }
