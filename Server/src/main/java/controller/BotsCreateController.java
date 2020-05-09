@@ -6,6 +6,9 @@ import view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Controller for the Bot creation screen
+ */
 public class BotsCreateController implements ActionListener {
     private static final String CREATE = "CREATE";
     private static final String CANCEL = "CANCEL";
@@ -13,6 +16,10 @@ public class BotsCreateController implements ActionListener {
     private MainView view;
     private BotManager model;
 
+    /**
+     * Creates and initializes the controller
+     * @param view Bot creation view
+     */
     public BotsCreateController (MainView view) {
         //TODO: Add model and initialized the dropdown field
         this.view = view;

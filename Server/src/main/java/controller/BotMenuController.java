@@ -8,6 +8,9 @@ import view.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Controller for the Bot menu
+ */
 public class BotMenuController implements ActionListener {
     private static final String CARD_CREATE = "Create Bot";
     private static final String CARD_EDIT = "Configure Bot";
@@ -15,6 +18,10 @@ public class BotMenuController implements ActionListener {
     private static final String CARD_LIST = "Bots";
     private MainView view;
 
+    /**
+     * Creates and initializes the controller
+     * @param view
+     */
     public BotMenuController(MainView view) {
         this.view = view;
     }

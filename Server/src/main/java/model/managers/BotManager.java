@@ -66,6 +66,10 @@ public class BotManager {
         return botDao.getAllBots();
     }
 
+    /**
+     * Gets all registered companies
+     * @return a list of all registered companies
+     */
     public ArrayList<Company> getCompanies() {
         companies = companyDao.getAllCompanies();
         return companies;
