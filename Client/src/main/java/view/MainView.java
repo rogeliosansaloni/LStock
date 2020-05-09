@@ -1,11 +1,13 @@
 package view;
 
+import model.entities.CompanyChange;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainView extends JFrame {
 
@@ -368,4 +370,6 @@ public class MainView extends JFrame {
         jpCompanyDetailsView.updateValue(strValue);
     }
 
+    public void updateCompanyList(ArrayList<CompanyChange> companies) {
+    }
 }

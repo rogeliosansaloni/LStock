@@ -1,54 +1,33 @@
 package view;
 
 import model.entities.Company;
+import model.entities.CompanyChange;
 import utils.StockColors;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class SharesView extends JPanel {
-    private JPanel jpCenter;
-    private JDialog jdCompany;
+    private JScrollPane jpScroll;
     private JPanel jpTable;
     private JButton[][] jlCompanies;
-    private String[] companiesNames = {"Company 1", "Company 2", "Company 3", "Company 4"};
     private JButton[][] jlSell;
     private String[] sellNames = {"sellshares_1", "sellshares_2", "sellshares_3", "sellshares_4"};
     protected StockColors color;
-
 
     public SharesView() {
         color = new StockColors();
         this.setBackground(color.getBLACK());
         this.setLayout(new BorderLayout());
         jpTable = new JPanel();
-        jpTable.setLayout(new GridLayout(5, 5, 20, 20));
 
-        for (int i = 0; i < 5; i++) {
-            createColumnLabel("COMPANY");
-            createColumnLabel("PRICE 1");
-            createColumnLabel("CHANGE (5 min)");
-            createColumnLabel("% CHANGE (5 min)");
-            jlCompanies = new JButton[companiesNames.length][4];
-            jlSell = new JButton[sellNames.length][4];
-
-            //We create a row for each company available.
-            for (int j = 0; j < companiesNames.length; j++) {
-                creatDataLabel("COMPANY " + (j + 1), color.getWHITE(), j, 0);
-                creatDataLabel((j + 1) * 100 + "€", color.getGreenTable(), j, 1);
-                creatDataLabel((j + 1) * 30 + "€", color.getRedTable(), j, 2);
-                creatDataLabel("0.5%", color.getGreenTable(), j, 3);
-                createDataLabelSmall("Sell All Shares", color.getWHITE(), j, 4);
-
-            }
-
-            jpTable.setBackground(color.getBLACK());
-            this.add(jpTable, BorderLayout.CENTER);
-            this.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-            this.setBackground(color.getBLACK());
-
-        }
+        jpTable.setBackground(color.getBLACK());
+        jpScroll = new JScrollPane(jpTable);
+        this.add(jpScroll, BorderLayout.CENTER);
+        this.setBorder(BorderFactory.createEmptyBorder(50, 20, 50, 20));
+        this.setBackground(color.getBLACK());
     }
 
     /**
@@ -61,7 +40,6 @@ public class SharesView extends JPanel {
         for (int i = 0; i < jlCompanies.length; i++) {
             for (int j = 0; j < 4; j++) {
                 jlCompanies[i][j].addActionListener(actionListener);
-                jlCompanies[i][j].setActionCommand(companiesNames[i]);
             }
         }
         //We add an actionListener for each sell shares button
@@ -73,9 +51,7 @@ public class SharesView extends JPanel {
         }
     }
 
-
-
-    public void createColumnLabel(String text) {
+    private void createColumnLabel(String text) {
         JLabel label = new JLabel(text);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBackground(color.getWHITE());
@@ -86,7 +62,7 @@ public class SharesView extends JPanel {
         jpTable.add(label);
     }
 
-    public void creatDataLabel(String text, Color c, int i, int j) {
+    private void createDataLabel(String text, Color c, int i, int j) {
         jlCompanies[i][j] = new JButton(text);
         jlCompanies[i][j].setHorizontalAlignment(SwingConstants.CENTER);
         jlCompanies[i][j].setBackground(c);
@@ -111,14 +87,38 @@ public class SharesView extends JPanel {
 
     }
 
+    public void showCompanies(ArrayList<CompanyChange> companies){
+        // Create a row for each company available
+        jpTable.removeAll();
+        jpTable.setLayout(new GridLayout(0, 4, 20, 20));
+        createColumnLabel("COMPANY");
+        createColumnLabel("PRICE 1");
+        createColumnLabel("CHANGE (5 min)");
+        createColumnLabel("% CHANGE (5 min)");
+        jlCompanies = new JButton[companies.size()][4];
+        jlSell = new JButton[companies.size()][4];
+        System.out.println(companies);
+        for (int i = 0; i < companies.size(); i++) {
+            createDataLabel(companies.get(i).getName(), color.getWHITE(), i, 0);
+            createDataLabel(companies.get(i).getCurrentShare() + "€", color.getGreenTable(), i, 1);
+            if(companies.get(i).getChange() < 0){
+                createDataLabel( companies.get(i).getChange() + "€", color.getRedTable(), i, 2);
+                createDataLabel(companies.get(i).getChangePer() + "%", color.getRedTable(), i, 3);
+            } else if(companies.get(i).getChange() > 0){
+                createDataLabel( companies.get(i).getChange() + "€", color.getGreenTable(), i, 2);
+                createDataLabel(companies.get(i).getChangePer() + "%", color.getGreenTable(), i, 3);
+            } else{
+                createDataLabel( companies.get(i).getChange() + "€", color.getWHITE(), i, 2);
+                createDataLabel(companies.get(i).getChangePer() + "%", color.getWHITE(), i, 3);
+            }
+            createDataLabelSmall("Sell All Shares", color.getWHITE(), i, 4);
+        }
+    }
+
     public void showSellActionConfirmation(Company company){
         final String message = "Do you really want to sell all your shares for %s?";
         String.format(message, company.getName());
     }
 
-    /**
-     * Gets the amount selected
-     * @return amount selected
-     */
 }
 
