@@ -16,6 +16,8 @@ public class MainView extends JFrame {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
+    private static final String CARD_BOTS_CREATE = "Create Bot";
+
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 740;
     private JLabel labelLogo;
@@ -30,6 +32,7 @@ public class MainView extends JFrame {
     private StockColors color;
     private HomeView jpHomeView;
     private SharesListView jpSharesView;
+    private BotMenuView jpMenuBots;
     private BotsCreateView jpBotsCreateView;
 
     public MainView() {
@@ -43,13 +46,13 @@ public class MainView extends JFrame {
         this.setResizable(false);
         initUI();
         initAllViews();
-
     }
 
     /**
      * Initializes all views
      */
     public void initAllViews() {
+        jpMenuBots = new BotMenuView();
         jpBotsCreateView = new BotsCreateView();
         jpHomeView = new HomeView();
         jpSharesView = new SharesListView();
@@ -61,11 +64,10 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
-
-        jpCenter.add(jpBotsCreateView, CARD_BOTS);
         jpCenter.add(jpHomeView, CARD_HOME);
+        jpCenter.add(jpMenuBots, CARD_BOTS);
+        jpCenter.add(jpBotsCreateView, CARD_BOTS_CREATE);
         jpCenter.add(jpSharesView, CARD_USERS);
-
         //TODO: Add the rest of views
     }
 

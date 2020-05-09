@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class HomeView extends JPanel {
+    private static final String CARD_USERS = "List of Users";
+    private static final String CARD_BOTS = "Manage Bots";
     private JButton jbUsers;
     private JButton jbBots;
     private JPanel jpButtons;
@@ -15,6 +17,7 @@ public class HomeView extends JPanel {
     public HomeView() {
         color = new StockColors();
         this.setBackground(color.getWHITE());
+
         jpButtons = new JPanel(new GridLayout(1,2, 30 ,0));
         jpButtons.setBackground(Color.WHITE);
         int anchuraBoton = 200;
@@ -47,8 +50,8 @@ public class HomeView extends JPanel {
      */
     public void registerController(ActionListener actionListener) {
         jbUsers.addActionListener(actionListener);
-        jbUsers.setActionCommand("users");
+        jbUsers.setActionCommand(CARD_USERS);
         jbBots.addActionListener(actionListener);
-        jbBots.setActionCommand("bots");
+        jbBots.setActionCommand(CARD_BOTS);
     }
 }

@@ -94,6 +94,7 @@ public class NetworkManager extends Thread {
         this.mainController = new MainController(mainView, model, loginView);
         this.mainView.registerMainController(mainController);
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
+        this.mainView.registerCompanyController(this.mainController.getCompanyController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
         this.mainView.setVisible(true);
