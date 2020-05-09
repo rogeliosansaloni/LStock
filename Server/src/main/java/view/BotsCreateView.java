@@ -9,6 +9,8 @@ public class BotsCreateView extends JPanel {
     private static final String NAME_LABEL = "Name";
     private static final String BUY_PERCENTAGE_LABEL = "Buy Percentatge";
     private static final String ACTIVATE_TIME_LABEL = "Activate time";
+    private static final String CREATE = "Create";
+    private static final String CANCEL = "Cancel";
     private JMenu jcbCompanyOptions;
     private JMenuBar jcbCompany;
     private JTextField[] jtField;
@@ -159,9 +161,9 @@ public class BotsCreateView extends JPanel {
 
     public void registerController(ActionListener controller) {
         this.jbCreate.addActionListener(controller);
-        this.jbCreate.setActionCommand("createNewBot");
+        this.jbCreate.setActionCommand(CREATE);
         this.jbCancel.addActionListener(controller);
-        this.jbCancel.setActionCommand("cancelBotCreation");
+        this.jbCancel.setActionCommand(CANCEL);
     }
 
     public String getBotName() {

@@ -1,5 +1,6 @@
 package view;
 
+import controller.BotMenuController;
 import controller.HomeController;
 import utils.StockColors;
 
@@ -17,6 +18,9 @@ public class MainView extends JFrame {
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
     private static final String CARD_BOTS_CREATE = "Create Bot";
+    private static final String CARD_BOTS_EDIT = "Edit Bot";
+    private static final String CARD_BOTS_REMOVE = "Remove Bot";
+    private static final String CARD_BOTS_LIST = "Bots";
 
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 740;
@@ -167,9 +171,28 @@ public class MainView extends JFrame {
         option3.setActionCommand(CARD_BOTS);
     }
 
+    /**
+     * Registers controller for the HomeView
+     *
+     * @param controller Home controller
+     */
     public void registerHomeController(HomeController controller) {
         jpHomeView.registerController(controller);
     }
+
+    /**
+     * Registers controller for the BotMenuView
+     *
+     * @param controller Bot menu controller
+     */
+    public void registerBotMenuController(BotMenuController controller) {
+        jpMenuBots.registerControllers(controller);
+    }
+
+    public void registerBotCreateController() {}
+    public void registerBotEditController() {}
+    public void registerBotRemoveController() {}
+    public void registerBotListController() {}
 
     /**
      * Shows desired view
@@ -186,6 +209,15 @@ public class MainView extends JFrame {
                 break;
             case CARD_BOTS:
                 cardLayout.show(jpCenter, CARD_BOTS);
+                break;
+            case CARD_BOTS_CREATE:
+                cardLayout.show(jpCenter, CARD_BOTS_CREATE);
+                break;
+            case CARD_BOTS_EDIT:
+                break;
+            case CARD_BOTS_REMOVE:
+                break;
+            case CARD_BOTS_LIST:
                 break;
         }
     }

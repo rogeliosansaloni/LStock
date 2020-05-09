@@ -24,6 +24,7 @@ public class BotMenuView extends JPanel {
     private JPanel jpMain;
 
     // Buttons
+    private JPanel jpButtons;
     private JButton jbCreate;
     private JButton jbRemove;
     private JButton jbShowList;
@@ -31,8 +32,8 @@ public class BotMenuView extends JPanel {
 
     public BotMenuView() {
         color = new StockColors();
-        initViews();
         initUI();
+        initViews();
     }
 
     private void initViews() {
@@ -40,60 +41,78 @@ public class BotMenuView extends JPanel {
         this.botsEditView = new BotsEditView();
         this.botsRemoveView = new BotsRemoveView();
         this.botsListView = new BotsListView();
+        addToCardLayout();
+    }
+
+    private void addToCardLayout() {
+        this.add(botsCreateView, CARD_CREATE);
+        this.add(botsListView, CARD_LIST);
+        this.add(botsRemoveView, CARD_REMOVE);
+        this.add(botsEditView, CARD_EDIT);
     }
 
     public void initUI() {
-        jpMain = new JPanel();
-        jpMain.setLayout(new CardLayout());
-        jpMain.setBackground(color.getWHITE());
+        this.setLayout(new CardLayout());
+        this.setBackground(color.getWHITE());
+        this.setLayout(new CardLayout());
 
-        // Main header
-        jpHeader = new JPanel(new BorderLayout());
-        jpHeader.setBackground(color.getDarkGreyHeader());
+        JPanel jpCenter = new JPanel();
+        jpCenter.setBackground(color.getWHITE());
 
-        // Menu
-        JPanel jpCenter = new JPanel(new GridLayout(2, 2));
+        jpButtons = new JPanel(new GridLayout(2,2, 30 ,0));
+        jpButtons.setBackground(Color.WHITE);
+        int anchuraBoton = 200;
+        int alturaBoton = 40;
+
+        Font fuenteBotones = new Font("Segoe UI Semibold", Font.PLAIN, 20);
         jbCreate = new JButton("Create");
+        jbCreate.setFont(fuenteBotones);
+        jbCreate.setForeground(Color.BLACK);
+        jbCreate.setBorder(null);
+        jbCreate.setBackground(color.getYELLOW());
+        jbCreate.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
+
         jbShowList = new JButton("Show list");
+        jbShowList.setFont(fuenteBotones);
+        jbShowList.setForeground(Color.BLACK);
+        jbShowList.setBorder(null);
+        jbShowList.setBackground(color.getYELLOW());
+        jbShowList.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
+
         jbRemove = new JButton("Remove");
+        jbRemove.setFont(fuenteBotones);
+        jbRemove.setForeground(Color.BLACK);
+        jbRemove.setBorder(null);
+        jbRemove.setBackground(color.getYELLOW());
+        jbRemove.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
+
         jbActivity = new JButton("Enable/Disable");
+        jbActivity.setFont(fuenteBotones);
+        jbActivity.setForeground(Color.BLACK);
+        jbActivity.setBorder(null);
+        jbActivity.setBackground(color.getYELLOW());
+        jbActivity.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
-        jpCenter.add(jbCreate);
-        jpCenter.add(jbRemove);
-        jpCenter.add(jbShowList);
-        jpCenter.add(jbActivity);
+        jpButtons.add(jbCreate);
+        jpButtons.add(jbRemove);
+        jpButtons.add(jbShowList);
+        jpButtons.add(jbActivity);
 
-        jpMain.add(jpCenter);
+        jpCenter.add(jpButtons, BorderLayout.CENTER);
+
+        this.add(jpCenter);
     }
 
-    /**
-     * Shows desired bot view
-     *
-     * @param card la vista que se quiere mostrar
-     */
-    public void updateView(String card) {
-        CardLayout cardLayout = (CardLayout) jpMain.getLayout();
-        switch (card) {
-            case CARD_CREATE:
-                cardLayout.show(jpMain, CARD_CREATE);
-                break;
-            case CARD_EDIT:
-                cardLayout.show(jpMain, CARD_EDIT);
-                break;
-            case CARD_LIST:
-                cardLayout.show(jpMain, CARD_LIST);
-                break;
-            case CARD_REMOVE:
-                cardLayout.show(jpMain, CARD_REMOVE);
-                break;
-        }
-    }
 
     public void registerControllers(ActionListener controller) {
         jbCreate.addActionListener(controller);
+        jbCreate.setActionCommand(CARD_CREATE);
         jbRemove.addActionListener(controller);
+        jbRemove.setActionCommand(CARD_REMOVE);
         jbShowList.addActionListener(controller);
+        jbShowList.setActionCommand(CARD_LIST);
         jbActivity.addActionListener(controller);
+        jbActivity.setActionCommand(CARD_EDIT);
     }
 
     public BotsCreateView getBotsCreateView() {
