@@ -22,7 +22,7 @@ public class MainView extends JFrame {
     private static final String CARD_BOTS_EDIT = "Edit Bot";
     private static final String CARD_BOTS_REMOVE = "Remove Bot";
     private static final String CARD_BOTS_LIST = "Bots";
-    private static final int PANEL_WIDTH = 1080;
+    private static final int PANEL_WIDTH = 780;
     private static final int PANEL_HEIGHT = 740;
 
     private JLabel labelLogo;

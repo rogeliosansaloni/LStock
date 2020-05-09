@@ -1,6 +1,7 @@
 package view;
 
 import model.entities.Company;
+import utils.StockColors;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,52 +10,58 @@ import java.util.ArrayList;
 
 public class BotsCreateView extends JPanel {
     private static final String PATH_ARROW_ICON = "/Images/dropdown.png";
+    private static final String FONT = "Segoe UI";
+    private static final String FONT_BUTTON = "Segoe UI Semibold";
+    private static final String TITLE = "Create Bot";
     private static final String NAME_LABEL = "Name";
     private static final String BUY_PERCENTAGE_LABEL = "Buy Percentatge";
     private static final String ACTIVATE_TIME_LABEL = "Activate time";
-    private static final String CREATE = "Create";
-    private static final String CANCEL = "Cancel";
+    private static final String CREATE = "CREATE";
+    private static final String CANCEL = "CANCEL";
+    private JPanel jpButtons;
     private JMenu jcbCompanyOptions;
     private JMenuBar jcbCompany;
     private JTextField[] jtField;
     private JButton jbCreate;
     private JButton jbCancel;
+    private StockColors color;
 
     public BotsCreateView() {
+        color = new StockColors();
+        Font font = new Font(FONT, Font.ITALIC, 20);
 
-        Font font = new Font("Segoe UI", Font.ITALIC, 20);
+        this.setLayout(new GridLayout(6,1,0,15));
+        this.setBackground(color.getWHITE());
+
+        JLabel jlTitle = new JLabel(TITLE);
+        jlTitle.setPreferredSize(new Dimension(200, 1));
+        jlTitle.setHorizontalAlignment(JLabel.CENTER);
+        jlTitle.setFont(font);
+        this.add(jlTitle);
+
         jtField = new JTextField[4];
 
-        // Nam
         jtField[0] = new JTextField(NAME_LABEL);
         jtField[0].setBorder(null);
         jtField[0].setFont(font);
         jtField[0].setForeground(Color.GRAY);
-        jtField[0].setCaretColor(Color.WHITE);
-        jtField[0].addMouseListener(new MouseAdapter() {
+        jtField[0].setBackground(color.getTEXTFIELD());
+        jtField[0].addFocusListener(new FocusListener() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                jtField[0].setCaretColor(Color.BLACK);
-                jtField[0].setText("");
-                jtField[0].addFocusListener(new FocusListener() {
-                    @Override
-                    public void focusGained(FocusEvent e) {
-                        if (jtField[0].getText().equals(NAME_LABEL)) {
-                            jtField[0].setText("");
-                        }
-                    }
+            public void focusGained(FocusEvent e) {
+                if (jtField[0].getText().equals(NAME_LABEL)) {
+                    jtField[0].setText("");
+                }
+            }
 
-                    @Override
-                    public void focusLost(FocusEvent e) {
-                        if (jtField[0].getText().equals("")) {
-                            jtField[0].setCaretColor(Color.WHITE);
-                            jtField[0].setText(NAME_LABEL);
-                        }
-                    }
-                });
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (jtField[0].getText().equals("")) {
+                    jtField[0].setText(NAME_LABEL);
+                }
             }
         });
+        this.add(jtField[0]);
 
         //Company
         ImageIcon imageArrow = new ImageIcon(MainView.class.getResource(PATH_ARROW_ICON));
@@ -62,20 +69,25 @@ public class BotsCreateView extends JPanel {
         imageArrow = new ImageIcon(scaleImageArrow);
 
         jcbCompany = new JMenuBar();
-        jcbCompanyOptions = new JMenu("Company");
+        jcbCompany.setBorder(null);
+        jcbCompany.setForeground(Color.GRAY);
+        jcbCompany.setBackground(color.getTEXTFIELD());
+        jcbCompanyOptions = new JMenu();
         jcbCompanyOptions.setHorizontalTextPosition(SwingConstants.LEFT);
         jcbCompanyOptions.setFont(font);
         jcbCompanyOptions.setForeground(Color.BLACK);
         jcbCompanyOptions.setIcon(imageArrow);
-        jcbCompanyOptions.setIconTextGap(80);
+        //TODO: Fix position of ImageIcon
+        //jcbCompanyOptions.setIconTextGap(160);
         jcbCompany.add(jcbCompanyOptions);
+        this.add(jcbCompany);
 
         //Buy Percentage
         jtField[1] = new JTextField(BUY_PERCENTAGE_LABEL);
         jtField[1].setBorder(null);
         jtField[1].setFont(font);
         jtField[1].setForeground(Color.GRAY);
-        jtField[1].setBackground(Color.WHITE);
+        jtField[1].setBackground(color.getTEXTFIELD());
         jtField[1].addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -91,15 +103,15 @@ public class BotsCreateView extends JPanel {
                 }
             }
         });
+        this.add(jtField[1]);
 
         //Activation Time
         jtField[2] = new JTextField(ACTIVATE_TIME_LABEL);
         jtField[2].setBorder(null);
         jtField[2].setFont(font);
         jtField[2].setForeground(Color.GRAY);
-        jtField[2].setBackground(Color.WHITE);
+        jtField[2].setBackground(color.getTEXTFIELD());
         jtField[2].addFocusListener(new FocusListener() {
-            // TODO: Remove this from the view
             @Override
             public void focusGained(FocusEvent e) {
                 if (jtField[2].getText().equals(ACTIVATE_TIME_LABEL)) {
@@ -114,37 +126,32 @@ public class BotsCreateView extends JPanel {
                 }
             }
         });
+        this.add(jtField[2]);
 
+        jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
+        jpButtons.setBackground(color.getWHITE());
+        int width = 200;
+        int height = 20;
 
-        Font fontButton = new Font("Segoe UI Semibold", Font.PLAIN, 20);
-
-        //Create Button
-        jbCreate = new JButton("CREATE");
-        jbCreate.setBackground(Color.GREEN);
-        jbCreate.setFont(fontButton);
-        jbCreate.setForeground(Color.BLACK);
-        jbCreate.setPreferredSize(new Dimension(150, 50));
-
-        //Cancel Button
-        jbCancel = new JButton("CANCEL");
-        jbCancel.setBackground(Color.RED);
-        jbCancel.setFont(fontButton);
-        jbCancel.setForeground(Color.BLACK);
-        jbCancel.setPreferredSize(new Dimension(150, 50));
-
-        JPanel jpGeneral = new JPanel(new GridLayout(5, 1, 0, 30));
-        JPanel jpButtons = new JPanel(new FlowLayout());
-
+        Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
+        jbCreate = new JButton(CREATE);
+        jbCreate.setFont(buttonFont);
+        jbCreate.setForeground(color.getBLACK());
+        jbCreate.setBorder(null);
+        jbCreate.setBackground(color.getGREEN());
+        jbCreate.setPreferredSize(new Dimension(width, height));
         jpButtons.add(jbCreate);
+
+        jbCancel = new JButton(CANCEL);
+        jbCancel.setFont(buttonFont);
+        jbCancel.setForeground(color.getBLACK());
+        jbCancel.setBorder(null);
+        jbCancel.setBackground(color.getRED());
+        jbCancel.setPreferredSize(new Dimension(width,height));
         jpButtons.add(jbCancel);
 
-        jpGeneral.add(jtField[0]);
-        jpGeneral.add(jcbCompany);
-        jpGeneral.add(jtField[1]);
-        jpGeneral.add(jtField[2]);
-        jpGeneral.add(jpButtons);
-
-        this.add(jpGeneral);
+        this.add(jpButtons);
+        this.setBorder(BorderFactory.createEmptyBorder(0, 150, 50, 150));
     }
 
     public void registerController(ActionListener controller) {
@@ -155,7 +162,7 @@ public class BotsCreateView extends JPanel {
     }
 
     public void showCompanies(ArrayList<Company> companies) {
-        Font font = new Font("Segoe UI", Font.ITALIC, 20);
+        Font font = new Font(FONT, Font.ITALIC, 20);
         int numCompanies = companies.size();
         JMenuItem[] itemCompany = new JMenuItem[numCompanies];
         for (int i = 0; i < numCompanies; i++) {
