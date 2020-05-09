@@ -7,6 +7,9 @@ public class StockManager {
     private Company company;
     private ArrayList<Company> companies;
 
+    private ArrayList<CompanyChange> companiesChange;
+
+
     public StockManager(User user) {
         this.user = user;
     }
@@ -23,7 +26,15 @@ public class StockManager {
         return companies;
     }
 
+    public ArrayList<CompanyChange> getCompaniesChange() {
+        return companiesChange;
+    }
+
     public void setCompanies(ArrayList<Company> companies) {
         this.companies = companies;
+    }
+
+    public void setCompaniesChange(ArrayList<CompanyChange> companiesChange) {
+        this.companiesChange = companiesChange;
     }
 }
