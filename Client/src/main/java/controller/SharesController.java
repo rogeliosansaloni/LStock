@@ -27,7 +27,8 @@ public class SharesController implements ActionListener {
         whichButton = e.getActionCommand();
         String[] substrings = whichButton.split("_", 2);
         int sharesPosition = Integer.parseInt(substrings[1]);
-
+        //company = getCompanyPosition (sharesPosition);
+       // showSellActionConfirmation(company);
     }
 
     public void updateCompanyList (ArrayList<CompanyChange> companies){
