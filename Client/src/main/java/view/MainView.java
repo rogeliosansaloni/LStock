@@ -9,7 +9,6 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import model.entities.Company;
 
 public class MainView extends JFrame {
 
@@ -29,7 +28,7 @@ public class MainView extends JFrame {
     private JLabel labelStock;
     private JLabel labelUserPhoto;
     private JLabel labelViewName;
-    private JLabel labelActualPrice;
+    private JLabel labelCurrentPrice;
     private JLabel labelBalance;
     private String userName = "Peter Fox";
     private String userBalance = "00.00";
@@ -119,12 +118,12 @@ public class MainView extends JFrame {
         labelViewName.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         jpCenterHeader.add(labelViewName, BorderLayout.CENTER);
 
-        labelActualPrice = new JLabel("", SwingConstants.CENTER);
+        labelCurrentPrice = new JLabel("", SwingConstants.CENTER);
         Font fontActualPrice = new Font("Segoe UI", Font.PLAIN, 40);
-        labelActualPrice.setFont(fontActualPrice);
-        labelActualPrice.setForeground(color.getWHITE());
-        labelActualPrice.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
-        jpCenterHeader.add(labelActualPrice, BorderLayout.SOUTH);
+        labelCurrentPrice.setFont(fontActualPrice);
+        labelCurrentPrice.setForeground(color.getWHITE());
+        labelCurrentPrice.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        jpCenterHeader.add(labelCurrentPrice, BorderLayout.SOUTH);
         jpHeader.add(jpCenterHeader, BorderLayout.CENTER);
 
         jpOptions = new JPanel(new BorderLayout());
@@ -295,6 +294,7 @@ public class MainView extends JFrame {
      */
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
+        labelCurrentPrice.setText("");
         switch (card) {
             case CARD_COMPANY:
                 labelViewName.setText(CARD_COMPANY);
@@ -321,6 +321,15 @@ public class MainView extends JFrame {
                 cardLayout.show(jpCenter, CARD_COMPANYDETAILS);
                 break;
         }
+    }
+
+    /**
+     * Sets the value of the labelCurrentPrice depending on the value it receives
+     */
+
+    public void setCurrentPrice(float value){
+        String text = "CURRENT PRICE: " + value + " €";
+        labelCurrentPrice.setText(text);
     }
 
     public void updateCompanyList(ArrayList<CompanyChange> companies){

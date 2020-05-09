@@ -30,6 +30,10 @@ public class StockManager {
         return companyDetails;
     }
 
+    public float getCurrentPrice() {
+        return companyDetails.get(0).getValueClose();
+    }
+
     public ArrayList<CompanyChange> getCompaniesChange() {
         return companiesChange;
     }

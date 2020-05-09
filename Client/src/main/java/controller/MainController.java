@@ -95,9 +95,13 @@ public class MainController implements ActionListener {
         companyController.updateCompanyList(model.getCompaniesChange());
     }
 
+    /**
+     * Updates the CompanyDetailView depending on the values received from the database
+     */
     public void updateCompanyDetails () {
         view.updateView(CARD_COMPANYDETAILS);
         companyDetailController.updateCompanyDetailView(model.getCompanyDetails());
+        view.setCurrentPrice(model.getCurrentPrice());
     }
 
     /**
