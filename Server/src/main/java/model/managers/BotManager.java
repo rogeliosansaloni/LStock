@@ -5,21 +5,26 @@ import database.CompanyDao;
 import database.DBConnector;
 import model.entities.Bot;
 import model.entities.Company;
-import network.DedicatedServer;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the manager that controls all operations that can be
+ * done to the bots
+ */
 public class BotManager {
     private ArrayList<Company> companies;
-    private DBConnector connector;
     private BotDao botDao;
     private CompanyDao companyDao;
 
+    /**
+     * Creates and initializes the BotManager
+     */
     public BotManager() {
-        connector = new DBConnector();
-        this.botDao = new BotDao(connector);
-        this.companyDao = new CompanyDao(connector);
-        connector.connect();
+        DBConnector dbConnector = new DBConnector();
+        this.botDao = new BotDao(dbConnector);
+        this.companyDao = new CompanyDao(dbConnector);
+        dbConnector.connect();
     }
 
     /**
@@ -38,10 +43,10 @@ public class BotManager {
      * Updates the bot information
      *
      * @param botId id of the bot to be configured
+     * @param action indicates if we should enable or disable a bot
      */
-    public void configureBot(int botId) {
-        Bot bot = botDao.getBotById(botId);
-        botDao.updateBot(bot);
+    public void configureBot(int botId, String action) {
+            botDao.updateBot(botId, action);
     }
 
     /**
@@ -53,6 +58,10 @@ public class BotManager {
         botDao.deleteBot(botId);
     }
 
+    /**
+     * Gets all existing
+     * @return a list of all existing bots
+     */
     public ArrayList<Bot> getAllBots() {
         return botDao.getAllBots();
     }
@@ -60,5 +69,14 @@ public class BotManager {
     public ArrayList<Company> getCompanies() {
         companies = companyDao.getAllCompanies();
         return companies;
+    }
+
+    /**
+     * Gets all bots associated to a specific company
+     * @param companyId id of the company
+     * @return a list of all bots for a specific company
+     */
+    public ArrayList<Bot> getAllBotsByCompany(int companyId) {
+        return botDao.getAllBotsByCompany(companyId);
     }
 }

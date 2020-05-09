@@ -38,9 +38,11 @@ public class BotDao {
         // Get the latest bot created for the specified company
         ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, bot.getCompany().getCompanyId()));
         try {
-            int botId = Integer.parseInt(verify.getObject("bot_id").toString());
-            System.out.println(String.format(successMessage, botId));
-            return botId;
+            while (verify.next()) {
+                int botId = verify.getInt("bot_id");
+                System.out.println(String.format(successMessage, botId));
+                return botId;
+            }
         } catch (SQLException e) {
             System.out.println(String.format(errorMessage, bot.getCompany().getCompanyId()));
         }
@@ -70,9 +72,30 @@ public class BotDao {
 
     /**
      * Gets all existing bots
+     * @return a list of all existing bots
      */
     public ArrayList<Bot> getAllBots() {
         ResultSet retrievedBots = dbConnector.selectQuery("SELECT * FROM Bots;");
+        ArrayList<Bot> bots = null;
+        try {
+            bots = new ArrayList<Bot>();
+            while (retrievedBots.next()) {
+                bots.add(toBot(retrievedBots));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting all bots");
+        }
+        return bots;
+    }
+
+    /**
+     * Gets all bots for a specific company
+     * @param companyId company id
+     * @return a list of all bots associated to a company
+     */
+    public ArrayList<Bot> getAllBotsByCompany(int companyId) {
+        final String selectQuery = "SELECT * FROM Bots WHERE company_id = %d;";
+        ResultSet retrievedBots = dbConnector.selectQuery(String.format(selectQuery, companyId));
         ArrayList<Bot> bots = null;
         try {
             bots = new ArrayList<Bot>();
@@ -154,6 +177,42 @@ public class BotDao {
             }
         } catch (SQLException e) {
             System.out.println(String.format(errorMessage, bot.getBotId()));
+        }
+        return false;
+    }
+
+    /**
+     * Updates the activity of a bot
+     * @param botId id of the bot to be configured
+     * @param activate indicates if the bot should be enabled or disabled
+     * @return true if the bot activity has been changed. If not, false.
+     */
+    public boolean updateBot(int botId, String activate) {
+        final String updateQuery = "UPDATE Bots SET activity_status = %s WHERE " +
+                "bot_id = %d;";
+        final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
+        final String errorMessage = "Error updating bot activity with id %d";
+
+        // Determine if we should enable or disable the bot
+        String newActivity = "";
+        if (activate.equals("ENABLE")) {
+            newActivity = "TRUE";
+        } else {
+            newActivity = "FALSE";
+        }
+
+        // Consult the database to get information on the bot to be updated
+        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, botId));
+        try {
+            while (result.next()) {
+                // If the bot exists, update the information
+                if (result.getInt("bot_id") == botId) {
+                    dbConnector.updateQuery(String.format(updateQuery, newActivity, botId));
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(String.format(errorMessage, botId));
         }
         return false;
     }
