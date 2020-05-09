@@ -1,47 +1,54 @@
 package controller;
 
 import model.entities.Bot;
+import model.entities.Company;
 import model.managers.BotManager;
 import view.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Controller for the Bot menu
+ */
 public class BotMenuController implements ActionListener {
-    private BotMenuView view;
-    private BotManager model;
+    private static final String CARD_CREATE = "Create Bot";
+    private static final String CARD_EDIT = "Configure Bot";
+    private static final String CARD_REMOVE = "Remove Bot";
+    private static final String CARD_LIST = "Bots";
+    private MainView view;
 
-    public BotMenuController(BotMenuView view, BotManager model) {
+    /**
+     * Creates and initializes the controller
+     * @param view
+     */
+    public BotMenuController(MainView view) {
         this.view = view;
-        this.model = model;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String mode = e.getActionCommand();
         switch (mode) {
-            case "createBot":
-                Bot bot = new Bot();
-                // TODO: Get bot information from view
-                model.createBot(bot);
+            case CARD_CREATE:
+                view.updateView(CARD_CREATE);
                 break;
-            case "editBot":
-                int botToBeEdited = view.getBotsEditView().getBotId();
+            case CARD_EDIT:
+                view.updateView(CARD_EDIT);
+                //int botToBeEdited = view.getBotsEditView().getBotId();
                 // TODO: Get bot information from view
-                model.configureBot(botToBeEdited, "ENABLE");
+                //model.configureBot(botToBeEdited);
                 break;
-            case "deleteBot":
-                int botToBeDeleted = view.getBotsRemoveView().getBotId();
+            case CARD_REMOVE:
+                view.updateView(CARD_REMOVE);
+                //int botToBeDeleted = view.getBotsRemoveView().getBotId();
                 // TODO: Get bot information from view
-                model.deleteBot(botToBeDeleted);
+                //model.deleteBot(botToBeDeleted);
                 break;
-            case "listBots":
-                view.getBotsListView().showBotsInTable(model.getAllBots());
+            case CARD_LIST:
+                view.updateView(CARD_LIST);
+                //view.getBotsListView().showBotsInTable(model.getAllBots());
                 break;
         }
-    }
-
-    public void validatePercentage(float percentage) {
-        // TODO: Implement validatePercentage
     }
 }

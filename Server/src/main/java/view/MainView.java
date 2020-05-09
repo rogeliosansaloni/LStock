@@ -1,5 +1,7 @@
 package view;
 
+import controller.BotMenuController;
+import controller.BotsCreateController;
 import controller.HomeController;
 import utils.StockColors;
 
@@ -16,8 +18,13 @@ public class MainView extends JFrame {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
-    private static final int PANEL_WIDTH = 1080;
+    private static final String CARD_BOTS_CREATE = "Create Bot";
+    private static final String CARD_BOTS_EDIT = "Edit Bot";
+    private static final String CARD_BOTS_REMOVE = "Remove Bot";
+    private static final String CARD_BOTS_LIST = "Bots";
+    private static final int PANEL_WIDTH = 780;
     private static final int PANEL_HEIGHT = 740;
+
     private JLabel labelLogo;
     private JLabel labelStock;
     protected JPanel jpNorth;
@@ -30,6 +37,7 @@ public class MainView extends JFrame {
     private StockColors color;
     private HomeView jpHomeView;
     private SharesListView jpSharesView;
+    private BotMenuView jpMenuBots;
     private BotsCreateView jpBotsCreateView;
 
     public MainView() {
@@ -43,13 +51,13 @@ public class MainView extends JFrame {
         this.setResizable(false);
         initUI();
         initAllViews();
-
     }
 
     /**
      * Initializes all views
      */
     public void initAllViews() {
+        jpMenuBots = new BotMenuView();
         jpBotsCreateView = new BotsCreateView();
         jpHomeView = new HomeView();
         jpSharesView = new SharesListView();
@@ -61,11 +69,10 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
-
-        jpCenter.add(jpBotsCreateView, CARD_BOTS);
         jpCenter.add(jpHomeView, CARD_HOME);
+        jpCenter.add(jpMenuBots, CARD_BOTS);
+        jpCenter.add(jpBotsCreateView, CARD_BOTS_CREATE);
         jpCenter.add(jpSharesView, CARD_USERS);
-
         //TODO: Add the rest of views
     }
 
@@ -165,9 +172,35 @@ public class MainView extends JFrame {
         option3.setActionCommand(CARD_BOTS);
     }
 
+    /**
+     * Registers controller for the HomeView
+     *
+     * @param controller Home controller
+     */
     public void registerHomeController(HomeController controller) {
         jpHomeView.registerController(controller);
     }
+
+    /**
+     * Registers controller for the BotMenuView
+     *
+     * @param controller Bot menu controller
+     */
+    public void registerBotMenuController(BotMenuController controller) {
+        jpMenuBots.registerControllers(controller);
+    }
+
+    /**
+     * Registers controller for the Bot create view
+     *
+     * @param controller BotsCreate controller
+     */
+    public void registerBotCreateController(BotsCreateController controller) {
+        jpBotsCreateView.registerController(controller);
+    }
+    public void registerBotEditController() {}
+    public void registerBotRemoveController() {}
+    public void registerBotListController() {}
 
     /**
      * Shows desired view
@@ -184,6 +217,15 @@ public class MainView extends JFrame {
                 break;
             case CARD_BOTS:
                 cardLayout.show(jpCenter, CARD_BOTS);
+                break;
+            case CARD_BOTS_CREATE:
+                cardLayout.show(jpCenter, CARD_BOTS_CREATE);
+                break;
+            case CARD_BOTS_EDIT:
+                break;
+            case CARD_BOTS_REMOVE:
+                break;
+            case CARD_BOTS_LIST:
                 break;
         }
     }

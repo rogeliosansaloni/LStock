@@ -13,6 +13,7 @@ import java.util.ArrayList;
  * done to the bots
  */
 public class BotManager {
+    private ArrayList<Company> companies;
     private BotDao botDao;
     private CompanyDao companyDao;
 
@@ -63,6 +64,15 @@ public class BotManager {
      */
     public ArrayList<Bot> getAllBots() {
         return botDao.getAllBots();
+    }
+
+    /**
+     * Gets all registered companies
+     * @return a list of all registered companies
+     */
+    public ArrayList<Company> getCompanies() {
+        companies = companyDao.getAllCompanies();
+        return companies;
     }
 
     /**
