@@ -1,6 +1,7 @@
 package view;
 
 import controller.BotMenuController;
+import controller.BotsCreateController;
 import controller.HomeController;
 import utils.StockColors;
 
@@ -189,7 +190,14 @@ public class MainView extends JFrame {
         jpMenuBots.registerControllers(controller);
     }
 
-    public void registerBotCreateController() {}
+    /**
+     * Registers controller for the Bot create view
+     *
+     * @param controller BotsCreate controller
+     */
+    public void registerBotCreateController(BotsCreateController controller) {
+        jpBotsCreateView.registerController(controller);
+    }
     public void registerBotEditController() {}
     public void registerBotRemoveController() {}
     public void registerBotListController() {}

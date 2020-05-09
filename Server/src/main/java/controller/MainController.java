@@ -15,12 +15,15 @@ public class MainController implements ActionListener {
     private final MainView view;
     private HomeController homeController;
     private BotMenuController botMenuController;
+    private BotsCreateController botsCreateController;
     //TODO: Add the rest con controllers
 
     public MainController(MainView view) {
         this.view = view;
         this.homeController = new HomeController(view);
         this.botMenuController = new BotMenuController(view);
+        this.botsCreateController = new BotsCreateController(view);
+
         //TODO: Initialize controllers
     }
 
@@ -49,5 +52,7 @@ public class MainController implements ActionListener {
     }
 
     public BotMenuController getBotMenuController() { return botMenuController; }
+
+    public BotsCreateController getBotsCreateController() { return botsCreateController; }
 
 }
