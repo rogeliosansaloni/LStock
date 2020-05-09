@@ -1,9 +1,6 @@
 package controller;
 
-import model.entities.Company;
-import model.entities.ShareTrade;
-import model.entities.StockManager;
-import model.entities.User;
+import model.entities.*;
 import network.NetworkManager;
 import view.CompanyDetailView;
 import view.MainView;
@@ -11,6 +8,7 @@ import view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CompanyDetailController implements ActionListener {
     private static final String CONFIRM_BUY_ACTION = "Do you want to buy this share?";
@@ -67,5 +65,9 @@ public class CompanyDetailController implements ActionListener {
      */
     public void updateCompanyUserValueAndBalance(float totalBalance, float value) {
         view.updateCompanyUserValueAndBalance(totalBalance, value);
+    }
+
+    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails) {
+        view.updateCompanyDetailView(companyDetails);
     }
 }

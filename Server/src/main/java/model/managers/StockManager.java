@@ -16,6 +16,7 @@ public class StockManager {
     private DBConnector connector;
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
+    private ArrayList<CompanyDetail> companyDetails;
     private UserDao userDao;
     private CompanyDao companyDao;
     private ShareDao shareDao;
@@ -131,6 +132,11 @@ public class StockManager {
     public ArrayList<CompanyChange> getCompaniesChange() {
         companiesChange = companyDao.getCompaniesChange();
         return companiesChange;
+    }
+
+    public ArrayList<CompanyDetail> getCompanyDetails(int companyId) {
+        companyDetails = companyDao.getCompanyDetails(companyId);
+        return companyDetails;
     }
 }
 

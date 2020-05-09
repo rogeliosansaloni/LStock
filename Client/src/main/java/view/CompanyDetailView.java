@@ -1,5 +1,6 @@
 package view;
 
+import model.entities.CompanyDetail;
 import model.entities.User;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -15,6 +16,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
 public class CompanyDetailView extends JPanel {
     //private static final String TITLE = "My Company Shares: ";
@@ -76,7 +78,6 @@ public class CompanyDetailView extends JPanel {
         ChartPanel chart = new ChartPanel(jfcCandleStick);
         chart.setPreferredSize(new Dimension(700,480));
 
-
         jpCenter.add(chart);
         //Adding in the main pannel
         this.add(jpSouth, BorderLayout.SOUTH);
@@ -85,6 +86,10 @@ public class CompanyDetailView extends JPanel {
 
     public void updateNumberShares(User user) {
         jlMyShares.setText(Integer.toString(user.getShares().size()));
+    }
+
+    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails){
+
     }
 
     public void updateValue (String value) {

@@ -1,6 +1,7 @@
 package view;
 
 import model.entities.CompanyChange;
+import model.entities.CompanyDetail;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -28,10 +29,12 @@ public class MainView extends JFrame {
     private JLabel labelStock;
     private JLabel labelUserPhoto;
     private JLabel labelViewName;
+    private JLabel labelActualPrice;
     private JLabel labelBalance;
     private String userName = "Peter Fox";
     private String userBalance = "00.00";
     private JPanel jpHeader;
+    private JPanel jpCenterHeader;
     private JPanel jpLogo;
     private JPanel jpOptions;
     private JPanel jpMenu;
@@ -106,12 +109,23 @@ public class MainView extends JFrame {
         jpLogo.add(labelStock, BorderLayout.SOUTH);
         jpHeader.add(jpLogo, BorderLayout.WEST);
 
-        //Here we change the content of this label depending on the view we create
+        jpCenterHeader = new JPanel(new BorderLayout());
+        jpCenterHeader.setBackground(color.getDarkGreyHeader());
+
         labelViewName = new JLabel("COMPANIES", SwingConstants.CENTER);
         Font fontNameView = new Font("Segoe UI", Font.PLAIN, 50);
         labelViewName.setFont(fontNameView);
         labelViewName.setForeground(color.getWHITE());
-        jpHeader.add(labelViewName, BorderLayout.CENTER);
+        labelViewName.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        jpCenterHeader.add(labelViewName, BorderLayout.CENTER);
+
+        labelActualPrice = new JLabel("", SwingConstants.CENTER);
+        Font fontActualPrice = new Font("Segoe UI", Font.PLAIN, 40);
+        labelActualPrice.setFont(fontActualPrice);
+        labelActualPrice.setForeground(color.getWHITE());
+        labelActualPrice.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        jpCenterHeader.add(labelActualPrice, BorderLayout.SOUTH);
+        jpHeader.add(jpCenterHeader, BorderLayout.CENTER);
 
         jpOptions = new JPanel(new BorderLayout());
         jpOptions.setBackground(color.getDarkGreyHeader());
@@ -136,7 +150,7 @@ public class MainView extends JFrame {
 
         jpHeader.add(jpOptions, BorderLayout.EAST);
 
-        jpHeader.setBorder(BorderFactory.createEmptyBorder(30, 50, 15, 50));
+        jpHeader.setBorder(BorderFactory.createEmptyBorder(30, 50, 15, 10));
         jpMain.add(jpHeader, BorderLayout.NORTH);
 
         //Here we edit the jpCenter depending on the view the create
@@ -270,8 +284,8 @@ public class MainView extends JFrame {
         jpBalanceView.registerController(controller);
     }
 
-    public void registerCompanyController(ActionListener controller) {
-        jpCompanyView.registerController(controller);
+    public void registerCompanyController(ActionListener controller, ArrayList<CompanyChange> companies) {
+        jpCompanyView.registerController(controller, companies);
     }
 
     /**
@@ -311,6 +325,10 @@ public class MainView extends JFrame {
 
     public void updateCompanyList(ArrayList<CompanyChange> companies){
         jpCompanyView.showCompanies(companies);
+    }
+
+    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails){
+        jpCompanyDetailsView.updateCompanyDetailView(companyDetails);
     }
 
     /**

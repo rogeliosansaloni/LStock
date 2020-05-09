@@ -1,12 +1,12 @@
 package controller;
 
-import model.entities.CompanyChange;
-import model.entities.StockManager;
+import model.entities.*;
+import network.NetworkManager;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import model.entities.Company;
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -21,23 +21,15 @@ public class CompanyController implements ActionListener {
     }
     /**
      * The controller of the CompanyView. Depending on the company that has been selected,
-     * it will show the corresponding CompanyDetaiñView.
+     * it will show the corresponding CompanyDetailView.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "Company 1":
-                System.out.println("Company 1");
-                break;
-            case "Company 2":
-                System.out.println("Company 2");
-                break;
-            case "Company 3":
-                System.out.println("Company 3");
-                break;
-            case "Company 4":
-                System.out.println("Company 4");
-                break;
+        TunnelObject companyId = new CompanyInfo(Integer.parseInt(e.getActionCommand()));
+        try {
+            NetworkManager.getInstance().sendCompanyDetails(companyId);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
     /**

@@ -32,11 +32,13 @@ public class CompanyView extends JPanel {
      *
      * @param actionListener ActionListener
      */
-    public void registerController(ActionListener actionListener) {
+    public void registerController(ActionListener actionListener, ArrayList<CompanyChange> companies) {
         // Add an actionListener for each company
         for (int i = 0; i < jlCompanies.length; i++) {
             for (int j = 0; j < 4; j++) {
                 jlCompanies[i][j].addActionListener(actionListener);
+                jlCompanies[i][j].setActionCommand(Integer.toString(companies.get(i).getCompanyId()));
+                System.out.println(jlCompanies[i][j].getActionCommand());
             }
         }
     }
@@ -76,7 +78,6 @@ public class CompanyView extends JPanel {
         createColumnLabel("CHANGE (5 min)");
         createColumnLabel("% CHANGE (5 min)");
         jlCompanies = new JButton[companies.size()][4];
-        System.out.println(companies);
         for (int i = 0; i < companies.size(); i++) {
             createDataLabel(companies.get(i).getName(), color.getWHITE(), i, 0);
             createDataLabel(companies.get(i).getCurrentShare() + "€", color.getGreenTable(), i, 1);

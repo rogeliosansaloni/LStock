@@ -12,6 +12,7 @@ public class MainController implements ActionListener {
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
+    private static final String CARD_COMPANYDETAILS = "Company Details";
     private final MainView view;
     private final LoginView loginView;
     private StockManager model;
@@ -92,6 +93,11 @@ public class MainController implements ActionListener {
 
     public void updateCompanyList () {
         companyController.updateCompanyList(model.getCompaniesChange());
+    }
+
+    public void updateCompanyDetails () {
+        view.updateView(CARD_COMPANYDETAILS);
+        companyDetailController.updateCompanyDetailView(model.getCompanyDetails());
     }
 
     /**

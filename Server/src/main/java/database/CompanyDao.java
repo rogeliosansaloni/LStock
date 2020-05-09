@@ -3,6 +3,7 @@ package database;
 
 import model.entities.Company;
 import model.entities.CompanyChange;
+import model.entities.CompanyDetail;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -79,15 +80,7 @@ public class CompanyDao {
      */
 
     public ArrayList<CompanyChange> getCompaniesChange() {
-        ResultSet retrieved = dbConnector.selectQuery("SELECT c.name as name, s1.price as current_share, (s1.price - s2.price) as share_change, ((s1.price - s2.price)/s1.price)*100 as change_per\n" +
-                "FROM Company as c LEFT JOIN Share as s1 ON c.company_id = s1.company_id RIGHT JOIN Share as s2 ON s2.company_id = c.company_id\n" +
-                "WHERE s1.time = (SELECT MAX(s3.time) \n" +
-                "FROM Share as s3 \n" +
-                "WHERE s3.company_id = s1.company_id)\n" +
-                "AND s2.time = (SELECT MAX(s4.time) \n" +
-                "FROM Share as s4 \n" +
-                "WHERE s4.company_id = s2.company_id \n" +
-                "AND s4.time <= ADDDATE(NOW(), INTERVAL -5 MINUTE));");
+        ResultSet retrieved = dbConnector.selectQuery("CALL getCompaniesChange();");
         ArrayList<CompanyChange> companies = null;
         try {
             companies = new ArrayList<CompanyChange>();
@@ -96,6 +89,29 @@ public class CompanyDao {
             }
         } catch (SQLException e) {
             System.out.println(GETTING_COMPANIES_ERROR);
+        }
+        return companies;
+    }
+
+    /**
+     * Gets the value of the share of an specific company the last 10 minutes
+     * before the last change in the value of the share
+     *
+     * @return ArrayList<CompanyChange> an list of the information mentioned before
+     */
+
+    public ArrayList<CompanyDetail> getCompanyDetails(int companyId) {
+        ArrayList<CompanyDetail> companies = null;
+        for(int i=0; i<10; i++){
+            ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
+            try {
+                companies = new ArrayList<CompanyDetail>();
+                while (retrieved.next()) {
+                    companies.add(toCompanyDetail(retrieved));
+                }
+            } catch (SQLException e) {
+                System.out.println(GETTING_COMPANIES_ERROR);
+            }
         }
         return companies;
     }
@@ -139,11 +155,22 @@ public class CompanyDao {
 
     private CompanyChange toCompanyChange(ResultSet resultSet) throws SQLException {
         CompanyChange companyChange = new CompanyChange();
+        companyChange.setCompanyId(resultSet.getInt("companyId"));
         companyChange.setName(resultSet.getString("name"));
         companyChange.setCurrentShare(resultSet.getFloat("current_share"));
         companyChange.setChange(resultSet.getFloat("share_change"));
         companyChange.setChangePer(resultSet.getFloat("change_per"));
         return companyChange;
+    }
+
+    private CompanyDetail toCompanyDetail(ResultSet resultSet) throws SQLException {
+        CompanyDetail companyDetail = new CompanyDetail();
+        companyDetail.setCompanyId(resultSet.getInt("companyId"));
+        companyDetail.setCompanyName(resultSet.getString("name"));
+        companyDetail.setValueOpen(resultSet.getFloat("valueOpen"));
+        companyDetail.setValueClose(resultSet.getFloat("valueClose"));
+        companyDetail.setMinutesBefore(resultSet.getInt("minutesBefore"));
+        return companyDetail;
     }
 
     /**

@@ -94,7 +94,7 @@ public class NetworkManager extends Thread {
         this.mainController = new MainController(mainView, model, loginView);
         this.mainView.initFirstView(model.getCompaniesChange());
         this.mainView.registerMainController(mainController);
-        this.mainView.registerCompanyController(this.mainController.getCompanyController());
+        this.mainView.registerCompanyController(this.mainController.getCompanyController(), model.getCompaniesChange());
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
@@ -150,7 +150,7 @@ public class NetworkManager extends Thread {
      * @param object object that contains user information for company details menu
      * @throws IOException
      */
-    public void sendCompanyDetails(CompanyInfo object) throws IOException {
+    public void sendCompanyDetails(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
@@ -213,6 +213,12 @@ public class NetworkManager extends Thread {
                         mainController.updateCompanyList();
                         mainView.setVisible(true);
                     }
+                }
+
+                if (received instanceof CompanyDetailList) {
+                    CompanyDetailList companyDetails = (CompanyDetailList) received;
+                    model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
+                    mainController.updateCompanyDetails();
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
