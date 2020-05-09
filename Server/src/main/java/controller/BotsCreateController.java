@@ -1,5 +1,6 @@
 package controller;
 
+import model.managers.BotManager;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -10,9 +11,12 @@ public class BotsCreateController implements ActionListener {
     private static final String CANCEL = "CANCEL";
     private static final String CARD_BOTS = "Manage Bots";
     private MainView view;
+    private BotManager model;
 
     public BotsCreateController (MainView view) {
+        //TODO: Add model and initialized the dropdown field
         this.view = view;
+        //this.view.getBotsCreateView().showCompanies(model.getCompanies());
     }
 
     @Override

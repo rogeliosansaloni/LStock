@@ -14,13 +14,6 @@ public class BotMenuController implements ActionListener {
     private static final String CARD_REMOVE = "Remove Bot";
     private static final String CARD_LIST = "Bots";
     private MainView view;
-    private BotManager model;
-
-    public BotMenuController(MainView view, BotManager model) {
-        this.view = view;
-        //this.view.getBotsCreateView().showCompanies(model.getCompanies());
-        this.model = model;
-    }
 
     public BotMenuController(MainView view) {
         this.view = view;
