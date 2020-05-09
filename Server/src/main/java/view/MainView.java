@@ -16,8 +16,8 @@ public class MainView extends JFrame {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
-    private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 740;
+    private static final int PANEL_WIDTH = 1080;
+    private static final int PANEL_HEIGHT = 740;
     private JLabel labelLogo;
     private JLabel labelStock;
     protected JPanel jpNorth;
@@ -35,8 +35,8 @@ public class MainView extends JFrame {
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
-        this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
-        this.setSize(anchuraPanel, alturaPanel);
+        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+        this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());

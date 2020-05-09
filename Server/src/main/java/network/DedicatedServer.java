@@ -94,7 +94,6 @@ public class DedicatedServer extends Thread {
                             oos.writeObject(userProfileInfo);
                         }
                     }
-
                 }
 
                 if (tunnelObject instanceof ShareTrade) {
@@ -115,6 +114,12 @@ public class DedicatedServer extends Thread {
                     ArrayList<Company> companies = stockModel.getCompanies();
                     CompanyList companyList = companyMapper.convertToCompanyList(companies);
                     oos.writeObject(companyList);
+                }
+
+                if (tunnelObject instanceof CompanyChangeList) {
+                    ArrayList<CompanyChange> companies = stockModel.getCompaniesChange();
+                    CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
+                    oos.writeObject(companyChangeList);
                 }
             }
         } catch (ClassNotFoundException e) {

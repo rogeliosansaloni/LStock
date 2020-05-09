@@ -1,11 +1,14 @@
 package view;
 
+import model.entities.CompanyChange;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import model.entities.Company;
 
 public class MainView extends JFrame {
 
@@ -19,8 +22,8 @@ public class MainView extends JFrame {
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
-    private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 768;
+    private static final int PANEL_WIDTH = 1080;
+    private static final int PANEL_HEIGHT = 768;
     private JLabel labelLogo;
     private JLabel labelStock;
     private JLabel labelUserPhoto;
@@ -44,7 +47,7 @@ public class MainView extends JFrame {
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
-        this.setSize(anchuraPanel, alturaPanel);
+        this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -69,7 +72,7 @@ public class MainView extends JFrame {
      */
     private void addToCardLayout() {
         jpCenter.add(jpCompanyView, CARD_COMPANY);
-        jpCenter.add(jpCompanyDetailsView,CARD_COMPANYDETAILS);
+        jpCenter.add(jpCompanyDetailsView, CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
         //TODO: Add the rest of views
     }
@@ -306,6 +309,10 @@ public class MainView extends JFrame {
         }
     }
 
+    public void updateCompanyList(ArrayList<CompanyChange> companies){
+        jpCompanyView.showCompanies(companies);
+    }
+
     /**
      * Gets amount selected from the Load Balance view
      *
@@ -324,6 +331,10 @@ public class MainView extends JFrame {
         String strDouble = String.format("%.2f", totalBalance);
         menuOptions.setText(nickname);
         labelBalance.setText("Balance: " + strDouble + " $");
+    }
+
+    public void initFirstView (ArrayList<CompanyChange> companies) {
+        updateCompanyList(companies);
     }
 
     /**
