@@ -1,10 +1,7 @@
 package view;
 
-import utils.StockColors;
-
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.ActionListener;
 

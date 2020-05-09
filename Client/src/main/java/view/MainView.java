@@ -1,7 +1,6 @@
 package view;
 
 import model.entities.CompanyChange;
-import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
