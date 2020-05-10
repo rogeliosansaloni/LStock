@@ -204,24 +204,55 @@ public class MainView extends JFrame {
     public void registerBotRemoveController() {}
     public void registerBotListController() {}
 
+    /**
+     * Shows all of the companies name in the Bots Create view combobox
+     * @param companies receives a list of companies
+     */
     public void showCompanies (ArrayList<Company> companies) {
         jpBotsCreateView.showCompanies(companies);
     }
 
-    public String getCompanyName() {
-        return jpBotsCreateView.getCompanyName();
-    }
+    /**
+     * Gets the selected company name
+     *
+     * @return the company name
+     */
+    public String getSelectedCompany() { return jpBotsCreateView.getCompanyName(); }
 
+    /**
+     * Gets the indicated bot name
+     *
+     * @return the bot name
+     */
     public String getBotName() {
         return jpBotsCreateView.getBotName();
     }
 
-    public float getBotPercentage() {
+    /**
+     * Gets the probability of being bought/sold
+     *
+     * @return the probability in percentage
+     */
+    public String getBotPercentage() {
         return jpBotsCreateView.getPercentage();
     }
 
-    public float getBotActivation() {
+    /**
+     * Gets the activation time indicated in the Bots Create view
+     *
+     * @return the activation time
+     */
+    public String getBotActivation() {
         return jpBotsCreateView.getActivation();
+    }
+
+    /**
+     * Shows error message in the Bots Create view
+     *
+     * @param message the error message
+     */
+    public void showErrorMessage (String message) {
+        jpBotsCreateView.showErrorMessage(message);
     }
 
 

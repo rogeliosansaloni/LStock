@@ -76,6 +76,20 @@ public class BotManager {
     }
 
     /**
+     * Gets the company id
+     * @param company the company
+     * @return the id of the company
+     */
+    public int getCompanyId (String company) {
+        for (Company c : companies) {
+            if (c.getName().equals(company)) {
+                return c.getCompanyId();
+            }
+        }
+        return -1;
+    }
+
+    /**
      * Gets all bots associated to a specific company
      * @param companyId id of the company
      * @return a list of all bots for a specific company
