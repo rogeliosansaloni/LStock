@@ -4,12 +4,14 @@ import controller.BotMenuController;
 import controller.BotsCreateController;
 import controller.BotsRemoveController;
 import controller.HomeController;
+import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainView extends JFrame {
 
@@ -213,6 +215,58 @@ public class MainView extends JFrame {
 
     public void registerBotEditController() {}
     public void registerBotListController() {}
+
+    /**
+     * Shows all of the companies name in the Bots Create view combobox
+     * @param companies receives a list of companies
+     */
+    public void showCompanies (ArrayList<Company> companies) {
+        jpBotsCreateView.showCompanies(companies);
+    }
+
+    /**
+     * Gets the selected company name
+     *
+     * @return the company name
+     */
+    public String getSelectedCompany() { return jpBotsCreateView.getCompanyName(); }
+
+    /**
+     * Gets the indicated bot name
+     *
+     * @return the bot name
+     */
+    public String getBotName() {
+        return jpBotsCreateView.getBotName();
+    }
+
+    /**
+     * Gets the probability of being bought/sold
+     *
+     * @return the probability in percentage
+     */
+    public String getBotPercentage() {
+        return jpBotsCreateView.getPercentage();
+    }
+
+    /**
+     * Gets the activation time indicated in the Bots Create view
+     *
+     * @return the activation time
+     */
+    public String getBotActivation() {
+        return jpBotsCreateView.getActivation();
+    }
+
+    /**
+     * Shows error message in the Bots Create view
+     *
+     * @param message the error message
+     */
+    public void showErrorMessage (String message) {
+        jpBotsCreateView.showErrorMessage(message);
+    }
+
 
     /**
      * Shows desired view

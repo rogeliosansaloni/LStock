@@ -71,6 +71,11 @@ public class Company {
         this.name = name;
     }
 
+    public Company(int companyId, String name) {
+        this.companyId = companyId;
+        this.name = name;
+    }
+
     public void listBots() {
     }
 

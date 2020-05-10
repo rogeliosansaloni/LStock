@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.LinkedList;
 
 import controller.MainController;
+import model.entities.Bot;
+import model.managers.BotManager;
 import utils.JSONReader;
 import view.MainView;
 
@@ -18,6 +20,7 @@ public class Server extends Thread {
     private ServerConfiguration serverConfiguration;
     private MainView mainView;
     private MainController mainController;
+    private BotManager botModel;
 
     public Server() throws IOException {
         initServerConfiguration();
@@ -60,8 +63,9 @@ public class Server extends Thread {
      * Initializes main view
      */
     public void initMainView () {
+        botModel = new BotManager();
         this.mainView = new MainView();
-        this.mainController = new MainController(mainView);
+        this.mainController = new MainController(mainView, botModel);
         this.mainView.registerController(mainController);
         this.mainView.registerHomeController(this.mainController.getHomeController());
         this.mainView.registerBotMenuController(this.mainController.getBotMenuController());
