@@ -55,8 +55,11 @@ public class BotsRemoveView extends JPanel {
         this.add(jcbBot);
 
         //Status
-        jlStatus = new JLabel("Status: ");
-        this.add(jlTitle, JLabel.CENTER);
+        jlStatus = new JLabel();
+        jlStatus.setPreferredSize(new Dimension(200, 1));
+        jlStatus.setHorizontalAlignment(JLabel.CENTER);
+        jlStatus.setFont(font);
+        this.add(jlStatus);
 
         //Buttons
         jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
@@ -81,15 +84,13 @@ public class BotsRemoveView extends JPanel {
 
         this.add(jpButtons);
         this.setBorder(BorderFactory.createEmptyBorder(0, 150, 50, 150));
-
-
     }
 
     public void registerController(ActionListener controller) {
         this.jbRemove.addActionListener(controller);
-        this.jbRemove.setActionCommand("removeExistingBot");
+        this.jbRemove.setActionCommand(REMOVE);
         this.jbCancel.addActionListener(controller);
-        this.jbCancel.setActionCommand("cancelBotRemoval");
+        this.jbCancel.setActionCommand(CANCEL);
     }
 
     public int getBotId() {

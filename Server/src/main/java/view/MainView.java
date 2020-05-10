@@ -236,6 +236,7 @@ public class MainView extends JFrame {
             case CARD_BOTS_EDIT:
                 break;
             case CARD_BOTS_REMOVE:
+                cardLayout.show(jpCenter, CARD_BOTS_REMOVE);
                 break;
             case CARD_BOTS_LIST:
                 break;
