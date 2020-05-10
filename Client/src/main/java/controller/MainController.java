@@ -1,11 +1,14 @@
 package controller;
 
+import model.entities.CompanyChangeList;
 import model.entities.StockManager;
+import network.NetworkManager;
 import view.LoginView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainController implements ActionListener {
     private static final String CARD_COMPANY = "Companies";
@@ -34,6 +37,11 @@ public class MainController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "company":
+                try {
+                    NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 view.updateView(CARD_COMPANY);
                 updateCompanyList();
                 break;
@@ -93,6 +101,7 @@ public class MainController implements ActionListener {
 
     public void updateCompanyList () {
         companyController.updateCompanyList(model.getCompaniesChange());
+        this.view.registerCompanyController(companyController, model.getCompaniesChange());
     }
 
     /**

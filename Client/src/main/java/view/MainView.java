@@ -119,7 +119,7 @@ public class MainView extends JFrame {
         jpCenterHeader.add(labelViewName, BorderLayout.CENTER);
 
         labelCurrentPrice = new JLabel("", SwingConstants.CENTER);
-        Font fontActualPrice = new Font("Segoe UI", Font.PLAIN, 40);
+        Font fontActualPrice = new Font("Segoe UI", Font.PLAIN, 30);
         labelCurrentPrice.setFont(fontActualPrice);
         labelCurrentPrice.setForeground(color.getWHITE());
         labelCurrentPrice.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
@@ -358,10 +358,6 @@ public class MainView extends JFrame {
         String strDouble = String.format("%.2f", totalBalance);
         menuOptions.setText(nickname);
         labelBalance.setText("Balance: " + strDouble + " $");
-    }
-
-    public void initFirstView (ArrayList<CompanyChange> companies) {
-        updateCompanyList(companies);
     }
 
     /**

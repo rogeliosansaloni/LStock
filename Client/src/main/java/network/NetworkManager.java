@@ -92,9 +92,8 @@ public class NetworkManager extends Thread {
         model.setCompaniesChange(companyChange);
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
-        this.mainView.initFirstView(model.getCompaniesChange());
+        this.mainController.updateCompanyList();
         this.mainView.registerMainController(mainController);
-        this.mainView.registerCompanyController(this.mainController.getCompanyController(), model.getCompaniesChange());
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
@@ -208,10 +207,12 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof CompanyChangeList) {
                     CompanyChangeList companies = (CompanyChangeList) received;
+                    ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
                     if (mainView == null) {
-                        initMainView(companyMapper.convertToCompaniesChange(companies));
-                        mainController.updateCompanyList();
-                        mainView.setVisible(true);
+                        initMainView(companiesChange);
+                    } else{
+                        model.setCompaniesChange(companiesChange);
+                        this.mainController.updateCompanyList();
                     }
                 }
 

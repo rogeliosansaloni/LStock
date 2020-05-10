@@ -101,13 +101,19 @@ public class CompanyDao {
      */
 
     public ArrayList<CompanyDetail> getCompanyDetails(int companyId) {
-        ArrayList<CompanyDetail> companies = null;
+        ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
         for(int i=0; i<10; i++){
             ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
             try {
-                companies = new ArrayList<CompanyDetail>();
-                while (retrieved.next()) {
-                    companies.add(toCompanyDetail(retrieved));
+                if(retrieved.next() == false){
+                    ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
+                    retrievedCompanyName.next();
+                    companies.add(new CompanyDetail(5, retrievedCompanyName.getString("companyName"), 0, 0, i));
+                }else{
+                    retrieved.beforeFirst();
+                    while (retrieved.next()) {
+                        companies.add(toCompanyDetail(retrieved));
+                    }
                 }
             } catch (SQLException e) {
                 System.out.println(GETTING_COMPANIES_ERROR);
