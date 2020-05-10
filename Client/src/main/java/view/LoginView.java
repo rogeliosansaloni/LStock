@@ -58,7 +58,7 @@ public class LoginView extends JFrame {
 
         jpNorth.add(labelLogo, BorderLayout.CENTER);
         labelStock = new JLabel("StockLS", SwingConstants.CENTER);
-        Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
+        Font fuenteLogo = new Font("Roboto", Font.PLAIN, 50);
         labelStock.setFont(fuenteLogo);
         jpNorth.add(labelStock, BorderLayout.SOUTH);
         jpNorth.setBorder(BorderFactory.createEmptyBorder(70, 0, 80, 0));
@@ -69,7 +69,7 @@ public class LoginView extends JFrame {
         jpCenter = new JPanel(new GridLayout(4, 1, 0, 15));
         jpCenter.setBackground(Color.WHITE);
 
-        Font fuenteCampo = new Font("Segoe UI", Font.ITALIC, 20);
+        Font fuenteCampo = new Font("Roboto", Font.ITALIC, 20);
         campos = new JTextField[2];
         campos[0] = new JTextField("Nickname or Email");
         campos[0].setBorder(null);
@@ -125,7 +125,7 @@ public class LoginView extends JFrame {
         int anchuraBoton = 200;
         int alturaBoton = 40;
 
-        Font fuenteBotones = new Font("Segoe UI Semibold", Font.PLAIN, 20);
+        Font fuenteBotones = new Font("Roboto", Font.BOLD, 20);
         jbLogin = new JButton("Login");
         jbLogin.setFont(fuenteBotones);
         jbLogin.setForeground(Color.BLACK);

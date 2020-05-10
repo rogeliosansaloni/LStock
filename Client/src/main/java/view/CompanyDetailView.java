@@ -1,30 +1,30 @@
 package view;
 
 import model.entities.CompanyDetail;
-import model.entities.User;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.*;
-import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import utils.StockColors;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 public class CompanyDetailView extends JPanel {
-    //private static final String TITLE = "My Company Shares: ";
+    private JPanel jpRight;
+    private JPanel jpGraph;
+    private JPanel jpButtons;
     private JButton jbBuy;
     private JButton jbSell;
-    private JLabel jlActualPrice;
+    private JTextField jtNumShares;
     private JLabel jlMyShares;
-    private JFreeChart jfcCandleStick;
     protected StockColors color;
 
     public CompanyDetailView() {
@@ -34,39 +34,88 @@ public class CompanyDetailView extends JPanel {
         this.setBackground(color.getBLACK());
 
         //Panel South
-        JPanel jpSouth = new JPanel(new FlowLayout());
-        jpSouth.setBackground(color.getBLACK());
-        Font font = new Font("Segoe UI Semibold", Font.PLAIN, 20);
+        jpRight = new JPanel();
+        jpRight.setLayout(new BorderLayout());
+        jpRight.setBackground(color.getBLACK());
+        jpRight.setAlignmentX(SwingConstants.CENTER);
 
         //Info shares of the client in the company
-        jlMyShares = new JLabel("My Company Shares: 0          ");
+        Font fontMyShares = new Font("Roboto", Font.PLAIN, 22);
+        jlMyShares = new JLabel("My Company Shares: 0");
         jlMyShares.setForeground(color.getWHITE());
-        jlMyShares.setFont(font);
+        jlMyShares.setFont(fontMyShares);
+        jlMyShares.setHorizontalAlignment(SwingConstants.CENTER);
+        jlMyShares.setBorder(BorderFactory.createEmptyBorder(120, 0, 50, 0));
 
+        //Textfield number of shares to sell or buy
+        Font fontTextfield = new Font("Roboto", Font.PLAIN, 20);
+        jtNumShares = new JTextField("Number of shares to sell/buy");
+        jtNumShares.setFont(fontTextfield);
+        jtNumShares.setForeground(Color.GRAY);
+        jtNumShares.setBorder(null);
+        jtNumShares.setPreferredSize(new Dimension(200, 100));
+        jtNumShares.setBackground(color.getTEXTFIELD());
+        jtNumShares.setHorizontalAlignment(SwingConstants.CENTER);
+        jtNumShares.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (jtNumShares.getText().equals("Number of shares to sell/buy")) {
+                    jtNumShares.setText("");
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (jtNumShares.getText().equals("")) {
+                    jtNumShares.setText("Number of shares to sell/buy");
+                }
+            }
+        });
+        //A panel for the buttons
+        jpButtons = new JPanel();
+        jpButtons.setLayout(new GridLayout(1, 2, 20, 0));
+        jpButtons.setBorder(BorderFactory.createEmptyBorder(40, 0, 120, 0));
+        jpButtons.setBackground(color.getBLACK());
+        Font fontButtons = new Font("Roboto", Font.BOLD, 25);
         //Sell button
-        jbSell = new JButton("SELL SHARES");
+        jbSell = new JButton("SELL");
         jbSell.setActionCommand("sellShare");
         jbSell.setBackground(color.getWHITE());
         jbSell.setPreferredSize(new Dimension(200,40));
-        jbSell.setFont(font);
+        jbSell.setFont(fontButtons);
+        jpButtons.add(jbSell);
 
         //Buy button
-        jbBuy = new JButton("BUY SHARES");
+        jbBuy = new JButton("BUY");
         jbBuy.setActionCommand("buyShare");
         jbBuy.setBackground(color.getWHITE());
         jbBuy.setPreferredSize(new Dimension(200,40));
-        jbBuy.setFont(font);
+        jbBuy.setFont(fontButtons);
+        jpButtons.add(jbBuy);
 
-        //Adding in the south panel
-        jpSouth.add(jlMyShares);
-        jpSouth.add(jbSell);
-        jpSouth.add(jbBuy);
+        //Adding in the right panel
+        jpRight.add(jlMyShares, BorderLayout.NORTH);
+        jpRight.add(jtNumShares, BorderLayout.CENTER);
+        jpRight.add(jpButtons, BorderLayout.SOUTH);
 
-        //Panel Center
-        JPanel jpCenter = new JPanel(new FlowLayout());
-        jpCenter.setBackground(color.getBLACK());
+        //Panel Graph
+        jpGraph = new JPanel(new BorderLayout());
+        jpGraph.setBorder(new EmptyBorder(20, 0, 0, 30));
+        //jpGraph.setBackground(color.getBLACK());
 
-        // Chart Example (Not valid)
+        //Adding in the main panel
+        this.add(jpGraph, BorderLayout.CENTER);
+        this.add(jpRight, BorderLayout.EAST);
+        this.setBorder(new EmptyBorder(20, 30, 20, 30));
+    }
+
+    public void updateNumberShares(CompanyDetail companyDetail) {
+        jlMyShares.setText("Your quantity of shares of " + companyDetail.getCompanyName() + ": " + companyDetail.getNumShares());
+    }
+
+    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails){
+        updateNumberShares(companyDetails.get(0));
+        /*
         final XYSeries series = new XYSeries("Data");
         series.add(1.0, 10);
         series.add(5.0, 20);
@@ -76,20 +125,10 @@ public class CompanyDetailView extends JPanel {
         jfcCandleStick = ChartFactory.createXYLineChart("Stock", "Months", "Money", data, PlotOrientation.VERTICAL, true, true,false);
         jfcCandleStick.setBackgroundPaint(color.getBLACK());
         ChartPanel chart = new ChartPanel(jfcCandleStick);
-        chart.setPreferredSize(new Dimension(700,480));
 
-        jpCenter.add(chart);
-        //Adding in the main pannel
-        this.add(jpSouth, BorderLayout.SOUTH);
-        this.add(jpCenter, BorderLayout.CENTER);
-    }
-
-    public void updateNumberShares(User user) {
-        jlMyShares.setText(Integer.toString(user.getShares().size()));
-    }
-
-    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails){
-
+        jpGraph.add(chart);
+        */
+        jpGraph.add(new JLabel("Hola"));
     }
 
     public void updateValue (String value) {

@@ -25,9 +25,9 @@ public class CompanyController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        TunnelObject companyId = new CompanyInfo(Integer.parseInt(e.getActionCommand()));
+        TunnelObject userShares = new UserShares(model.getUser().getUserId(), Integer.parseInt(e.getActionCommand()));
         try {
-            NetworkManager.getInstance().sendCompanyDetails(companyId);
+            NetworkManager.getInstance().sendUserShares(userShares);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

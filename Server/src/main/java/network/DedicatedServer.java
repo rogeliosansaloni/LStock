@@ -122,8 +122,8 @@ public class DedicatedServer extends Thread {
                     oos.writeObject(companyChangeList);
                 }
 
-                if (tunnelObject instanceof CompanyInfo) {
-                    ArrayList<CompanyDetail> companies = stockModel.getCompanyDetails(((CompanyInfo) tunnelObject).getCompanyId());
+                if (tunnelObject instanceof UserShares) {
+                    ArrayList<CompanyDetail> companies = stockModel.getCompanyDetails(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
                     CompanyDetailList companyChangeList = companyMapper.convertToCompanyDetailList(companies);
                     oos.writeObject(companyChangeList);
                 }

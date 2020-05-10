@@ -34,6 +34,10 @@ public class StockManager {
         return companyDetails.get(0).getValueClose();
     }
 
+    public String getCompanyDetailName() {
+        return companyDetails.get(0).getCompanyName();
+    }
+
     public ArrayList<CompanyChange> getCompaniesChange() {
         return companiesChange;
     }

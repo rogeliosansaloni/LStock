@@ -67,14 +67,15 @@ public class CompanyMapperImpl implements CompanyMapper {
     @Override
     public ArrayList<CompanyDetail> converToCompanyDetails(CompanyDetailList companyDetailList) {
         ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
-        int companiesLen = companyDetailList.getCompanyName().length;
-        int[] companiesId = companyDetailList.getCompanyId();
-        String[] names = companyDetailList.getCompanyName();
+        int companiesLen = companyDetailList.getValueClose().length;
+        int numShares = companyDetailList.getNumShares();
+        int companyId = companyDetailList.getCompanyId();
+        String companyName = companyDetailList.getCompanyName();
         float[] valueOpen = companyDetailList.getValueOpen();
         float[] valueClose = companyDetailList.getValueClose();
         int[] minutesBefore = companyDetailList.getMinutesBefore();
         for (int i = 0; i < companiesLen; i++) {
-            companies.add(new CompanyDetail(companiesId[i], names[i], valueOpen[i], valueClose[i], minutesBefore[i]));
+            companies.add(new CompanyDetail(numShares, companyId, companyName, valueOpen[i], valueClose[i], minutesBefore[i]));
         }
         return companies;
     }
@@ -83,9 +84,10 @@ public class CompanyMapperImpl implements CompanyMapper {
     public CompanyDetailList convertToCompanyDetailList(ArrayList<CompanyDetail> companyDetails) {
         CompanyDetailList companyDetailList = new CompanyDetailList(companyDetails.size());
         int i = 0;
+        companyDetailList.setNumShares(companyDetails.get(0).getNumShares());
+        companyDetailList.setCompanyId(companyDetails.get(0).getCompanyId());
+        companyDetailList.setCompanyName(companyDetails.get(0).getCompanyName());
         for (CompanyDetail c : companyDetails) {
-            companyDetailList.setCompanyId(i, c.getCompanyId());
-            companyDetailList.setCompanyName(i, c.getCompanyName());
             companyDetailList.setValueOpen(i, c.getValueOpen());
             companyDetailList.setValueClose(i, c.getValueClose());
             companyDetailList.setMinutesBefore(i, c.getMinutesBefore());

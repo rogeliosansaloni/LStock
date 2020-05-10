@@ -3,6 +3,7 @@ package model.entities;
 
 public class CompanyDetail {
 
+    private int numShares;
     private int companyId;
     private String companyName;
     private float valueOpen;
@@ -21,12 +22,21 @@ public class CompanyDetail {
      * @param valueClose    value of the share at the end of that minute
      * @param minutesBefore      minutes before tha last change in the value of the share
      */
-    public CompanyDetail(int companyId, String companyName, float valueOpen, float valueClose, int minutesBefore) {
+    public CompanyDetail(int numShares, int companyId, String companyName, float valueOpen, float valueClose, int minutesBefore) {
+        this.numShares = numShares;
         this.companyId = companyId;
         this.companyName = companyName;
         this.valueOpen = valueOpen;
         this.valueClose = valueClose;
         this.minutesBefore = minutesBefore;
+    }
+
+    public int getNumShares() {
+        return numShares;
+    }
+
+    public void setNumShares(int numShares) {
+        this.numShares = numShares;
     }
 
     public int getCompanyId() {

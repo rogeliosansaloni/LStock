@@ -100,19 +100,30 @@ public class CompanyDao {
      * @return ArrayList<CompanyChange> an list of the information mentioned before
      */
 
-    public ArrayList<CompanyDetail> getCompanyDetails(int companyId) {
+    public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
         ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
+        int numShares = 0;
+
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumShares(" + userId + ", " + companyId + ");");
+        try {
+            if(retrievedShares.next() != false){
+                numShares = retrievedShares.getInt("numShares");
+            }
+        } catch (SQLException e) {
+            System.out.println(GETTING_COMPANIES_ERROR);
+        }
+
         for(int i=0; i<10; i++){
             ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
             try {
                 if(retrieved.next() == false){
                     ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
                     retrievedCompanyName.next();
-                    companies.add(new CompanyDetail(5, retrievedCompanyName.getString("companyName"), 0, 0, i));
+                    companies.add(new CompanyDetail(numShares, 5, retrievedCompanyName.getString("companyName"), 0, 0, i));
                 }else{
                     retrieved.beforeFirst();
                     while (retrieved.next()) {
-                        companies.add(toCompanyDetail(retrieved));
+                        companies.add(toCompanyDetail(numShares, retrieved));
                     }
                 }
             } catch (SQLException e) {
@@ -169,8 +180,9 @@ public class CompanyDao {
         return companyChange;
     }
 
-    private CompanyDetail toCompanyDetail(ResultSet resultSet) throws SQLException {
+    private CompanyDetail toCompanyDetail(int  numShares, ResultSet resultSet) throws SQLException {
         CompanyDetail companyDetail = new CompanyDetail();
+        companyDetail.setNumShares(numShares);
         companyDetail.setCompanyId(resultSet.getInt("companyId"));
         companyDetail.setCompanyName(resultSet.getString("name"));
         companyDetail.setValueOpen(resultSet.getFloat("valueOpen"));

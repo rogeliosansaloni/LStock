@@ -149,7 +149,7 @@ public class NetworkManager extends Thread {
      * @param object object that contains user information for company details menu
      * @throws IOException
      */
-    public void sendCompanyDetails(TunnelObject object) throws IOException {
+    public void sendUserShares(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 

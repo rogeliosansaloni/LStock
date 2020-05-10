@@ -101,7 +101,7 @@ public class MainView extends JFrame {
         jpLogo.add(labelLogo, BorderLayout.CENTER);
         jpLogo.setBackground(color.getDarkGreyHeader());
 
-        Font fontLogo = new Font("Segoe UI", Font.PLAIN, 30);
+        Font fontLogo = new Font("Roboto", Font.PLAIN, 30);
         labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         labelStock.setFont(fontLogo);
         labelStock.setForeground(color.getDarkGreyText());
@@ -112,14 +112,14 @@ public class MainView extends JFrame {
         jpCenterHeader.setBackground(color.getDarkGreyHeader());
 
         labelViewName = new JLabel("COMPANIES", SwingConstants.CENTER);
-        Font fontNameView = new Font("Segoe UI", Font.PLAIN, 50);
+        Font fontNameView = new Font("Roboto", Font.PLAIN, 50);
         labelViewName.setFont(fontNameView);
         labelViewName.setForeground(color.getWHITE());
         labelViewName.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         jpCenterHeader.add(labelViewName, BorderLayout.CENTER);
 
         labelCurrentPrice = new JLabel("", SwingConstants.CENTER);
-        Font fontActualPrice = new Font("Segoe UI", Font.PLAIN, 30);
+        Font fontActualPrice = new Font("Roboto", Font.PLAIN, 30);
         labelCurrentPrice.setFont(fontActualPrice);
         labelCurrentPrice.setForeground(color.getWHITE());
         labelCurrentPrice.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
@@ -138,7 +138,7 @@ public class MainView extends JFrame {
 
         createMenuBar();
 
-        Font fontBalance = new Font("Segoe UI", Font.PLAIN, 25);
+        Font fontBalance = new Font("Roboto", Font.PLAIN, 25);
 
         //Here we put the user's balance
         labelBalance = new JLabel("Balance: " + userBalance + " $");
@@ -167,7 +167,7 @@ public class MainView extends JFrame {
      */
     public void createMenuBar() {
 
-        Font fontName = new Font("Segoe UI", Font.BOLD, 30);
+        Font fontName = new Font("Roboto", Font.BOLD, 30);
         jpMenu = new JPanel(new BorderLayout());
         jpMenu.setBackground(color.getDarkGreyHeader());
 
@@ -209,7 +209,7 @@ public class MainView extends JFrame {
     }
 
     public void addOptionBar (JMenuItem option){
-        Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
+        Font fontOptions = new Font("Roboto", Font.PLAIN, 28);
         Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
         option.setHorizontalAlignment(SwingConstants.CENTER);
         option.setBackground(color.getDarkGreyHeader());
@@ -327,9 +327,10 @@ public class MainView extends JFrame {
      * Sets the value of the labelCurrentPrice depending on the value it receives
      */
 
-    public void setCurrentPrice(float value){
+    public void setTitleCompanyDetail(float value, String companyName){
         String text = "CURRENT PRICE: " + value + " €";
         labelCurrentPrice.setText(text);
+        labelViewName.setText(companyName);
     }
 
     public void updateCompanyList(ArrayList<CompanyChange> companies){

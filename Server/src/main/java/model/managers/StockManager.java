@@ -134,8 +134,8 @@ public class StockManager {
         return companiesChange;
     }
 
-    public ArrayList<CompanyDetail> getCompanyDetails(int companyId) {
-        companyDetails = companyDao.getCompanyDetails(companyId);
+    public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
+        companyDetails = companyDao.getCompanyDetails(userId, companyId);
         return companyDetails;
     }
 }
