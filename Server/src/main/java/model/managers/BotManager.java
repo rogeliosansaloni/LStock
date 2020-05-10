@@ -71,7 +71,7 @@ public class BotManager {
      * @return a list of all registered companies
      */
     public ArrayList<Company> getCompanies() {
-        companies = companyDao.getAllCompanies();
+        companies = companyDao.getAllCompanyNames();
         return companies;
     }
 
@@ -83,4 +83,5 @@ public class BotManager {
     public ArrayList<Bot> getAllBotsByCompany(int companyId) {
         return botDao.getAllBotsByCompany(companyId);
     }
+
 }

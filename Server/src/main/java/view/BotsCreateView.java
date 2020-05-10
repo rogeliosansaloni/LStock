@@ -155,6 +155,7 @@ public class BotsCreateView extends JPanel {
     }
 
     public void registerController(ActionListener controller) {
+        this.jcbCompanyOptions.addActionListener(controller);
         this.jbCreate.addActionListener(controller);
         this.jbCreate.setActionCommand(CREATE);
         this.jbCancel.addActionListener(controller);

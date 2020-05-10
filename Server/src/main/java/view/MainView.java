@@ -3,12 +3,14 @@ package view;
 import controller.BotMenuController;
 import controller.BotsCreateController;
 import controller.HomeController;
+import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainView extends JFrame {
 
@@ -201,6 +203,27 @@ public class MainView extends JFrame {
     public void registerBotEditController() {}
     public void registerBotRemoveController() {}
     public void registerBotListController() {}
+
+    public void showCompanies (ArrayList<Company> companies) {
+        jpBotsCreateView.showCompanies(companies);
+    }
+
+    public String getCompanyName() {
+        return jpBotsCreateView.getCompanyName();
+    }
+
+    public String getBotName() {
+        return jpBotsCreateView.getBotName();
+    }
+
+    public float getBotPercentage() {
+        return jpBotsCreateView.getPercentage();
+    }
+
+    public float getBotActivation() {
+        return jpBotsCreateView.getActivation();
+    }
+
 
     /**
      * Shows desired view
