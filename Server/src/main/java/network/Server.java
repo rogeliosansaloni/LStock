@@ -66,6 +66,7 @@ public class Server extends Thread {
         this.mainView.registerHomeController(this.mainController.getHomeController());
         this.mainView.registerBotMenuController(this.mainController.getBotMenuController());
         this.mainView.registerBotCreateController(this.mainController.getBotsCreateController());
+        this.mainView.registerBotRemoveController(this.mainController.getBotsRemoveController());
         this.mainView.setVisible(true);
     }
 
