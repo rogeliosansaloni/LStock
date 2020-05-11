@@ -1,11 +1,5 @@
 package network;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
-
 import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
@@ -16,6 +10,12 @@ import utils.UserMapperImpl;
 import view.LoginView;
 import view.MainView;
 import view.RegisterView;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
 
 public class NetworkManager extends Thread {
     private Socket serverSocket;
@@ -159,6 +159,9 @@ public class NetworkManager extends Thread {
     public void sendUserProfileInfo (TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
+    public void sendCompanyShares(TunnelObject object) throws IOException {
+        oos.writeObject(object);
+    }
 
     /**
      * Runs the main client thread and receives objects coming from the server
@@ -211,9 +214,15 @@ public class NetworkManager extends Thread {
                         mainView.setVisible(true);
                     }
                 }
+
+                if (received instanceof CompanyShares){
+
+                }
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+
 }
