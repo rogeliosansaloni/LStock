@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 public class MainView extends JFrame {
@@ -155,7 +157,6 @@ public class MainView extends JFrame {
         //Here we edit the jpCenter depending on the view the create
         jpCenter = new JPanel();
         jpCenter.setLayout(new CardLayout());
-
         jpCenter.setBackground(color.getBLACK());
         jpMain.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpMain);
@@ -166,7 +167,6 @@ public class MainView extends JFrame {
      * Creates Menu Bar
      */
     public void createMenuBar() {
-
         Font fontName = new Font("Roboto", Font.BOLD, 30);
         jpMenu = new JPanel(new BorderLayout());
         jpMenu.setBackground(color.getDarkGreyHeader());
@@ -331,6 +331,15 @@ public class MainView extends JFrame {
         String text = "CURRENT PRICE: " + value + " €";
         labelCurrentPrice.setText(text);
         labelViewName.setText(companyName);
+    }
+
+    public String getNumSharesTextfield(){
+        String text = jpCompanyDetailsView.getNumShares();
+        return text;
+    }
+
+    public void showErrorCompanyDetail(int error){
+        jpCompanyDetailsView.showErrorTextfield(error);
     }
 
     public void updateCompanyList(ArrayList<CompanyChange> companies){

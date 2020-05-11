@@ -119,7 +119,7 @@ public class CompanyDao {
                 if(retrieved.next() == false){
                     ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
                     retrievedCompanyName.next();
-                    companies.add(new CompanyDetail(numShares, 5, retrievedCompanyName.getString("companyName"), 0, 0, i));
+                    companies.add(new CompanyDetail(numShares, 5, retrievedCompanyName.getString("companyName"), -1, -0, -1, 0, i));
                 }else{
                     retrieved.beforeFirst();
                     while (retrieved.next()) {
@@ -185,8 +185,11 @@ public class CompanyDao {
         companyDetail.setNumShares(numShares);
         companyDetail.setCompanyId(resultSet.getInt("companyId"));
         companyDetail.setCompanyName(resultSet.getString("name"));
+        companyDetail.setShareIdOpen(resultSet.getInt("shareIdOpen"));
         companyDetail.setValueOpen(resultSet.getFloat("valueOpen"));
+        companyDetail.setShareIdClose(resultSet.getInt("shareIdClose"));
         companyDetail.setValueClose(resultSet.getFloat("valueClose"));
+        companyDetail.setValueOpen(resultSet.getFloat("valueOpen"));
         companyDetail.setMinutesBefore(resultSet.getInt("minutesBefore"));
         return companyDetail;
     }

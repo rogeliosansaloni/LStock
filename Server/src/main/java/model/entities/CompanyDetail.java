@@ -6,7 +6,9 @@ public class CompanyDetail {
     private int numShares;
     private int companyId;
     private String companyName;
+    private int shareIdOpen;
     private float valueOpen;
+    private int shareIdClose;
     private float valueClose;
     private int minutesBefore;
 
@@ -18,11 +20,15 @@ public class CompanyDetail {
      *
      * @param companyId      company id
      * @param companyName      company name
+     * @param shareIdOpen      shareId of the open value
      * @param valueOpen     value of the share at the beginning of that minute
+     * @param shareIdClose      shareId of the close value
      * @param valueClose    value of the share at the end of that minute
      * @param minutesBefore      minutes before tha last change in the value of the share
      */
-    public CompanyDetail(int numShares, int companyId, String companyName, float valueOpen, float valueClose, int minutesBefore) {
+    public CompanyDetail(int numShares, int companyId, String companyName, int shareIdOpen, float valueOpen, int shareIdClose, float valueClose, int minutesBefore) {
+        this.shareIdOpen = shareIdOpen;
+        this.shareIdClose = shareIdClose;
         this.numShares = numShares;
         this.companyId = companyId;
         this.companyName = companyName;
@@ -55,12 +61,28 @@ public class CompanyDetail {
         this.companyName = companyName;
     }
 
+    public int getShareIdOpen() {
+        return shareIdOpen;
+    }
+
+    public void setShareIdOpen(int shareIdOpen) {
+        this.shareIdOpen = shareIdOpen;
+    }
+
     public float getValueOpen() {
         return valueOpen;
     }
 
     public void setValueOpen(float valueOpen) {
         this.valueOpen = valueOpen;
+    }
+
+    public int getShareIdClose() {
+        return shareIdClose;
+    }
+
+    public void setShareIdClose(int shareIdClose) {
+        this.shareIdClose = shareIdClose;
     }
 
     public float getValueClose() {
@@ -79,5 +101,7 @@ public class CompanyDetail {
         this.minutesBefore = minutesBefore;
     }
 }
+
+
 
 

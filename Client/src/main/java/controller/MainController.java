@@ -110,7 +110,7 @@ public class MainController implements ActionListener {
     public void updateCompanyDetails () {
         view.updateView(CARD_COMPANYDETAILS);
         companyDetailController.updateCompanyDetailView(model.getCompanyDetails());
-        view.setTitleCompanyDetail(model.getCurrentPrice(), model.getCompanyDetailName());
+        view.setTitleCompanyDetail(model.getCurrentShareValue(), model.getCompanyDetailName());
     }
 
     /**

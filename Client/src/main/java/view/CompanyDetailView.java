@@ -18,6 +18,8 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 public class CompanyDetailView extends JPanel {
+    private static final String ERROR_MESSAGE_1 = "The value introduced must be a positive number.";
+    private static final String ERROR_MESSAGE_2 = "You don't hace enough balance to buy ";
     private JPanel jpRight;
     private JPanel jpGraph;
     private JPanel jpButtons;
@@ -132,6 +134,23 @@ public class CompanyDetailView extends JPanel {
     }
 
     public void updateValue (String value) {
+
+    }
+
+    public String getNumShares (){
+        String numShares = jtNumShares.getText();
+        return numShares;
+    }
+
+    public void showErrorTextfield(int error){
+        switch (error) {
+            case 1:
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_1);
+                break;
+            case 2:
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_2);
+                break;
+        }
 
     }
 

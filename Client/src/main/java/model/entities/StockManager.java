@@ -30,12 +30,20 @@ public class StockManager {
         return companyDetails;
     }
 
-    public float getCurrentPrice() {
+    public float getCurrentShareValue() {
         return companyDetails.get(0).getValueClose();
+    }
+
+    public int getCurrentShareId() {
+        return companyDetails.get(0).getShareIdClose();
     }
 
     public String getCompanyDetailName() {
         return companyDetails.get(0).getCompanyName();
+    }
+
+    public int getCompanyDetailId() {
+        return companyDetails.get(0).getCompanyId();
     }
 
     public ArrayList<CompanyChange> getCompaniesChange() {
@@ -52,5 +60,11 @@ public class StockManager {
 
     public void setCompaniesChange(ArrayList<CompanyChange> companiesChange) {
         this.companiesChange = companiesChange;
+    }
+
+    public float checkUserBalance (int quantityShares){
+        float totalPurchase = quantityShares * getCurrentShareValue();
+        float userBalance = user.getTotalBalance() - totalPurchase;
+        return userBalance;
     }
 }

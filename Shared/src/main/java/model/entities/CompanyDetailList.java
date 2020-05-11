@@ -5,13 +5,17 @@ public class CompanyDetailList extends TunnelObject {
     private int numShares;
     private int companyId;
     private String companyName;
+    private int[] shareIdOpen;
     private float[] valueOpen;
+    private int[] shareIdClose;
     private float[] valueClose;
     private int[] minutesBefore;
 
     public CompanyDetailList(int numCompanies) {
 
+        this.shareIdOpen = new int[numCompanies];
         this.valueOpen = new float[numCompanies];
+        this.shareIdClose = new int[numCompanies];
         this.valueClose = new float[numCompanies];
         this.minutesBefore = new int[numCompanies];
     }
@@ -31,8 +35,16 @@ public class CompanyDetailList extends TunnelObject {
         return companyName;
     }
 
+    public int[] getShareIdOpen() {
+        return shareIdOpen;
+    }
+
     public float[] getValueOpen() {
         return valueOpen;
+    }
+
+    public int[] getShareIdClose() {
+        return shareIdClose;
     }
 
     public float[] getValueClose() {
@@ -55,8 +67,16 @@ public class CompanyDetailList extends TunnelObject {
         this.companyName = companyName;
     }
 
+    public void setShareIdOpen(int i, int shareIdOpen) {
+        this.shareIdOpen[i] = shareIdOpen;
+    }
+
     public void setValueOpen(int i, float valueOpen) {
         this.valueOpen[i] = valueOpen;
+    }
+
+    public void setShareIdClose(int i, int shareIdClose) {
+        this.shareIdClose[i] = shareIdClose;
     }
 
     public void setValueClose(int i, float valueClose) {

@@ -2,7 +2,6 @@ package controller;
 
 import model.entities.*;
 import network.NetworkManager;
-import view.CompanyDetailView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -33,26 +32,25 @@ public class CompanyDetailController implements ActionListener {
             //If user confirms to buy the share
             if (view.confirmAction(CONFIRM_BUY_ACTION) == CONFIRMED) {
                 //Check if the user has enough money
-                float shareValue = 200;
-                int companyId = 3; //stockers
-                int shareId = 1;
-                if (model.getUser().getTotalBalance() >= shareValue) {
-                    ShareTrade shareTrade = new ShareTrade(model.getUser().getUserId(), model.getUser().getTotalBalance(), companyId, shareId, shareValue, BUY_ACTION);
-                    try {
-                        NetworkManager.getInstance().sendShareTrade(shareTrade);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+                String textfieldText = view.getNumSharesTextfield();
+                int numShares = checkInteger(textfieldText);
+                if(numShares > 0){
+                    sendShareTrade(numShares);
                 } else {
-                    view.showNoEnoughBalanceErrorMessage(BALANCE_ERROR);
+                    view.showErrorCompanyDetail(2);
                 }
             }
         }
         if (e.getActionCommand().equals("sellShare")) {
-            // TODO: Handle selling of shares
-            String message = "Do you really want to sell your shares?";
-            if (view.confirmAction(message) == CONFIRMED) {
-                //companyDetailView.updateNumberShares();
+            if (view.confirmAction(CONFIRM_SELL_ACTION) == CONFIRMED) {
+                //Check if the user has enough money
+                String textfieldText = view.getNumSharesTextfield();
+                int numShares = checkInteger(textfieldText);
+                if(numShares > 0){
+                    sendShareTrade(numShares);
+                } else {
+                    view.showErrorCompanyDetail(2);
+                }
             }
         }
     }
@@ -69,5 +67,34 @@ public class CompanyDetailController implements ActionListener {
 
     public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails) {
         view.updateCompanyDetailView(companyDetails);
+    }
+
+    public int checkInteger(String text){
+        try{
+            int numShares = Integer.parseInt(text);
+            if(numShares < 0){
+                view.showErrorCompanyDetail(1);
+                return -1;
+            }
+            return numShares;
+        }
+        catch(NumberFormatException e){
+            view.showErrorCompanyDetail(1);
+            return -1;
+        }
+    }
+
+    public void sendShareTrade(int numShares){
+        float userBalance = model.checkUserBalance(numShares);
+        int userId = model.getUser().getUserId();
+        int companyId = model.getCompanyDetailId();
+        int shareId = model.getCurrentShareId();
+        float currentShareValue = model.getCurrentShareValue();
+        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, BUY_ACTION);
+        try {
+            NetworkManager.getInstance().sendShareTrade(shareTrade);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
     }
 }
