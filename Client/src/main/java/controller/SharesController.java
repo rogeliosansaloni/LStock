@@ -13,22 +13,22 @@ public class SharesController implements ActionListener {
     private MainView view;
     private StockManager model;
 
-    public SharesController(MainView view, Company company){
+    public SharesController(MainView view, Company company) {
         this.view = view;
         this.model = model;
+    }
 
-
-    @Override
-    public void actionPerformed (ActionEvent e) {
+     @Override
+        public void actionPerformed (ActionEvent e){
             TunnelObject companyShares = new CompanyShares(model.getUser().getUserId(), Integer.parseInt(e.getActionCommand()));
             try {
                 NetworkManager.getInstance().sendCompanyShares(companyShares);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
-    }
+        }
 
-    public void updateCompanyList (ArrayList<ShareChange> shares){
-        this.view.updateCompanyList(shares);
-    }
+        public void updateCompanyList (ArrayList < ShareChange > shares) {
+            this.view.updateCompanyList(shares);
+        }
 }

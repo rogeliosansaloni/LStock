@@ -1,6 +1,7 @@
 package view;
 
 import model.entities.CompanyChange;
+import model.entities.ShareChange;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -369,6 +370,6 @@ public class MainView extends JFrame {
         jpCompanyDetailsView.updateValue(strValue);
     }
 
-    public void updateCompanyList(ArrayList<CompanyChange> companies) {
+    public void updateCompanyList(ArrayList<ShareChange> companies) {
     }
 }

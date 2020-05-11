@@ -49,4 +49,5 @@ public class ShareChange {
     public void setProfitLoss(float profitLoss) {
         this.profitLoss = profitLoss;
     }
+
 }
