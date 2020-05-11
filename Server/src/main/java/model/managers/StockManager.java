@@ -110,15 +110,15 @@ public class StockManager {
      * @param company the company
      * @return ShareTrade with the new values of users total balance and company value
      */
-    public ShareTrade createUserCompanyShare (User user, Company company) {
-        //Creates the purchased share
-        shareDao.insertPurchasedShare(user, company);
+    public ShareTrade updatePurchaseBuy (User user, Company company, Purchase purchase) {
+        //Updates the purchased share
+        shareDao.updatePurchasedShare(purchase);
         //Updates de the user balance
         userDao.updateUserBalance(user, company);
         //Recalculates the new value of the company
         company.setValue(company.recalculateValue(BUY_ACTION, company.getValue()));
         //Updates the company new value
-        companyDao.insertCompanyNewShare(company);
+        companyDao.updateCompanyNewValue(company);
         ShareTrade info = shareMapper.userCompanyToShareTrade(user, company);
         info.setActionToDo(BUY_ACTION);
         return info;

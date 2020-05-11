@@ -9,6 +9,7 @@ public class ShareTrade extends TunnelObject {
     private int companyId;
     private int shareId;
     private float sharePrice;
+    private int numShares;
     private String actionToDo;
 
     public ShareTrade () { }
@@ -18,12 +19,13 @@ public class ShareTrade extends TunnelObject {
      * @param sharePrice price of the share
      * @param actionToDo action to do with the share: buy or sell
      */
-    public ShareTrade(int userId, float totalBalance, int companyId, int shareId, float sharePrice, String actionToDo) {
+    public ShareTrade(int userId, float totalBalance, int companyId, int shareId, float sharePrice, int numShares, String actionToDo) {
         this.userId = userId;
         this.totalBalance = totalBalance;
         this.companyId = companyId;
         this.shareId = shareId;
         this.sharePrice = sharePrice;
+        this.numShares = numShares;
         this.actionToDo = actionToDo;
     }
 
@@ -74,5 +76,13 @@ public class ShareTrade extends TunnelObject {
 
     public void setTotalBalance(float totalBalance) {
         this.totalBalance = totalBalance;
+    }
+
+    public int getNumShares() {
+        return numShares;
+    }
+
+    public void setNumShares(int numShares) {
+        this.numShares = numShares;
     }
 }

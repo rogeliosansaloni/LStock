@@ -222,7 +222,7 @@ public class CompanyDao {
      *
      * @param company the company
      */
-    public void insertCompanyNewShare (Company company) {
+    public void updateCompanyNewValue (Company company) {
         dbConnector.insertQuery("INSERT INTO Share (company_id, price) VALUES (" + company.getCompanyId() + ", " + company.getValue() + ");");
         ResultSet result = dbConnector.selectQuery("SELECT * FROM Share WHERE company_id = " + company.getCompanyId() + " AND price = " + company.getValue() + ";");
         try {

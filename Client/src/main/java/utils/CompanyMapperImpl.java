@@ -71,11 +71,13 @@ public class CompanyMapperImpl implements CompanyMapper {
         int numShares = companyDetailList.getNumShares();
         int companyId = companyDetailList.getCompanyId();
         String companyName = companyDetailList.getCompanyName();
+        int[] shareIdOpen = companyDetailList.getShareIdOpen();
         float[] valueOpen = companyDetailList.getValueOpen();
+        int[] shareIdClose = companyDetailList.getShareIdClose();
         float[] valueClose = companyDetailList.getValueClose();
         int[] minutesBefore = companyDetailList.getMinutesBefore();
         for (int i = 0; i < companiesLen; i++) {
-            companies.add(new CompanyDetail(numShares, companyId, companyName, valueOpen[i], valueClose[i], minutesBefore[i]));
+            companies.add(new CompanyDetail(numShares, companyId, companyName, shareIdOpen[i], valueOpen[i], shareIdClose[i], valueClose[i], minutesBefore[i]));
         }
         return companies;
     }
@@ -88,7 +90,9 @@ public class CompanyMapperImpl implements CompanyMapper {
         companyDetailList.setCompanyId(companyDetails.get(0).getCompanyId());
         companyDetailList.setCompanyName(companyDetails.get(0).getCompanyName());
         for (CompanyDetail c : companyDetails) {
+            companyDetailList.setShareIdOpen(i, c.getShareIdOpen());
             companyDetailList.setValueOpen(i, c.getValueOpen());
+            companyDetailList.setShareIdClose(i, c.getShareIdClose());
             companyDetailList.setValueClose(i, c.getValueClose());
             companyDetailList.setMinutesBefore(i, c.getMinutesBefore());
             i++;

@@ -148,7 +148,7 @@ public class CompanyDetailView extends JPanel {
                 JOptionPane.showMessageDialog(null, ERROR_MESSAGE_1);
                 break;
             case 2:
-                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_2);
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_2 + getNumShares() + " shares.");
                 break;
         }
 

@@ -3,9 +3,31 @@ package utils;
 import model.entities.Company;
 import model.entities.ShareTrade;
 import model.entities.User;
+import model.entities.Purchase;
 import utils.mappers.ShareMapper;
 
 public class ShareMapperImpl implements ShareMapper {
+
+    @Override
+    public Purchase shareTradeToPurchase(ShareTrade shareTrade) {
+        Purchase purchase = new Purchase();
+        purchase.setUserId(shareTrade.getUserId());
+        purchase.setCompanyId(shareTrade.getCompanyId());
+        purchase.setShareId(shareTrade.getShareId());
+        purchase.setShareQuantity(shareTrade.getNumShares());
+        return purchase;
+    }
+
+    @Override
+    public ShareTrade purchaseToShareTrade(Purchase purchase) {
+        ShareTrade shareTrade = new ShareTrade();
+        shareTrade.setUserId(purchase.getUserId());
+        shareTrade.setCompanyId(purchase.getCompanyId());
+        shareTrade.setShareId(purchase.getShareId());
+        shareTrade.setNumShares(purchase.getShareQuantity());
+        return shareTrade;
+    }
+
     @Override
     public User shareTradeToUser(ShareTrade shareTrade) {
         User user = new User();
@@ -19,7 +41,7 @@ public class ShareMapperImpl implements ShareMapper {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setUserId(user.getUserId());
         shareTrade.setTotalBalance(user.getTotalBalance());
-        return  shareTrade;
+        return shareTrade;
     }
 
     @Override

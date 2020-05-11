@@ -67,4 +67,8 @@ public class StockManager {
         float userBalance = user.getTotalBalance() - totalPurchase;
         return userBalance;
     }
+
+    public void updateUserBalance (float newBalance){
+        this.user.setTotalBalance(newBalance);
+    }
 }

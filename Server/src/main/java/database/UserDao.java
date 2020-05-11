@@ -115,16 +115,9 @@ public class UserDao {
      * @param user User information
      */
     public void updateUserBalance(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
-
         try {
-            while (result.next()) {
-                if (result.getInt("user_id") == user.getUserId()) {
-                    float totalAmount = result.getFloat("total_balance") + user.getTotalBalance();
-                    dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
-                    user.setTotalBalance(totalAmount);
-                }
-            }
+            ResultSet result = dbConnector.selectQuery("CALL updateUserBalance( " + user.getUserId() + ", " + user.getTotalBalance() + ");");
+            result.next();
         } catch (SQLException e) {
             System.out.println(BALANCE_MESSAGE_1);
         }

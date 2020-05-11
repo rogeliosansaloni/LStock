@@ -121,6 +121,7 @@ public class MainController implements ActionListener {
      */
     public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
         //TODO: Update company in the model
-        companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
+        model.updateUserBalance(totalBalance);
+        view.updateCompanyUserValueAndBalance(totalBalance, value);
     }
 }

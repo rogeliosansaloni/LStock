@@ -31,38 +31,33 @@ public class CompanyDetailController implements ActionListener {
         if (e.getActionCommand().equals("buyShare")) {
             //If user confirms to buy the share
             if (view.confirmAction(CONFIRM_BUY_ACTION) == CONFIRMED) {
-                //Check if the user has enough money
                 String textfieldText = view.getNumSharesTextfield();
+                //Check if the text introduced is an integer
                 int numShares = checkInteger(textfieldText);
                 if(numShares > 0){
-                    sendShareTrade(numShares);
+                    //Check if the user has enough money
+                    float userBalance = model.checkUserBalance(numShares);
+                    if(userBalance > 0){
+                        sendShareTrade(numShares, userBalance);
+                    }
                 } else {
                     view.showErrorCompanyDetail(2);
                 }
             }
         }
         if (e.getActionCommand().equals("sellShare")) {
+            //If user confirms to sell the share
             if (view.confirmAction(CONFIRM_SELL_ACTION) == CONFIRMED) {
-                //Check if the user has enough money
                 String textfieldText = view.getNumSharesTextfield();
+                //Check if the text introduced is an integer
                 int numShares = checkInteger(textfieldText);
                 if(numShares > 0){
-                    sendShareTrade(numShares);
+                    //sendShareTrade(numShares);
                 } else {
                     view.showErrorCompanyDetail(2);
                 }
             }
         }
-    }
-
-    /**
-     * Updates company and users value in the view
-     *
-     * @param totalBalance the new balance of the user
-     * @param value the new value of the company
-     */
-    public void updateCompanyUserValueAndBalance(float totalBalance, float value) {
-        view.updateCompanyUserValueAndBalance(totalBalance, value);
     }
 
     public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails) {
@@ -84,13 +79,12 @@ public class CompanyDetailController implements ActionListener {
         }
     }
 
-    public void sendShareTrade(int numShares){
-        float userBalance = model.checkUserBalance(numShares);
+    public void sendShareTrade(int numShares, float userBalance){
         int userId = model.getUser().getUserId();
         int companyId = model.getCompanyDetailId();
         int shareId = model.getCurrentShareId();
         float currentShareValue = model.getCurrentShareValue();
-        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, BUY_ACTION);
+        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, numShares,  BUY_ACTION);
         try {
             NetworkManager.getInstance().sendShareTrade(shareTrade);
         } catch (IOException e1) {

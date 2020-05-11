@@ -3,6 +3,8 @@ package database;
 import model.entities.Company;
 import model.entities.Share;
 import model.entities.User;
+import model.entities.Purchase;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,14 +16,26 @@ import java.util.ArrayList;
 public class ShareDao {
 
     private DBConnector dbConnector;
+    private static final String UPDATE_PURCHASE_ERROR = "Error updating the purchase.";
 
     public ShareDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
-    public void insertPurchasedShare (User user, Company company) {
-        dbConnector.insertQuery("INSERT INTO Purchase (user_id, share_id, company_id, share_quantity) " + "VALUES (" + user.getUserId() + ", "
-                                + company.getShareId() + ", " + company.getCompanyId() + ", " + company.getValue() + ");");
+    public void updatePurchasedShare (Purchase purchase) {
+        //First we need to know if that purchase already exists in the Purchase value of the database
+        ResultSet retrievedCheck = dbConnector.selectQuery("CALL checkIfPurchaseExists(" + purchase.getUserId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareId() + ");");
+        try {
+            if(retrievedCheck.next() != false){
+                dbConnector.selectQuery("CALL insertPurchase(" + purchase.getUserId() + ", "
+                        + purchase.getShareId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareQuantity() + ");");
+            } else{
+                dbConnector.selectQuery("CALL updatePurchase(" + purchase.getUserId() + ", "
+                        + purchase.getShareId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareQuantity() + ");");
+            }
+        } catch (SQLException e) {
+        }
+
     }
 
     /**
