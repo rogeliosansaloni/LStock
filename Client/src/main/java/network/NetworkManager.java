@@ -215,12 +215,14 @@ public class NetworkManager extends Thread {
                     }
                 }
 
-                if (received instanceof CompanyShares){
-                    CompanyShares shares = (CompanyShares) received;
-                    if (mainView == null ) {
+                if (received instanceof ShareChangeList) {
+                    ShareChangeList shares = (ShareChangeList) received;
+
+                    if (mainView == null) {
+
+                    } else{
 
                     }
-
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

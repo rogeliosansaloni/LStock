@@ -20,7 +20,7 @@ public class SharesController implements ActionListener {
 
      @Override
         public void actionPerformed (ActionEvent e){
-            TunnelObject companyShares = new CompanyShares(model.getUser().getUserId(), Integer.parseInt(e.getActionCommand()));
+            TunnelObject companyShares = new CurrentShares(model.getUser().getUserId(), Integer.parseInt(e.getActionCommand()));
             try {
                 NetworkManager.getInstance().sendCompanyShares(companyShares);
             } catch (IOException ex) {

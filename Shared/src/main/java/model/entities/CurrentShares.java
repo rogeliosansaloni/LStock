@@ -1,10 +1,10 @@
 package model.entities;
 
-public class CompanyShares extends TunnelObject {
+public class CurrentShares extends TunnelObject {
     private int userId;
     private int companyId;
 
-    public CompanyShares(int userId, int companyId){
+    public CurrentShares(int userId, int companyId){
         this.userId = userId;
         this.companyId = companyId;
     }

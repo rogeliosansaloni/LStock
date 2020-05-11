@@ -1,16 +1,16 @@
 package network;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
-
 import model.entities.*;
 import model.managers.StockManager;
 import utils.CompanyMapperImpl;
 import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
 
 public class DedicatedServer extends Thread {
     private static final String BUY_ACTION = "BUY";
@@ -115,6 +115,10 @@ public class DedicatedServer extends Thread {
                     ArrayList<Company> companies = stockModel.getCompanies();
                     CompanyList companyList = companyMapper.convertToCompanyList(companies);
                     oos.writeObject(companyList);
+                }
+
+                if (tunnelObject instanceof CurrentShares) {
+
                 }
             }
         } catch (ClassNotFoundException e) {
