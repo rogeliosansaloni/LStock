@@ -216,6 +216,10 @@ public class NetworkManager extends Thread {
                 }
 
                 if (received instanceof CompanyShares){
+                    CompanyShares shares = (CompanyShares) received;
+                    if (mainView == null ) {
+
+                    }
 
                 }
             }

@@ -13,7 +13,7 @@ public class SharesController implements ActionListener {
     private MainView view;
     private StockManager model;
 
-    public SharesController(MainView view, Company company) {
+    public SharesController(MainView view, StockManager model) {
         this.view = view;
         this.model = model;
     }
