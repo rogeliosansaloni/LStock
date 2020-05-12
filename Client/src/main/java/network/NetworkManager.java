@@ -7,6 +7,7 @@ import model.entities.*;
 import utils.CompanyMapperImpl;
 import utils.JSONReader;
 import utils.UserMapperImpl;
+import utils.mappers.ShareMapper;
 import view.LoginView;
 import view.MainView;
 import view.RegisterView;
@@ -159,7 +160,7 @@ public class NetworkManager extends Thread {
     public void sendUserProfileInfo (TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
-    public void sendCompanyShares(TunnelObject object) throws IOException {
+    public void sendCurrentShares(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
@@ -217,12 +218,8 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof ShareChangeList) {
                     ShareChangeList shares = (ShareChangeList) received;
+                    ArrayList<ShareChange> companiesChange = ShareMapper.convertToCompaniesChange(shares);
 
-                    if (mainView == null) {
-
-                    } else{
-
-                    }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

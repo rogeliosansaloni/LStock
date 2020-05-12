@@ -48,4 +48,9 @@ public class ShareChangeList extends TunnelObject {
     public void setCompanyProfitLoss(float[] companyProfitLoss) {
         this.companyProfitLoss = companyProfitLoss;
     }
+
+    public int[] getCompanyId() {
+
+        return new int[0];
+    }
 }

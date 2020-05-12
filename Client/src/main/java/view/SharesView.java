@@ -100,6 +100,11 @@ public class SharesView extends JPanel {
         jpScroll = new JScrollPane(jpTable);
         this.add(jpScroll, BorderLayout.CENTER);
     }
+    public void showSellActionConfirmation(){
+        final String message = "Do you really want to sell all your shares for %s?";
+       // String.format(message, company.getName());
+    }
+
 
     /**
      * Gets the amount selected

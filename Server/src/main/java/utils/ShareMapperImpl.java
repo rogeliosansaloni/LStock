@@ -1,9 +1,9 @@
 package utils;
 
-import model.entities.Company;
-import model.entities.ShareTrade;
-import model.entities.User;
+import model.entities.*;
 import utils.mappers.ShareMapper;
+
+import java.util.ArrayList;
 
 public class ShareMapperImpl implements ShareMapper {
     @Override
@@ -49,5 +49,20 @@ public class ShareMapperImpl implements ShareMapper {
         shareTrade.setSharePrice(company.getValue());
         shareTrade.setShareId(company.getShareId());
         return shareTrade;
+    }
+
+    @Override
+    public ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList) {
+        ArrayList<ShareChange> companies = new ArrayList<ShareChange>();
+        int sharesLen = shareChangeList.getCompanyName().length;
+        int[] sharesId = shareChangeList.getCompanyId();
+        String[] names = shareChangeList.getCompanyName();
+        float[] actionValue = shareChangeList. getCompanyActionValue();
+        float[] myActions = shareChangeList.getCompanyMyActions();
+        float[] profitLoss = shareChangeList.getCompanyProfitLoss();
+        for (int i = 0; i < sharesLen; i++) {
+            shares.add(new SharesChange(sharesId[i], names[i], actionValue[i], myActions[i], profitLoss[i]));
+        }
+        return shares;
     }
 }

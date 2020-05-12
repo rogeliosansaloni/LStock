@@ -50,4 +50,7 @@ public class ShareChange {
         this.profitLoss = profitLoss;
     }
 
+    public void getCompanyId() {
+
+    }
 }
