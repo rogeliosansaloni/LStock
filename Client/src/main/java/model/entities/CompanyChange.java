@@ -7,9 +7,14 @@ public class CompanyChange {
     private float change;
     private float changePer;
 
-    public CompanyChange() {
-
-    }
+    /**
+     * It will create a companyChange
+     *
+     * @param name      company name
+     * @param currentShare     current company's share price
+     * @param change    difference between current price and the price the company had 5 minutes ago
+     * @param changePer      the change value but in % format
+     */
 
     public CompanyChange(String name, float currentShare, float change, float changePer) {
         this.name = name;

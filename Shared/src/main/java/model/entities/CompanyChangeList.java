@@ -14,7 +14,6 @@ public class CompanyChangeList extends TunnelObject {
     }
 
     public CompanyChangeList() {
-
     }
 
     public String[] getCompanyName() {
@@ -33,7 +32,6 @@ public class CompanyChangeList extends TunnelObject {
         return companyChangePer;
     }
 
-
     public void setCompanyName(int i, String companyName) {
         this.companyName[i] = companyName;
     }
@@ -49,6 +47,4 @@ public class CompanyChangeList extends TunnelObject {
     public void setCompanyChangePer(int i, float companyChangePer) {
         this.companyChangePer[i] = companyChangePer;
     }
-
-
 }
