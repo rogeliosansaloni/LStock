@@ -28,7 +28,7 @@ public class MainController implements ActionListener {
         this.companyController = new CompanyController(view, model);
         this.balanceController = new BalanceController(view, model);
         this.companyDetailController = new CompanyDetailController(view, model);
-        this.sharesController = new SharesController(view);
+        this.sharesController = new SharesController(view, model);
     }
 
     @Override
