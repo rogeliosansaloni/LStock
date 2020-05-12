@@ -18,17 +18,17 @@ public class SharesController implements ActionListener {
         this.model = model;
     }
 
-     @Override
-        public void actionPerformed (ActionEvent e){
-            TunnelObject currentShares = new CurrentShares(model.getUser().getUserId(), Integer.parseInt(e.getActionCommand()));
-            try {
-                NetworkManager.getInstance().sendCurrentShares(currentShares);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        TunnelObject currentShares = new CurrentShares(model.getUser().getUserId(), Integer.parseInt(e.getActionCommand()));
+        try {
+            NetworkManager.getInstance().sendCurrentShares(currentShares);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
+    }
 
-        public void updateCompanyList (ArrayList < ShareChange > shares) {
-            this.view.updateCompanyList(shares);
-        }
+    public void updateCompanyList(ArrayList<ShareChange> shares) {
+        this.view.updateCompanyList(shares);
+    }
 }
