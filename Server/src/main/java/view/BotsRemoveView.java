@@ -1,11 +1,13 @@
 package view;
 
+import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class BotsRemoveView extends JPanel {
     private static final String FONT = "Segoe UI";
@@ -22,6 +24,7 @@ public class BotsRemoveView extends JPanel {
     private JLabel jlStatus;
     private JButton jbRemove;
     private JButton jbCancel;
+    private String selectedItem;
 
     public BotsRemoveView() {
         color = new StockColors();
@@ -85,6 +88,22 @@ public class BotsRemoveView extends JPanel {
         this.add(jpButtons);
         this.setBorder(BorderFactory.createEmptyBorder(0, 150, 50, 150));
     }
+
+    /**
+     * Shows the companies in the combobox;
+     *
+     * @param companies list of the companies
+     */
+    public void showCompanies(ArrayList<Company> companies) {
+        Font font = new Font(FONT, Font.ITALIC, 20);
+        int numCompanies = companies.size();
+        for (int i = 0; i < numCompanies; i++) {
+            Company company = (Company) companies.get(i);
+            jcbCompany.addItem(company.getName());
+        }
+    }
+
+    public String getSelectedItem () { return selectedItem; }
 
     public void registerController(ActionListener controller) {
         this.jbRemove.addActionListener(controller);

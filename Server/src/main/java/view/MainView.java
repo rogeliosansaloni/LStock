@@ -222,6 +222,7 @@ public class MainView extends JFrame {
      */
     public void showCompanies (ArrayList<Company> companies) {
         jpBotsCreateView.showCompanies(companies);
+        jpBotsRemoveView.showCompanies(companies);
     }
 
     /**
@@ -258,6 +259,7 @@ public class MainView extends JFrame {
         return jpBotsCreateView.getActivation();
     }
 
+    public String getSelectedItem() { return  jpBotsRemoveView.getSelectedItem(); }
     /**
      * Shows error message in the Bots Create view
      *
