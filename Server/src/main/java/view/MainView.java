@@ -1,5 +1,6 @@
 package view;
 
+import controller.BotCreateFocusController;
 import controller.BotMenuController;
 import controller.BotsCreateController;
 import controller.HomeController;
@@ -197,6 +198,8 @@ public class MainView extends JFrame {
      */
     public void registerBotCreateController(BotsCreateController controller) {
         jpBotsCreateView.registerController(controller);
+        BotCreateFocusController focusController = new BotCreateFocusController(jpBotsCreateView);
+        jpBotsCreateView.registerFocusController(focusController);
     }
     public void registerBotEditController() {}
     public void registerBotRemoveController() {}

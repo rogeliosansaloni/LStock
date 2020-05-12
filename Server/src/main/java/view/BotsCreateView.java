@@ -41,28 +41,13 @@ public class BotsCreateView extends JPanel {
         jlTitle.setFont(font);
         this.add(jlTitle);
 
-        jtField = new JTextField[4];
+        jtField = new JTextField[3];
 
         jtField[0] = new JTextField(NAME_LABEL);
         jtField[0].setBorder(null);
         jtField[0].setFont(font);
         jtField[0].setForeground(Color.GRAY);
         jtField[0].setBackground(color.getTEXTFIELD());
-        jtField[0].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (jtField[0].getText().equals(NAME_LABEL)) {
-                    jtField[0].setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (jtField[0].getText().equals("")) {
-                    jtField[0].setText(NAME_LABEL);
-                }
-            }
-        });
         this.add(jtField[0]);
 
         //Company
@@ -90,21 +75,6 @@ public class BotsCreateView extends JPanel {
         jtField[1].setFont(font);
         jtField[1].setForeground(Color.GRAY);
         jtField[1].setBackground(color.getTEXTFIELD());
-        jtField[1].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (jtField[1].getText().equals(BUY_PERCENTAGE_LABEL)) {
-                    jtField[1].setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (jtField[1].getText().equals("")) {
-                    jtField[1].setText(BUY_PERCENTAGE_LABEL);
-                }
-            }
-        });
         this.add(jtField[1]);
 
         //Activation Time
@@ -113,21 +83,6 @@ public class BotsCreateView extends JPanel {
         jtField[2].setFont(font);
         jtField[2].setForeground(Color.GRAY);
         jtField[2].setBackground(color.getTEXTFIELD());
-        jtField[2].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (jtField[2].getText().equals(ACTIVATE_TIME_LABEL)) {
-                    jtField[2].setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (jtField[2].getText().equals("")) {
-                    jtField[2].setText(ACTIVATE_TIME_LABEL);
-                }
-            }
-        });
         this.add(jtField[2]);
 
         jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
@@ -161,6 +116,12 @@ public class BotsCreateView extends JPanel {
         this.jbCancel.setActionCommand(CANCEL);
     }
 
+    public void registerFocusController(FocusListener controller) {
+        for(int i = 0; i < jtField.length; i++) {
+            this.jtField[i].addFocusListener(controller);
+        }
+    }
+
     public void showCompanies(ArrayList<Company> companies) {
         Font font = new Font(FONT, Font.ITALIC, 20);
         int numCompanies = companies.size();
@@ -189,5 +150,9 @@ public class BotsCreateView extends JPanel {
 
     public float getActivation() {
         return Float.parseFloat(jtField[2].getText());
+    }
+
+    public JTextField[] getJtField() {
+        return jtField;
     }
 }
