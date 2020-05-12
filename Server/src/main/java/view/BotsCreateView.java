@@ -1,5 +1,6 @@
 package view;
 
+import controller.BotCreateFocusController;
 import model.entities.Company;
 import utils.StockColors;
 
@@ -9,12 +10,14 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * View for bot creation
+ */
 public class BotsCreateView extends JPanel {
     private static final String PATH_ARROW_ICON = "/Images/dropdown.png";
     private static final String FONT = "Segoe UI";
     private static final String FONT_BUTTON = "Segoe UI Semibold";
     private static final String TITLE = "Create Bot";
-    private static final String NAME_LABEL = "Name";
     private static final String BUY_PERCENTAGE_LABEL = "Buy Percentage";
     private static final String ACTIVATE_TIME_LABEL = "Activation Time";
     private static final String CREATE = "CREATE";
@@ -28,6 +31,9 @@ public class BotsCreateView extends JPanel {
     private JButton jbCancel;
     private StockColors color;
 
+    /**
+     * Creates the view for bot creation
+     */
     public BotsCreateView() {
         color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
@@ -41,29 +47,7 @@ public class BotsCreateView extends JPanel {
         jlTitle.setFont(font);
         this.add(jlTitle);
 
-        jtField = new JTextField[4];
-
-        jtField[0] = new JTextField(NAME_LABEL);
-        jtField[0].setBorder(null);
-        jtField[0].setFont(font);
-        jtField[0].setForeground(Color.GRAY);
-        jtField[0].setBackground(color.getTEXTFIELD());
-        jtField[0].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (jtField[0].getText().equals(NAME_LABEL)) {
-                    jtField[0].setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (jtField[0].getText().equals("")) {
-                    jtField[0].setText(NAME_LABEL);
-                }
-            }
-        });
-        this.add(jtField[0]);
+        jtField = new JTextField[2];
 
         //Company combobox
         jcbCompany = new JComboBox<>();
@@ -75,50 +59,20 @@ public class BotsCreateView extends JPanel {
         this.add(jcbCompany);
 
         //Buy Percentage
-        jtField[1] = new JTextField(BUY_PERCENTAGE_LABEL);
+        jtField[0] = new JTextField(BUY_PERCENTAGE_LABEL);
+        jtField[0].setBorder(null);
+        jtField[0].setFont(font);
+        jtField[0].setForeground(Color.GRAY);
+        jtField[0].setBackground(color.getTEXTFIELD());
+        this.add(jtField[0]);
+
+        //Activation Time
+        jtField[1] = new JTextField(ACTIVATE_TIME_LABEL);
         jtField[1].setBorder(null);
         jtField[1].setFont(font);
         jtField[1].setForeground(Color.GRAY);
         jtField[1].setBackground(color.getTEXTFIELD());
-        jtField[1].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (jtField[1].getText().equals(BUY_PERCENTAGE_LABEL)) {
-                    jtField[1].setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (jtField[1].getText().equals("")) {
-                    jtField[1].setText(BUY_PERCENTAGE_LABEL);
-                }
-            }
-        });
         this.add(jtField[1]);
-
-        //Activation Time
-        jtField[2] = new JTextField(ACTIVATE_TIME_LABEL);
-        jtField[2].setBorder(null);
-        jtField[2].setFont(font);
-        jtField[2].setForeground(Color.GRAY);
-        jtField[2].setBackground(color.getTEXTFIELD());
-        jtField[2].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (jtField[2].getText().equals(ACTIVATE_TIME_LABEL)) {
-                    jtField[2].setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (jtField[2].getText().equals("")) {
-                    jtField[2].setText(ACTIVATE_TIME_LABEL);
-                }
-            }
-        });
-        this.add(jtField[2]);
 
         jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
         jpButtons.setBackground(color.getWHITE());
@@ -145,7 +99,7 @@ public class BotsCreateView extends JPanel {
     }
 
     /**
-     * Registrates controller for each field of the form
+     * Registers controller for each field of the form
      *
      * @param controller the action listener
      */
@@ -154,6 +108,14 @@ public class BotsCreateView extends JPanel {
         this.jbCreate.setActionCommand(CREATE);
         this.jbCancel.addActionListener(controller);
         this.jbCancel.setActionCommand(CANCEL);
+    }
+
+    /**
+     * Registers FocusListener for each JTextField of the view
+     */
+    public void registerFocusController() {
+        this.jtField[0].addFocusListener(new BotCreateFocusController(this, 0, BUY_PERCENTAGE_LABEL));
+        this.jtField[1].addFocusListener(new BotCreateFocusController(this, 1, ACTIVATE_TIME_LABEL));
     }
 
     /**
@@ -194,7 +156,7 @@ public class BotsCreateView extends JPanel {
      * @return the probability in percentage
      */
     public String getPercentage() {
-        return jtField[1].getText();
+        return jtField[0].getText();
     }
 
     /**
@@ -203,7 +165,7 @@ public class BotsCreateView extends JPanel {
      * @return the activation time
      */
     public String getActivation() {
-        return jtField[2].getText();
+        return jtField[1].getText();
     }
 
     /**
@@ -213,5 +175,31 @@ public class BotsCreateView extends JPanel {
      */
     public void showErrorMessage (String message) {
         JOptionPane.showMessageDialog(null, message);
+    }
+
+    /**
+     * Gets all JTextFields
+     * @return array of all JTextFields of the view
+     */
+    public JTextField[] getJtField() {
+        return jtField;
+    }
+
+    /**
+     * Gets a specific JTextFrield
+     * @param i id of the JTextField
+     * @return
+     */
+    public JTextField getJTextField(int i) {
+        return jtField[i];
+    }
+
+    /**
+     * Sets the texts of a specific JTextField
+     * @param i
+     * @param text
+     */
+    public void setJTextField(int i, String text){
+        jtField[i].setText(text);
     }
 }
