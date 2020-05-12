@@ -53,7 +53,8 @@ public class ShareChange {
         this.profitLoss = profitLoss;
     }
 
-    public void getCompanyId() {
-
+    public int getCompanyId() {
+        // TODO: Get company id of which we want to sell the shares
+        return 1;
     }
 }
