@@ -46,6 +46,7 @@ public class BotsRemoveView extends JPanel {
         jcbCompany.setFont(font);
         jcbCompany.setForeground(Color.GRAY);
         jcbCompany.setBackground(color.getTEXTFIELD());
+        jcbCompany.setActionCommand("bot-company");
         this.add(jcbCompany);
 
         //Bot combobox
@@ -55,6 +56,7 @@ public class BotsRemoveView extends JPanel {
         jcbBot.setFont(font);
         jcbBot.setForeground(Color.GRAY);
         jcbBot.setBackground(color.getTEXTFIELD());
+        jcbCompany.setActionCommand("bot-id");
         this.add(jcbBot);
 
         //Status
@@ -115,5 +117,19 @@ public class BotsRemoveView extends JPanel {
     public int getBotId() {
         String name = jcbBot.getSelectedItem().toString();
         return Integer.parseInt(name.replaceAll("[^0-9]", ""));
+    }
+
+    /**
+     * Shows the companies in the combobox;
+     *
+     * @param companies list of the companies
+     */
+    public void showCompanies(ArrayList<Company> companies) {
+        Font font = new Font(FONT, Font.ITALIC, 20);
+        int numCompanies = companies.size();
+        for (int i = 0; i < numCompanies; i++) {
+            Company company = (Company) companies.get(i);
+            jcbCompany.addItem(company.getName());
+        }
     }
 }
