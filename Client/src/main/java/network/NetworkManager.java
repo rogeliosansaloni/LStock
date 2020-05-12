@@ -218,7 +218,7 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof ShareChangeList) {
                     ShareChangeList shares = (ShareChangeList) received;
-                    ArrayList<ShareChange> companiesChange = ShareMapper.convertToCompaniesChange(shares);
+                    ArrayList<ShareChange> sharesChange = ShareMapper.convertToSharesChange(shares);
 
                 }
             }
