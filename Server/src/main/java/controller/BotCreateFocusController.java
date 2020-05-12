@@ -11,36 +11,22 @@ public class BotCreateFocusController implements FocusListener {
     private static final String BUY_PERCENTAGE_LABEL = "Buy Percentatge";
     private static final String ACTIVATE_TIME_LABEL = "Activate time";
     private BotsCreateView view;
+    private int id;
+    private String labelName;
 
-    public BotCreateFocusController(BotsCreateView view) {
+    public BotCreateFocusController(BotsCreateView view, int id, String labelName) {
         this.view = view;
+        this.id = id;
+        this.labelName = labelName;
     }
 
     @Override
     public void focusGained(FocusEvent e) {
-        JTextField[] jTextFields = view.getJtField();
-        if (jTextFields[0].getText().equals(NAME_LABEL)) {
-            jTextFields[0].setText("");
-        }
-        if (jTextFields[1].getText().equals(BUY_PERCENTAGE_LABEL)) {
-            jTextFields[1].setText("");
-        }
-        if (jTextFields[2].getText().equals(ACTIVATE_TIME_LABEL)) {
-            jTextFields[2].setText("");
-        }
+        view.setJTextField(id,"");
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        JTextField[] jTextFields = view.getJtField();
-        if (jTextFields[0].getText().equals("")) {
-            jTextFields[0].setText(NAME_LABEL);
-        }
-        if (jTextFields[1].getText().equals("")) {
-            jTextFields[1].setText(BUY_PERCENTAGE_LABEL);
-        }
-        if (jTextFields[2].getText().equals("")) {
-            jTextFields[2].setText(ACTIVATE_TIME_LABEL);
-        }
+        view.setJTextField(id, labelName);
     }
 }

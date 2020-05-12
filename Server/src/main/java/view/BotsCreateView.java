@@ -1,5 +1,6 @@
 package view;
 
+import controller.BotCreateFocusController;
 import model.entities.Company;
 import utils.StockColors;
 
@@ -116,10 +117,10 @@ public class BotsCreateView extends JPanel {
         this.jbCancel.setActionCommand(CANCEL);
     }
 
-    public void registerFocusController(FocusListener controller) {
-        for(int i = 0; i < jtField.length; i++) {
-            this.jtField[i].addFocusListener(controller);
-        }
+    public void registerFocusController() {
+        this.jtField[0].addFocusListener(new BotCreateFocusController(this, 0, NAME_LABEL));
+        this.jtField[1].addFocusListener(new BotCreateFocusController(this, 1, BUY_PERCENTAGE_LABEL));
+        this.jtField[2].addFocusListener(new BotCreateFocusController(this, 2, ACTIVATE_TIME_LABEL));
     }
 
     public void showCompanies(ArrayList<Company> companies) {
@@ -154,5 +155,13 @@ public class BotsCreateView extends JPanel {
 
     public JTextField[] getJtField() {
         return jtField;
+    }
+
+    public JTextField getJTextField(int i) {
+        return jtField[i];
+    }
+
+    public void setJTextField(int i, String text){
+        jtField[i].setText(text);
     }
 }

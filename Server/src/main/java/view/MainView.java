@@ -198,8 +198,7 @@ public class MainView extends JFrame {
      */
     public void registerBotCreateController(BotsCreateController controller) {
         jpBotsCreateView.registerController(controller);
-        BotCreateFocusController focusController = new BotCreateFocusController(jpBotsCreateView);
-        jpBotsCreateView.registerFocusController(focusController);
+        jpBotsCreateView.registerFocusController();
     }
     public void registerBotEditController() {}
     public void registerBotRemoveController() {}
