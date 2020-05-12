@@ -1,5 +1,7 @@
 package view;
 
+import utils.StockColors;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;

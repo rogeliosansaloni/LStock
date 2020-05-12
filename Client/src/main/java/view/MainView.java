@@ -9,7 +9,6 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import model.entities.Company;
 
 public class MainView extends JFrame {
 

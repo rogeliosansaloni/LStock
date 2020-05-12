@@ -1,5 +1,7 @@
 package view;
 
+import utils.StockColors;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
