@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+/**
+ * View for bot creation
+ */
 public class BotsCreateView extends JPanel {
     private static final String PATH_ARROW_ICON = "/Images/dropdown.png";
     private static final String FONT = "Segoe UI";
@@ -29,6 +32,9 @@ public class BotsCreateView extends JPanel {
     private JButton jbCancel;
     private StockColors color;
 
+    /**
+     * Creates the view for bot creation
+     */
     public BotsCreateView() {
         color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
@@ -101,7 +107,7 @@ public class BotsCreateView extends JPanel {
     }
 
     /**
-     * Registrates controller for each field of the form
+     * Registers controller for each field of the form
      *
      * @param controller the action listener
      */
@@ -112,6 +118,9 @@ public class BotsCreateView extends JPanel {
         this.jbCancel.setActionCommand(CANCEL);
     }
 
+    /**
+     * Registers FocusListener for each JTextField of the view
+     */
     public void registerFocusController() {
         this.jtField[0].addFocusListener(new BotCreateFocusController(this, 0, NAME_LABEL));
         this.jtField[1].addFocusListener(new BotCreateFocusController(this, 1, BUY_PERCENTAGE_LABEL));
@@ -177,14 +186,28 @@ public class BotsCreateView extends JPanel {
         JOptionPane.showMessageDialog(null, message);
     }
 
+    /**
+     * Gets all JTextFields
+     * @return array of all JTextFields of the view
+     */
     public JTextField[] getJtField() {
         return jtField;
     }
 
+    /**
+     * Gets a specific JTextFrield
+     * @param i id of the JTextField
+     * @return
+     */
     public JTextField getJTextField(int i) {
         return jtField[i];
     }
 
+    /**
+     * Sets the texts of a specific JTextField
+     * @param i
+     * @param text
+     */
     public void setJTextField(int i, String text){
         jtField[i].setText(text);
     }
