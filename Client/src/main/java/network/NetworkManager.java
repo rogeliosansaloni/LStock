@@ -6,8 +6,8 @@ import controller.RegisterController;
 import model.entities.*;
 import utils.CompanyMapperImpl;
 import utils.JSONReader;
+import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
-import utils.mappers.ShareMapper;
 import view.LoginView;
 import view.MainView;
 import view.RegisterView;
@@ -33,6 +33,7 @@ public class NetworkManager extends Thread {
     private LoginView loginView;
     private UserMapperImpl mapper;
     private CompanyMapperImpl companyMapper;
+    private ShareMapperImpl shareMapper;
     private StockManager model;
 
     /**
@@ -84,6 +85,7 @@ public class NetworkManager extends Thread {
     private void init() {
         this.mapper = new UserMapperImpl();
         this.companyMapper = new CompanyMapperImpl();
+        this.shareMapper = new ShareMapperImpl();
     }
 
     /**
@@ -221,7 +223,7 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof ShareChangeList) {
                     ShareChangeList shares = (ShareChangeList) received;
-                    ArrayList<ShareChange> sharesChange = ShareMapper.convertToSharesChange(shares);
+                    ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
 
                 }
             }
