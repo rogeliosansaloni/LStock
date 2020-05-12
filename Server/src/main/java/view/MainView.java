@@ -1,5 +1,6 @@
 package view;
 
+import controller.BotCreateFocusController;
 import controller.BotMenuController;
 import controller.BotsCreateController;
 import controller.HomeController;
@@ -41,6 +42,7 @@ public class MainView extends JFrame {
     private SharesListView jpSharesView;
     private BotMenuView jpMenuBots;
     private BotsCreateView jpBotsCreateView;
+    private BotsRemoveView jpBotsRemoveView;
 
     public MainView() {
         color = new StockColors();
@@ -61,6 +63,7 @@ public class MainView extends JFrame {
     public void initAllViews() {
         jpMenuBots = new BotMenuView();
         jpBotsCreateView = new BotsCreateView();
+        jpBotsRemoveView = new BotsRemoveView();
         jpHomeView = new HomeView();
         jpSharesView = new SharesListView();
         //TODO: Add the rest of views
@@ -199,6 +202,7 @@ public class MainView extends JFrame {
      */
     public void registerBotCreateController(BotsCreateController controller) {
         jpBotsCreateView.registerController(controller);
+        jpBotsCreateView.registerFocusController();
     }
     public void registerBotEditController() {}
     public void registerBotRemoveController() {}
@@ -278,6 +282,7 @@ public class MainView extends JFrame {
             case CARD_BOTS_EDIT:
                 break;
             case CARD_BOTS_REMOVE:
+                cardLayout.show(jpCenter, CARD_BOTS_REMOVE);
                 break;
             case CARD_BOTS_LIST:
                 break;
