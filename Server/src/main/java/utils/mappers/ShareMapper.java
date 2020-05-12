@@ -1,8 +1,8 @@
 package utils.mappers;
 
-import model.entities.Company;
-import model.entities.ShareTrade;
-import model.entities.User;
+import model.entities.*;
+
+import java.util.ArrayList;
 
 public interface ShareMapper {
     User shareTradeToUser (ShareTrade shareTrade);
@@ -14,4 +14,6 @@ public interface ShareMapper {
     ShareTrade companyToShareTrade (Company company);
 
     ShareTrade userCompanyToShareTrade (User user, Company company);
+
+    ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList);
 }

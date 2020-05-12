@@ -53,7 +53,7 @@ public class ShareMapperImpl implements ShareMapper {
 
     @Override
     public ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList) {
-        ArrayList<ShareChange> companies = new ArrayList<ShareChange>();
+        ArrayList<ShareChange> shares = new ArrayList<ShareChange>();
         int sharesLen = shareChangeList.getCompanyName().length;
         int[] sharesId = shareChangeList.getCompanyId();
         String[] names = shareChangeList.getCompanyName();
@@ -61,7 +61,7 @@ public class ShareMapperImpl implements ShareMapper {
         float[] myActions = shareChangeList.getCompanyMyActions();
         float[] profitLoss = shareChangeList.getCompanyProfitLoss();
         for (int i = 0; i < sharesLen; i++) {
-            shares.add(new SharesChange(sharesId[i], names[i], actionValue[i], myActions[i], profitLoss[i]));
+            shares.add(new ShareChange(sharesId[i], names[i], actionValue[i], myActions[i], profitLoss[i]));
         }
         return shares;
     }

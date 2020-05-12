@@ -18,6 +18,9 @@ public class ShareChange {
         this.profitLoss = profitLoss;
     }
 
+    public ShareChange(int i, String name, float v, float myAction, float profitLoss) {
+    }
+
     public String getName() {
         return name;
     }
