@@ -156,7 +156,7 @@ public class BotsCreateView extends JPanel {
      * @return the probability in percentage
      */
     public String getPercentage() {
-        return jtField[1].getText();
+        return jtField[0].getText();
     }
 
     /**
@@ -165,7 +165,7 @@ public class BotsCreateView extends JPanel {
      * @return the activation time
      */
     public String getActivation() {
-        return jtField[2].getText();
+        return jtField[1].getText();
     }
 
     /**
