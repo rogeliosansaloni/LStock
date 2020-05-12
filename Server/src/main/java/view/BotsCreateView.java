@@ -18,7 +18,6 @@ public class BotsCreateView extends JPanel {
     private static final String FONT = "Segoe UI";
     private static final String FONT_BUTTON = "Segoe UI Semibold";
     private static final String TITLE = "Create Bot";
-    private static final String NAME_LABEL = "Name";
     private static final String BUY_PERCENTAGE_LABEL = "Buy Percentage";
     private static final String ACTIVATE_TIME_LABEL = "Activation Time";
     private static final String CREATE = "CREATE";
@@ -48,14 +47,7 @@ public class BotsCreateView extends JPanel {
         jlTitle.setFont(font);
         this.add(jlTitle);
 
-        jtField = new JTextField[3];
-
-        jtField[0] = new JTextField(NAME_LABEL);
-        jtField[0].setBorder(null);
-        jtField[0].setFont(font);
-        jtField[0].setForeground(Color.GRAY);
-        jtField[0].setBackground(color.getTEXTFIELD());
-        this.add(jtField[0]);
+        jtField = new JTextField[2];
 
         //Company combobox
         jcbCompany = new JComboBox<>();
@@ -67,20 +59,20 @@ public class BotsCreateView extends JPanel {
         this.add(jcbCompany);
 
         //Buy Percentage
-        jtField[1] = new JTextField(BUY_PERCENTAGE_LABEL);
+        jtField[0] = new JTextField(BUY_PERCENTAGE_LABEL);
+        jtField[0].setBorder(null);
+        jtField[0].setFont(font);
+        jtField[0].setForeground(Color.GRAY);
+        jtField[0].setBackground(color.getTEXTFIELD());
+        this.add(jtField[0]);
+
+        //Activation Time
+        jtField[1] = new JTextField(ACTIVATE_TIME_LABEL);
         jtField[1].setBorder(null);
         jtField[1].setFont(font);
         jtField[1].setForeground(Color.GRAY);
         jtField[1].setBackground(color.getTEXTFIELD());
         this.add(jtField[1]);
-
-        //Activation Time
-        jtField[2] = new JTextField(ACTIVATE_TIME_LABEL);
-        jtField[2].setBorder(null);
-        jtField[2].setFont(font);
-        jtField[2].setForeground(Color.GRAY);
-        jtField[2].setBackground(color.getTEXTFIELD());
-        this.add(jtField[2]);
 
         jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
         jpButtons.setBackground(color.getWHITE());
@@ -122,9 +114,8 @@ public class BotsCreateView extends JPanel {
      * Registers FocusListener for each JTextField of the view
      */
     public void registerFocusController() {
-        this.jtField[0].addFocusListener(new BotCreateFocusController(this, 0, NAME_LABEL));
-        this.jtField[1].addFocusListener(new BotCreateFocusController(this, 1, BUY_PERCENTAGE_LABEL));
-        this.jtField[2].addFocusListener(new BotCreateFocusController(this, 2, ACTIVATE_TIME_LABEL));
+        this.jtField[0].addFocusListener(new BotCreateFocusController(this, 0, BUY_PERCENTAGE_LABEL));
+        this.jtField[1].addFocusListener(new BotCreateFocusController(this, 1, ACTIVATE_TIME_LABEL));
     }
 
     /**
