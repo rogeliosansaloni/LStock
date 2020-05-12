@@ -23,6 +23,8 @@ public class BotsRemoveController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
             case REMOVE:
+                int botId = view.getBotsRemoveView().getBotId();
+                model.deleteBot(botId);
                 break;
             case CANCEL:
                 view.updateView(CARD_BOTS);

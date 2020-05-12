@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 
+import controller.BotsRemoveComboBoxController;
 import controller.MainController;
 import model.entities.Bot;
 import model.managers.BotManager;
@@ -64,14 +65,15 @@ public class Server extends Thread {
      */
     public void initMainView () {
         botModel = new BotManager();
-        this.mainView = new MainView();
-        this.mainController = new MainController(mainView, botModel);
-        this.mainView.registerController(mainController);
-        this.mainView.registerHomeController(this.mainController.getHomeController());
-        this.mainView.registerBotMenuController(this.mainController.getBotMenuController());
-        this.mainView.registerBotCreateController(this.mainController.getBotsCreateController());
-        this.mainView.registerBotRemoveController(this.mainController.getBotsRemoveController());
-        this.mainView.setVisible(true);
+        mainView = new MainView();
+        mainController = new MainController(mainView, botModel);
+        mainView.registerController(mainController);
+        mainView.registerHomeController(mainController.getHomeController());
+        mainView.registerBotMenuController(mainController.getBotMenuController());
+        mainView.registerBotCreateController(mainController.getBotsCreateController());
+        mainView.registerBotRemoveController(mainController.getBotsRemoveController(),
+                new BotsRemoveComboBoxController(mainView, botModel));
+        mainView.setVisible(true);
     }
 
     public void run() {

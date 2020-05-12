@@ -1,10 +1,6 @@
 package view;
 
-import controller.BotCreateFocusController;
-import controller.BotMenuController;
-import controller.BotsCreateController;
-import controller.BotsRemoveController;
-import controller.HomeController;
+import controller.*;
 import model.entities.Company;
 import utils.StockColors;
 
@@ -211,8 +207,10 @@ public class MainView extends JFrame {
      * Registers controller for the Bot remove view
      * @param controller BotsRemove controller
      */
-    public void registerBotRemoveController(BotsRemoveController controller) {
+    public void registerBotRemoveController(BotsRemoveController controller,
+                                            BotsRemoveComboBoxController comboBoxController) {
         jpBotsRemoveView.registerController(controller);
+        jpBotsRemoveView.registerComboBoxController(comboBoxController);
     }
 
     public void registerBotEditController() {}
@@ -261,7 +259,11 @@ public class MainView extends JFrame {
         return jpBotsCreateView.getActivation();
     }
 
-    public String getSelectedItem() { return  jpBotsRemoveView.getSelectedItem(); }
+    /**
+     * Gets BotsRemoveView from MainView
+     * @return view for bot removal
+     */
+    public BotsRemoveView getBotsRemoveView() { return  jpBotsRemoveView; }
     /**
      * Shows error message in the Bots Create view
      *
