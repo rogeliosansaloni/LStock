@@ -5,6 +5,7 @@ import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -15,15 +16,14 @@ public class BotsCreateView extends JPanel {
     private static final String FONT_BUTTON = "Segoe UI Semibold";
     private static final String TITLE = "Create Bot";
     private static final String NAME_LABEL = "Name";
-    private static final String BUY_PERCENTAGE_LABEL = "Buy Percentatge";
-    private static final String ACTIVATE_TIME_LABEL = "Activate time";
+    private static final String BUY_PERCENTAGE_LABEL = "Buy Percentage";
+    private static final String ACTIVATE_TIME_LABEL = "Activation Time";
     private static final String CREATE = "CREATE";
     private static final String CANCEL = "CANCEL";
     private static final int WIDTH = 200;
     private static final int HEIGHT = 20;
     private JPanel jpButtons;
-    private JMenu jcbCompanyOptions;
-    private JMenuBar jcbCompany;
+    private JComboBox<String> jcbCompany;
     private JTextField[] jtField;
     private JButton jbCreate;
     private JButton jbCancel;
@@ -51,23 +51,13 @@ public class BotsCreateView extends JPanel {
         jtField[0].setBackground(color.getTEXTFIELD());
         this.add(jtField[0]);
 
-        //Company
-        ImageIcon imageArrow = new ImageIcon(MainView.class.getResource(PATH_ARROW_ICON));
-        Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
-        imageArrow = new ImageIcon(scaleImageArrow);
-
-        jcbCompany = new JMenuBar();
+        //Company combobox
+        jcbCompany = new JComboBox<>();
+        jcbCompany.setUI(new BasicComboBoxUI());
         jcbCompany.setBorder(null);
+        jcbCompany.setFont(font);
         jcbCompany.setForeground(Color.GRAY);
         jcbCompany.setBackground(color.getTEXTFIELD());
-        jcbCompanyOptions = new JMenu();
-        jcbCompanyOptions.setHorizontalTextPosition(SwingConstants.LEFT);
-        jcbCompanyOptions.setFont(font);
-        jcbCompanyOptions.setForeground(Color.BLACK);
-        jcbCompanyOptions.setIcon(imageArrow);
-        //TODO: Fix position of ImageIcon
-        //jcbCompanyOptions.setIconTextGap(160);
-        jcbCompany.add(jcbCompanyOptions);
         this.add(jcbCompany);
 
         //Buy Percentage
@@ -110,6 +100,11 @@ public class BotsCreateView extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(0, 150, 50, 150));
     }
 
+    /**
+     * Registrates controller for each field of the form
+     *
+     * @param controller the action listener
+     */
     public void registerController(ActionListener controller) {
         this.jbCreate.addActionListener(controller);
         this.jbCreate.setActionCommand(CREATE);
@@ -123,34 +118,63 @@ public class BotsCreateView extends JPanel {
         this.jtField[2].addFocusListener(new BotCreateFocusController(this, 2, ACTIVATE_TIME_LABEL));
     }
 
+    /**
+     * Shows the companies in the combobox;
+     *
+     * @param companies list of the companies
+     */
     public void showCompanies(ArrayList<Company> companies) {
         Font font = new Font(FONT, Font.ITALIC, 20);
         int numCompanies = companies.size();
-        JMenuItem[] itemCompany = new JMenuItem[numCompanies];
         for (int i = 0; i < numCompanies; i++) {
             Company company = (Company) companies.get(i);
-            itemCompany[i] = new JMenuItem(company.getName());
-            itemCompany[i].setHorizontalAlignment(SwingConstants.CENTER);
-            itemCompany[i].setForeground(Color.GRAY);
-            itemCompany[i].setFont(font);
-            jcbCompanyOptions.add(itemCompany[i]);
+            jcbCompany.addItem(company.getName());
         }
     }
 
+    /**
+     * Gets the indicated bot name
+     *
+     * @return the bot name
+     */
     public String getBotName() {
         return jtField[0].getText();
     }
 
+    /**
+     * Gets the selected company name
+     *
+     * @return the company name
+     */
     public String getCompanyName() {
-        return jcbCompanyOptions.getName();
+        return String.valueOf(jcbCompany.getSelectedItem());
     }
 
-    public float getPercentage() {
-        return Float.parseFloat(jtField[1].getText());
+    /**
+     * Gets the indicated probability of being bought/sold
+     *
+     * @return the probability in percentage
+     */
+    public String getPercentage() {
+        return jtField[1].getText();
     }
 
-    public float getActivation() {
-        return Float.parseFloat(jtField[2].getText());
+    /**
+     * Gets the indicated activation time
+     *
+     * @return the activation time
+     */
+    public String getActivation() {
+        return jtField[2].getText();
+    }
+
+    /**
+     * Shows error message
+     *
+     * @param message the error message
+     */
+    public void showErrorMessage (String message) {
+        JOptionPane.showMessageDialog(null, message);
     }
 
     public JTextField[] getJtField() {

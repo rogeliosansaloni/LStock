@@ -42,6 +42,21 @@ public class CompanyDao {
         }
     }
 
+    public ArrayList<Company> getAllCompanyNames() {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM Company");
+        ArrayList<Company> companies = null;
+        try {
+            companies = new ArrayList<>();
+            while (result.next()) {
+                companies.add(new Company(result.getInt("company_id"), result.getString("name")));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(GETTING_COMPANIES_ERROR);
+        }
+        return companies;
+    }
+
 
     /**
      * Gets all the companies in the LStock

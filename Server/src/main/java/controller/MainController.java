@@ -1,5 +1,6 @@
 package controller;
 
+import model.managers.BotManager;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ public class MainController implements ActionListener {
     private static final String CARD_BOTS_REMOVE = "Remove Bot";
     private static final String CARD_BOTS_LIST = "Bots";
     private final MainView view;
+    private BotManager botModel;
     private HomeController homeController;
     private BotMenuController botMenuController;
     private BotsCreateController botsCreateController;
@@ -25,12 +27,12 @@ public class MainController implements ActionListener {
      * Creates and initializes the controller
      * @param view Main client view
      */
-    public MainController(MainView view) {
+    public MainController(MainView view, BotManager botModel) {
         this.view = view;
+        this.botModel = botModel;
         this.homeController = new HomeController(view);
         this.botMenuController = new BotMenuController(view);
-        this.botsCreateController = new BotsCreateController(view);
-
+        this.botsCreateController = new BotsCreateController(view, botModel);
         //TODO: Initialize controllers
     }
 

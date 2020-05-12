@@ -1,17 +1,88 @@
 package view;
 
+import utils.StockColors;
+
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxUI;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class BotsRemoveView extends JPanel {
+    private static final String FONT = "Segoe UI";
+    private static final String FONT_BUTTON = "Segoe UI Semibold";
+    private static final String TITLE = "Remove Bot";
+    private static final String REMOVE = "REMOVE";
+    private static final String CANCEL = "CANCEL";
+    private static final int WIDTH = 200;
+    private static final int HEIGHT = 20;
+    private StockColors color;
     private JComboBox<String> jcbBot;
     private JComboBox<String> jcbCompany;
+    private JPanel jpButtons;
     private JLabel jlStatus;
     private JButton jbRemove;
     private JButton jbCancel;
 
     public BotsRemoveView() {
-        // TODO: Implement remove view
+        color = new StockColors();
+        Font font = new Font(FONT, Font.ITALIC, 20);
+
+        this.setLayout(new GridLayout(6,1,0,15));
+        this.setBackground(color.getWHITE());
+
+        JLabel jlTitle = new JLabel(TITLE);
+        jlTitle.setPreferredSize(new Dimension(200, 1));
+        jlTitle.setHorizontalAlignment(JLabel.CENTER);
+        jlTitle.setFont(font);
+        this.add(jlTitle);
+
+        //Company combobox
+        jcbCompany = new JComboBox<>();
+        jcbCompany.setUI(new BasicComboBoxUI());
+        jcbCompany.setBorder(null);
+        jcbCompany.setFont(font);
+        jcbCompany.setForeground(Color.GRAY);
+        jcbCompany.setBackground(color.getTEXTFIELD());
+        this.add(jcbCompany);
+
+        //Bot combobox
+        jcbBot = new JComboBox<>();
+        jcbBot.setUI(new BasicComboBoxUI());
+        jcbBot.setBorder(null);
+        jcbBot.setFont(font);
+        jcbBot.setForeground(Color.GRAY);
+        jcbBot.setBackground(color.getTEXTFIELD());
+        this.add(jcbBot);
+
+        //Status
+        jlStatus = new JLabel("Status: ");
+        this.add(jlTitle, JLabel.CENTER);
+
+        //Buttons
+        jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
+        jpButtons.setBackground(color.getWHITE());
+
+        Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
+        jbRemove = new JButton(REMOVE);
+        jbRemove.setFont(buttonFont);
+        jbRemove.setForeground(color.getBLACK());
+        jbRemove.setBorder(null);
+        jbRemove.setBackground(color.getGREEN());
+        jbRemove.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        jpButtons.add(jbRemove);
+
+        jbCancel = new JButton(CANCEL);
+        jbCancel.setFont(buttonFont);
+        jbCancel.setForeground(color.getBLACK());
+        jbCancel.setBorder(null);
+        jbCancel.setBackground(color.getRED());
+        jbCancel.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        jpButtons.add(jbCancel);
+
+        this.add(jpButtons);
+        this.setBorder(BorderFactory.createEmptyBorder(0, 150, 50, 150));
+
+
     }
 
     public void registerController(ActionListener controller) {
