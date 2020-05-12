@@ -104,11 +104,5 @@ public class SharesView extends JPanel {
         final String message = "Do you really want to sell all your shares for %s?";
        // String.format(message, company.getName());
     }
-
-
-    /**
-     * Gets the amount selected
-     * @return amount selected
-     */
 }
 

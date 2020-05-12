@@ -314,6 +314,10 @@ public class MainView extends JFrame {
         jpCompanyView.showCompanies(companies);
     }
 
+    public void updateSharesList(ArrayList<ShareChange> shares){
+        // TODO: Create method in SharesView to update the shares list
+    }
+
     /**
      * Gets amount selected from the Load Balance view
      *
