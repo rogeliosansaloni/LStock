@@ -35,7 +35,8 @@ public class BotCreateFocusController implements FocusListener {
      */
     @Override
     public void focusGained(FocusEvent e) {
-        view.setJTextField(id,"");
+        if (view.getJTextField(id).getText().equals(labelName))
+            view.setJTextField(id,"");
     }
 
     /**
@@ -44,6 +45,7 @@ public class BotCreateFocusController implements FocusListener {
      */
     @Override
     public void focusLost(FocusEvent e) {
-        view.setJTextField(id, labelName);
+        if(view.getJTextField(id).getText().equals(""))
+            view.setJTextField(id, labelName);
     }
 }
