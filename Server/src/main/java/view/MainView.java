@@ -1,9 +1,6 @@
 package view;
 
-import controller.BotCreateFocusController;
-import controller.BotMenuController;
-import controller.BotsCreateController;
-import controller.HomeController;
+import controller.*;
 import model.entities.Company;
 import utils.StockColors;
 
@@ -209,7 +206,11 @@ public class MainView extends JFrame {
     }
     public void registerBotEditController() {}
     public void registerBotRemoveController() {}
-    public void registerBotListController() {}
+    public void registerBotListController(BotsListController controller) {
+        jpBotsListView.registerController(controller);
+    }
+
+    public BotsListView getBotsListView () { return jpBotsListView; }
 
     /**
      * Shows all of the companies name in the Bots Create view combobox
