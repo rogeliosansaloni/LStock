@@ -206,10 +206,19 @@ public class MainView extends JFrame {
     }
     public void registerBotEditController() {}
     public void registerBotRemoveController() {}
+
+    /**
+     * Registers controller for Bots List controller
+     * @param controller BotsListController
+     */
     public void registerBotListController(BotsListController controller) {
         jpBotsListView.registerController(controller);
     }
 
+    /**
+     * Gets the Bots List view
+     * @return Bots list view
+     */
     public BotsListView getBotsListView () { return jpBotsListView; }
 
     /**

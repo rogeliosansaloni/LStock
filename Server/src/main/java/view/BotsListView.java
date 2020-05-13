@@ -26,7 +26,6 @@ public class BotsListView extends JPanel {
     public BotsListView() {
         color = new StockColors();
         initUI();
-        // TODO: Implement list view
     }
 
     private void initUI() {
@@ -36,6 +35,7 @@ public class BotsListView extends JPanel {
         jpCenter = new JPanel(new BorderLayout());
         jpCenter.setBackground(color.getWHITE());
 
+        //Initializes table with columns and 0 rows.
         DefaultTableModel model = new DefaultTableModel(columnNames,0) {
           public boolean isCellEditable (int row, int column) {
               return false;
@@ -71,11 +71,19 @@ public class BotsListView extends JPanel {
 
     }
 
+    /**
+     * Register action listener to Return button
+     * @param controller ActionListener
+     */
     public void registerController(ActionListener controller) {
         this.jbReturn.addActionListener(controller);
         this.jbReturn.setActionCommand(RETURN);
     }
 
+    /**
+     * Initializes Bot table with the corresponding information
+     * @param bots List of company bots
+     */
     public void showBotsInTable(ArrayList<Bot> bots) {
         String status;
         DefaultTableModel model = (DefaultTableModel) jtBotsList.getModel();
@@ -87,9 +95,9 @@ public class BotsListView extends JPanel {
                 model.addRow(obj);
             }
         }
+        //Sets cells value to center
         DefaultTableCellRenderer center = new DefaultTableCellRenderer();
         center.setHorizontalAlignment(JLabel.CENTER);
-
         for (int col = 0; col < model.getColumnCount(); col++) {
             jtBotsList.getColumnModel().getColumn(col).setCellRenderer(center);
         }
