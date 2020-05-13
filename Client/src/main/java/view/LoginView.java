@@ -1,12 +1,11 @@
 package view;
 
+import controller.LoginFocusController;
 import utils.StockColors;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.net.URL;
 
 public class LoginView extends JFrame {
@@ -14,6 +13,10 @@ public class LoginView extends JFrame {
     private static final String TITLE = "StockLS - C2";
     private static final String ERROR_MESSAGE_1 = "All fields are required.";
     private static final String ERROR_MESSAGE_2 = "Fields can't be empty.";
+    private static final String USER_LABEL = "Nickname or Email";
+    private static final String PASSWORD_LABEL = "Password";
+    private static final String LOGIN = "Login";
+    private static final String REGISTER = "Register";
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 740;
     private JLabel labelLogo;
@@ -22,7 +25,7 @@ public class LoginView extends JFrame {
     private JPanel jpCenter;
     private JPanel jpCampos;
     private JPanel jpBotones;
-    private JTextField[] campos;
+    private JTextField[] jtField;
     private JButton jbLogin;
     private JButton jbRegister;
     private StockColors color;
@@ -70,50 +73,20 @@ public class LoginView extends JFrame {
         jpCenter.setBackground(Color.WHITE);
 
         Font fuenteCampo = new Font("Segoe UI", Font.ITALIC, 20);
-        campos = new JTextField[2];
-        campos[0] = new JTextField("Nickname or Email");
-        campos[0].setBorder(null);
-        campos[0].setFont(fuenteCampo);
-        campos[0].setForeground(Color.GRAY);
-        campos[0].setBackground(color.getTEXTFIELD());
-        campos[0].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (campos[0].getText().equals("Nickname or Email")) {
-                    campos[0].setText("");
-                }
-            }
+        jtField = new JTextField[2];
+        jtField[0] = new JTextField(USER_LABEL);
+        jtField[0].setBorder(null);
+        jtField[0].setFont(fuenteCampo);
+        jtField[0].setForeground(Color.GRAY);
+        jtField[0].setBackground(color.getTEXTFIELD());
+        jpCenter.add(jtField[0]);
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (campos[0].getText().equals("")) {
-                    campos[0].setText("Nickname or Email");
-                }
-            }
-        });
-        //We add separation space between fields
-        jpCenter.add(campos[0]);
-        campos[1] = new JTextField("Password");
-        campos[1].setFont(fuenteCampo);
-        campos[1].setForeground(Color.GRAY);
-        campos[1].setBorder(null);
-        campos[1].setBackground(color.getTEXTFIELD());
-        campos[1].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (campos[1].getText().equals("Password")) {
-                    campos[1].setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (campos[1].getText().equals("")) {
-                    campos[1].setText("Password");
-                }
-            }
-        });
-        jpCenter.add(campos[1]);
+        jtField[1] = new JTextField(PASSWORD_LABEL);
+        jtField[1].setFont(fuenteCampo);
+        jtField[1].setForeground(Color.GRAY);
+        jtField[1].setBorder(null);
+        jtField[1].setBackground(color.getTEXTFIELD());
+        jpCenter.add(jtField[1]);
 
         //We create a filler row to separate the buttons and the login fields
         JLabel relleno = new JLabel();
@@ -126,14 +99,14 @@ public class LoginView extends JFrame {
         int alturaBoton = 40;
 
         Font fuenteBotones = new Font("Segoe UI Semibold", Font.PLAIN, 20);
-        jbLogin = new JButton("Login");
+        jbLogin = new JButton(LOGIN);
         jbLogin.setFont(fuenteBotones);
         jbLogin.setForeground(Color.BLACK);
         jbLogin.setBorder(null);
         jbLogin.setBackground(color.getYELLOW());
         jbLogin.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
-        jbRegister = new JButton("Register");
+        jbRegister = new JButton(REGISTER);
         jbRegister.setFont(fuenteBotones);
         jbRegister.setForeground(Color.BLACK);
         jbRegister.setBorder(null);
@@ -155,14 +128,36 @@ public class LoginView extends JFrame {
      * @param listener an ActionListener
      */
     public void registerController(ActionListener listener) {
-        campos[0].addActionListener(listener);
-        campos[0].setActionCommand("user");
-        campos[1].addActionListener(listener);
-        campos[1].setActionCommand("password");
         jbLogin.addActionListener(listener);
-        jbLogin.setActionCommand("login");
+        jbLogin.setActionCommand(LOGIN);
         jbRegister.addActionListener(listener);
-        jbRegister.setActionCommand("register");
+        jbRegister.setActionCommand(REGISTER);
+    }
+
+    /**
+     * Registers FocusListener for each JTextField of the view
+     */
+    public void registerFocusController() {
+        this.jtField[0].addFocusListener(new LoginFocusController(this,0, USER_LABEL));
+        this.jtField[1].addFocusListener(new LoginFocusController(this, 1, PASSWORD_LABEL));
+    }
+
+    /**
+     * Gets a specific JTextFrield
+     * @param i id of the JTextField
+     * @return Jtextfield
+     */
+    public JTextField getJTextField(int i) {
+        return jtField[i];
+    }
+
+    /**
+     * Sets the texts of a specific JTextField
+     * @param i
+     * @param text
+     */
+    public void setJTextField (int i, String text) {
+        jtField[i].setText(text);
     }
 
     /**
@@ -187,7 +182,7 @@ public class LoginView extends JFrame {
      * @return introduced nickname or email
      */
     public String getNicknameEmail() {
-        return campos[0].getText();
+        return jtField[0].getText();
     }
 
     /**
@@ -196,7 +191,7 @@ public class LoginView extends JFrame {
      * @return introduced password
      */
     public String getPassword() {
-        return campos[1].getText();
+        return jtField[1].getText();
     }
 
     public void showLoginFailure(String message) {
@@ -204,9 +199,8 @@ public class LoginView extends JFrame {
     }
 
     public void flushCredentials(){
-        campos[0].setText("Nickname or Email");
-        campos[1].setText("Password");
+        jtField[0].setText(USER_LABEL);
+        jtField[1].setText(PASSWORD_LABEL);
 
     }
-
 }

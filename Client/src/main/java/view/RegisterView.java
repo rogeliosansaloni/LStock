@@ -1,5 +1,7 @@
 package view;
 
+import controller.LoginFocusController;
+import controller.RegisterFocusController;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -12,6 +14,12 @@ import java.net.URL;
 public class RegisterView extends JFrame {
     private static final String PATH_LOGO = "/Images/stock.png";
     private static final String TITLE = "StockLS - C2";
+    private static final String NICKNAME_LABEL = "Nickname";
+    private static final String EMAIL_LABEL = "Email";
+    private static final String PASSWORD_LABEL = "Password";
+    private static final String VERIFY_PASSWORD_LABEL = "Verify Password";
+    private static final String LOGIN = "Login";
+    private static final String REGISTER = "Register";
     private static final String ERROR_CASE_1 = "Fields Required";
     private static final String ERROR_CASE_2 = "Fields Empty";
     private static final String ERROR_CASE_3 = "Email Error";
@@ -35,9 +43,8 @@ public class RegisterView extends JFrame {
     private JLabel labelStock;
     protected JPanel jpNorth;
     private JPanel jpCenter;
-    private JPanel jpCampos;
     private JPanel jpBotones;
-    private JTextField[] campos;
+    private JTextField[] jtField;
     private JButton jbLogin;
     private JButton jbRegister;
     private StockColors color;
@@ -86,94 +93,37 @@ public class RegisterView extends JFrame {
         jpCenter.setBackground(Color.WHITE);
 
         Font fuenteCampo = new Font("Segoe UI", Font.ITALIC, 20);
-        campos = new JTextField[4];
-        campos[0] = new JTextField("Nickname");
-        campos[0].setBorder(null);
-        campos[0].setFont(fuenteCampo);
-        campos[0].setForeground(Color.GRAY);
-        campos[0].setBackground(color.getTEXTFIELD());
-        campos[0].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (campos[0].getText().equals("Nickname")) {
-                    campos[0].setText("");
-                }
-            }
+        jtField = new JTextField[4];
+        jtField[0] = new JTextField(NICKNAME_LABEL);
+        jtField[0].setBorder(null);
+        jtField[0].setFont(fuenteCampo);
+        jtField[0].setForeground(Color.GRAY);
+        jtField[0].setBackground(color.getTEXTFIELD());
+        jpCenter.add(jtField[0]);
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (campos[0].getText().equals("")) {
-                    campos[0].setText("Nickname");
-                }
-            }
-        });
-        jpCenter.add(campos[0]);
         //We add separation space between fields
-        campos[1] = new JTextField("Email");
-        campos[1].setBorder(null);
-        campos[1].setFont(fuenteCampo);
-        campos[1].setForeground(Color.GRAY);
-        campos[1].setBackground(color.getTEXTFIELD());
-        campos[1].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (campos[1].getText().equals("Email")) {
-                    campos[1].setText("");
-                }
-            }
+        jtField[1] = new JTextField(EMAIL_LABEL);
+        jtField[1].setBorder(null);
+        jtField[1].setFont(fuenteCampo);
+        jtField[1].setForeground(Color.GRAY);
+        jtField[1].setBackground(color.getTEXTFIELD());
+        jpCenter.add(jtField[1]);
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (campos[1].getText().equals("")) {
-                    campos[1].setText("Email");
-                }
-            }
-        });
-        jpCenter.add(campos[1]);
         //We add separation space between fields
-        campos[2] = new JTextField("Password");
-        campos[2].setBorder(null);
-        campos[2].setFont(fuenteCampo);
-        campos[2].setForeground(Color.GRAY);
-        campos[2].setBackground(color.getTEXTFIELD());
-        campos[2].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (campos[2].getText().equals("Password")) {
-                    campos[2].setText("");
-                }
-            }
+        jtField[2] = new JTextField(PASSWORD_LABEL);
+        jtField[2].setBorder(null);
+        jtField[2].setFont(fuenteCampo);
+        jtField[2].setForeground(Color.GRAY);
+        jtField[2].setBackground(color.getTEXTFIELD());
+        jpCenter.add(jtField[2]);
 
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (campos[2].getText().equals("")) {
-                    campos[2].setText("Password");
-                }
-            }
-        });
-        jpCenter.add(campos[2]);
         //We add separation space between fields
-        campos[3] = new JTextField("Verify Password");
-        campos[3].setBorder(null);
-        campos[3].setFont(fuenteCampo);
-        campos[3].setForeground(Color.GRAY);
-        campos[3].setBackground(color.getTEXTFIELD());
-        campos[3].addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (campos[3].getText().equals("Verify Password")) {
-                    campos[3].setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (campos[3].getText().equals("")) {
-                    campos[3].setText("Verify Password");
-                }
-            }
-        });
-        jpCenter.add(campos[3]);
+        jtField[3] = new JTextField(VERIFY_PASSWORD_LABEL);
+        jtField[3].setBorder(null);
+        jtField[3].setFont(fuenteCampo);
+        jtField[3].setForeground(Color.GRAY);
+        jtField[3].setBackground(color.getTEXTFIELD());
+        jpCenter.add(jtField[3]);
 
         //We create a filler row to separate the buttons and the register fields
         JLabel relleno = new JLabel();
@@ -186,14 +136,14 @@ public class RegisterView extends JFrame {
         int alturaBoton = 40;
 
         Font fuenteBotones = new Font("Segoe UI Semibold", Font.PLAIN, 20);
-        jbLogin = new JButton("Login");
+        jbLogin = new JButton(LOGIN);
         jbLogin.setFont(fuenteBotones);
         jbLogin.setForeground(Color.BLACK);
         jbLogin.setBorder(null);
         jbLogin.setBackground(color.getLightGrey());
         jbLogin.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
-        jbRegister = new JButton("Register");
+        jbRegister = new JButton(REGISTER);
         jbRegister.setFont(fuenteBotones);
         jbRegister.setForeground(Color.BLACK);
         jbRegister.setBorder(null);
@@ -215,18 +165,38 @@ public class RegisterView extends JFrame {
      * @param actionListener the actionListener
      */
     public void registerController(ActionListener actionListener) {
-        campos[0].addActionListener(actionListener);
-        campos[0].setActionCommand("nickname");
-        campos[1].addActionListener(actionListener);
-        campos[1].setActionCommand("email");
-        campos[2].addActionListener(actionListener);
-        campos[2].setActionCommand("pass1");
-        campos[3].addActionListener(actionListener);
-        campos[3].setActionCommand("pass2");
         jbLogin.addActionListener(actionListener);
-        jbLogin.setActionCommand("login");
+        jbLogin.setActionCommand(LOGIN);
         jbRegister.addActionListener(actionListener);
-        jbRegister.setActionCommand("register");
+        jbRegister.setActionCommand(REGISTER);
+    }
+
+    /**
+     * Registers FocusListener for each JTextField of the view
+     */
+    public void registerFocusController() {
+        this.jtField[0].addFocusListener(new RegisterFocusController(this,0, NICKNAME_LABEL));
+        this.jtField[1].addFocusListener(new RegisterFocusController(this, 1, EMAIL_LABEL));
+        this.jtField[2].addFocusListener(new RegisterFocusController(this, 2, PASSWORD_LABEL));
+        this.jtField[3].addFocusListener(new RegisterFocusController(this, 3, VERIFY_PASSWORD_LABEL));
+    }
+
+    /**
+     * Gets a specific JTextFrield
+     * @param i id of the JTextField
+     * @return Jtextfield
+     */
+    public JTextField getJTextField(int i) {
+        return jtField[i];
+    }
+
+    /**
+     * Sets the texts of a specific JTextField
+     * @param i
+     * @param text
+     */
+    public void setJTextField (int i, String text) {
+        jtField[i].setText(text);
     }
 
     /**
@@ -269,7 +239,7 @@ public class RegisterView extends JFrame {
      * @return Nickname
      */
     public String getNickname() {
-        return campos[0].getText();
+        return jtField[0].getText();
     }
 
     /**
@@ -278,7 +248,7 @@ public class RegisterView extends JFrame {
      * @return Email
      */
     public String getEmail() {
-        return campos[1].getText();
+        return jtField[1].getText();
     }
 
     /**
@@ -287,7 +257,7 @@ public class RegisterView extends JFrame {
      * @return Password
      */
     public String getPassword() {
-        return campos[2].getText();
+        return jtField[2].getText();
     }
 
     /**
@@ -296,7 +266,7 @@ public class RegisterView extends JFrame {
      * @return Repeated password
      */
     public String getPasswordVerification() {
-        return campos[3].getText();
+        return jtField[3].getText();
     }
 
 }
