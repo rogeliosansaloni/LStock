@@ -17,6 +17,7 @@ public class ShareDao {
 
     private DBConnector dbConnector;
     private static final String UPDATE_PURCHASE_ERROR = "Error updating the purchase.";
+    private static final String GETTING_SHARES_ERROR = "Error getting the shares.";
 
     public ShareDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
@@ -26,12 +27,14 @@ public class ShareDao {
         //First we need to know if that purchase already exists in the Purchase value of the database
         ResultSet retrievedCheck = dbConnector.selectQuery("CALL checkIfPurchaseExists(" + purchase.getUserId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareId() + ");");
         try {
-            if(retrievedCheck.next() != false){
-                dbConnector.selectQuery("CALL insertPurchase(" + purchase.getUserId() + ", "
+            if(retrievedCheck.next() == false){
+                ResultSet resultPurchase = dbConnector.selectQuery("CALL insertPurchase(" + purchase.getUserId() + ", "
                         + purchase.getShareId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareQuantity() + ");");
+                resultPurchase.next();
             } else{
-                dbConnector.selectQuery("CALL updatePurchase(" + purchase.getUserId() + ", "
+                ResultSet resultPurchase = dbConnector.selectQuery("CALL updatePurchase(" + purchase.getUserId() + ", "
                         + purchase.getShareId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareQuantity() + ");");
+                resultPurchase.next();
             }
         } catch (SQLException e) {
         }
@@ -80,6 +83,19 @@ public class ShareDao {
             System.out.println("Error getting all shares");
         }
         return shares;
+    }
+
+    public int getNumShares(User user, Company company){
+        int numShares = 0;
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumShares(" + user.getUserId() + ", " + company.getCompanyId() + ");");
+        try {
+            if(retrievedShares.next() != false){
+                numShares = retrievedShares.getInt("numShares");
+            }
+        } catch (SQLException e) {
+            System.out.println(GETTING_SHARES_ERROR);
+        }
+        return numShares;
     }
 
     /**

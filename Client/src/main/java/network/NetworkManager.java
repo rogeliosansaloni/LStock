@@ -202,7 +202,7 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof ShareTrade) {
                     ShareTrade info = ((ShareTrade) received);
-                    mainController.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
+                    mainController.updateViewsAfterPurchase(info.getTotalBalance(),  info.getCompanyId(), info.getNumShares());
                 }
 
                 if (received instanceof CompanyChangeList) {

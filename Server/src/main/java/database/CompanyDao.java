@@ -119,7 +119,7 @@ public class CompanyDao {
                 if(retrieved.next() == false){
                     ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
                     retrievedCompanyName.next();
-                    companies.add(new CompanyDetail(numShares, 5, retrievedCompanyName.getString("companyName"), -1, -0, -1, 0, i));
+                    companies.add(new CompanyDetail(numShares, 5, retrievedCompanyName.getString("companyName"), -1, -1, -1, -1, i));
                 }else{
                     retrieved.beforeFirst();
                     while (retrieved.next()) {

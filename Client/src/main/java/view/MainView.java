@@ -346,8 +346,8 @@ public class MainView extends JFrame {
         jpCompanyView.showCompanies(companies);
     }
 
-    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails){
-        jpCompanyDetailsView.updateCompanyDetailView(companyDetails);
+    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails, float maxValue, float minValue){
+        jpCompanyDetailsView.updateCompanyDetailView(companyDetails, maxValue, minValue);
     }
 
     /**
@@ -387,7 +387,6 @@ public class MainView extends JFrame {
      */
     public int confirmAction (String message) {
         return jpCompanyDetailsView.confirmAction(message);
-
     }
 
     /**
@@ -401,15 +400,12 @@ public class MainView extends JFrame {
 
     /**
      * Update the user and the company new values in the view
-     *
      * @param totalBalance new balance of the user
-     * @param value new value of the company
      */
-    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
+    public void updateViewsAfterPurchase(float totalBalance) {
         String strBalance = String.format("%.2f", totalBalance);
-        String strValue = String.format("%.2f", value);
+        updateTotalBalance(totalBalance);
         jpBalanceView.updateCurrentBalance(strBalance);
-        jpCompanyDetailsView.updateValue(strValue);
     }
 
 }

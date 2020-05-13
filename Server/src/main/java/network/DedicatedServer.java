@@ -125,8 +125,8 @@ public class DedicatedServer extends Thread {
 
                 if (tunnelObject instanceof UserShares) {
                     ArrayList<CompanyDetail> companies = stockModel.getCompanyDetails(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
-                    CompanyDetailList companyChangeList = companyMapper.convertToCompanyDetailList(companies);
-                    oos.writeObject(companyChangeList);
+                    CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companies);
+                    oos.writeObject(companyDetailList);
                 }
             }
         } catch (ClassNotFoundException e) {

@@ -109,7 +109,7 @@ public class MainController implements ActionListener {
      */
     public void updateCompanyDetails () {
         view.updateView(CARD_COMPANYDETAILS);
-        companyDetailController.updateCompanyDetailView(model.getCompanyDetails());
+        view.updateCompanyDetailView(model.getCompanyDetails(), model.getMaxDetailShareValue(), model.getMinShareValue());
         view.setTitleCompanyDetail(model.getCurrentShareValue(), model.getCompanyDetailName());
     }
 
@@ -117,11 +117,12 @@ public class MainController implements ActionListener {
      * Updates company and users value in the view
      *
      * @param totalBalance the new balance of the user
-     * @param value the new value of the company
+     * @param companyId the company id
      */
-    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
+    public void updateViewsAfterPurchase(float totalBalance, int companyId, int numShares) {
         //TODO: Update company in the model
         model.updateUserBalance(totalBalance);
-        view.updateCompanyUserValueAndBalance(totalBalance, value);
+        view.updateViewsAfterPurchase(totalBalance);
+        companyController.sendUserShares(companyId);
     }
 }

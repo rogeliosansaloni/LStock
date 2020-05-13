@@ -34,6 +34,30 @@ public class StockManager {
         return companyDetails.get(0).getValueClose();
     }
 
+    public float getMaxDetailShareValue() {
+        float maxValue = companyDetails.get(0).getValueClose();
+        for(int i=1; i<companyDetails.size(); i++){
+            if(companyDetails.get(i).getValueClose() > maxValue){
+                maxValue = companyDetails.get(i).getValueClose();
+            }
+        }
+        return maxValue;
+    }
+
+    public float getMinDetailShareValue() {
+        float minValue = companyDetails.get(0).getValueClose();
+        for(int i=1; i<companyDetails.size(); i++){
+            if(companyDetails.get(i).getValueClose() < minValue){
+                minValue = companyDetails.get(i).getValueClose();
+            }
+        }
+        return minValue;
+    }
+
+    public float getMinShareValue() {
+        return companyDetails.get(0).getValueClose();
+    }
+
     public int getCurrentShareId() {
         return companyDetails.get(0).getShareIdClose();
     }

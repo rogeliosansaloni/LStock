@@ -39,9 +39,9 @@ public class CompanyDetailController implements ActionListener {
                     float userBalance = model.checkUserBalance(numShares);
                     if(userBalance > 0){
                         sendShareTrade(numShares, userBalance);
+                    } else{
+                        view.showErrorCompanyDetail(2);
                     }
-                } else {
-                    view.showErrorCompanyDetail(2);
                 }
             }
         }
@@ -60,14 +60,10 @@ public class CompanyDetailController implements ActionListener {
         }
     }
 
-    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails) {
-        view.updateCompanyDetailView(companyDetails);
-    }
-
     public int checkInteger(String text){
         try{
             int numShares = Integer.parseInt(text);
-            if(numShares < 0){
+            if(numShares <= 0){
                 view.showErrorCompanyDetail(1);
                 return -1;
             }

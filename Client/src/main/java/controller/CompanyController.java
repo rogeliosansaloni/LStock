@@ -25,12 +25,8 @@ public class CompanyController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        TunnelObject userShares = new UserShares(model.getUser().getUserId(), Integer.parseInt(e.getActionCommand()));
-        try {
-            NetworkManager.getInstance().sendUserShares(userShares);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        int companyId = Integer.parseInt(e.getActionCommand());
+        sendUserShares(companyId);
     }
     /**
      * Proc that shows the companies on the view's table
@@ -39,5 +35,14 @@ public class CompanyController implements ActionListener {
      */
     public void updateCompanyList (ArrayList<CompanyChange> companies){
         this.view.updateCompanyList(companies);
+    }
+
+    public void sendUserShares(int companyId){
+        TunnelObject userShares = new UserShares(model.getUser().getUserId(), companyId);
+        try {
+            NetworkManager.getInstance().sendUserShares(userShares);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

@@ -18,5 +18,5 @@ public interface ShareMapper {
 
     ShareTrade companyToShareTrade (Company company);
 
-    ShareTrade userCompanyToShareTrade (User user, Company company);
+    ShareTrade userCompanyToShareTrade (User user, Company company, int numShares);
 }
