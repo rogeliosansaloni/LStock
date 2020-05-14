@@ -23,10 +23,13 @@ public class BotsRemoveController implements ActionListener {
 
     private void initView() {
         view.showCompanies(model.getCompanies());
-        String companyName = view.getBotsRemoveView().getCompanyName();
-        int companyId = model.getCompanyId(companyName);
-        ArrayList<Bot> bots = model.getAllBotsByCompany(companyId);
+        ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
         view.showBots(bots);
+    }
+
+    private int getSelectedCompanyId() {
+        String companyName = view.getBotsRemoveView().getCompanyName();
+        return model.getCompanyId(companyName);
     }
 
     @Override
@@ -35,6 +38,7 @@ public class BotsRemoveController implements ActionListener {
             case REMOVE:
                 int botId = view.getBotsRemoveView().getBotId();
                 model.deleteBot(botId);
+                view.showBots(model.getAllBotsByCompany(getSelectedCompanyId()));
                 break;
             case CANCEL:
                 view.updateView(CARD_BOTS);
