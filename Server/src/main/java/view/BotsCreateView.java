@@ -133,6 +133,14 @@ public class BotsCreateView extends JPanel {
     }
 
     /**
+     * Shows the placeholder for the text fields
+     */
+    public void initTextFields() {
+        setJTextField(0, BUY_PERCENTAGE_LABEL);
+        setJTextField(1, ACTIVATE_TIME_LABEL);
+    }
+
+    /**
      * Gets the indicated bot name
      *
      * @return the bot name

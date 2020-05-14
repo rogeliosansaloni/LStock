@@ -45,6 +45,7 @@ public class BotsCreateController implements ActionListener {
      */
     public void initView() {
         view.showCompanies(model.getCompanies());
+        view.initTextFields();
     }
 
     @Override
@@ -61,7 +62,9 @@ public class BotsCreateController implements ActionListener {
                     bot.setCompany(new Company(id, companyName));
                     bot.setActiveTime(Float.parseFloat(activation));
                     bot.setProbability(Float.parseFloat(percentage));
-                    model.createBot(bot);
+                    if (model.createBot(bot) >= 0) {
+                        initView();
+                    }
                 }
                 break;
             case CANCEL:

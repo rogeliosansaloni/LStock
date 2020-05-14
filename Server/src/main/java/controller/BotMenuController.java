@@ -32,6 +32,7 @@ public class BotMenuController implements ActionListener {
         String mode = e.getActionCommand();
         switch (mode) {
             case CARD_CREATE:
+                mainController.getBotsCreateController().initView();
                 view.updateView(CARD_CREATE);
                 break;
             case CARD_EDIT:
