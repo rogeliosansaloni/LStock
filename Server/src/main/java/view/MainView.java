@@ -223,7 +223,6 @@ public class MainView extends JFrame {
      */
     public void showCompanies (ArrayList<Company> companies) {
         jpBotsCreateView.showCompanies(companies);
-        jpBotsRemoveView.showCompanies(companies);
     }
 
     /**
@@ -232,14 +231,6 @@ public class MainView extends JFrame {
      * @return the company name
      */
     public String getSelectedCompany() { return jpBotsCreateView.getCompanyName(); }
-
-    /**
-     * Show all the bots of the default company in Bots Remove view combobox
-     * @param bots a list of bots
-     */
-    public void showBots(ArrayList<Bot> bots) {
-        jpBotsRemoveView.showBots(bots);
-    }
 
     /**
      * Gets the indicated bot name

@@ -2,6 +2,7 @@ package controller;
 
 import model.entities.Bot;
 import model.managers.BotManager;
+import view.BotsRemoveView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -12,11 +13,13 @@ public class BotsRemoveController implements ActionListener {
     private static final String REMOVE = "REMOVE";
     private static final String CANCEL = "CANCEL";
     private static final String CARD_BOTS = "Manage Bots";
-    private MainView view;
+    private MainView mainView;
+    private BotsRemoveView view;
     private BotManager model;
 
-    public BotsRemoveController(MainView view, BotManager model) {
+    public BotsRemoveController(BotsRemoveView view, MainView mainView, BotManager model) {
         this.view = view;
+        this.mainView = mainView;
         this.model = model;
         initView();
     }
@@ -28,7 +31,7 @@ public class BotsRemoveController implements ActionListener {
     }
 
     private int getSelectedCompanyId() {
-        String companyName = view.getBotsRemoveView().getCompanyName();
+        String companyName = mainView.getBotsRemoveView().getCompanyName();
         return model.getCompanyId(companyName);
     }
 
@@ -36,12 +39,12 @@ public class BotsRemoveController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
             case REMOVE:
-                int botId = view.getBotsRemoveView().getBotId();
+                int botId = mainView.getBotsRemoveView().getBotId();
                 model.deleteBot(botId);
                 view.showBots(model.getAllBotsByCompany(getSelectedCompanyId()));
                 break;
             case CANCEL:
-                view.updateView(CARD_BOTS);
+                mainView.updateView(CARD_BOTS);
                 break;
         }
     }
