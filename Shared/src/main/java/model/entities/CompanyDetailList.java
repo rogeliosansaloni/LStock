@@ -9,6 +9,8 @@ public class CompanyDetailList extends TunnelObject {
     private float[] valueOpen;
     private int[] shareIdClose;
     private float[] valueClose;
+    private float[] maxValue;
+    private float[] minValue;
     private int[] minutesBefore;
 
     public CompanyDetailList(int numCompanies) {
@@ -17,6 +19,8 @@ public class CompanyDetailList extends TunnelObject {
         this.valueOpen = new float[numCompanies];
         this.shareIdClose = new int[numCompanies];
         this.valueClose = new float[numCompanies];
+        this.maxValue = new float[numCompanies];
+        this.minValue = new float[numCompanies];
         this.minutesBefore = new int[numCompanies];
     }
 
@@ -51,6 +55,14 @@ public class CompanyDetailList extends TunnelObject {
         return valueClose;
     }
 
+    public float[] getMaxValue() {
+        return maxValue;
+    }
+
+    public float[] getMinValue() {
+        return minValue;
+    }
+
     public int[] getMinutesBefore() {
         return minutesBefore;
     }
@@ -81,6 +93,14 @@ public class CompanyDetailList extends TunnelObject {
 
     public void setValueClose(int i, float valueClose) {
         this.valueClose[i] = valueClose;
+    }
+
+    public void setMaxValue(int i, float maxValue) {
+        this.maxValue[i] = maxValue;
+    }
+
+    public void setMinValue(int i, float minValue) {
+        this.minValue[i] = minValue;
     }
 
     public void setMinutesBefore(int i, int minutesBefore) {

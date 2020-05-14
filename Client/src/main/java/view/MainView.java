@@ -346,8 +346,8 @@ public class MainView extends JFrame {
         jpCompanyView.showCompanies(companies);
     }
 
-    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails, float maxValue, float minValue){
-        jpCompanyDetailsView.updateCompanyDetailView(companyDetails, maxValue, minValue);
+    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails, float maxValue){
+        jpCompanyDetailsView.updateCompanyDetailView(companyDetails, maxValue);
     }
 
     /**

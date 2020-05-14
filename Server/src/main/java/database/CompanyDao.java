@@ -119,16 +119,21 @@ public class CompanyDao {
                 if(retrieved.next() == false){
                     ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
                     retrievedCompanyName.next();
-                    companies.add(new CompanyDetail(numShares, 5, retrievedCompanyName.getString("companyName"), -1, -1, -1, -1, i));
+                    companies.add(new CompanyDetail(numShares, 5, retrievedCompanyName.getString("companyName"), -1, -1, -1, -1,-1, -1, i));
                 }else{
                     retrieved.beforeFirst();
                     while (retrieved.next()) {
                         companies.add(toCompanyDetail(numShares, retrieved));
                     }
+                    ResultSet retrievedMaxMin = dbConnector.selectQuery("CALL getMaxMinValues(" + i + ", " + companyId + ");");
+                    while (retrievedMaxMin.next()) {
+                        companies.set(i, extractMaxMinDetail(retrievedMaxMin, companies.get(i)));
+                    }
                 }
             } catch (SQLException e) {
                 System.out.println(GETTING_COMPANIES_ERROR);
             }
+
         }
         return companies;
     }
@@ -191,6 +196,18 @@ public class CompanyDao {
         companyDetail.setValueClose(resultSet.getFloat("valueClose"));
         companyDetail.setValueOpen(resultSet.getFloat("valueOpen"));
         companyDetail.setMinutesBefore(resultSet.getInt("minutesBefore"));
+        return companyDetail;
+    }
+
+    private CompanyDetail extractMaxMinDetail(ResultSet retrievedMaxMin, CompanyDetail companyDetail) throws SQLException {
+        companyDetail.setMaxValue(retrievedMaxMin.getFloat("maximumValue"));
+        companyDetail.setMinValue(retrievedMaxMin.getFloat("minimumValue"));
+        if(companyDetail.getValueOpen() > companyDetail.getMaxValue()){
+            companyDetail.setMaxValue(companyDetail.getValueOpen());
+        }
+        if(companyDetail.getValueOpen() < companyDetail.getMinValue()){
+            companyDetail.setMinValue(companyDetail.getValueOpen());
+        }
         return companyDetail;
     }
 

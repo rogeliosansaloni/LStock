@@ -75,9 +75,12 @@ public class CompanyMapperImpl implements CompanyMapper {
         float[] valueOpen = companyDetailList.getValueOpen();
         int[] shareIdClose = companyDetailList.getShareIdClose();
         float[] valueClose = companyDetailList.getValueClose();
+        float[] maxValue = companyDetailList.getMaxValue();
+        float[] minValue = companyDetailList.getMinValue();
+
         int[] minutesBefore = companyDetailList.getMinutesBefore();
         for (int i = 0; i < companiesLen; i++) {
-            companies.add(new CompanyDetail(numShares, companyId, companyName, shareIdOpen[i], valueOpen[i], shareIdClose[i], valueClose[i], minutesBefore[i]));
+            companies.add(new CompanyDetail(numShares, companyId, companyName, shareIdOpen[i], valueOpen[i], shareIdClose[i], valueClose[i], maxValue[i], minValue[i], minutesBefore[i]));
         }
         return companies;
     }
@@ -94,6 +97,8 @@ public class CompanyMapperImpl implements CompanyMapper {
             companyDetailList.setValueOpen(i, c.getValueOpen());
             companyDetailList.setShareIdClose(i, c.getShareIdClose());
             companyDetailList.setValueClose(i, c.getValueClose());
+            companyDetailList.setMaxValue(i, c.getMaxValue());
+            companyDetailList.setMinValue(i, c.getMinValue());
             companyDetailList.setMinutesBefore(i, c.getMinutesBefore());
             i++;
         }
