@@ -73,6 +73,7 @@ public class Server extends Thread {
         mainView.registerBotCreateController(mainController.getBotsCreateController());
         mainView.registerBotRemoveController(mainController.getBotsRemoveController(),
                 new BotsRemoveComboBoxController(mainView.getBotsRemoveView(), botModel));
+        mainView.registerBotListController(mainController.getBotsListController());
         mainView.setVisible(true);
     }
 
