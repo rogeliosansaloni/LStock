@@ -1,11 +1,13 @@
 package controller;
 
-import view.LoginView;
 import view.RegisterView;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+/**
+ * Controller for the focus effect of the registration view
+ */
 public class RegisterFocusController implements FocusListener {
     private RegisterView view;
     private int id;

@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Controller of JTextfields and buttons for login functionality
+ */
 public class LoginController implements ActionListener {
     private static final int ERROR_1 = 1;
     private static final int ERROR_2 = 2;
@@ -20,6 +23,11 @@ public class LoginController implements ActionListener {
     private LoginView loginView;
     private RegisterView registerView;
 
+    /**
+     * Initializes login controller and views
+     * @param loginView Login view
+     * @param registerView Register view
+     */
     public LoginController(LoginView loginView, RegisterView registerView) {
         this.loginView = loginView;
         this.registerView = registerView;

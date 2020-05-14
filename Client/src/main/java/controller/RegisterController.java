@@ -1,7 +1,6 @@
 package controller;
 
 import model.entities.AuthenticationInfo;
-import model.entities.TunnelObject;
 import network.NetworkManager;
 import view.LoginView;
 import view.RegisterView;
@@ -11,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+/**
+ * Controller of the JTextfields and buttons for the registration functionality
+ */
 public class RegisterController implements ActionListener {
     private static final String LOGIN = "Login";
     private static final String REGISTER = "Register";
@@ -30,6 +32,11 @@ public class RegisterController implements ActionListener {
     private RegisterView registerView;
     private LoginView loginView;
 
+    /**
+     * Initializes the register controller and views
+     * @param registerView Register view
+     * @param loginView Login view
+     */
     public RegisterController(RegisterView registerView, LoginView loginView) {
         this.registerView = registerView;
         this.loginView = loginView;

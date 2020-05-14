@@ -5,6 +5,9 @@ import view.LoginView;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
+/**
+ * Controller for the focus effect of JTextfields of LoginView
+ */
 public class LoginFocusController implements FocusListener {
     private LoginView view;
     private int id;
