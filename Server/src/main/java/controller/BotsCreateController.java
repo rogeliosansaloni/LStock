@@ -3,6 +3,7 @@ package controller;
 import model.entities.Bot;
 import model.entities.Company;
 import model.managers.BotManager;
+import view.BotsCreateView;
 import view.MainView;
 
 import javax.swing.*;
@@ -24,16 +25,18 @@ public class BotsCreateController implements ActionListener {
     private static final String BOT_PROB_VALUE_ERROR = "Probability value is wrong (Only 0-100%).";
     private static final String BOT_ACT_ERROR = "You have to indicate an activation time.";
     private static final String BOT_ACT_VALUE_ERROR = "Activation time value is wrong.";
-    private MainView view;
+    private BotsCreateView view;
+    private MainView mainView;
     private BotManager model;
 
     /**
      * Creates and initializes the controller
      * @param view Bot creation view
      */
-    public BotsCreateController (MainView view, BotManager model) {
+    public BotsCreateController (BotsCreateView view, MainView mainView, BotManager model) {
         this.model = model;
         this.view = view;
+        this.mainView = mainView;
         initView();
     }
 
@@ -48,10 +51,10 @@ public class BotsCreateController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case CREATE:
-                String companyName = view.getSelectedCompany();
+                String companyName = view.getCompanyName();
                 String botName = view.getBotName();
-                String percentage = view.getBotPercentage();
-                String activation = view.getBotActivation();
+                String percentage = view.getPercentage();
+                String activation = view.getActivation();
                 if (validFields(botName, percentage, activation)) {
                     Bot bot = new Bot();
                     int id = model.getCompanyId(companyName);
@@ -62,7 +65,7 @@ public class BotsCreateController implements ActionListener {
                 }
                 break;
             case CANCEL:
-                view.updateView(CARD_BOTS);
+                mainView.updateView(CARD_BOTS);
                 break;
         }
     }
