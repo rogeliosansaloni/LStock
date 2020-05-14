@@ -11,6 +11,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.net.URL;
 
+/**
+ * Register view
+ */
 public class RegisterView extends JFrame {
     private static final String PATH_LOGO = "/Images/stock.png";
     private static final String TITLE = "StockLS - C2";
@@ -49,6 +52,9 @@ public class RegisterView extends JFrame {
     private JButton jbRegister;
     private StockColors color;
 
+    /**
+     * Creates and initializes the register view
+     */
     public RegisterView() {
         color = new StockColors();
         this.setTitle(TITLE);

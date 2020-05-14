@@ -8,6 +8,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+/**
+ * Login view
+ */
 public class LoginView extends JFrame {
     private static final String PATH_LOGO = "/Images/stock.png";
     private static final String TITLE = "StockLS - C2";
@@ -30,6 +33,9 @@ public class LoginView extends JFrame {
     private JButton jbRegister;
     private StockColors color;
 
+    /**
+     * Creates and initializes the login view
+     */
     public LoginView() {
         color = new StockColors();
         this.setTitle(TITLE);
