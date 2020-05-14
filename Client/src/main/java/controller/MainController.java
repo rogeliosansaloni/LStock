@@ -24,9 +24,8 @@ public class MainController implements ActionListener {
         this.view = view;
         this.loginView = loginView;
         this.model = model;
-        this.balanceController = new BalanceController(view, model);
+        this.balanceController = new BalanceController(view.getBalanceView(), model);
         this.companyController = new CompanyController(view, model);
-        this.balanceController = new BalanceController(view, model);
         this.companyDetailController = new CompanyDetailController(view, model);
         this.sharesController = new SharesController(view, model);
     }
@@ -89,7 +88,7 @@ public class MainController implements ActionListener {
      */
     public void updateTotalBalance (float totalBalance) {
         model.getUser().setTotalBalance(totalBalance);
-        balanceController.updateTotalBalance(totalBalance);
+        view.updateTotalBalance(totalBalance);
     }
 
     public void updateCompanyList () {
