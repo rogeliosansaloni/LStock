@@ -1,14 +1,19 @@
 package model.entities;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  * Represents a Bot
  */
-public class Bot extends Thread {
+public class Bot implements Runnable {
+    private static final String TRANSACTION_MESSAGE = "Bot %d has made a %s transaction.";
     private int botId;
     private float activeTime;
     private float probability;
     private int status;
     private Company company;
+    private ArrayList<Share> shares;
 
     /**
      * Bot constructor
@@ -22,6 +27,7 @@ public class Bot extends Thread {
         this.activeTime = activeTime;
         this.probability = probability;
         this.company = company;
+        this.shares = new ArrayList<>();
     }
 
     /**
@@ -30,14 +36,6 @@ public class Bot extends Thread {
     public Bot() {
 
     }
-
-    public boolean checkBuySell() {
-        return false;
-    }
-
-    public void makeTransaction() {
-    }
-
 
     /**
      * Getters
@@ -84,5 +82,38 @@ public class Bot extends Thread {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    @Override
+    public void run() {
+        try {
+            transact();
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void transact() throws InterruptedException {
+        synchronized (shares) {
+            while(status != 1) {
+                shares.wait();
+            }
+
+            // Bot works every after X seconds
+            Thread.sleep((long) (activeTime * 1000));
+            // TODO: Add buy or sell action here
+            Share share = new Share(); // TODO: Get the share that was bought or sold
+
+            // Checks if the bot should buy or sell according to probability
+            if (new Random().nextDouble() >= probability) {
+                System.out.println(String.format(TRANSACTION_MESSAGE, botId, "buy"));
+                shares.add(share);
+            } else {
+                System.out.println(String.format(TRANSACTION_MESSAGE, botId, "sell"));
+                shares.remove(share);
+            }
+
+            shares.notifyAll();
+        }
     }
 }
