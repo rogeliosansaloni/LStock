@@ -26,7 +26,6 @@ public class BotsRemoveView extends JPanel {
     private JLabel jlStatus;
     private JButton jbRemove;
     private JButton jbCancel;
-    private String selectedItem;
 
     public BotsRemoveView() {
         color = new StockColors();
