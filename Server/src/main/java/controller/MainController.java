@@ -33,7 +33,7 @@ public class MainController implements ActionListener {
         this.view = view;
         this.botModel = botModel;
         this.homeController = new HomeController(view);
-        this.botMenuController = new BotMenuController(view);
+        this.botMenuController = new BotMenuController(this, view);
         this.botsCreateController = new BotsCreateController(view, botModel);
         this.botsRemoveController = new BotsRemoveController(view.getBotsRemoveView(), view, botModel);
         this.botsListController = new BotsListController(view, view.getBotsListView(), botModel);

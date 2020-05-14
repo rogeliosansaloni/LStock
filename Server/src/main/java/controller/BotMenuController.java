@@ -17,12 +17,13 @@ public class BotMenuController implements ActionListener {
     private static final String CARD_REMOVE = "Remove Bot";
     private static final String CARD_LIST = "Bots";
     private MainView view;
-
+    private MainController mainController;
     /**
      * Creates and initializes the controller
      * @param view
      */
-    public BotMenuController(MainView view) {
+    public BotMenuController(MainController mainController, MainView view) {
+        this.mainController = mainController;
         this.view = view;
     }
 
@@ -40,14 +41,12 @@ public class BotMenuController implements ActionListener {
                 //model.configureBot(botToBeEdited);
                 break;
             case CARD_REMOVE:
+                mainController.getBotsRemoveController().initView();
                 view.updateView(CARD_REMOVE);
-                //int botToBeDeleted = view.getBotsRemoveView().getBotId();
-                // TODO: Get bot information from view
-                //model.deleteBot(botToBeDeleted);
                 break;
             case CARD_LIST:
+                mainController.getBotsListController().initView();
                 view.updateView(CARD_LIST);
-                //view.getBotsListView().showBotsInTable(model.getAllBots());
                 break;
         }
     }

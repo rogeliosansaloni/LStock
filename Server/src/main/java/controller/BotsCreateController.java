@@ -34,7 +34,14 @@ public class BotsCreateController implements ActionListener {
     public BotsCreateController (MainView view, BotManager model) {
         this.model = model;
         this.view = view;
-        this.view.showCompanies(model.getCompanies());
+        initView();
+    }
+
+    /**
+     * Initializes view data
+     */
+    public void initView() {
+        view.showCompanies(model.getCompanies());
     }
 
     @Override

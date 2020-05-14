@@ -37,7 +37,7 @@ public class BotsRemoveController implements ActionListener {
      * Initializes the comboboxes with the names of the companies and the bots for the
      * selected and default company
      */
-    private void initView() {
+    public void initView() {
         view.showCompanies(model.getCompanies());
         ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
         view.showBots(bots);
