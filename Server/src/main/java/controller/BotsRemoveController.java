@@ -1,10 +1,12 @@
 package controller;
 
+import model.entities.Bot;
 import model.managers.BotManager;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class BotsRemoveController implements ActionListener {
     private static final String REMOVE = "REMOVE";
@@ -16,7 +18,15 @@ public class BotsRemoveController implements ActionListener {
     public BotsRemoveController(MainView view, BotManager model) {
         this.view = view;
         this.model = model;
-        this.view.showCompanies(model.getCompanies());
+        initView();
+    }
+
+    private void initView() {
+        view.showCompanies(model.getCompanies());
+        String companyName = view.getBotsRemoveView().getCompanyName();
+        int companyId = model.getCompanyId(companyName);
+        ArrayList<Bot> bots = model.getAllBotsByCompany(companyId);
+        view.showBots(bots);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package view;
 
 import controller.*;
+import model.entities.Bot;
 import model.entities.Company;
 import utils.StockColors;
 
@@ -218,7 +219,7 @@ public class MainView extends JFrame {
 
     /**
      * Shows all of the companies name in the Bots Create view combobox
-     * @param companies receives a list of companies
+     * @param companies a list of companies
      */
     public void showCompanies (ArrayList<Company> companies) {
         jpBotsCreateView.showCompanies(companies);
@@ -231,6 +232,14 @@ public class MainView extends JFrame {
      * @return the company name
      */
     public String getSelectedCompany() { return jpBotsCreateView.getCompanyName(); }
+
+    /**
+     * Show all the bots of the default company in Bots Remove view combobox
+     * @param bots a list of bots
+     */
+    public void showBots(ArrayList<Bot> bots) {
+        jpBotsRemoveView.showBots(bots);
+    }
 
     /**
      * Gets the indicated bot name
