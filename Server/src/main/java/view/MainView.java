@@ -247,15 +247,6 @@ public class MainView extends JFrame {
         return jpBotsCreateView;
     }
 
-    /**
-     * Shows error message in the Bots Create view
-     *
-     * @param message the error message
-     */
-    public void showErrorMessage (String message) {
-        jpBotsCreateView.showErrorMessage(message);
-    }
-
 
     /**
      * Shows desired view
