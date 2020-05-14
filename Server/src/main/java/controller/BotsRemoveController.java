@@ -9,6 +9,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Controller for Bot removal
+ */
 public class BotsRemoveController implements ActionListener {
     private static final String REMOVE = "REMOVE";
     private static final String CANCEL = "CANCEL";
@@ -17,6 +20,12 @@ public class BotsRemoveController implements ActionListener {
     private BotsRemoveView view;
     private BotManager model;
 
+    /**
+     * Creates and initializes the controller
+     * @param view MainView to be able to return to Bots Menu view
+     * @param mainView the main view for Client
+     * @param model BotManager
+     */
     public BotsRemoveController(BotsRemoveView view, MainView mainView, BotManager model) {
         this.view = view;
         this.mainView = mainView;
@@ -24,12 +33,20 @@ public class BotsRemoveController implements ActionListener {
         initView();
     }
 
+    /**
+     * Initializes the comboboxes with the names of the companies and the bots for the
+     * selected and default company
+     */
     private void initView() {
         view.showCompanies(model.getCompanies());
         ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
         view.showBots(bots);
     }
 
+    /**
+     * Gets the company id of the selected company name from the combobox
+     * @return if of the company
+     */
     private int getSelectedCompanyId() {
         String companyName = mainView.getBotsRemoveView().getCompanyName();
         return model.getCompanyId(companyName);
