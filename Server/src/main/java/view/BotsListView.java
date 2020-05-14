@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * Bots list view
+ */
 public class BotsListView extends JPanel {
     private static final String[] columnNames = {"Company", "Bot", "Buy percentage", "Activation Time", "Status"};
     private static final String RETURN = "Return";
@@ -23,11 +26,17 @@ public class BotsListView extends JPanel {
     private JButton jbReturn;
     private StockColors color;
 
+    /**
+     * Creates and initializes the bots list view
+     */
     public BotsListView() {
         color = new StockColors();
         initUI();
     }
 
+    /**
+     * Creates de Bots list view
+     */
     private void initUI() {
         this.setLayout(new BorderLayout());
         this.setBackground(color.getWHITE());
