@@ -1,5 +1,6 @@
 package view;
 
+import model.entities.Bot;
 import model.entities.Company;
 import utils.StockColors;
 
@@ -7,6 +8,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class BotsRemoveView extends JPanel {
@@ -24,6 +26,7 @@ public class BotsRemoveView extends JPanel {
     private JLabel jlStatus;
     private JButton jbRemove;
     private JButton jbCancel;
+    private String selectedItem;
 
     public BotsRemoveView() {
         color = new StockColors();
@@ -55,12 +58,15 @@ public class BotsRemoveView extends JPanel {
         jcbBot.setFont(font);
         jcbBot.setForeground(Color.GRAY);
         jcbBot.setBackground(color.getTEXTFIELD());
-        jcbCompany.setActionCommand("bot-id");
+        jcbBot.setActionCommand("bot-id");
         this.add(jcbBot);
 
         //Status
-        jlStatus = new JLabel("Status: ");
-        this.add(jlTitle, JLabel.CENTER);
+        jlStatus = new JLabel();
+        jlStatus.setPreferredSize(new Dimension(200, 1));
+        jlStatus.setHorizontalAlignment(JLabel.CENTER);
+        jlStatus.setFont(font);
+        this.add(jlStatus);
 
         //Buttons
         jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
@@ -85,20 +91,15 @@ public class BotsRemoveView extends JPanel {
 
         this.add(jpButtons);
         this.setBorder(BorderFactory.createEmptyBorder(0, 150, 50, 150));
-
-
     }
 
-    public void registerController(ActionListener controller) {
-        this.jbRemove.addActionListener(controller);
-        this.jbRemove.setActionCommand("removeExistingBot");
-        this.jbCancel.addActionListener(controller);
-        this.jbCancel.setActionCommand("cancelBotRemoval");
-    }
-
-    public int getBotId() {
-        String name = jcbBot.getSelectedItem().toString();
-        return Integer.parseInt(name.replaceAll("[^0-9]", ""));
+    /**
+     * Gets the selected company name
+     *
+     * @return the company name
+     */
+    public String getCompanyName() {
+        return String.valueOf(jcbCompany.getSelectedItem());
     }
 
     /**
@@ -113,5 +114,51 @@ public class BotsRemoveView extends JPanel {
             Company company = (Company) companies.get(i);
             jcbCompany.addItem(company.getName());
         }
+    }
+
+    /**
+     * Shows all bots for a specific company in the combo box
+     * @param bots list of bots
+     */
+    public void showBots(ArrayList<Bot> bots) {
+        // Clear bot list from combo box
+        jcbBot.removeAllItems();
+
+        // Add retrieved bots to the list
+        Font font = new Font(FONT, Font.ITALIC, 20);
+        int numBots = bots.size();
+        for (int i = 0; i < numBots; i++) {
+            Bot bot = (Bot) bots.get(i);
+            jcbBot.addItem(String.format("Bot %d", bot.getBotId()));
+        }
+    }
+
+    /**
+     * Registers the controller for the buttons
+     * @param controller controller for the buttons
+     */
+    public void registerController(ActionListener controller) {
+        this.jbRemove.addActionListener(controller);
+        this.jbRemove.setActionCommand(REMOVE);
+        this.jbCancel.addActionListener(controller);
+        this.jbCancel.setActionCommand(CANCEL);
+    }
+
+    /**
+     * Registers the controller for the combo boxes
+     * @param itemListener item listener for the combo boxes
+     */
+    public void registerComboBoxController(ItemListener itemListener) {
+        this.jcbCompany.addItemListener(itemListener);
+        this.jcbBot.addItemListener(itemListener);
+    }
+
+    /**
+     * Gets id of bot to be removed
+     * @return id of the bot
+     */
+    public int getBotId() {
+        String name = jcbBot.getSelectedItem().toString();
+        return Integer.parseInt(name.replaceAll("[^0-9]", ""));
     }
 }

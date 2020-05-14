@@ -118,11 +118,16 @@ public class BotDao {
      */
     private Bot toBot(ResultSet resultSet) throws SQLException {
         Bot bot = new Bot();
-        bot.setBotId(resultSet.getInt("bot_id"));
-        bot.setActiveTime(resultSet.getFloat("active_time"));
-        bot.setProbability(resultSet.getFloat("probability"));
-        bot.setCompany(new Company(resultSet.getString("name")));
-        bot.setStatus(resultSet.getInt("activity_status"));
+        try {
+            bot.setBotId(resultSet.getInt("bot_id"));
+            bot.setActiveTime(resultSet.getFloat("active_time"));
+            bot.setProbability(resultSet.getFloat("probability"));
+            bot.setStatus(resultSet.getInt("activity_status"));
+            bot.setCompany(new Company(resultSet.getString("name")));
+        } catch (SQLException e) {
+            // If column 'name' does not exist, parse the company_id
+            bot.setCompany(new Company(resultSet.getInt("company_id")));
+        }
         return bot;
     }
 

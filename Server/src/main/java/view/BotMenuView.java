@@ -33,14 +33,6 @@ public class BotMenuView extends JPanel {
     public BotMenuView() {
         color = new StockColors();
         initUI();
-        initViews();
-    }
-
-    private void initViews() {
-        this.botsCreateView = new BotsCreateView();
-        this.botsEditView = new BotsEditView();
-        this.botsRemoveView = new BotsRemoveView();
-        this.botsListView = new BotsListView();
     }
 
     public void initUI() {
