@@ -21,6 +21,7 @@ public class MainController implements ActionListener {
     private HomeController homeController;
     private BotMenuController botMenuController;
     private BotsCreateController botsCreateController;
+    private BotsListController botsListController;
     //TODO: Add the rest con controllers
 
     /**
@@ -33,6 +34,7 @@ public class MainController implements ActionListener {
         this.homeController = new HomeController(view);
         this.botMenuController = new BotMenuController(view);
         this.botsCreateController = new BotsCreateController(view, botModel);
+        this.botsListController = new BotsListController(view, view.getBotsListView(), botModel);
         //TODO: Initialize controllers
     }
 
@@ -71,5 +73,11 @@ public class MainController implements ActionListener {
      * @return BotsCreateCntroller
      */
     public BotsCreateController getBotsCreateController() { return botsCreateController; }
+
+    /**
+     * Gets the BotsListController
+     * @return BotsListController
+     */
+    public BotsListController getBotsListController() { return  botsListController; }
 
 }

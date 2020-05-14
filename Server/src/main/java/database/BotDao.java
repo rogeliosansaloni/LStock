@@ -75,7 +75,8 @@ public class BotDao {
      * @return a list of all existing bots
      */
     public ArrayList<Bot> getAllBots() {
-        ResultSet retrievedBots = dbConnector.selectQuery("SELECT * FROM Bots;");
+        ResultSet retrievedBots = dbConnector.selectQuery("SELECT c.name, bot_id, active_time, probability, activity_status" +
+                " FROM Bots as b, Company as c WHERE b.company_id = c.company_id;");
         ArrayList<Bot> bots = null;
         try {
             bots = new ArrayList<Bot>();
@@ -120,7 +121,8 @@ public class BotDao {
         bot.setBotId(resultSet.getInt("bot_id"));
         bot.setActiveTime(resultSet.getFloat("active_time"));
         bot.setProbability(resultSet.getFloat("probability"));
-        bot.setCompany(new Company(resultSet.getInt("company_id")));
+        bot.setCompany(new Company(resultSet.getString("name")));
+        bot.setStatus(resultSet.getInt("activity_status"));
         return bot;
     }
 

@@ -1,9 +1,6 @@
 package view;
 
-import controller.BotCreateFocusController;
-import controller.BotMenuController;
-import controller.BotsCreateController;
-import controller.HomeController;
+import controller.*;
 import model.entities.Company;
 import utils.StockColors;
 
@@ -43,6 +40,7 @@ public class MainView extends JFrame {
     private BotMenuView jpMenuBots;
     private BotsCreateView jpBotsCreateView;
     private BotsRemoveView jpBotsRemoveView;
+    private BotsListView jpBotsListView;
 
     public MainView() {
         color = new StockColors();
@@ -64,6 +62,7 @@ public class MainView extends JFrame {
         jpMenuBots = new BotMenuView();
         jpBotsCreateView = new BotsCreateView();
         jpBotsRemoveView = new BotsRemoveView();
+        jpBotsListView = new BotsListView();
         jpHomeView = new HomeView();
         jpSharesView = new SharesListView();
         //TODO: Add the rest of views
@@ -78,6 +77,7 @@ public class MainView extends JFrame {
         jpCenter.add(jpMenuBots, CARD_BOTS);
         jpCenter.add(jpBotsCreateView, CARD_BOTS_CREATE);
         jpCenter.add(jpBotsRemoveView, CARD_BOTS_REMOVE);
+        jpCenter.add(jpBotsListView, CARD_BOTS_LIST);
         jpCenter.add(jpSharesView, CARD_USERS);
         //TODO: Add the rest of views
     }
@@ -207,7 +207,20 @@ public class MainView extends JFrame {
     }
     public void registerBotEditController() {}
     public void registerBotRemoveController() {}
-    public void registerBotListController() {}
+
+    /**
+     * Registers controller for Bots List controller
+     * @param controller BotsListController
+     */
+    public void registerBotListController(BotsListController controller) {
+        jpBotsListView.registerController(controller);
+    }
+
+    /**
+     * Gets the Bots List view
+     * @return Bots list view
+     */
+    public BotsListView getBotsListView () { return jpBotsListView; }
 
     /**
      * Shows all of the companies name in the Bots Create view combobox
@@ -286,6 +299,7 @@ public class MainView extends JFrame {
                 cardLayout.show(jpCenter, CARD_BOTS_REMOVE);
                 break;
             case CARD_BOTS_LIST:
+                cardLayout.show(jpCenter, CARD_BOTS_LIST);
                 break;
         }
     }
