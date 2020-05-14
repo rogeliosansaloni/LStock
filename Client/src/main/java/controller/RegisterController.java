@@ -1,7 +1,6 @@
 package controller;
 
 import model.entities.AuthenticationInfo;
-import model.entities.TunnelObject;
 import network.NetworkManager;
 import view.LoginView;
 import view.RegisterView;
@@ -11,7 +10,16 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+/**
+ * Controller of the JTextfields and buttons for the registration functionality
+ */
 public class RegisterController implements ActionListener {
+    private static final String LOGIN = "Login";
+    private static final String REGISTER = "Register";
+    private static final String NICKNAME_LABEL = "Nickname";
+    private static final String EMAIL_LABEL = "Email";
+    private static final String PASSWORD_LABEL = "Password";
+    private static final String VERIFY_PASSWORD_LABEL = "Verify Password";
     private static final String NO_ERROR = "No Error";
     private static final String ERROR_1 = "Fields Required";
     private static final String ERROR_2 = "Fields Empty";
@@ -24,6 +32,11 @@ public class RegisterController implements ActionListener {
     private RegisterView registerView;
     private LoginView loginView;
 
+    /**
+     * Initializes the register controller and views
+     * @param registerView Register view
+     * @param loginView Login view
+     */
     public RegisterController(RegisterView registerView, LoginView loginView) {
         this.registerView = registerView;
         this.loginView = loginView;
@@ -36,7 +49,7 @@ public class RegisterController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("register")) {
+        if (e.getActionCommand().equals(REGISTER)) {
             String nickname = registerView.getNickname();
             String email = registerView.getEmail();
             String pass1 = registerView.getPassword();
@@ -50,7 +63,7 @@ public class RegisterController implements ActionListener {
                 }
             }
         }
-        if (e.getActionCommand().equals("login")) {
+        if (e.getActionCommand().equals(LOGIN)) {
             registerView.setVisible(false);
             loginView.setVisible(true);
         }
@@ -67,17 +80,17 @@ public class RegisterController implements ActionListener {
      */
     private boolean validCredentials(String nickname, String email, String pass1, String pass2) {
         //If all fields are empty
-        if (nickname.equals("Nickname") && email.equals("Email") && pass1.equals("Password") && pass2.equals("Verify Password")) {
+        if (nickname.equals(NICKNAME_LABEL) && email.equals(EMAIL_LABEL) && pass1.equals(PASSWORD_LABEL) && pass2.equals(VERIFY_PASSWORD_LABEL)) {
             registerView.showErrorMessages(ERROR_1);
             return false;
         }
         //If some field is empty, show the corresponding message
-        if (nickname.equals("Nickname") || email.equals("Email") || pass1.equals("Password") || pass2.equals("Verify Password")) {
+        if (nickname.equals(NICKNAME_LABEL) || email.equals(EMAIL_LABEL) || pass1.equals(PASSWORD_LABEL) || pass2.equals(VERIFY_PASSWORD_LABEL)) {
             registerView.showErrorMessages(ERROR_2);
             return false;
         }
         //If email field isn't empty check if it's valid
-        if (!email.equals("Email")) {
+        if (!email.equals(EMAIL_LABEL)) {
             Pattern emailPattern = Pattern.compile(REGEX_EMAIL);
             if (!emailPattern.matcher(email).matches()) {
                 registerView.showErrorMessages(ERROR_3);
@@ -85,7 +98,7 @@ public class RegisterController implements ActionListener {
             }
         }
         //If password fields aren't empty, check if they're the same
-        if (!pass1.equals("Password") && !pass2.equals("Verify Password")) {
+        if (!pass1.equals(PASSWORD_LABEL) && !pass2.equals(VERIFY_PASSWORD_LABEL)) {
             if (!pass1.equals(pass2)) {
                 registerView.showErrorMessages(ERROR_4);
                 return false;

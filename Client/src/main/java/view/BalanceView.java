@@ -10,18 +10,26 @@ import java.awt.event.ActionListener;
 
 import static javax.swing.SwingConstants.*;
 
+/**
+ * Balance view
+ */
 public class BalanceView extends JPanel {
+    private final static String LOAD = "Load";
+    private final static String SELECT_AMOUNT = "Select Amount: ";
     private JLabel jlCurrent;
     private JButton jbLoad;
     private JComboBox<String> jcbAmount;
     protected StockColors color;
 
+    /**
+     * Creates the balance view
+     */
     public BalanceView () {
         color = new StockColors();
         //Balance
         this.setBackground(color.getBLACK());
         this.setLayout(new GridLayout(3,1));
-        jlCurrent = new JLabel("Select Amount: ", CENTER);
+        jlCurrent = new JLabel(SELECT_AMOUNT, CENTER);
         Font font = new Font("Segoe UI", Font.PLAIN, 30);
         jlCurrent.setFont(font);
         jlCurrent.setForeground(color.getWHITE());
@@ -46,7 +54,7 @@ public class BalanceView extends JPanel {
         JPanel jpLoadButton = new JPanel(new FlowLayout());
         jpLoadButton.setBackground(color.getBLACK());
 
-        jbLoad = new JButton("Load");
+        jbLoad = new JButton(LOAD);
         jbLoad.setBackground(color.getBLUE());
         jbLoad.setBorder(borderOptions);
         jbLoad.setForeground(color.getBLACK());
@@ -67,7 +75,7 @@ public class BalanceView extends JPanel {
      */
     public void registerController(ActionListener actionListener) {
         jbLoad.addActionListener(actionListener);
-        jbLoad.setActionCommand("load");
+        jbLoad.setActionCommand(LOAD);
     }
 
     /**
