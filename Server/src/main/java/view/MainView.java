@@ -1,6 +1,7 @@
 package view;
 
 import controller.*;
+import model.entities.Bot;
 import model.entities.Company;
 import utils.StockColors;
 
@@ -205,8 +206,18 @@ public class MainView extends JFrame {
         jpBotsCreateView.registerController(controller);
         jpBotsCreateView.registerFocusController();
     }
+
+    /**
+     * Registers controller for the Bot remove view
+     * @param controller BotsRemove controller
+     */
+    public void registerBotRemoveController(BotsRemoveController controller,
+                                            BotsRemoveComboBoxController comboBoxController) {
+        jpBotsRemoveView.registerController(controller);
+        jpBotsRemoveView.registerComboBoxController(comboBoxController);
+    }
+
     public void registerBotEditController() {}
-    public void registerBotRemoveController() {}
 
     /**
      * Registers controller for Bots List controller
@@ -223,54 +234,17 @@ public class MainView extends JFrame {
     public BotsListView getBotsListView () { return jpBotsListView; }
 
     /**
-     * Shows all of the companies name in the Bots Create view combobox
-     * @param companies receives a list of companies
+     * Gets BotsRemoveView
+     * @return view for bot removal
      */
-    public void showCompanies (ArrayList<Company> companies) {
-        jpBotsCreateView.showCompanies(companies);
-    }
+    public BotsRemoveView getBotsRemoveView() { return  jpBotsRemoveView; }
 
     /**
-     * Gets the selected company name
-     *
-     * @return the company name
+     * Gets Bots Create view
+     * @return view for Bot creation
      */
-    public String getSelectedCompany() { return jpBotsCreateView.getCompanyName(); }
-
-    /**
-     * Gets the indicated bot name
-     *
-     * @return the bot name
-     */
-    public String getBotName() {
-        return jpBotsCreateView.getBotName();
-    }
-
-    /**
-     * Gets the probability of being bought/sold
-     *
-     * @return the probability in percentage
-     */
-    public String getBotPercentage() {
-        return jpBotsCreateView.getPercentage();
-    }
-
-    /**
-     * Gets the activation time indicated in the Bots Create view
-     *
-     * @return the activation time
-     */
-    public String getBotActivation() {
-        return jpBotsCreateView.getActivation();
-    }
-
-    /**
-     * Shows error message in the Bots Create view
-     *
-     * @param message the error message
-     */
-    public void showErrorMessage (String message) {
-        jpBotsCreateView.showErrorMessage(message);
+    public BotsCreateView getBotsCreateView() {
+        return jpBotsCreateView;
     }
 
 

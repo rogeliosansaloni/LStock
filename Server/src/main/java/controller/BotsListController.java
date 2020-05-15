@@ -26,8 +26,16 @@ public class BotsListController implements ActionListener {
         this.mainView = mainView;
         this.view = view;
         this.model = model;
-        this.view.showBotsInTable(model.getAllBots());
+        initView();
     }
+
+    /**
+     * Initializes view data
+     */
+    public void initView() {
+        view.showBotsInTable(model.getAllBots());
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         mainView.updateView(CARD_BOTS);
