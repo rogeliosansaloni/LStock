@@ -3,7 +3,6 @@ package controller;
 import model.entities.Bot;
 import model.managers.BotManager;
 import view.BotsEditView;
-import view.BotsRemoveView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
