@@ -218,8 +218,9 @@ public class MainView extends JFrame {
         jpBotsRemoveView.registerComboBoxController(comboBoxController);
     }
 
-    public void registerBotEditController(BotsEditController controller) {
+    public void registerBotEditController(BotsEditController controller, BotsEditComboBoxController comboBoxController) {
         jpBotsEditView.registerController(controller);
+        jpBotsEditView.registerComboBoxController(comboBoxController);
     }
 
     /**

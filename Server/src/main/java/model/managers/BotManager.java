@@ -98,4 +98,12 @@ public class BotManager {
         return botDao.getAllBotsByCompany(companyId);
     }
 
+    /**
+     * Gets bot information
+     * @param botId id of the bot
+     * @return a Bot that contains all of its information
+     */
+    public Bot getBot(int botId) {
+        return botDao.getBotById(botId);
+    }
 }

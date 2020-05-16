@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class BotsEditView extends JPanel {
@@ -137,7 +138,7 @@ public class BotsEditView extends JPanel {
      * Gets the selected company from the combobox
      * @return name of the selected company
      */
-    public String getCompany() {
+    public String getCompanyName() {
         return jcbCompany.getSelectedItem().toString();
     }
 
@@ -164,5 +165,14 @@ public class BotsEditView extends JPanel {
         this.jbActivate.setActionCommand("activateBot");
         this.jbDeactivate.addActionListener(controller);
         this.jbDeactivate.setActionCommand("deactivateBot");
+    }
+
+    /**
+     * Registers the controller for the combo boxes
+     * @param itemListener item listener for the combo boxes
+     */
+    public void registerComboBoxController(ItemListener itemListener) {
+        this.jcbCompany.addItemListener(itemListener);
+        this.jcbBot.addItemListener(itemListener);
     }
 }
