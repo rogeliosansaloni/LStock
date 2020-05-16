@@ -15,5 +15,5 @@ public interface ShareMapper {
 
     ShareTrade userCompanyToShareTrade (User user, Company company);
 
-    static ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList);
+    ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList);
 }

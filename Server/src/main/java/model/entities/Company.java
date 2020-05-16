@@ -85,6 +85,10 @@ public class Company {
         return value;
     }
 
+    public void addToShares (Share share){
+
+    }
+
     /**
      * Getters
      **/
