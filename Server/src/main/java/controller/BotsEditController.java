@@ -59,10 +59,10 @@ public class BotsEditController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
             case ENABLE:
-                // TODO: Change bot status to ENABLED
+                model.configureBot(view.getBotId(), "ENABLE");
                 break;
             case DISABLE:
-                // TODO: Change bot status to DISABLED
+                model.configureBot(view.getBotId(), "DISABLE");
                 break;
             case CANCEL:
                 mainView.updateView(CARD_BOTS);

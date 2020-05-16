@@ -200,12 +200,16 @@ public class BotDao {
         final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
         final String errorMessage = "Error updating bot activity with id %d";
 
+        Bot bot = getBotById(botId);
+
         // Determine if we should enable or disable the bot
-        String newActivity = "";
+        int newActivity;
         if (activate.equals("ENABLE")) {
-            newActivity = "TRUE";
-        } else {
-            newActivity = "FALSE";
+            newActivity = 1;
+        } else if (activate.equals("DISABLE")) {
+            newActivity = 0;
+        } else { // No change
+            newActivity = bot.getStatus();
         }
 
         // Consult the database to get information on the bot to be updated
