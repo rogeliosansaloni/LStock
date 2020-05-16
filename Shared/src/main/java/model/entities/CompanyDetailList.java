@@ -2,7 +2,7 @@ package model.entities;
 
 public class CompanyDetailList extends TunnelObject {
 
-    private int numShares;
+    private int numUserShares;
     private int companyId;
     private String companyName;
     private int[] shareIdOpen;
@@ -27,8 +27,8 @@ public class CompanyDetailList extends TunnelObject {
     public CompanyDetailList() {
     }
 
-    public int getNumShares() {
-        return numShares;
+    public int getNumUserShares() {
+        return numUserShares;
     }
 
     public int getCompanyId() {
@@ -67,8 +67,8 @@ public class CompanyDetailList extends TunnelObject {
         return minutesBefore;
     }
 
-    public void setNumShares(int numShares) {
-        this.numShares = numShares;
+    public void setNumUserShares(int numUserShares) {
+        this.numUserShares = numUserShares;
     }
 
     public void setCompanyId(int companyId) {

@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class CompanyDetailController implements ActionListener {
     private static final String CONFIRM_BUY_ACTION = "Do you want to buy this share?";
     private static final String CONFIRM_SELL_ACTION = "Do you want to sell your share?";
-    private static final String BALANCE_ERROR = "You don't have enough money to buy this share.";
     private static final String BUY_ACTION = "BUY";
     private static final String SELL_ACTION = "SELL";
     private static final int CONFIRMED = 0;
@@ -38,7 +37,7 @@ public class CompanyDetailController implements ActionListener {
                     //Check if the user has enough money
                     float userBalance = model.checkUserBalance(numShares);
                     if(userBalance > 0){
-                        sendShareTrade(numShares, userBalance);
+                        sendShareTrade(numShares, userBalance, BUY_ACTION);
                     } else{
                         view.showErrorCompanyDetail(2);
                     }
@@ -52,7 +51,12 @@ public class CompanyDetailController implements ActionListener {
                 //Check if the text introduced is an integer
                 int numShares = checkInteger(textfieldText);
                 if(numShares > 0){
-                    //sendShareTrade(numShares);
+                    float userBalance = model.checkNumUserShares(numShares);
+                    if(userBalance > 0){
+                        sendShareTrade(numShares, userBalance, SELL_ACTION);
+                    } else{
+                        view.showErrorCompanyDetail(3);
+                    }
                 } else {
                     view.showErrorCompanyDetail(2);
                 }
@@ -75,12 +79,12 @@ public class CompanyDetailController implements ActionListener {
         }
     }
 
-    public void sendShareTrade(int numShares, float userBalance){
+    public void sendShareTrade(int numShares, float userBalance, String action){
         int userId = model.getUser().getUserId();
         int companyId = model.getCompanyDetailId();
         int shareId = model.getCurrentShareId();
         float currentShareValue = model.getCurrentShareValue();
-        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, numShares,  BUY_ACTION);
+        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, numShares,  action);
         try {
             NetworkManager.getInstance().sendShareTrade(shareTrade);
         } catch (IOException e1) {

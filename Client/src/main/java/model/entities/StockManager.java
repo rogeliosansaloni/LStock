@@ -85,4 +85,14 @@ public class StockManager {
     public void updateUserBalance (float newBalance){
         this.user.setTotalBalance(newBalance);
     }
+
+    public float checkNumUserShares (int quantityShares){
+        int numUserShares = this.companyDetails.get(0).getNumUserShares();
+        if(numUserShares >= quantityShares){
+            float benefitSale = quantityShares * getCurrentShareValue();
+            float userBalance = user.getTotalBalance() + benefitSale;
+            return userBalance;
+        }
+        return -1;
+    }
 }

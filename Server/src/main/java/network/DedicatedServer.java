@@ -101,14 +101,8 @@ public class DedicatedServer extends Thread {
                     Purchase purchase = shareMapper.shareTradeToPurchase(shareTrade);
                     User user = shareMapper.shareTradeToUser(shareTrade);
                     Company company = shareMapper.shareTradeToCompany(shareTrade);
-                    if (shareTrade.getActionToDo().equals(BUY_ACTION)) {
-                        ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchase);
-                        oos.writeObject(share);
-                    } else {
-                        if (shareTrade.getActionToDo().equals(SELL_ACTION)) {
-                             //stockModel.updateCompanyValue(shareTrade.getCompanyId(), "sell");
-                        }
-                    }
+                    ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchase, shareTrade.getActionToDo());
+                    oos.writeObject(share);
                 }
 
                 if (tunnelObject instanceof CompanyList) {

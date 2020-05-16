@@ -38,7 +38,6 @@ public class ShareDao {
             }
         } catch (SQLException e) {
         }
-
     }
 
     /**
@@ -64,30 +63,9 @@ public class ShareDao {
     }
 
 
-    /**
-     * It will get all the shares in the LStock
-     *
-     * @return ArrayList<Share> all shares
-     */
-    public ArrayList<Share> getAllShares() {
-        ResultSet retrievedShare = dbConnector.selectQuery("SELECT * FROM Shares;");
-        ArrayList<Share> shares = null;
-        try {
-            shares = new ArrayList<Share>();
-            while (retrievedShare.next()) {
-                //No tengo muy claro que se tiene que coger
-                Share s = toShare(retrievedShare);
-                shares.add(s);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error getting all shares");
-        }
-        return shares;
-    }
-
     public int getNumShares(User user, Company company){
         int numShares = 0;
-        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumShares(" + user.getUserId() + ", " + company.getCompanyId() + ");");
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + user.getUserId() + ", " + company.getCompanyId() + ");");
         try {
             if(retrievedShares.next() != false){
                 numShares = retrievedShares.getInt("numShares");

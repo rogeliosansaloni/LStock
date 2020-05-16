@@ -102,12 +102,12 @@ public class CompanyDao {
 
     public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
         ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
-        int numShares = 0;
+        int numUserShares = 0;
 
-        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumShares(" + userId + ", " + companyId + ");");
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + userId + ", " + companyId + ");");
         try {
             if(retrievedShares.next() != false){
-                numShares = retrievedShares.getInt("numShares");
+                numUserShares = retrievedShares.getInt("numShares");
             }
         } catch (SQLException e) {
             System.out.println(GETTING_COMPANIES_ERROR);
@@ -119,11 +119,11 @@ public class CompanyDao {
                 if(retrieved.next() == false){
                     ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
                     retrievedCompanyName.next();
-                    companies.add(new CompanyDetail(numShares, 5, retrievedCompanyName.getString("companyName"), -1, -1, -1, -1,-1, -1, i));
+                    companies.add(new CompanyDetail(numUserShares, 5, retrievedCompanyName.getString("companyName"), -1, -1, -1, -1,-1, -1, i));
                 }else{
                     retrieved.beforeFirst();
                     while (retrieved.next()) {
-                        companies.add(toCompanyDetail(numShares, retrieved));
+                        companies.add(toCompanyDetail(numUserShares, retrieved));
                     }
                     ResultSet retrievedMaxMin = dbConnector.selectQuery("CALL getMaxMinValues(" + i + ", " + companyId + ");");
                     while (retrievedMaxMin.next()) {
@@ -185,9 +185,9 @@ public class CompanyDao {
         return companyChange;
     }
 
-    private CompanyDetail toCompanyDetail(int  numShares, ResultSet resultSet) throws SQLException {
+    private CompanyDetail toCompanyDetail(int  numUserShares, ResultSet resultSet) throws SQLException {
         CompanyDetail companyDetail = new CompanyDetail();
-        companyDetail.setNumShares(numShares);
+        companyDetail.setNumUserShares(numUserShares);
         companyDetail.setCompanyId(resultSet.getInt("companyId"));
         companyDetail.setCompanyName(resultSet.getString("name"));
         companyDetail.setShareIdOpen(resultSet.getInt("shareIdOpen"));

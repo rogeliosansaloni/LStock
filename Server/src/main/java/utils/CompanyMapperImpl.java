@@ -68,7 +68,7 @@ public class CompanyMapperImpl implements CompanyMapper {
     public ArrayList<CompanyDetail> converToCompanyDetails(CompanyDetailList companyDetailList) {
         ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
         int companiesLen = companyDetailList.getValueClose().length;
-        int numShares = companyDetailList.getNumShares();
+        int numUserShares = companyDetailList.getNumUserShares();
         int companyId = companyDetailList.getCompanyId();
         String companyName = companyDetailList.getCompanyName();
         int[] shareIdOpen = companyDetailList.getShareIdOpen();
@@ -80,7 +80,7 @@ public class CompanyMapperImpl implements CompanyMapper {
 
         int[] minutesBefore = companyDetailList.getMinutesBefore();
         for (int i = 0; i < companiesLen; i++) {
-            companies.add(new CompanyDetail(numShares, companyId, companyName, shareIdOpen[i], valueOpen[i], shareIdClose[i], valueClose[i], maxValue[i], minValue[i], minutesBefore[i]));
+            companies.add(new CompanyDetail(numUserShares, companyId, companyName, shareIdOpen[i], valueOpen[i], shareIdClose[i], valueClose[i], maxValue[i], minValue[i], minutesBefore[i]));
         }
         return companies;
     }
@@ -89,7 +89,7 @@ public class CompanyMapperImpl implements CompanyMapper {
     public CompanyDetailList convertToCompanyDetailList(ArrayList<CompanyDetail> companyDetails) {
         CompanyDetailList companyDetailList = new CompanyDetailList(companyDetails.size());
         int i = 0;
-        companyDetailList.setNumShares(companyDetails.get(0).getNumShares());
+        companyDetailList.setNumUserShares(companyDetails.get(0).getNumUserShares());
         companyDetailList.setCompanyId(companyDetails.get(0).getCompanyId());
         companyDetailList.setCompanyName(companyDetails.get(0).getCompanyName());
         for (CompanyDetail c : companyDetails) {
