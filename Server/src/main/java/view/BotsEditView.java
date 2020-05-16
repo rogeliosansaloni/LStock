@@ -1,11 +1,14 @@
 package view;
 
+import model.entities.Bot;
+import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class BotsEditView extends JPanel {
     private static final String FONT = "Segoe UI";
@@ -88,6 +91,37 @@ public class BotsEditView extends JPanel {
 
         this.add(jpButtons);
         this.setBorder(BorderFactory.createEmptyBorder(0, 150, 50, 150));
+    }
+
+    /**
+     * Shows the companies in the combobox;
+     *
+     * @param companies list of the companies
+     */
+    public void showCompanies(ArrayList<Company> companies) {
+        Font font = new Font(FONT, Font.ITALIC, 20);
+        int numCompanies = companies.size();
+        for (int i = 0; i < numCompanies; i++) {
+            Company company = (Company) companies.get(i);
+            jcbCompany.addItem(company.getName());
+        }
+    }
+
+    /**
+     * Shows all bots for a specific company in the combo box
+     * @param bots list of bots
+     */
+    public void showBots(ArrayList<Bot> bots) {
+        // Clear bot list from combo box
+        jcbBot.removeAllItems();
+
+        // Add retrieved bots to the list
+        Font font = new Font(FONT, Font.ITALIC, 20);
+        int numBots = bots.size();
+        for (int i = 0; i < numBots; i++) {
+            Bot bot = (Bot) bots.get(i);
+            jcbBot.addItem(String.format("Bot %d", bot.getBotId()));
+        }
     }
 
     public int getBotId() {

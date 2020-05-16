@@ -1,8 +1,5 @@
 package controller;
 
-import model.entities.Bot;
-import model.entities.Company;
-import model.managers.BotManager;
 import view.*;
 
 import java.awt.event.ActionEvent;
@@ -36,10 +33,8 @@ public class BotMenuController implements ActionListener {
                 view.updateView(CARD_CREATE);
                 break;
             case CARD_EDIT:
+                mainController.getBotsEditController().initView();
                 view.updateView(CARD_EDIT);
-                //int botToBeEdited = view.getBotsEditView().getBotId();
-                // TODO: Get bot information from view
-                //model.configureBot(botToBeEdited);
                 break;
             case CARD_REMOVE:
                 mainController.getBotsRemoveController().initView();
