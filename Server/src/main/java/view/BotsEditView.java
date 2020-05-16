@@ -124,15 +124,41 @@ public class BotsEditView extends JPanel {
         }
     }
 
+    /**
+     * Gets the id of the selected bot
+     * @return id of the selected bot
+     */
     public int getBotId() {
         String name = jcbBot.getSelectedItem().toString();
         return Integer.parseInt(name.replaceAll("[^0-9]", ""));
     }
 
+    /**
+     * Gets the selected company from the combobox
+     * @return name of the selected company
+     */
     public String getCompany() {
         return jcbCompany.getSelectedItem().toString();
     }
 
+    /**
+     * Show button to change the activity status of the bot
+     * @param bot bot that we want to activate or deactivate
+     */
+    public void showStatusButton(Bot bot) {
+        if (bot.getStatus() == 1) {
+            jbActivate.setVisible(false);
+            jbDeactivate.setVisible(true);
+        } else {
+            jbDeactivate.setVisible(false);
+            jbActivate.setVisible(true);
+        }
+    }
+
+    /**
+     * Registers the controller for buttons
+     * @param controller
+     */
     public void registerController(ActionListener controller) {
         this.jbActivate.addActionListener(controller);
         this.jbActivate.setActionCommand("activateBot");
