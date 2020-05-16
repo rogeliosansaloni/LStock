@@ -17,7 +17,8 @@ public class BotMenuController implements ActionListener {
     private MainController mainController;
     /**
      * Creates and initializes the controller
-     * @param view
+     * @param view main view for Client
+     * @param mainController main controller for Client views
      */
     public BotMenuController(MainController mainController, MainView view) {
         this.mainController = mainController;
