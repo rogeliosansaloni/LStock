@@ -1,5 +1,6 @@
 package view;
 
+import model.entities.User;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -20,6 +21,7 @@ public class ProfileView extends JPanel {
     private JPanel jpIcon;
     private JLabel jlUserPhoto;
     private JLabel jlUserName;
+    private User user;
 
     public ProfileView (){
         //General window setup
@@ -41,12 +43,12 @@ public class ProfileView extends JPanel {
         jlNickname.setFont(fontN.deriveFont(attributesN));
 
         //User Nickname
-        jlUserNick = new JLabel("peter.foxie");
+        jlUserNick = new JLabel(user.getNickname());
         jlUserNick.setForeground(color.getWHITE());
         jlUserNick.setFont(fontData);
 
         //EMAIL
-        jlEmail = new JLabel("NICKNAME");
+        jlEmail = new JLabel("EMAIL");
         jlEmail.setForeground(color.getWHITE());
         Font fontE = jlEmail.getFont();
         Map attributesE = fontE.getAttributes();
@@ -54,12 +56,12 @@ public class ProfileView extends JPanel {
         jlNickname.setFont(fontE.deriveFont(attributesE));
 
         //User Email
-        jlUserEmail = new JLabel("peter.foxie@gmail.com");
+        jlUserEmail = new JLabel(user.getEmail());
         jlUserEmail.setForeground(color.getWHITE());
         jlUserEmail.setFont(fontData);
 
         //DESCRIPTION
-        jlDescription = new JLabel("NICKNAME");
+        jlDescription = new JLabel("DESCRIPTION");
         jlDescription.setForeground(color.getWHITE());
         Font fontD = jlDescription.getFont();
         Map attributesD = fontD.getAttributes();
@@ -67,7 +69,7 @@ public class ProfileView extends JPanel {
         jlDescription.setFont(fontD.deriveFont(attributesD));
 
         //User Description
-        jlUserDescription = new JLabel("peter.foxie@gmail.com");
+        jlUserDescription = new JLabel(user.getDescription());
         jlUserDescription.setForeground(color.getWHITE());
         jlUserDescription.setFont(fontData);
 
@@ -93,14 +95,13 @@ public class ProfileView extends JPanel {
 
         // Add User Name
         Font fontName = new Font("Segoe UI", Font.ITALIC, 30);
-        jlUserName = new JLabel("Peter Foxie", SwingConstants.CENTER);
+        jlUserName = new JLabel(user.getNickname(), SwingConstants.CENTER);
         jlUserName.setFont(fontName);
         jlUserName.setForeground(color.getBLACK());
 
         //Adding in the main pannel
         this.add(jpInformation, FlowLayout.RIGHT);
         this.add(jpIcon, FlowLayout.LEFT);
-
 
     }
 
