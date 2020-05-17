@@ -24,8 +24,7 @@ public class BotsEditView extends JPanel {
     private JComboBox<String> jcbBot;
     private JComboBox<String> jcbCompany;
     private JPanel jpButtons;
-    private JButton jbActivate;
-    private JButton jbDeactivate;
+    private JButton jButton;
     private JButton jbCancel;
 
     public BotsEditView() {
@@ -66,21 +65,13 @@ public class BotsEditView extends JPanel {
         jpButtons.setBackground(color.getWHITE());
 
         Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
-        jbActivate = new JButton(ENABLE);
-        jbActivate.setFont(buttonFont);
-        jbActivate.setForeground(color.getBLACK());
-        jbActivate.setBorder(null);
-        jbActivate.setBackground(color.getGREEN());
-        jbActivate.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        jpButtons.add(jbActivate);
-
-        jbDeactivate = new JButton(DISABLE);
-        jbDeactivate.setFont(buttonFont);
-        jbDeactivate.setForeground(color.getBLACK());
-        jbDeactivate.setBorder(null);
-        jbDeactivate.setBackground(color.getRED());
-        jbDeactivate.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        jpButtons.add(jbDeactivate);
+        jButton = new JButton("");
+        jButton.setFont(buttonFont);
+        jButton.setForeground(color.getBLACK());
+        jButton.setBorder(null);
+        jButton.setBackground(color.getGREEN());
+        jButton.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        jpButtons.add(jButton);
 
         jbCancel = new JButton(CANCEL);
         jbCancel.setFont(buttonFont);
@@ -148,11 +139,11 @@ public class BotsEditView extends JPanel {
      */
     public void showStatusButton(Bot bot) {
         if (bot.getStatus() == 1) {
-            jbActivate.setVisible(false);
-            jbDeactivate.setVisible(true);
+            jButton.setText(DISABLE);
+            jButton.setBackground(color.getRED());
         } else {
-            jbDeactivate.setVisible(false);
-            jbActivate.setVisible(true);
+            jButton.setText(ENABLE);
+            jButton.setBackground(color.getGREEN());
         }
     }
 
@@ -161,10 +152,9 @@ public class BotsEditView extends JPanel {
      * @param controller
      */
     public void registerController(ActionListener controller) {
-        this.jbActivate.addActionListener(controller);
-        this.jbActivate.setActionCommand("activateBot");
-        this.jbDeactivate.addActionListener(controller);
-        this.jbDeactivate.setActionCommand("deactivateBot");
+        jButton.addActionListener(controller);
+        jbCancel.addActionListener(controller);
+        jbCancel.setActionCommand(CANCEL);
     }
 
     /**
@@ -174,5 +164,14 @@ public class BotsEditView extends JPanel {
     public void registerComboBoxController(ItemListener itemListener) {
         this.jcbCompany.addItemListener(itemListener);
         this.jcbBot.addItemListener(itemListener);
+    }
+
+    /**
+     * Shows message when a bot activity status change
+     * @param message the message
+     */
+    public void showMessages(String message) {
+        JOptionPane.showMessageDialog(null,message);
+
     }
 }

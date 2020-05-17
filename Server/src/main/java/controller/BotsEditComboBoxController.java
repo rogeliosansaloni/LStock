@@ -29,16 +29,18 @@ public class BotsEditComboBoxController implements ItemListener {
     @Override
     public void itemStateChanged(ItemEvent e) {
         JComboBox comboBox = (JComboBox) e.getSource();
-        if (comboBox.getActionCommand().equals("bot-company")) {
-            String companyName = view.getCompanyName();
-            int companyId = model.getCompanyId(companyName);
-            ArrayList<Bot> bots = model.getAllBotsByCompany(companyId);
-            view.showBots(bots);
-        } else {
-            if(comboBox.getActionCommand().equals("bot-id")) {
-                int botId = view.getBotId();
-                Bot bot = model.getBot(botId);
-                view.showStatusButton(bot);
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            if (comboBox.getActionCommand().equals("bot-company")) {
+                String companyName = view.getCompanyName();
+                int companyId = model.getCompanyId(companyName);
+                ArrayList<Bot> bots = model.getAllBotsByCompany(companyId);
+                view.showBots(bots);
+            } else {
+                if(comboBox.getActionCommand().equals("bot-id")) {
+                    int botId = view.getBotId();
+                    Bot bot = model.getBot(botId);
+                    view.showStatusButton(bot);
+                }
             }
         }
     }

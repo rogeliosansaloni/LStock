@@ -16,7 +16,8 @@ public class BotsEditController implements ActionListener {
     private static final String ENABLE = "ENABLE";
     private static final String DISABLE = "DISABLE";
     private static final String CANCEL = "CANCEL";
-    private static final String CARD_BOTS = "Configure Bots";
+    private static final String MESSAGE = "The bot you selected was ";
+    private static final String CARD_BOTS = "Manage Bots";
     private MainView mainView;
     private BotsEditView view;
     private BotManager model;
@@ -57,14 +58,17 @@ public class BotsEditController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
-            case ENABLE:
-                model.configureBot(view.getBotId(), "ENABLE");
-                break;
-            case DISABLE:
-                model.configureBot(view.getBotId(), "DISABLE");
-                break;
             case CANCEL:
                 mainView.updateView(CARD_BOTS);
+                break;
+            default:
+                int botId = view.getBotId();
+                int status = model.getBot(botId).getStatus();
+                String action = ENABLE;
+                if (status == 1) { action = DISABLE; }
+                model.configureBot(botId,action);
+                view.showMessages(MESSAGE + action.toLowerCase() + "d");
+                view.showStatusButton(model.getBot(botId));
                 break;
         }
     }
