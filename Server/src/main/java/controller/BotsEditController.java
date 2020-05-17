@@ -43,7 +43,11 @@ public class BotsEditController implements ActionListener {
         view.showCompanies(model.getCompanies());
         ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
         view.showBots(bots);
-        view.showStatusButton(bots.get(0));
+        if (!bots.isEmpty()) {
+            view.showStatusButton(bots.get(0));
+        } else {
+            view.hideStatusButton();
+        }
     }
 
     /**

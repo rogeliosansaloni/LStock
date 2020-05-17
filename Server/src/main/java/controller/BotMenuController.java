@@ -34,7 +34,7 @@ public class BotMenuController implements ActionListener {
                 view.updateView(CARD_CREATE);
                 break;
             case CARD_EDIT:
-                //mainController.getBotsEditController().initView();
+                mainController.getBotsEditController().initView();
                 view.updateView(CARD_EDIT);
                 break;
             case CARD_REMOVE:

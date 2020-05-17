@@ -35,6 +35,11 @@ public class BotsEditComboBoxController implements ItemListener {
                 int companyId = model.getCompanyId(companyName);
                 ArrayList<Bot> bots = model.getAllBotsByCompany(companyId);
                 view.showBots(bots);
+                if (!bots.isEmpty()) {
+                    view.showStatusButton(bots.get(0));
+                } else {
+                    view.hideStatusButton();
+                }
             } else {
                 if(comboBox.getActionCommand().equals("bot-id")) {
                     int botId = view.getBotId();

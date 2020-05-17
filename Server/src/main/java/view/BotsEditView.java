@@ -31,7 +31,7 @@ public class BotsEditView extends JPanel {
         color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
 
-        this.setLayout(new GridLayout(6,1,0,15));
+        this.setLayout(new GridLayout(6, 1, 0, 15));
         this.setBackground(color.getWHITE());
 
         JLabel jlTitle = new JLabel(TITLE);
@@ -78,7 +78,7 @@ public class BotsEditView extends JPanel {
         jbCancel.setForeground(color.getBLACK());
         jbCancel.setBorder(null);
         jbCancel.setBackground(color.getRED());
-        jbCancel.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        jbCancel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         jpButtons.add(jbCancel);
 
         this.add(jpButtons);
@@ -101,6 +101,7 @@ public class BotsEditView extends JPanel {
 
     /**
      * Shows all bots for a specific company in the combo box
+     *
      * @param bots list of bots
      */
     public void showBots(ArrayList<Bot> bots) {
@@ -118,6 +119,7 @@ public class BotsEditView extends JPanel {
 
     /**
      * Gets the id of the selected bot
+     *
      * @return id of the selected bot
      */
     public int getBotId() {
@@ -127,6 +129,7 @@ public class BotsEditView extends JPanel {
 
     /**
      * Gets the selected company from the combobox
+     *
      * @return name of the selected company
      */
     public String getCompanyName() {
@@ -135,20 +138,33 @@ public class BotsEditView extends JPanel {
 
     /**
      * Show button to change the activity status of the bot
+     *
      * @param bot bot that we want to activate or deactivate
      */
     public void showStatusButton(Bot bot) {
         if (bot.getStatus() == 1) {
             jButton.setText(DISABLE);
             jButton.setBackground(color.getRED());
+            jButton.setVisible(true);
         } else {
-            jButton.setText(ENABLE);
-            jButton.setBackground(color.getGREEN());
+            if (bot.getStatus() == 0) {
+                jButton.setText(ENABLE);
+                jButton.setBackground(color.getGREEN());
+                jButton.setVisible(true);
+            }
         }
     }
 
     /**
+     * Hides the button for enabling/disabling bots
+     */
+    public void hideStatusButton() {
+        jButton.setVisible(false);
+    }
+
+    /**
      * Registers the controller for buttons
+     *
      * @param controller
      */
     public void registerController(ActionListener controller) {
@@ -159,6 +175,7 @@ public class BotsEditView extends JPanel {
 
     /**
      * Registers the controller for the combo boxes
+     *
      * @param itemListener item listener for the combo boxes
      */
     public void registerComboBoxController(ItemListener itemListener) {
@@ -168,10 +185,11 @@ public class BotsEditView extends JPanel {
 
     /**
      * Shows message when a bot activity status change
+     *
      * @param message the message
      */
     public void showMessages(String message) {
-        JOptionPane.showMessageDialog(null,message);
+        JOptionPane.showMessageDialog(null, message);
 
     }
 }
