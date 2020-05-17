@@ -1,6 +1,5 @@
 package view;
 
-import model.entities.User;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -18,6 +17,7 @@ public class ProfileView extends JPanel {
     private JLabel jlDescription;
     private JLabel jlUserDescription;
     private JPanel jpInformation;
+    private JPanel jpIcon;
     private JLabel jlUserPhoto;
     private JLabel jlUserName;
 
@@ -28,7 +28,7 @@ public class ProfileView extends JPanel {
         this.setLayout(new BorderLayout());
 
         //Panel Information
-        JPanel jpInformation = new JPanel(new FlowLayout());
+        jpInformation = new JPanel(new FlowLayout());
         jpInformation.setBackground(color.getBLACK());
         Font fontData = new Font("Segoe UI Semibold", Font.PLAIN, 20);
 
@@ -39,6 +39,8 @@ public class ProfileView extends JPanel {
         Map attributesN = fontN.getAttributes();
         attributesN.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         jlNickname.setFont(fontN.deriveFont(attributesN));
+
+        //User Nickname
         jlUserNick = new JLabel("peter.foxie");
         jlUserNick.setForeground(color.getWHITE());
         jlUserNick.setFont(fontData);
@@ -50,6 +52,8 @@ public class ProfileView extends JPanel {
         Map attributesE = fontE.getAttributes();
         attributesE.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         jlNickname.setFont(fontE.deriveFont(attributesE));
+
+        //User Email
         jlUserEmail = new JLabel("peter.foxie@gmail.com");
         jlUserEmail.setForeground(color.getWHITE());
         jlUserEmail.setFont(fontData);
@@ -61,6 +65,8 @@ public class ProfileView extends JPanel {
         Map attributesD = fontD.getAttributes();
         attributesD.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         jlDescription.setFont(fontD.deriveFont(attributesD));
+
+        //User Description
         jlUserDescription = new JLabel("peter.foxie@gmail.com");
         jlUserDescription.setForeground(color.getWHITE());
         jlUserDescription.setFont(fontData);
@@ -74,7 +80,7 @@ public class ProfileView extends JPanel {
         jpInformation.add(jlUserDescription);
 
         //We create the JPanel for the Icon
-        JPanel jpIcon = new JPanel(new FlowLayout());
+         jpIcon = new JPanel(new FlowLayout());
 
         // Create User Icon
         ImageIcon imageIcon = new ImageIcon(MainView.class.getResource(
@@ -86,19 +92,15 @@ public class ProfileView extends JPanel {
         jpIcon.setBackground(color.getBLACK());
 
         // Add User Name
-        Font fontLogo = new Font("Segoe UI", Font.ITALIC, 30);
+        Font fontName = new Font("Segoe UI", Font.ITALIC, 30);
         jlUserName = new JLabel("Peter Foxie", SwingConstants.CENTER);
-        jlUserName.setFont(fontLogo);
+        jlUserName.setFont(fontName);
         jlUserName.setForeground(color.getBLACK());
 
+        //Adding in the main pannel
+        this.add(jpInformation, FlowLayout.RIGHT);
+        this.add(jpIcon, FlowLayout.LEFT);
 
-    }
-
-    public void updateProfile (User user){
-
-    }
-
-    public void showMessages (String type){
 
     }
 
