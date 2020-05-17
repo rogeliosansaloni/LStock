@@ -9,6 +9,7 @@ import java.awt.font.TextAttribute;
 import java.util.Map;
 
 public class ProfileView extends JPanel {
+    private static final String PATH_USER_ICON = "/Images/icon.png";
     protected StockColors color;
     private JLabel jlNickname;
     private JLabel jlUserNick;
@@ -17,6 +18,8 @@ public class ProfileView extends JPanel {
     private JLabel jlDescription;
     private JLabel jlUserDescription;
     private JPanel jpInformation;
+    private JLabel jlUserPhoto;
+    private JLabel jlUserName;
 
     public ProfileView (){
         //General window setup
@@ -62,7 +65,7 @@ public class ProfileView extends JPanel {
         jlUserDescription.setForeground(color.getWHITE());
         jlUserDescription.setFont(fontData);
 
-        //Adding in the south panel
+        //Adding in the information panel
         jpInformation.add(jlNickname);
         jpInformation.add(jlUserNick);
         jpInformation.add(jlEmail);
@@ -70,7 +73,23 @@ public class ProfileView extends JPanel {
         jpInformation.add(jlDescription);
         jpInformation.add(jlUserDescription);
 
-        //Icon Panel
+        //We create the JPanel for the Icon
+        JPanel jpIcon = new JPanel(new FlowLayout());
+
+        // Create User Icon
+        ImageIcon imageIcon = new ImageIcon(MainView.class.getResource(
+                PATH_USER_ICON));
+        Image scaleImage = imageIcon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT);
+        imageIcon = new ImageIcon(scaleImage);
+        jlUserPhoto = new JLabel(imageIcon);
+        jpIcon.add(jlUserPhoto, BorderLayout.CENTER);
+        jpIcon.setBackground(color.getBLACK());
+
+        // Add User Name
+        Font fontLogo = new Font("Segoe UI", Font.ITALIC, 30);
+        jlUserName = new JLabel("Peter Foxie", SwingConstants.CENTER);
+        jlUserName.setFont(fontLogo);
+        jlUserName.setForeground(color.getBLACK());
 
 
     }
