@@ -24,6 +24,7 @@ public class ProfileView extends JPanel {
     private User user;
 
     public ProfileView (){
+
         //General window setup
         color = new StockColors();
         this.setBackground(color.getBLACK());
@@ -87,7 +88,7 @@ public class ProfileView extends JPanel {
         // Create User Icon
         ImageIcon imageIcon = new ImageIcon(MainView.class.getResource(
                 PATH_USER_ICON));
-        Image scaleImage = imageIcon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT);
+        Image scaleImage = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
         jlUserPhoto = new JLabel(imageIcon);
         jpIcon.add(jlUserPhoto, BorderLayout.CENTER);
