@@ -54,8 +54,8 @@ public class BotManager {
      *
      * @param botId id of the bot to be deleted
      */
-    public void deleteBot(int botId) {
-        botDao.deleteBot(botId);
+    public boolean deleteBot(int botId) {
+        return botDao.deleteBot(botId);
     }
 
     /**

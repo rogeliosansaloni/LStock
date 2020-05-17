@@ -16,6 +16,8 @@ public class BotsRemoveController implements ActionListener {
     private static final String REMOVE = "REMOVE";
     private static final String CANCEL = "CANCEL";
     private static final String CARD_BOTS = "Manage Bots";
+    private static final String SUCCESS_MESSAGE = "The bot %d has been removed successfully";
+    private static final String ERROR_MESSAGE = "There was a problem with removing the bot.";
     private MainView mainView;
     private BotsRemoveView view;
     private BotManager model;
@@ -57,8 +59,12 @@ public class BotsRemoveController implements ActionListener {
         switch(e.getActionCommand()) {
             case REMOVE:
                 int botId = mainView.getBotsRemoveView().getBotId();
-                model.deleteBot(botId);
-                view.showBots(model.getAllBotsByCompany(getSelectedCompanyId()));
+                if (model.deleteBot(botId)) {
+                    view.showMessages(String.format(SUCCESS_MESSAGE, botId));
+                    view.showBots(model.getAllBotsByCompany(getSelectedCompanyId()));
+                } else {
+                    view.showMessages(ERROR_MESSAGE);
+                }
                 break;
             case CANCEL:
                 mainView.updateView(CARD_BOTS);

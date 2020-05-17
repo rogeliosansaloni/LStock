@@ -160,4 +160,13 @@ public class BotsRemoveView extends JPanel {
         String name = jcbBot.getSelectedItem().toString();
         return Integer.parseInt(name.replaceAll("[^0-9]", ""));
     }
+
+    /**
+     * Shows message when a bot activity status change
+     * @param message the message
+     */
+    public void showMessages(String message) {
+        JOptionPane.showMessageDialog(null,message);
+
+    }
 }
