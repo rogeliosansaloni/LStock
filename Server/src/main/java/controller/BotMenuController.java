@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
  */
 public class BotMenuController implements ActionListener {
     private static final String CARD_CREATE = "Create Bot";
-    private static final String CARD_EDIT = "Configure Bot";
+    private static final String CARD_EDIT = "Edit Bot";
     private static final String CARD_REMOVE = "Remove Bot";
     private static final String CARD_LIST = "Bots";
     private MainView view;
