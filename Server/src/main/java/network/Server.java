@@ -80,7 +80,6 @@ public class Server extends Thread {
                 // Create dedicated server to attend to the client
                 DedicatedServer client = new DedicatedServer(clientSocket);
                 clients.add(client);
-
                 System.out.println("Client has connected correctly!");
 
                 // Start dedicated server for the client

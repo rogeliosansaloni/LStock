@@ -42,7 +42,8 @@ public class UserDao {
             while (result.next()) {
                 if (result.getString("email").equals(user.getEmail())) {
                     message = REGISTER_MESSAGE_2;
-                } else {
+                }
+                else {
                     if (result.getString("nickname").equals(user.getNickname())) {
                         message = REGISTER_MESSAGE_3;
                     }
@@ -93,19 +94,43 @@ public class UserDao {
      *
      * @return ArrayList<String> all users registered
      */
-    public ArrayList<String> getAllUsers() {
+    public ArrayList<User> getAllUsers() {
         ResultSet getUsers = dbConnector.selectQuery("SELECT * FROM User;");
-        ArrayList<String> users = null;
+        ArrayList<User> users = null;
         try {
-            users = new ArrayList<String>();
+            users = new ArrayList<User>();
             while (getUsers.next()) {
-                users.add((getUsers.getObject("nickname")).toString());
+                users.add(new User(
+                        getUsers.getObject("nickname").toString(),
+                        getUsers.getObject("email").toString(),
+                        //TODO add stock value to this user for SharesListView
+                        -1,
+                        Float.parseFloat(getUsers.getObject("total_balance").toString())
+                ));
             }
         } catch (SQLException e) {
             System.out.println("Error getting all users");
         }
         return users;
+    }
 
+    /**
+     * It will get all the users registered in LStock
+     *
+     * @return String[][] all users registered
+     */
+    public String[][] getAllUserList() {
+        String[][] users;
+        ArrayList<User> userList = getAllUsers();
+        users = new String[userList.size()][4];
+
+        for (int i = 0; i < userList.size(); i++){
+            users[i][0] = userList.get(i).getNickname();
+            users[i][1] = userList.get(i).getEmail();
+            users[i][2] = String.valueOf(userList.get(i).getStockValue());
+            users[i][3] = String.valueOf(userList.get(i).getTotalBalance());
+        }
+        return users;
     }
 
     /**

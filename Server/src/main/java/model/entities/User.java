@@ -52,6 +52,21 @@ public class User {
         this.password = password;
     }
 
+    /**
+     * Creates a user with the specified information
+     *
+     * @param nickname user nickname
+     * @param email user email
+     * @param stockValue user stock value
+     * @param totalBalance user total balance
+     */
+    public User(String nickname, String email, float stockValue, float totalBalance) {
+        this.nickname = nickname;
+        this.email = email;
+        this.stockValue = stockValue;
+        this.totalBalance = totalBalance;
+    }
+
     public User() {
 
     }
