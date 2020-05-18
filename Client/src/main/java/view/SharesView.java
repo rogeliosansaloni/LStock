@@ -82,6 +82,8 @@ public class SharesView extends JPanel {
         createColumnLabel("ACTION VALUE");
         createColumnLabel("MY ACTIONS");
         createColumnLabel("PROFIT & LOSS");
+        JLabel jlVacio = new JLabel();
+        jlVacio.setForeground(color.getBLACK());
         for (int i = 0; i < shares.size(); i++) {
             createDataLabel (shares.get(i).getName(), color.getWHITE(), i, 0);
             createDataLabel(shares.get(i).getActionValue() + "€", color.getGreenTable(), i, 1);
