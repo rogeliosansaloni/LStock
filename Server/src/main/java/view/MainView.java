@@ -41,26 +41,16 @@ public class MainView extends JFrame {
         this.setLayout(new BorderLayout());
         this.setResizable(false);
         initUI();
-        initAllViews();
-
-    }
-
-    /**
-     * Initializes all views
-     */
-    public void initAllViews() {
-        jpHomeView = new HomeView();
-        jpSharesView = new SharesListView();
-        //TODO: Add the rest of views
-        addToCardLayout();
     }
 
     /**
      * Add diferent views to layout
      */
-    private void addToCardLayout() {
-        jpCenter.add(jpHomeView, CARD_HOME);
-        jpCenter.add(jpSharesView, CARD_USERS);
+    public void addToCardLayout(HomeView homeView, SharesListView sharesListView) {
+        this.jpHomeView = homeView;
+        this.jpSharesView = sharesListView;
+        jpCenter.add(homeView, CARD_HOME);
+        jpCenter.add(sharesListView, CARD_USERS);
         //TODO: Add the rest of views
     }
 
@@ -159,6 +149,7 @@ public class MainView extends JFrame {
         option3.addActionListener(actionListener);
         option3.setActionCommand(CARD_BOTS);
     }
+
 
     public void registerHomeController(HomeController controller) {
         jpHomeView.registerController(controller);

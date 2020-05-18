@@ -1,57 +1,56 @@
 package controller;
 
-import model.entities.User;
 import model.managers.UserManager;
 import view.SharesListView;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 
-public class SharesListController extends MouseAdapter implements ActionListener {
+public class SharesListController implements ListSelectionListener {
     private SharesListView view;
-    private int currentView;
     private UserManager userManager;
+    private ListSelectionModel selectionModel;
+    private int selectedRow = 0;
 
     public SharesListController(SharesListView sharesListView){
         this.view = sharesListView;
         this.userManager = new UserManager();
-        this.currentView = 0;
-        loadUserList(currentView, userManager.getUserList());
+        loadUsers();
         this.view.setVisible(true);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        this.currentView = 1;
-//        User user = view.getSelectedUser();
-        //get user data company shares
-//        String [][] s = {{ view.getSelectedUser().getNickname(), "111", "222", "333"}};
-//        loadUserList(currentView, s);
+    /**
+     *  Get User data from User Manager and Database
+     */
+    public void loadUsers(){
+        loadUserList(userManager.getUserList());
     }
 
+    /**
+     *  Load data into SharesList Table
+     *
+     * @param data String array containing data for the table
+     */
+    public void loadUserList(String[][] data){
+        this.view.setUserList(data);
+        this.view.emptyTable();
+        this.view.fillData();
+    }
+
+    /**
+     *  Method to detect clicks on SharesList JTable
+     */
     @Override
-    public void actionPerformed(ActionEvent actionEvent) {
-        if (actionEvent.getActionCommand().equals("return")){
-            System.out.println("RETURN PRESSED");
-            if (currentView == 0){
-                System.out.println("back to server menu");
-            }else{
-                System.out.println("back to user list");
-                currentView = 0;
+    public void valueChanged(ListSelectionEvent listSelectionEvent) {
+
+        selectionModel = this.view.getSelectionModel();
+        if (!listSelectionEvent.getValueIsAdjusting()) {
+            if (!selectionModel.isSelectionEmpty()){
+                selectedRow = selectionModel.getMinSelectionIndex();
             }
         }
-    }
-
-    public void loadUserList(int currentView, String [][] data){
-        if (currentView == 0) {
-            this.view.setUserList(data);
-        }
-//        if (currentView == 1) {
-//            String [][] s = {{ view.getSelectedUser().getNickname(), "111", "222", "333"}};
-//            this.view.setUserList(data);
-//        }
+        //TODO get user data company shares
     }
 }
