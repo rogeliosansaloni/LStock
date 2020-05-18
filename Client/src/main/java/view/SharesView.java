@@ -77,7 +77,7 @@ public class SharesView extends JPanel {
         jpTable = new JPanel();
         jpTable.setBackground(color.getBLACK());
         // Create a row for each company available
-        jpTable.setLayout(new GridLayout(0, 4, 20, 20));
+        jpTable.setLayout(new GridLayout(0, 5, 20, 20));
         createColumnLabel("COMPANY");
         createColumnLabel("ACTION VALUE");
         createColumnLabel("MY ACTIONS");
@@ -95,7 +95,7 @@ public class SharesView extends JPanel {
                 createDataLabel( shares.get(i).getMyActions() + "€", color.getWHITE(), i, 2);
                 createDataLabel(shares.get(i).getProfitLoss() + "%", color.getWHITE(), i, 3);
             }
-            createDataLabelSmall("Sell All Shares", color.getWHITE(), i, 3);
+            createDataLabelSmall("Sell All Shares", color.getWHITE(), i, 4);
         }
         jpScroll = new JScrollPane(jpTable);
         this.add(jpScroll, BorderLayout.CENTER);
