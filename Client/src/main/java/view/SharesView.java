@@ -77,7 +77,7 @@ public class SharesView extends JPanel {
         jpTable = new JPanel();
         jpTable.setBackground(color.getBLACK());
         // Create a row for each company available
-        jpTable.setLayout(new GridLayout(0, 4, 20, 20));
+        jpTable.setLayout(new GridLayout(0, 5, 20, 20));
         createColumnLabel("COMPANY");
         createColumnLabel("ACTION VALUE");
         createColumnLabel("MY ACTIONS");
