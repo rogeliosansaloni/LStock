@@ -104,7 +104,6 @@ public class UserDao {
                         getUsers.getObject("nickname").toString(),
                         getUsers.getObject("email").toString(),
                         //TODO add stock value to this user for SharesListView
-                        /*Float.parseFloat(getUsers.getObject("stockValue").toString())*/
                         -1,
                         Float.parseFloat(getUsers.getObject("total_balance").toString())
                 ));
