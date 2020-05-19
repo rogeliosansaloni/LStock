@@ -17,7 +17,6 @@ public class CompanyView extends JPanel {
 
     public CompanyView() {
         color = new StockColors();
-        this.setBackground(color.getBLACK());
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(50, 20, 50, 20));
         this.setBackground(color.getBLACK());
