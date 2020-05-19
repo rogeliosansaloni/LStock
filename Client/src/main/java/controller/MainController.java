@@ -34,10 +34,11 @@ public class MainController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "company":
-                view.updateView(CARD_COMPANY);
                 updateCompanyList();
+                view.updateView(CARD_COMPANY);
                 break;
             case "profile":
+
                 view.updateView(CARD_PROFILE);
                 //TODO: Profile
                 break;
@@ -104,6 +105,13 @@ public class MainController implements ActionListener {
     public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
         //TODO: Update company in the model
         companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
+    }
+
+    /**
+     * Updates the shares table in the SharesView
+     */
+    public void updateShareView () {
+        sharesController.updateSharesView(model.getSharesChange());
     }
 
     public SharesController getSharesController() {

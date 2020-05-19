@@ -55,14 +55,29 @@ public class ShareMapperImpl implements ShareMapper {
     public ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList) {
         ArrayList<ShareChange> shares = new ArrayList<ShareChange>();
         int sharesLen = shareChangeList.getCompanyName().length;
-        int[] sharesId = shareChangeList.getCompanyId();
-        String[] names = shareChangeList.getCompanyName();
-        float[] actionValue = shareChangeList. getCompanyActionValue();
-        float[] myActions = shareChangeList.getCompanyMyActions();
-        float[] profitLoss = shareChangeList.getCompanyProfitLoss();
+        int[] sharesId = shareChangeList.getShareId();
+        String[] companyNames = shareChangeList.getCompanyName();
+        float[] actionValue = shareChangeList.getCurrentActionValue();
+        float[] myActions = shareChangeList.getMyActions();
+        float[] profitLoss = shareChangeList.getProfitLoss();
         for (int i = 0; i < sharesLen; i++) {
-            shares.add(new ShareChange(sharesId[i], names[i], actionValue[i], myActions[i], profitLoss[i]));
+            shares.add(new ShareChange(sharesId[i], companyNames[i], actionValue[i], myActions[i], profitLoss[i]));
         }
         return shares;
+    }
+
+    @Override
+    public ShareChangeList convertToShareChangeList(ArrayList<ShareChange> sharesChange) {
+        ShareChangeList shareChangeList = new ShareChangeList(sharesChange.size());
+        int i = 0;
+        for (ShareChange s : sharesChange) {
+            shareChangeList.setShareId(i, s.getShareId());
+            shareChangeList.setCompanyName(i, s.getCompanyName());
+            shareChangeList.setCurrentActionValue(i, s.getActionValue());
+            shareChangeList.setMyActions(i, s.getMyActions());
+            shareChangeList.setProfitLoss(i, s.getProfitLoss());
+            i++;
+        }
+        return shareChangeList;
     }
 }

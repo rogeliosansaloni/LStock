@@ -105,7 +105,7 @@ public class DedicatedServer extends Thread {
                         oos.writeObject(share);
                     } else {
                         if (shareTrade.getActionToDo().equals(SELL_ACTION)) {
-                             //stockModel.updateCompanyValue(shareTrade.getCompanyId(), "sell");
+                             //stockModel.updateCompanyValue(shareTrade.getShareId(), "sell");
                         }
                     }
                 }

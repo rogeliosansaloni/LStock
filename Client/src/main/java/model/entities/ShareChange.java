@@ -2,7 +2,8 @@ package model.entities;
 
 public class ShareChange {
 
-    private String name;
+    private int shareId;
+    private String companyName;
     private float actionValue;
     private float myActions;
     private float profitLoss;
@@ -11,22 +12,28 @@ public class ShareChange {
 
     }
 
-    public ShareChange(String name, float actionValue, float myActions, float profitLoss) {
-        this.name = name;
+    public ShareChange(int shareId, String companyName, float actionValue, float myActions, float profitLoss) {
+        this.shareId = shareId;
+        this.companyName = companyName;
         this.actionValue = actionValue ;
         this.myActions = myActions;
         this.profitLoss = profitLoss;
     }
 
-    public ShareChange(int i, String name, float v, float myAction, float profitLoss) {
+    public int getShareId() {
+        return shareId;
     }
 
-    public String getName() {
-        return name;
+    public void setShareId(int shareId) {
+        this.shareId = shareId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     public float getActionValue() {
@@ -53,8 +60,4 @@ public class ShareChange {
         this.profitLoss = profitLoss;
     }
 
-    public int getCompanyId() {
-        // TODO: Get company id of which we want to sell the shares
-        return 1;
-    }
 }

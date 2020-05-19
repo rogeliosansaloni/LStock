@@ -43,6 +43,7 @@ public class MainView extends JFrame {
     private JMenuItem optionProfile, optionShares, optionBalance, optionCompany, optionLogout;
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
+    private SharesView jpShares;
 
     public MainView() {
         color = new StockColors();
@@ -63,6 +64,7 @@ public class MainView extends JFrame {
         jpCompanyView = new CompanyView();
         jpBalanceView = new BalanceView();
         jpCompanyDetailsView = new CompanyDetailView();
+        jpShares = new SharesView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -74,6 +76,7 @@ public class MainView extends JFrame {
         jpCenter.add(jpCompanyView, CARD_COMPANY);
         jpCenter.add(jpCompanyDetailsView, CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
+        jpCenter.add(jpShares, CARD_SHARES);
         //TODO: Add the rest of views
     }
 
@@ -294,7 +297,7 @@ public class MainView extends JFrame {
                 break;
             case CARD_SHARES:
                 labelViewName.setText(CARD_SHARES);
-                //cardLayout.show(jpCenter, CARD_SHARES);
+                cardLayout.show(jpCenter, CARD_SHARES);
                 updateOptionsShares();
                 break;
             case CARD_BALANCE:
@@ -314,7 +317,7 @@ public class MainView extends JFrame {
     }
 
     public void updateSharesList(ArrayList<ShareChange> shares){
-        // TODO: Create method in SharesView to update the shares list
+        jpShares.updateSharesView(shares);
     }
 
     /**
