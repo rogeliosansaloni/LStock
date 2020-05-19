@@ -2,24 +2,31 @@ package model.entities;
 
 public class ShareChangeList extends TunnelObject {
 
+    private int userId;
     private int[] shareId;
     private String[] companyName;
-    private float[] currentActionValue;
+    private float[] shareValue;
     private float[] myActions;
     private float[] profitLoss;
 
     public ShareChangeList () {
-
     }
 
     public ShareChangeList(int numShares) {
         this.shareId = new int[numShares];
         this.companyName = new String[numShares];
-        this.currentActionValue = new float[numShares];
+        this.shareValue = new float[numShares];
         this.myActions = new float[numShares];
         this.profitLoss = new float[numShares];
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public int[] getShareId() {
         return shareId;
@@ -37,12 +44,12 @@ public class ShareChangeList extends TunnelObject {
         this.companyName[i] = companyName;
     }
 
-    public float[] getCurrentActionValue() {
-        return currentActionValue;
+    public float[] getShareValue() {
+        return shareValue;
     }
 
-    public void setCurrentActionValue(int i, float currentActionValue) {
-        this.currentActionValue[i] = currentActionValue;
+    public void setShareValueValue(int i, float shareValue) {
+        this.shareValue[i] = shareValue;
     }
 
     public float[] getMyActions() {

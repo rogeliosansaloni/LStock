@@ -16,6 +16,7 @@ public class StockManager {
     private DBConnector connector;
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
+    private ArrayList<ShareChange> sharesChange;
     private UserDao userDao;
     private CompanyDao companyDao;
     private ShareDao shareDao;
@@ -37,6 +38,7 @@ public class StockManager {
         this.companyDao = companyDao;
         this.companies = new ArrayList<Company>();
         this.companiesChange = new ArrayList<CompanyChange>();
+        this.sharesChange = new ArrayList<ShareChange>();
     }
 
     /**
@@ -131,6 +133,11 @@ public class StockManager {
     public ArrayList<CompanyChange> getCompaniesChange() {
         companiesChange = companyDao.getCompaniesChange();
         return companiesChange;
+    }
+
+    public ArrayList<ShareChange> getSharesChange(int userId) {
+        sharesChange = shareDao.getSharesChange(userId);
+        return sharesChange;
     }
 }
 

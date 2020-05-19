@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import model.entities.Company;
 
 public class CompanyView extends JPanel {
     private JScrollPane jpScroll;
@@ -79,7 +78,7 @@ public class CompanyView extends JPanel {
         System.out.println(companies);
         for (int i = 0; i < companies.size(); i++) {
             createDataLabel(companies.get(i).getName(), color.getWHITE(), i, 0);
-            createDataLabel(companies.get(i).getCurrentShare() + "€", color.getGreenTable(), i, 1);
+            createDataLabel(companies.get(i).getShareValue() + "€", color.getGreenTable(), i, 1);
             if(companies.get(i).getChange() < 0){
                 createDataLabel( companies.get(i).getChange() + "€", color.getRedTable(), i, 2);
                 createDataLabel(companies.get(i).getChangePer() + "%", color.getRedTable(), i, 3);

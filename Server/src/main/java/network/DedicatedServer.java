@@ -122,6 +122,12 @@ public class DedicatedServer extends Thread {
                     oos.writeObject(companyChangeList);
                 }
 
+                if (tunnelObject instanceof ShareChangeList) {
+                    ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(((ShareChangeList) tunnelObject).getUserId());
+                    ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
+                    oos.writeObject(sharesChangeList);
+                }
+
                 if (tunnelObject instanceof CurrentShares) {
 
                 }

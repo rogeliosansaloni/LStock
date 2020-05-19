@@ -1,11 +1,15 @@
 package controller;
 
+import model.entities.ShareChangeList;
 import model.entities.StockManager;
+import model.entities.TunnelObject;
+import network.NetworkManager;
 import view.LoginView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainController implements ActionListener {
     private static final String CARD_COMPANY = "Companies";
@@ -38,11 +42,11 @@ public class MainController implements ActionListener {
                 view.updateView(CARD_COMPANY);
                 break;
             case "profile":
-
                 view.updateView(CARD_PROFILE);
                 //TODO: Profile
                 break;
             case "shares":
+                sendSharesChange();
                 view.updateView(CARD_SHARES);
                 //TODO: Shares
                 break;
@@ -112,6 +116,16 @@ public class MainController implements ActionListener {
      */
     public void updateShareView () {
         sharesController.updateSharesView(model.getSharesChange());
+    }
+
+    public void sendSharesChange(){
+        TunnelObject info = new ShareChangeList();
+        ((ShareChangeList) info).setUserId(model.getUser().getUserId());
+        try {
+            NetworkManager.getInstance().sendShareChange(info);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public SharesController getSharesController() {

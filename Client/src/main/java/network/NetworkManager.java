@@ -168,6 +168,10 @@ public class NetworkManager extends Thread {
         oos.writeObject(object);
     }
 
+    public void sendShareChange(TunnelObject object) throws IOException {
+        oos.writeObject(object);
+    }
+
     /**
      * Runs the main client thread and receives objects coming from the server
      */
@@ -224,7 +228,8 @@ public class NetworkManager extends Thread {
                 if (received instanceof ShareChangeList) {
                     ShareChangeList shares = (ShareChangeList) received;
                     ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
-
+                    model.setSharesChange(sharesChange);
+                    mainController.updateShareView();
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

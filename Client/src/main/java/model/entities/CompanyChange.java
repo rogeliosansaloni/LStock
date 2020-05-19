@@ -3,7 +3,7 @@ package model.entities;
 
 public class CompanyChange {
     private String name;
-    private float currentShare;
+    private float shareValue;
     private float change;
     private float changePer;
 
@@ -11,14 +11,14 @@ public class CompanyChange {
      * It will create a companyChange
      *
      * @param name      company name
-     * @param currentShare     current company's share price
+     * @param shareValue     current company's share price
      * @param change    difference between current price and the price the company had 5 minutes ago
      * @param changePer      the change value but in % format
      */
 
-    public CompanyChange(String name, float currentShare, float change, float changePer) {
+    public CompanyChange(String name, float shareValue, float change, float changePer) {
         this.name = name;
-        this.currentShare = currentShare;
+        this.shareValue = shareValue;
         this.change = change;
         this.changePer = changePer;
     }
@@ -31,12 +31,12 @@ public class CompanyChange {
         this.name = name;
     }
 
-    public float getCurrentShare() {
-        return currentShare;
+    public float getShareValue() {
+        return shareValue;
     }
 
-    public void setCurrentShare(float currentShare) {
-        this.currentShare = currentShare;
+    public void setShareValue(float shareValue) {
+        this.shareValue = shareValue;
     }
 
     public float getChange() {

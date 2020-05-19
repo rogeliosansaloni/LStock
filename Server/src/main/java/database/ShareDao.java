@@ -2,6 +2,7 @@ package database;
 
 import model.entities.Company;
 import model.entities.Share;
+import model.entities.ShareChange;
 import model.entities.User;
 
 import java.sql.ResultSet;
@@ -69,6 +70,25 @@ public class ShareDao {
     }
 
     /**
+     * Gets the info from the shares that will be used in the Shares View of the Client
+     * @param userId the id of the user
+     * @return ArrayList<ShareChange> all shares
+     */
+    public ArrayList<ShareChange> getSharesChange(int userId) {
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getSharesChange(" + userId + ");");
+        ArrayList<ShareChange> sharesChange = new ArrayList<ShareChange>();
+        try {
+            while (retrievedShares.next()) {
+                ShareChange s = toShareChange(retrievedShares);
+                sharesChange.add(s);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting all shares");
+        }
+        return sharesChange;
+    }
+
+    /**
      * Converts retrieved Share information into a Share object
      * @param resultSet information retrieved from the database
      * @return a Share object that contains all information on the specific share
@@ -80,6 +100,17 @@ public class ShareDao {
         share.setPrice(resultSet.getFloat("price"));
         share.getCompany().setCompanyId(resultSet.getInt("company_id"));
         return share;
+    }
+
+    private ShareChange toShareChange(ResultSet resultSet) throws SQLException {
+        ShareChange shareChange = new ShareChange();
+        shareChange.setShareId(resultSet.getInt("shareId"));
+        shareChange.setCompanyName(resultSet.getString("companyName"));
+        shareChange.setShareValue(resultSet.getFloat("shareValue"));
+        shareChange.setMyActions(resultSet.getInt("myActions"));
+        shareChange.setProfitLoss(resultSet.getFloat("profitLoss"));
+
+        return shareChange;
     }
 
 }

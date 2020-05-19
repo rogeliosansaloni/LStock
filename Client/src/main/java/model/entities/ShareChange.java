@@ -4,7 +4,7 @@ public class ShareChange {
 
     private int shareId;
     private String companyName;
-    private float actionValue;
+    private float shareValue;
     private float myActions;
     private float profitLoss;
 
@@ -12,10 +12,10 @@ public class ShareChange {
 
     }
 
-    public ShareChange(int shareId, String companyName, float actionValue, float myActions, float profitLoss) {
+    public ShareChange(int shareId, String companyName, float shareValue, float myActions, float profitLoss) {
         this.shareId = shareId;
         this.companyName = companyName;
-        this.actionValue = actionValue ;
+        this.shareValue = shareValue;
         this.myActions = myActions;
         this.profitLoss = profitLoss;
     }
@@ -36,12 +36,12 @@ public class ShareChange {
         this.companyName = companyName;
     }
 
-    public float getActionValue() {
-        return actionValue;
+    public float getShareValue() {
+        return shareValue;
     }
 
-    public void setActionValue(float actionValue) {
-        this.actionValue = actionValue;
+    public void setShareValue(float shareValue) {
+        this.shareValue = shareValue;
     }
 
     public float getMyActions() {
