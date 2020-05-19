@@ -118,6 +118,8 @@ public class MainController implements ActionListener {
      */
     public void updateShareView () {
         view.updateSharesView(model.getSharesChange());
+        view.registerSharesController(sharesController, model.getSharesChange());
+
     }
 
     public void sendSharesChange(){

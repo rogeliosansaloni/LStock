@@ -273,12 +273,12 @@ public class MainView extends JFrame {
         jpBalanceView.registerController(controller);
     }
 
-    public void registerCompanyController(ActionListener controller) {
-        jpCompanyView.registerController(controller);
+    public void registerCompanyController(ActionListener controller, ArrayList<CompanyChange> companies) {
+        jpCompanyView.registerController(controller, companies);
     }
 
-    public void registerSharesController(ActionListener controller) {
-        jpShares.registerController(controller);
+    public void registerSharesController(ActionListener controller, ArrayList<ShareChange> shares) {
+        jpShares.registerController(controller, shares);
     }
 
     /**

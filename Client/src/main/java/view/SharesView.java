@@ -25,8 +25,12 @@ public class SharesView extends JPanel {
      * Adds actionListener to load button
      * @param actionListener ActionListener
      */
-    public void registerController(ActionListener actionListener) {
-
+    public void registerController(ActionListener actionListener, ArrayList<ShareChange> shares) {
+        // Add an actionListener for each share
+        for (int i = 0; i < shares.size(); i++) {
+            jbSellShares[i].addActionListener(actionListener);
+            jbSellShares[i].setActionCommand(Float.toString(shares.get(i).getShareId()));
+        }
     }
 
     public void updateSharesView (ArrayList<ShareChange> shares){
@@ -49,7 +53,7 @@ public class SharesView extends JPanel {
             } else{
                 createLabel(shares.get(i).getSharesQuantity() + "", Font.PLAIN, color.getWHITE());
             }
-            createSellButton(shares.get(i).getProfitLoss() + "", i);
+            createSellButton(i);
         }
         jpTable.setBackground(color.getBLACK());
         jpScroll = new JScrollPane(jpTable);
@@ -69,8 +73,8 @@ public class SharesView extends JPanel {
 
     }
 
-    public void createSellButton (String text, int i){
-        jbSellShares[i] = new JButton(text);
+    public void createSellButton (int i){
+        jbSellShares[i] = new JButton("SELL ALL SHARES");
         jbSellShares[i].setHorizontalAlignment(SwingConstants.CENTER);
         jbSellShares[i].setBackground(color.getWHITE());
         jbSellShares[i].setForeground(color.getBLACK());
