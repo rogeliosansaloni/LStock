@@ -100,6 +100,7 @@ public class ProfileView extends JPanel {
         jlUserName.setFont(fontName);
         jlUserName.setForeground(color.getBLACK());
 
+
         //Adding in the main pannel
         this.add(jpInformation, FlowLayout.RIGHT);
         this.add(jpIcon, FlowLayout.LEFT);
