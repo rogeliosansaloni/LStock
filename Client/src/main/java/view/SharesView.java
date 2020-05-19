@@ -30,7 +30,6 @@ public class SharesView extends JPanel {
     }
 
     public void updateSharesView (ArrayList<ShareChange> shares){
-        jpTable.removeAll();
         jpTable = new JPanel();
         jpTable.setLayout(new GridLayout(0, 5, 20, 20));
         createLabel("COMPANY", Font.BOLD, color.getWHITE());
