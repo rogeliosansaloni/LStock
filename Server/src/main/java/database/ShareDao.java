@@ -88,6 +88,7 @@ public class ShareDao {
         return sharesChange;
     }
 
+
     /**
      * Converts retrieved Share information into a Share object
      * @param resultSet information retrieved from the database
@@ -107,7 +108,7 @@ public class ShareDao {
         shareChange.setShareId(resultSet.getInt("shareId"));
         shareChange.setCompanyName(resultSet.getString("companyName"));
         shareChange.setShareValue(resultSet.getFloat("shareValue"));
-        shareChange.setMyActions(resultSet.getInt("myActions"));
+        shareChange.setSharesQuantity(resultSet.getInt("sharesQuantity"));
         shareChange.setProfitLoss(resultSet.getFloat("profitLoss"));
 
         return shareChange;

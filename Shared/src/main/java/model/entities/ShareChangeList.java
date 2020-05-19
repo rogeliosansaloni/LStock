@@ -6,7 +6,7 @@ public class ShareChangeList extends TunnelObject {
     private int[] shareId;
     private String[] companyName;
     private float[] shareValue;
-    private float[] myActions;
+    private int[] sharesQuantity;
     private float[] profitLoss;
 
     public ShareChangeList () {
@@ -16,7 +16,7 @@ public class ShareChangeList extends TunnelObject {
         this.shareId = new int[numShares];
         this.companyName = new String[numShares];
         this.shareValue = new float[numShares];
-        this.myActions = new float[numShares];
+        this.sharesQuantity = new int[numShares];
         this.profitLoss = new float[numShares];
     }
 
@@ -48,16 +48,16 @@ public class ShareChangeList extends TunnelObject {
         return shareValue;
     }
 
-    public void setShareValueValue(int i, float shareValue) {
+    public void setShareValue(int i, float shareValue) {
         this.shareValue[i] = shareValue;
     }
 
-    public float[] getMyActions() {
-        return myActions;
+    public int[] getSharesQuantity() {
+        return sharesQuantity;
     }
 
-    public void setMyActions(int i, float myActions) {
-        this.myActions[i] = myActions;
+    public void setSharesQuantity(int i, int sharesQuantity) {
+        this.sharesQuantity[i] = sharesQuantity;
     }
 
     public float[] getProfitLoss() {

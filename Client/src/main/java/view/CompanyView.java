@@ -92,8 +92,4 @@ public class CompanyView extends JPanel {
         }
     }
 
-    /**
-     * Gets the amount selected
-     * @return amount selected
-     */
 }

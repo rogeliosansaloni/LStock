@@ -28,7 +28,4 @@ public class SharesController implements ActionListener {
         }
     }
 
-    public void updateSharesView(ArrayList<ShareChange> shares) {
-        this.view.updateSharesList(shares);
-    }
 }

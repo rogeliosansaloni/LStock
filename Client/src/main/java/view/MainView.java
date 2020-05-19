@@ -277,6 +277,10 @@ public class MainView extends JFrame {
         jpCompanyView.registerController(controller);
     }
 
+    public void registerSharesController(ActionListener controller) {
+        jpShares.registerController(controller);
+    }
+
     /**
      * Shows desired view
      *
@@ -316,7 +320,7 @@ public class MainView extends JFrame {
         jpCompanyView.showCompanies(companies);
     }
 
-    public void updateSharesList(ArrayList<ShareChange> shares){
+    public void updateSharesView(ArrayList<ShareChange> shares){
         jpShares.updateSharesView(shares);
     }
 

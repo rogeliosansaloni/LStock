@@ -48,7 +48,6 @@ public class MainController implements ActionListener {
             case "shares":
                 sendSharesChange();
                 view.updateView(CARD_SHARES);
-                //TODO: Shares
                 break;
             case "load":
                 view.updateView(CARD_BALANCE);
@@ -85,6 +84,9 @@ public class MainController implements ActionListener {
         return companyController;
     }
 
+    public SharesController getSharesController() {
+        return sharesController;
+    }
 
     /**
      * Updates the new total balance of the user
@@ -115,7 +117,7 @@ public class MainController implements ActionListener {
      * Updates the shares table in the SharesView
      */
     public void updateShareView () {
-        sharesController.updateSharesView(model.getSharesChange());
+        view.updateSharesView(model.getSharesChange());
     }
 
     public void sendSharesChange(){
@@ -126,9 +128,5 @@ public class MainController implements ActionListener {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public SharesController getSharesController() {
-        return sharesController;
     }
 }

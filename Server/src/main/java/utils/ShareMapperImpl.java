@@ -58,10 +58,10 @@ public class ShareMapperImpl implements ShareMapper {
         int[] sharesId = shareChangeList.getShareId();
         String[] companyNames = shareChangeList.getCompanyName();
         float[] actionValue = shareChangeList.getShareValue();
-        float[] myActions = shareChangeList.getMyActions();
+        int[] sharesQuantity = shareChangeList.getSharesQuantity();
         float[] profitLoss = shareChangeList.getProfitLoss();
         for (int i = 0; i < sharesLen; i++) {
-            shares.add(new ShareChange(sharesId[i], companyNames[i], actionValue[i], myActions[i], profitLoss[i]));
+            shares.add(new ShareChange(sharesId[i], companyNames[i], actionValue[i], sharesQuantity[i], profitLoss[i]));
         }
         return shares;
     }
@@ -73,8 +73,8 @@ public class ShareMapperImpl implements ShareMapper {
         for (ShareChange s : sharesChange) {
             shareChangeList.setShareId(i, s.getShareId());
             shareChangeList.setCompanyName(i, s.getCompanyName());
-            shareChangeList.setShareValueValue(i, s.getShareValue());
-            shareChangeList.setMyActions(i, s.getMyActions());
+            shareChangeList.setShareValue(i, s.getShareValue());
+            shareChangeList.setSharesQuantity(i, s.getSharesQuantity());
             shareChangeList.setProfitLoss(i, s.getProfitLoss());
             i++;
         }
