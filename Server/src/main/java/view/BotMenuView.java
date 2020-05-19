@@ -40,7 +40,7 @@ public class BotMenuView extends JPanel {
         JPanel jpCenter = new JPanel();
         jpCenter.setBackground(color.getWHITE());
 
-        jpButtons = new JPanel(new GridLayout(2, 2, 30, 0));
+        jpButtons = new JPanel(new GridLayout(4, 1, 30, 50));
         jpButtons.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;
@@ -76,8 +76,8 @@ public class BotMenuView extends JPanel {
 
         jpButtons.add(jbCreate);
         jpButtons.add(jbRemove);
-        jpButtons.add(jbShowList);
         jpButtons.add(jbActivity);
+        jpButtons.add(jbShowList);
 
         jpCenter.add(jpButtons, BorderLayout.CENTER);
         this.add(jpCenter);
