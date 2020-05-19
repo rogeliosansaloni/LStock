@@ -16,6 +16,7 @@ public class BotsEditView extends JPanel {
     private static final String FONT_BUTTON = "Segoe UI Semibold";
     private static final String TITLE = "Edit Bot";
     private static final String ENABLE = "ENABLE";
+    private static final String BUTTON = "ENABLE/DISABLE";
     private static final String DISABLE = "DISABLE";
     private static final String CANCEL = "CANCEL";
     private static final int WIDTH = 200;
@@ -24,7 +25,7 @@ public class BotsEditView extends JPanel {
     private JComboBox<String> jcbBot;
     private JComboBox<String> jcbCompany;
     private JPanel jpButtons;
-    private JButton jButton;
+    private JButton jbEnable;
     private JButton jbCancel;
 
     public BotsEditView() {
@@ -63,15 +64,16 @@ public class BotsEditView extends JPanel {
         //Buttons
         jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
         jpButtons.setBackground(color.getWHITE());
-
         Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
-        jButton = new JButton("");
-        jButton.setFont(buttonFont);
-        jButton.setForeground(color.getBLACK());
-        jButton.setBorder(null);
-        jButton.setBackground(color.getGREEN());
-        jButton.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        jpButtons.add(jButton);
+
+
+        jbEnable = new JButton(BUTTON);
+        jbEnable.setFont(buttonFont);
+        jbEnable.setForeground(color.getBLACK());
+        jbEnable.setBorder(null);
+        jbEnable.setBackground(color.getGREEN());
+        jbEnable.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        jpButtons.add(jbEnable);
 
         jbCancel = new JButton(CANCEL);
         jbCancel.setFont(buttonFont);
@@ -80,6 +82,7 @@ public class BotsEditView extends JPanel {
         jbCancel.setBackground(color.getRED());
         jbCancel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         jpButtons.add(jbCancel);
+
 
         this.add(jpButtons);
         this.setBorder(BorderFactory.createEmptyBorder(0, 150, 50, 150));
@@ -143,14 +146,12 @@ public class BotsEditView extends JPanel {
      */
     public void showStatusButton(Bot bot) {
         if (bot.getStatus() == 1) {
-            jButton.setText(DISABLE);
-            jButton.setBackground(color.getRED());
-            jButton.setVisible(true);
+            jbEnable.setText(DISABLE);
+            jbEnable.setBackground(color.getRED());
         } else {
             if (bot.getStatus() == 0) {
-                jButton.setText(ENABLE);
-                jButton.setBackground(color.getGREEN());
-                jButton.setVisible(true);
+                jbEnable.setText(ENABLE);
+                jbEnable.setBackground(color.getGREEN());
             }
         }
     }
@@ -159,7 +160,7 @@ public class BotsEditView extends JPanel {
      * Hides the button for enabling/disabling bots
      */
     public void hideStatusButton() {
-        jButton.setVisible(false);
+        jbEnable.setBackground(color.getLightGrey());
     }
 
     /**
@@ -168,7 +169,7 @@ public class BotsEditView extends JPanel {
      * @param controller
      */
     public void registerController(ActionListener controller) {
-        jButton.addActionListener(controller);
+        jbEnable.addActionListener(controller);
         jbCancel.addActionListener(controller);
         jbCancel.setActionCommand(CANCEL);
     }
