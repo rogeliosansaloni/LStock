@@ -18,7 +18,8 @@ public class BotsEditComboBoxController implements ItemListener {
 
     /**
      * Creates and initializes the combobox controller
-     * @param view Bot Remove view
+     *
+     * @param view  Bot Remove view
      * @param model BotManager
      */
     public BotsEditComboBoxController(BotsEditView view, BotManager model) {
@@ -35,13 +36,9 @@ public class BotsEditComboBoxController implements ItemListener {
                 int companyId = model.getCompanyId(companyName);
                 ArrayList<Bot> bots = model.getAllBotsByCompany(companyId);
                 view.showBots(bots);
-                if (!bots.isEmpty()) {
-                    view.showStatusButton(bots.get(0));
-                } else {
-                    view.hideStatusButton();
-                }
+                view.showStatusButton(bots.get(0));
             } else {
-                if(comboBox.getActionCommand().equals("bot-id")) {
+                if (comboBox.getActionCommand().equals("bot-id")) {
                     int botId = view.getBotId();
                     Bot bot = model.getBot(botId);
                     view.showStatusButton(bot);

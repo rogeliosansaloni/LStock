@@ -66,6 +66,7 @@ public class BotsCreateController implements ActionListener {
                     bot.setProbability(Float.parseFloat(percentage));
                     if (model.createBot(bot) >= 0) {
                         initView();
+                        model.updateCompanyBots();
                         view.showErrorMessage(SUCCESS_MESSAGE);
                     } else {
                         view.showErrorMessage(ERROR_MESSAGE);

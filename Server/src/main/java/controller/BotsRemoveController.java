@@ -1,6 +1,7 @@
 package controller;
 
 import model.entities.Bot;
+import model.entities.Company;
 import model.managers.BotManager;
 import view.BotsRemoveView;
 import view.MainView;
@@ -40,9 +41,8 @@ public class BotsRemoveController implements ActionListener {
      * selected and default company
      */
     public void initView() {
-        view.showCompanies(model.getCompanies());
-        ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
-        view.showBots(bots);
+        view.showCompanies(model.getCompaniesWithBots());
+        view.showBots(getInitBots());
     }
 
     /**
@@ -54,6 +54,29 @@ public class BotsRemoveController implements ActionListener {
         return model.getCompanyId(companyName);
     }
 
+    /**
+     * Get the company from a list of companies by id
+     * @param companies list of companies
+     * @param id id of the company
+     * @return company
+     */
+    private Company getCompany(ArrayList<Company> companies, int id) {
+        for(Company c : companies) {
+            if (c.getCompanyId() == id) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get the bots of the selected company
+     * @return bots of the company
+     */
+    private ArrayList<Bot> getInitBots() {
+        return getCompany(model.getCompaniesWithBots(), getSelectedCompanyId()).getBots();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
@@ -61,7 +84,13 @@ public class BotsRemoveController implements ActionListener {
                 int botId = mainView.getBotsRemoveView().getBotId();
                 if (model.deleteBot(botId)) {
                     view.showMessages(String.format(SUCCESS_MESSAGE, botId));
-                    view.showBots(model.getAllBotsByCompany(getSelectedCompanyId()));
+                    model.updateCompanyBots();
+                    ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
+                    if (bots.isEmpty()) {
+                        initView();
+                    } else {
+                        view.showBots(bots);
+                    }
                 } else {
                     view.showMessages(ERROR_MESSAGE);
                 }

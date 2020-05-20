@@ -94,10 +94,11 @@ public class BotsEditView extends JPanel {
      * @param companies list of the companies
      */
     public void showCompanies(ArrayList<Company> companies) {
-        Font font = new Font(FONT, Font.ITALIC, 20);
-        int numCompanies = companies.size();
-        for (int i = 0; i < numCompanies; i++) {
-            Company company = (Company) companies.get(i);
+        // Clear the list of companies from combo box
+        jcbCompany.removeAllItems();
+
+        // Add the retrieved companies to the list
+        for (Company company : companies) {
             jcbCompany.addItem(company.getName());
         }
     }
@@ -112,10 +113,7 @@ public class BotsEditView extends JPanel {
         jcbBot.removeAllItems();
 
         // Add retrieved bots to the list
-        Font font = new Font(FONT, Font.ITALIC, 20);
-        int numBots = bots.size();
-        for (int i = 0; i < numBots; i++) {
-            Bot bot = (Bot) bots.get(i);
+        for (Bot bot : bots) {
             jcbBot.addItem(String.format("Bot %d", bot.getBotId()));
         }
     }
@@ -154,13 +152,6 @@ public class BotsEditView extends JPanel {
                 jbEnable.setBackground(color.getGREEN());
             }
         }
-    }
-
-    /**
-     * Hides the button for enabling/disabling bots
-     */
-    public void hideStatusButton() {
-        jbEnable.setBackground(color.getLightGrey());
     }
 
     /**

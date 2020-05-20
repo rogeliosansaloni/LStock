@@ -1,6 +1,7 @@
 package controller;
 
 import model.entities.Bot;
+import model.entities.Company;
 import model.managers.BotManager;
 import view.BotsEditView;
 import view.MainView;
@@ -40,14 +41,33 @@ public class BotsEditController implements ActionListener {
      * selected and default company
      */
     public void initView() {
-        view.showCompanies(model.getCompanies());
+        view.showCompanies(model.getCompaniesWithBots());
         ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
-        view.showBots(bots);
-        if (!bots.isEmpty()) {
-            view.showStatusButton(bots.get(0));
-        } else {
-            view.hideStatusButton();
+        view.showBots(getInitBots());
+        view.showStatusButton(bots.get(0));
+    }
+
+    /**
+     * Get the company from a list of companies by id
+     * @param companies list of companies
+     * @param id id of the company
+     * @return company
+     */
+    private Company getCompany(ArrayList<Company> companies, int id) {
+        for(Company c : companies) {
+            if (c.getCompanyId() == id) {
+                return c;
+            }
         }
+        return null;
+    }
+
+    /**
+     * Get the bots of the selected company
+     * @return bots of the company
+     */
+    private ArrayList<Bot> getInitBots() {
+        return getCompany(model.getCompaniesWithBots(), getSelectedCompanyId()).getBots();
     }
 
     /**
@@ -71,6 +91,7 @@ public class BotsEditController implements ActionListener {
                 String action = ENABLE;
                 if (status == 1) { action = DISABLE; }
                 model.configureBot(botId,action);
+                model.updateCompanyBots();
                 view.showMessages(MESSAGE + action.toLowerCase() + "d");
                 view.showStatusButton(model.getBot(botId));
                 break;

@@ -107,7 +107,7 @@ public class BotsRemoveView extends JPanel {
      * @param companies list of the companies
      */
     public void showCompanies(ArrayList<Company> companies) {
-        Font font = new Font(FONT, Font.ITALIC, 20);
+        jcbCompany.removeAllItems();
         int numCompanies = companies.size();
         for (int i = 0; i < numCompanies; i++) {
             Company company = (Company) companies.get(i);
