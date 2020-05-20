@@ -40,7 +40,7 @@ public class BotMenuView extends JPanel {
         JPanel jpCenter = new JPanel();
         jpCenter.setBackground(color.getWHITE());
 
-        jpButtons = new JPanel(new GridLayout(2, 2, 30, 0));
+        jpButtons = new JPanel(new GridLayout(4, 1, 50, 50));
         jpButtons.setBackground(Color.WHITE);
 
         jbCreate = createMenuButton("Create");
