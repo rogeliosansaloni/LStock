@@ -19,6 +19,21 @@ public class SharesView extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createEmptyBorder(50, 20, 50, 20));
         this.setBackground(color.getBLACK());
+
+        //Let's create the table
+        jpTable = new JPanel();
+        jpTable.setBackground(color.getBLACK());
+
+        jpTable.setLayout(new GridLayout(0, 5, 20, 20));
+        createLabel("COMPANY", Font.BOLD, color.getWHITE());
+        createLabel("ACTION VALUE", Font.BOLD, color.getWHITE());
+        createLabel("MY ACTIONS", Font.BOLD, color.getWHITE());
+        createLabel("PROFIT & LOSS", Font.BOLD, color.getWHITE());
+        jpTable.add(new JLabel());
+
+        jpScroll = new JScrollPane(jpTable);
+        jpScroll.setBackground(color.getBLACK());
+        this.add(jpScroll, BorderLayout.CENTER);
     }
 
     /**
@@ -34,13 +49,6 @@ public class SharesView extends JPanel {
     }
 
     public void updateSharesView (ArrayList<ShareChange> shares){
-        jpTable = new JPanel();
-        jpTable.setLayout(new GridLayout(0, 5, 20, 20));
-        createLabel("COMPANY", Font.BOLD, color.getWHITE());
-        createLabel("ACTION VALUE", Font.BOLD, color.getWHITE());
-        createLabel("MY ACTIONS", Font.BOLD, color.getWHITE());
-        createLabel("PROFIT & LOSS", Font.BOLD, color.getWHITE());
-        jpTable.add(new JLabel());
         jbSellShares = new JButton[shares.size()];
         for (int i = 0; i < shares.size(); i++) {
             createLabel(shares.get(i).getCompanyName(), Font.PLAIN, color.getWHITE());
@@ -55,10 +63,6 @@ public class SharesView extends JPanel {
             }
             createSellButton(i);
         }
-        jpTable.setBackground(color.getBLACK());
-        jpScroll = new JScrollPane(jpTable);
-        jpScroll.setBackground(color.getBLACK());
-        this.add(jpScroll, BorderLayout.CENTER);
     }
 
     public void createLabel(String text, int type, Color colorLabel){

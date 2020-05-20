@@ -320,10 +320,6 @@ public class MainView extends JFrame {
         jpCompanyView.showCompanies(companies);
     }
 
-    public void updateSharesView(ArrayList<ShareChange> shares){
-        jpShares.updateSharesView(shares);
-    }
-
     /**
      * Gets amount selected from the Load Balance view
      *
@@ -410,4 +406,5 @@ public class MainView extends JFrame {
      */
     public CompanyDetailView getCompanyDetailsView() { return jpCompanyDetailsView; }
 
+    public SharesView getSharesView(){ return jpShares; }
 }

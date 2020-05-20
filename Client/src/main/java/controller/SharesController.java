@@ -3,17 +3,17 @@ package controller;
 import model.entities.*;
 import network.NetworkManager;
 import view.MainView;
+import view.SharesView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class SharesController implements ActionListener {
-    private MainView view;
+    private SharesView view;
     private StockManager model;
 
-    public SharesController(MainView view, StockManager model) {
+    public SharesController(SharesView view, StockManager model) {
         this.view = view;
         this.model = model;
     }

@@ -31,7 +31,6 @@ public class MainController implements ActionListener {
         this.balanceController = new BalanceController(view.getBalanceView(), model);
         this.companyController = new CompanyController(view, model);
         this.companyDetailController = new CompanyDetailController(view, model);
-        this.sharesController = new SharesController(view, model);
     }
 
     @Override
@@ -46,8 +45,8 @@ public class MainController implements ActionListener {
                 //TODO: Profile
                 break;
             case "shares":
-                sendSharesChange();
                 view.updateView(CARD_SHARES);
+                sendSharesChange();
                 break;
             case "load":
                 view.updateView(CARD_BALANCE);
@@ -117,9 +116,8 @@ public class MainController implements ActionListener {
      * Updates the shares table in the SharesView
      */
     public void updateShareView () {
-        view.updateSharesView(model.getSharesChange());
+        view.getSharesView().updateSharesView(model.getSharesChange());
         view.registerSharesController(sharesController, model.getSharesChange());
-
     }
 
     public void sendSharesChange(){
