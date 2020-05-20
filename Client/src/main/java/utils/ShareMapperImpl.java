@@ -8,46 +8,6 @@ import java.util.ArrayList;
 public class ShareMapperImpl implements ShareMapper {
 
     @Override
-    public Purchase[] shareTradeToPurchase(ShareTrade shareTrade) {
-        int numPurchases = shareTrade.getShareId().length;
-        Purchase[] purchases = new Purchase[numPurchases];
-        for(int i=0; i<numPurchases; i++){
-            purchases[i] = new Purchase();
-            purchases[i].setUserId(shareTrade.getUserId());
-            purchases[i].setCompanyId(shareTrade.getCompanyId());
-            purchases[i].setShareId(shareTrade.getShareId()[i]);
-            purchases[i].setShareQuantity(shareTrade.getNumShares()[i]);
-        }
-        return purchases;
-    }
-
-    @Override
-    public User shareTradeToUser(ShareTrade shareTrade) {
-        User user = new User();
-        user.setUserId(shareTrade.getUserId());
-        user.setTotalBalance(shareTrade.getTotalBalance());
-        return user;
-    }
-
-    @Override
-    public Company shareTradeToCompany (ShareTrade shareTrade) {
-        Company company = new Company();
-        company.setCompanyId(shareTrade.getCompanyId());
-        company.setValue(shareTrade.getSharePrice()[0]);
-        return company;
-    }
-
-    @Override
-    public ShareTrade userCompanyToShareTrade (User user, Company company, int[] numShares) {
-        ShareTrade shareTrade = new ShareTrade();
-        shareTrade.setNumShares(numShares);
-        shareTrade.setUserId(user.getUserId());
-        shareTrade.setTotalBalance(user.getTotalBalance());
-        shareTrade.setCompanyId(company.getCompanyId());
-        return shareTrade;
-    }
-
-    @Override
     public ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList) {
         ArrayList<ShareSell> sharesSell = new ArrayList<ShareSell>();
         int sharesLen = shareSellList.getShareQuantity().length;

@@ -7,7 +7,6 @@ import view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CompanyDetailController implements ActionListener {
     private static final String CONFIRM_BUY_ACTION = "Do you want to buy this share?";
@@ -28,63 +27,95 @@ public class CompanyDetailController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("buyShare")) {
-            //If user confirms to buy the share
-            if (view.confirmAction(CONFIRM_BUY_ACTION) == CONFIRMED) {
-                String textfieldText = view.getNumSharesTextfield();
-                //Check if the text introduced is an integer
-                int numShares = checkInteger(textfieldText);
-                if(numShares > 0){
-                    //Check if the user has enough money
-                    float userBalance = model.checkUserBalance(numShares);
-                    if(userBalance > 0){
-                        sendShareTrade(numShares, userBalance, BUY_ACTION);
-                    } else{
-                        view.showErrorCompanyDetail(2);
+            String textfieldText = view.getNumSharesBuy();
+            //Check if the text introduced is an integer
+            int numShares = checkInteger(textfieldText);
+            if(numShares > 0){
+                //Check if the user has enough money
+                float userBalance = model.checkUserBalance(numShares);
+                if(userBalance > 0){
+                    //If user confirms to buy the share
+                    if (view.confirmAction(CONFIRM_BUY_ACTION) == CONFIRMED) {
+                        sendShareTradeBuy(numShares, userBalance, BUY_ACTION);
                     }
-                }
-            }
-        }
-        if (e.getActionCommand().equals("sellShare")) {
-            //If user confirms to sell the share
-            if (view.confirmAction(CONFIRM_SELL_ACTION) == CONFIRMED) {
-                String textfieldText = view.getNumSharesTextfield();
-                //Check if the text introduced is an integer
-                int numShares = checkInteger(textfieldText);
-                if(numShares > 0){
-                    float userBalance = model.checkNumUserShares(numShares);
-                    if(userBalance > 0){
-                        sendShareTrade(numShares, userBalance, SELL_ACTION);
-                    } else{
-                        view.showErrorCompanyDetail(3);
-                    }
-                } else {
+                } else{
                     view.showErrorCompanyDetail(2);
                 }
+            } else{
+                view.showErrorCompanyDetail(1);
             }
+
+        }
+        if (e.getActionCommand().equals("sellShare")) {
+            String[] textShareSells = view.getNumSharesSell();
+            //Check if the text introduced is an integer
+            int[] numShares = checkAllFields(textShareSells);
+            if(numShares != null){
+                float userBalance = model.checkNumUserShares(numShares);
+                if(userBalance > 0){
+                    if (view.confirmAction(CONFIRM_SELL_ACTION) == CONFIRMED) {
+                        sendShareTradeSell(numShares, userBalance, SELL_ACTION);
+                    }
+                } else{
+                    view.showErrorCompanyDetail(4);
+                }
+            } else {
+                view.showErrorCompanyDetail(3);
+            }
+
         }
     }
 
     public int checkInteger(String text){
-        try{
-            int numShares = Integer.parseInt(text);
-            if(numShares <= 0){
-                view.showErrorCompanyDetail(1);
+        if(text.equals("")){
+            return -2;
+        }else{
+            try{
+                int numShares = Integer.parseInt(text);
+                if(numShares <= 0){
+                    return -1;
+                }
+                return numShares;
+            }
+            catch(NumberFormatException e){
                 return -1;
             }
-            return numShares;
-        }
-        catch(NumberFormatException e){
-            view.showErrorCompanyDetail(1);
-            return -1;
         }
     }
 
-    public void sendShareTrade(int numShares, float userBalance, String action){
+    public int[] checkAllFields(String[] valuesString){
+        int value;
+        int[] valuesInt = new int[valuesString.length];
+        for(int i=0; i<valuesString.length; i++){
+            value = checkInteger(valuesString[i]);
+            if(value == -1){
+                return null;
+            } else {
+                valuesInt[i] = value;
+            }
+        }
+        return valuesInt;
+    }
+
+    public void sendShareTradeBuy(int numShares, float userBalance, String action){
         int userId = model.getUser().getUserId();
         int companyId = model.getCompanyDetailId();
         int shareId = model.getCurrentShareId();
         float currentShareValue = model.getCurrentShareValue();
         ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, numShares,  action);
+        try {
+            NetworkManager.getInstance().sendShareTrade(shareTrade);
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    public void sendShareTradeSell(int[] numShares, float userBalance, String action){
+        int userId = model.getUser().getUserId();
+        int companyId = model.getCompanyDetailId();
+        int[] shareId = model.getSharesSellSharesId();
+        float[] shareValue = model.getSharesSellSharesValue();
+        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, shareValue, numShares,  action);
         try {
             NetworkManager.getInstance().sendShareTrade(shareTrade);
         } catch (IOException e1) {

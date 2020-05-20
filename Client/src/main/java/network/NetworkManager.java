@@ -12,6 +12,7 @@ import controller.RegisterController;
 import model.entities.*;
 import utils.CompanyMapperImpl;
 import utils.JSONReader;
+import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
 import view.LoginView;
 import view.MainView;
@@ -32,6 +33,7 @@ public class NetworkManager extends Thread {
     private LoginView loginView;
     private UserMapperImpl mapper;
     private CompanyMapperImpl companyMapper;
+    private ShareMapperImpl shareMapper;
     private StockManager model;
 
     /**
@@ -83,6 +85,7 @@ public class NetworkManager extends Thread {
     private void init() {
         this.mapper = new UserMapperImpl();
         this.companyMapper = new CompanyMapperImpl();
+        this.shareMapper = new ShareMapperImpl();
     }
 
     /**
@@ -202,7 +205,7 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof ShareTrade) {
                     ShareTrade info = ((ShareTrade) received);
-                    mainController.updateViewsAfterPurchase(info.getTotalBalance(),  info.getCompanyId(), info.getNumShares());
+                    mainController.updateViewsAfterPurchase(info.getTotalBalance(),  info.getCompanyId());
                 }
 
                 if (received instanceof CompanyChangeList) {
@@ -216,9 +219,11 @@ public class NetworkManager extends Thread {
                     }
                 }
 
-                if (received instanceof CompanyDetailList) {
-                    CompanyDetailList companyDetails = (CompanyDetailList) received;
+                if (received instanceof DetailViewInfo) {
+                    CompanyDetailList companyDetails = ((DetailViewInfo) received).getCompanyDetailList();
+                    ShareSellList sharesSells = ((DetailViewInfo) received).getShareSellList();
                     model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
+                    model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
                     mainController.updateCompanyDetails();
                 }
             }

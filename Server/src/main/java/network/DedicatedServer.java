@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 
 import model.entities.*;
 import model.managers.StockManager;
@@ -98,10 +99,10 @@ public class DedicatedServer extends Thread {
 
                 if (tunnelObject instanceof ShareTrade) {
                     ShareTrade shareTrade = (ShareTrade) tunnelObject;
-                    Purchase purchase = shareMapper.shareTradeToPurchase(shareTrade);
+                    Purchase[] purchases = shareMapper.shareTradeToPurchase(shareTrade);
                     User user = shareMapper.shareTradeToUser(shareTrade);
                     Company company = shareMapper.shareTradeToCompany(shareTrade);
-                    ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchase, shareTrade.getActionToDo());
+                    ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchases, shareTrade.getActionToDo());
                     oos.writeObject(share);
                 }
 
@@ -119,9 +120,13 @@ public class DedicatedServer extends Thread {
 
                 if (tunnelObject instanceof UserShares) {
                     ArrayList<CompanyDetail> companies = stockModel.getCompanyDetails(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
+                    ArrayList<ShareSell> shares = stockModel.getSharesSell(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
                     CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companies);
-                    oos.writeObject(companyDetailList);
+                    ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
+                    DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
+                    oos.writeObject(detailViewInfo);
                 }
+
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

@@ -110,16 +110,20 @@ public class StockManager {
      * @param company the company
      * @return ShareTrade with the new values of users total balance and company value
      */
-    public ShareTrade updatePurchaseBuy (User user, Company company, Purchase purchase, String action) {
+    public ShareTrade updatePurchaseBuy (User user, Company company, Purchase[] purchases, String action) {
         //Updates the user balance
         userDao.updateUserBalance(user);
         //If the acttion is Sell, we want to decrease the number of shares.
-        if(action.equals("SELL")){
-            purchase.setShareQuantity(-purchase.getShareQuantity());
+        if(action.equals("BUY")){
+            //Updates the purchased share
+            shareDao.updatePurchasedShare(purchases[0]);
+        } else{
+            for(int i=0; i<purchases.length; i++){
+                purchases[i].setShareQuantity(-purchases[i].getShareQuantity());
+                //Updates the purchased share
+                shareDao.updatePurchasedShare(purchases[i]);
+            }
         }
-        //Updates the purchased share
-        shareDao.updatePurchasedShare(purchase);
-
         //Recalculates the new value of the company
         company.setValue(company.recalculateValue(action));
 
@@ -128,7 +132,6 @@ public class StockManager {
         //Get the user's number of shares
         int numShares = shareDao.getNumShares(user, company);
         ShareTrade info = shareMapper.userCompanyToShareTrade(user, company, numShares);
-        info.setActionToDo(BUY_ACTION);
         return info;
     }
 
@@ -145,6 +148,11 @@ public class StockManager {
     public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
         companyDetails = companyDao.getCompanyDetails(userId, companyId);
         return companyDetails;
+    }
+
+    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
+        ArrayList<ShareSell> sharesSell = shareDao.getSharesSell(userId, companyId);
+        return sharesSell;
     }
 }
 

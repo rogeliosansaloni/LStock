@@ -1,6 +1,8 @@
 package model.entities;
 
-public class CompanyDetailList extends TunnelObject {
+import java.io.Serializable;
+
+public class CompanyDetailList implements Serializable {
 
     private int numUserShares;
     private int companyId;

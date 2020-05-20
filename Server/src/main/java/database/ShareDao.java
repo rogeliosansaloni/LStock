@@ -1,9 +1,6 @@
 package database;
 
-import model.entities.Company;
-import model.entities.Share;
-import model.entities.User;
-import model.entities.Purchase;
+import model.entities.*;
 
 
 import java.sql.ResultSet;
@@ -76,6 +73,20 @@ public class ShareDao {
         return numShares;
     }
 
+    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
+        ResultSet retrieved = dbConnector.selectQuery("CALL getSharesSell(" + userId + "," + companyId + ");");
+        ArrayList<ShareSell> shares = null;
+        try {
+            shares = new ArrayList<ShareSell>();
+            while (retrieved.next()) {
+                shares.add(toShareSell(retrieved));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting shares sell");
+        }
+        return shares;
+    }
+
     /**
      * Converts retrieved Share information into a Share object
      * @param resultSet information retrieved from the database
@@ -88,6 +99,15 @@ public class ShareDao {
         share.setPrice(resultSet.getFloat("price"));
         share.getCompany().setCompanyId(resultSet.getInt("company_id"));
         return share;
+    }
+
+    private ShareSell toShareSell(ResultSet resultSet) throws SQLException {
+        ShareSell shareSell = new ShareSell();
+        shareSell.setCompanyId(resultSet.getInt("companyId"));
+        shareSell.setCompanyName(resultSet.getString("companyName"));
+        shareSell.setShareValue(resultSet.getFloat("shareValue"));
+        shareSell.setShareQuantity(resultSet.getInt("shareQuantity"));
+        return shareSell;
     }
 
 }

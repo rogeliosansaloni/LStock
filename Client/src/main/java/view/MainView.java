@@ -2,6 +2,7 @@ package view;
 
 import model.entities.CompanyChange;
 import model.entities.CompanyDetail;
+import model.entities.ShareSell;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -333,8 +334,13 @@ public class MainView extends JFrame {
         labelViewName.setText(companyName);
     }
 
-    public String getNumSharesTextfield(){
-        String text = jpCompanyDetailsView.getNumShares();
+    public String getNumSharesBuy(){
+        String text = jpCompanyDetailsView.getSharesBuy();
+        return text;
+    }
+
+    public String[] getNumSharesSell(){
+        String[] text = jpCompanyDetailsView.getSharesSell();
         return text;
     }
 
@@ -346,8 +352,9 @@ public class MainView extends JFrame {
         jpCompanyView.showCompanies(companies);
     }
 
-    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails, float maxValue){
+    public void updateCompanyDetailView(ArrayList<ShareSell> sharesSell, ArrayList<CompanyDetail> companyDetails, float maxValue){
         jpCompanyDetailsView.updateCompanyDetailView(companyDetails, maxValue);
+        jpCompanyDetailsView.updateSharesToSell(sharesSell);
     }
 
     /**

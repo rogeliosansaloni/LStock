@@ -108,9 +108,9 @@ public class MainController implements ActionListener {
      * Updates the CompanyDetailView depending on the values received from the database
      */
     public void updateCompanyDetails () {
-        view.updateView(CARD_COMPANYDETAILS);
-        view.updateCompanyDetailView(model.getCompanyDetails(), model.getMaxDetailShareValue());
+        view.updateCompanyDetailView(model.getSharesSell(), model.getCompanyDetails(), model.getMaxDetailShareValue());
         view.setTitleCompanyDetail(model.getCurrentShareValue(), model.getCompanyDetailName());
+        view.updateView(CARD_COMPANYDETAILS);
     }
 
     /**
@@ -119,8 +119,7 @@ public class MainController implements ActionListener {
      * @param totalBalance the new balance of the user
      * @param companyId the company id
      */
-    public void updateViewsAfterPurchase(float totalBalance, int companyId, int numShares) {
-        //TODO: Update company in the model
+    public void updateViewsAfterPurchase(float totalBalance, int companyId) {
         model.updateUserBalance(totalBalance);
         view.updateViewsAfterPurchase(totalBalance);
         companyController.sendUserShares(companyId);

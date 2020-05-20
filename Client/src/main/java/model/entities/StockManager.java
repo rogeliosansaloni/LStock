@@ -4,11 +4,9 @@ import java.util.ArrayList;
 
 public class StockManager {
     private User user;
-    private Company company;
-    private ArrayList<Company> companies;
     private ArrayList<CompanyDetail> companyDetails;
     private ArrayList<CompanyChange> companiesChange;
-
+    private ArrayList<ShareSell> sharesSell;
 
     public StockManager(User user) {
         this.user = user;
@@ -22,12 +20,28 @@ public class StockManager {
         this.user = user;
     }
 
-    public ArrayList<Company> getCompanies() {
-        return companies;
-    }
-
     public ArrayList<CompanyDetail> getCompanyDetails() {
         return companyDetails;
+    }
+
+    public ArrayList<ShareSell> getSharesSell() {
+        return sharesSell;
+    }
+
+    public int[] getSharesSellSharesId() {
+        int[] sharesId = new int[sharesSell.size()];
+        for(int i=0; i<sharesSell.size(); i++){
+            sharesId[i] = sharesSell.get(i).getShareId();
+        }
+        return sharesId;
+    }
+
+    public float[] getSharesSellSharesValue() {
+        float[] sharesValue = new float[sharesSell.size()];
+        for(int i=0; i<sharesSell.size(); i++){
+            sharesValue[i] = sharesSell.get(i).getShareValue();
+        }
+        return sharesValue;
     }
 
     public float getCurrentShareValue() {
@@ -64,12 +78,12 @@ public class StockManager {
         return companiesChange;
     }
 
-    public void setCompanies(ArrayList<Company> companies) {
-        this.companies = companies;
-    }
-
     public void setCompanyDetails(ArrayList<CompanyDetail> companyDetails) {
         this.companyDetails = companyDetails;
+    }
+
+    public void setSharesSell(ArrayList<ShareSell> sharesSell) {
+        this.sharesSell = sharesSell;
     }
 
     public void setCompaniesChange(ArrayList<CompanyChange> companiesChange) {
@@ -86,13 +100,17 @@ public class StockManager {
         this.user.setTotalBalance(newBalance);
     }
 
-    public float checkNumUserShares (int quantityShares){
-        int numUserShares = this.companyDetails.get(0).getNumUserShares();
-        if(numUserShares >= quantityShares){
-            float benefitSale = quantityShares * getCurrentShareValue();
-            float userBalance = user.getTotalBalance() + benefitSale;
-            return userBalance;
+    public float checkNumUserShares (int[] quantityShares){
+        for(int i=0; i<quantityShares.length; i++){
+            if(this.sharesSell.get(i).getShareQuantity() < quantityShares[i]){
+                return -1;
+            }
         }
-        return -1;
+        float userBalance = 0;
+        for(int i=0; i<quantityShares.length; i++){
+            float benefitSale = quantityShares[i] * getCurrentShareValue();
+            userBalance = user.getTotalBalance() + benefitSale;
+        }
+        return userBalance;
     }
 }
