@@ -10,6 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Main controller of the client different views
+ */
 public class MainController implements ActionListener {
     private static final String CARD_COMPANY = "Companies";
     private static final String CARD_PROFILE = "My Profile";
@@ -23,13 +26,18 @@ public class MainController implements ActionListener {
     private BalanceController balanceController;
     private CompanyController companyController;
 
+    /**
+     * Creates and initializes the controller and views
+     * @param view Main view
+     * @param model StockManager
+     * @param loginView Login view
+     */
     public MainController(MainView view, StockManager model, LoginView loginView) {
         this.view = view;
         this.loginView = loginView;
         this.model = model;
-        this.balanceController = new BalanceController(view, model);
+        this.balanceController = new BalanceController(view.getBalanceView(), model);
         this.companyController = new CompanyController(view, model);
-        this.balanceController = new BalanceController(view, model);
         this.companyDetailController = new CompanyDetailController(view, model);
     }
 
@@ -96,7 +104,7 @@ public class MainController implements ActionListener {
      */
     public void updateTotalBalance (float totalBalance) {
         model.getUser().setTotalBalance(totalBalance);
-        balanceController.updateTotalBalance(totalBalance);
+        view.updateTotalBalance(totalBalance);
     }
 
     public void updateCompanyList () {

@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+/**
+ * Main view
+ */
 public class MainView extends JFrame {
 
     //logo de stock
@@ -49,6 +52,9 @@ public class MainView extends JFrame {
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
 
+    /**
+     * Creates and initializes the main view
+     */
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
@@ -380,13 +386,12 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Updates total balance of the user
+     * Updates total balance of the user in the header
      * @param totalBalance Current balance of the user
      */
     public void updateTotalBalance (float totalBalance) {
         String strDouble = String.format("%.2f", totalBalance);
         labelBalance.setText("Balance: " + strDouble + " $");
-        jpBalanceView.updateCurrentBalance(strDouble);
     }
 
     /**
@@ -416,5 +421,26 @@ public class MainView extends JFrame {
         updateTotalBalance(totalBalance);
         jpBalanceView.updateCurrentBalance(strBalance);
     }
+
+    /**
+     * Gets the Balance View
+     *
+     * @return Balance View
+     */
+    public BalanceView getBalanceView () { return jpBalanceView; }
+
+    /**
+     * Gets the company view
+     *
+     * @return Company View
+     */
+    public CompanyView getCompanyView() { return jpCompanyView; }
+
+    /**
+     * Gets the Company Details View
+     *
+     * @return Company Details View
+     */
+    public CompanyDetailView getCompanyDetailsView() { return jpCompanyDetailsView; }
 
 }
