@@ -125,13 +125,13 @@ public class StockManager {
             }
         }
         //Recalculates the new value of the company
-        company.setValue(company.recalculateValue(action));
+        float currentValue = companyDao.getCompanyCurrenValue(company.getCompanyId());
+        company.setValue(currentValue);
+        company.recalculateValue(action);
 
         //Updates the company new value
         companyDao.updateCompanyNewValue(company);
-        //Get the user's number of shares
-        int numShares = shareDao.getNumShares(user, company);
-        ShareTrade info = shareMapper.userCompanyToShareTrade(user, company, numShares);
+        ShareTrade info = shareMapper.userCompanyToShareTrade(user, company);
         return info;
     }
 

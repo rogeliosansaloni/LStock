@@ -31,6 +31,7 @@ public class StockManager {
     public int[] getSharesSellSharesId() {
         int[] sharesId = new int[sharesSell.size()];
         for(int i=0; i<sharesSell.size(); i++){
+            System.out.println(sharesSell.get(i).getShareId());
             sharesId[i] = sharesSell.get(i).getShareId();
         }
         return sharesId;
@@ -101,16 +102,13 @@ public class StockManager {
     }
 
     public float checkNumUserShares (int[] quantityShares){
+        float benefitSale = 0;
         for(int i=0; i<quantityShares.length; i++){
             if(this.sharesSell.get(i).getShareQuantity() < quantityShares[i]){
                 return -1;
             }
+            benefitSale += quantityShares[i] * getCurrentShareValue();
         }
-        float userBalance = 0;
-        for(int i=0; i<quantityShares.length; i++){
-            float benefitSale = quantityShares[i] * getCurrentShareValue();
-            userBalance = user.getTotalBalance() + benefitSale;
-        }
-        return userBalance;
+        return user.getTotalBalance() + benefitSale;
     }
 }

@@ -115,32 +115,7 @@ public class UserDao {
      * @param user User information
      */
     public void updateUserBalance(User user) {
-        try {
-            ResultSet result = dbConnector.selectQuery("CALL updateUserBalance( " + user.getUserId() + ", " + user.getTotalBalance() + ");");
-            result.next();
-        } catch (SQLException e) {
-            System.out.println(BALANCE_MESSAGE_1);
-        }
-    }
-
-    /**
-     * Updates de the users discounted balance after buying a share from a company
-     * @param user the user
-     * @param company the company we're buying the share from
-     */
-    public void updateUserBalance (User user, Company company) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
-        try {
-            while (result.next()) {
-                if (result.getInt("user_id") == user.getUserId()) {
-                    float totalAmount = result.getFloat("total_balance") - company.getValue();
-                    dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
-                    user.setTotalBalance(totalAmount);
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(BALANCE_MESSAGE_1);
-        }
+        dbConnector.callProcedure("CALL updateUserBalance( " + user.getUserId() + ", " + user.getTotalBalance() + ");");
     }
 
     /**

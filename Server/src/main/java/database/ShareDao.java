@@ -25,15 +25,14 @@ public class ShareDao {
         ResultSet retrievedCheck = dbConnector.selectQuery("CALL checkIfPurchaseExists(" + purchase.getUserId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareId() + ");");
         try {
             if(retrievedCheck.next() == false){
-                ResultSet resultPurchase = dbConnector.selectQuery("CALL insertPurchase(" + purchase.getUserId() + ", "
-                        + purchase.getShareId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareQuantity() + ");");
-                resultPurchase.next();
+                dbConnector.callProcedure("CALL insertPurchase(" + purchase.getUserId() + ", "
+                        + purchase.getCompanyId()+ ", " + purchase.getShareId() + ", " + purchase.getShareQuantity() + ");");
             } else{
-                ResultSet resultPurchase = dbConnector.selectQuery("CALL updatePurchase(" + purchase.getUserId() + ", "
-                        + purchase.getShareId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareQuantity() + ");");
-                resultPurchase.next();
+                dbConnector.callProcedure("CALL updatePurchase(" + purchase.getUserId() + ", "
+                        + purchase.getCompanyId() + ", " + purchase.getShareId() + ", " + purchase.getShareQuantity() + ");");
             }
         } catch (SQLException e) {
+            System.out.println(UPDATE_PURCHASE_ERROR);
         }
     }
 
@@ -64,8 +63,8 @@ public class ShareDao {
         int numShares = 0;
         ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + user.getUserId() + ", " + company.getCompanyId() + ");");
         try {
-            if(retrievedShares.next() != false){
-                numShares = retrievedShares.getInt("numShares");
+            while(retrievedShares.next()){
+                numShares = retrievedShares.getInt("numUserShares");
             }
         } catch (SQLException e) {
             System.out.println(GETTING_SHARES_ERROR);
@@ -103,7 +102,9 @@ public class ShareDao {
 
     private ShareSell toShareSell(ResultSet resultSet) throws SQLException {
         ShareSell shareSell = new ShareSell();
+        shareSell.setUserId(resultSet.getInt("userId"));
         shareSell.setCompanyId(resultSet.getInt("companyId"));
+        shareSell.setShareId(resultSet.getInt("shareId"));
         shareSell.setCompanyName(resultSet.getString("companyName"));
         shareSell.setShareValue(resultSet.getFloat("shareValue"));
         shareSell.setShareQuantity(resultSet.getInt("shareQuantity"));

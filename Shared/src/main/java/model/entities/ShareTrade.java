@@ -5,8 +5,6 @@ package model.entities;
  */
 public class ShareTrade extends TunnelObject {
     private int userId;
-
-
     private float totalBalance;
     private int companyId;
     private int[] shareId;
@@ -39,9 +37,9 @@ public class ShareTrade extends TunnelObject {
         this.userId = userId;
         this.totalBalance = totalBalance;
         this.companyId = companyId;
-        this.shareId = new int[0];
-        this.sharePrice = new float[0];
-        this.numShares = new int[0];
+        this.shareId = new int[1];
+        this.sharePrice = new float[1];
+        this.numShares = new int[1];
         this.shareId[0] = shareId;
         this.sharePrice[0] = sharePrice;
         this.numShares[0] = numShares;

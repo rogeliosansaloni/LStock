@@ -295,7 +295,9 @@ public class MainView extends JFrame {
      */
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
-        labelCurrentPrice.setText("");
+        if(!card.equals(CARD_COMPANYDETAILS)){
+            labelCurrentPrice.setText("");
+        }
         switch (card) {
             case CARD_COMPANY:
                 labelViewName.setText(CARD_COMPANY);
@@ -318,7 +320,6 @@ public class MainView extends JFrame {
                 updateOptionsBalance();
                 break;
             case CARD_COMPANYDETAILS:
-                labelViewName.setText(CARD_COMPANYDETAILS);
                 cardLayout.show(jpCenter, CARD_COMPANYDETAILS);
                 break;
         }
@@ -353,6 +354,7 @@ public class MainView extends JFrame {
     }
 
     public void updateCompanyDetailView(ArrayList<ShareSell> sharesSell, ArrayList<CompanyDetail> companyDetails, float maxValue){
+
         jpCompanyDetailsView.updateCompanyDetailView(companyDetails, maxValue);
         jpCompanyDetailsView.updateSharesToSell(sharesSell);
     }

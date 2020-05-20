@@ -38,9 +38,8 @@ public class ShareMapperImpl implements ShareMapper {
     }
 
     @Override
-    public ShareTrade userCompanyToShareTrade (User user, Company company, int[] numShares) {
+    public ShareTrade userCompanyToShareTrade (User user, Company company) {
         ShareTrade shareTrade = new ShareTrade();
-        shareTrade.setNumShares(numShares);
         shareTrade.setUserId(user.getUserId());
         shareTrade.setTotalBalance(user.getTotalBalance());
         shareTrade.setCompanyId(company.getCompanyId());

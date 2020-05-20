@@ -16,11 +16,14 @@ public class CompanyDetailView extends JPanel {
     private static final String ERROR_MESSAGE_1 = "The value introduced must be a number bigger than 0.";
     private static final String ERROR_MESSAGE_2 = "You don't have enough balance to buy ";
     private static final String ERROR_MESSAGE_3 = "All quantities introduced must be a number bigger than 0.";
-    private static final String ERROR_MESSAGE_4 = "Sale cancelled. You are trying to sell more sells than you actually have.";
+    private static final String ERROR_MESSAGE_4 = "Introduce at least 1 valid number.";
+    private static final String ERROR_MESSAGE_5 = "Sale cancelled. You are trying to sell more sells than you actually have.";
     private JPanel jpRight;
+    private JPanel jpRightTop;
     private JPanel jpLeft;
     private JPanel jpBuy;
     private JPanel jpShareList;
+    private JScrollPane jpScrollShares;
     private JButton jbBuy;
     private JButton jbSell;
     private JTextField jtBuyShares;
@@ -40,18 +43,22 @@ public class CompanyDetailView extends JPanel {
         jpRight.setBackground(color.getBLACK());
         jpRight.setAlignmentX(SwingConstants.CENTER);
 
+        //Panel South
+        jpRightTop = new JPanel();
+        jpRightTop.setLayout(new BorderLayout());
+        jpRightTop.setBackground(color.getBLACK());
+        jpRightTop.setAlignmentX(SwingConstants.CENTER);
+
         //Info shares of the client in the company
         Font fontMyShares = new Font("Roboto", Font.PLAIN, 18);
         jlMyShares = new JLabel("My Company Shares: 0");
         jlMyShares.setForeground(color.getWHITE());
         jlMyShares.setFont(fontMyShares);
         jlMyShares.setHorizontalAlignment(SwingConstants.CENTER);
-        jlMyShares.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
         //A panel for the buy option
         jpBuy = new JPanel();
         jpBuy.setLayout(new FlowLayout());
-        jpBuy.setBorder(BorderFactory.createEmptyBorder(20, 0, 30, 0));
         jpBuy.setBackground(color.getBLACK());
         jpBuy.setPreferredSize(new Dimension(400, 60));
 
@@ -90,6 +97,11 @@ public class CompanyDetailView extends JPanel {
         jbBuy.setFont(buyFont);
         jpBuy.add(jbBuy);
 
+        jpRightTop.add(jlMyShares, BorderLayout.NORTH);
+        jpRightTop.add(jpBuy, BorderLayout.CENTER);
+        jpRightTop.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
+        jpRight.add(jpRightTop, BorderLayout.NORTH);
+
         Font sellFont = new Font("Roboto", Font.BOLD, 25);
         //Sell button
         jbSell = new JButton("SELL SHARES");
@@ -97,10 +109,7 @@ public class CompanyDetailView extends JPanel {
         jbSell.setBackground(color.getWHITE());
         jbSell.setPreferredSize(new Dimension(400,50));
         jbSell.setFont(sellFont);
-
-        //Adding in the right panel
-        jpRight.add(jlMyShares, BorderLayout.NORTH);
-        jpRight.add(jpBuy, BorderLayout.CENTER);
+        jpRight.add(jbSell, BorderLayout.SOUTH);
 
         //Left JPanel
         jpLeft = new JPanel(new BorderLayout());
@@ -206,36 +215,30 @@ public class CompanyDetailView extends JPanel {
     }
 
     public void updateSharesToSell(ArrayList<ShareSell> sharesSell){
-
         jpShareList = new JPanel();
+        jpShareList.removeAll();
         jpShareList.setBackground(color.getBLACK());
-        jpShareList.setPreferredSize(new Dimension(350, 300));
         jpShareList.setLayout(new GridLayout(0, 3, 5, 5));
         Font fontTitle = new Font("Roboto", Font.BOLD, 12);
         createLabel("STARTING PRICE", fontTitle);
         createLabel("YOUR QUANTITY", fontTitle);
         jpShareList.add(new JLabel());
         jtSellShares = new JTextField[sharesSell.size()];
-        Font fontData = new Font("Roboto", Font.PLAIN, 18);
+        Font fontData = new Font("Roboto", Font.PLAIN, 20);
         for (int i = 0; i < sharesSell.size(); i++) {
             createLabel(sharesSell.get(i).getShareValue() + "€", fontData);
             createLabel(sharesSell.get(i).getShareQuantity() + "", fontData);
             jtSellShares[i] = new JTextField("");
-            jtSellShares[i].setForeground(color.getWHITE());
+            jtSellShares[i].setForeground(Color.GRAY);
+            jtSellShares[i].setBackground(color.getTEXTFIELD());
             jtSellShares[i].setFont(fontData);
             jtSellShares[i].setHorizontalAlignment(SwingConstants.CENTER);
             jpShareList.add(jtSellShares[i]);
         }
-        jpShareList.setBorder(new EmptyBorder(0, 0, 20, 0));
-        JPanel jpSellShares = new JPanel();
-        jpSellShares.setPreferredSize(new Dimension(350, 300));
-        jpSellShares.setLayout(new BorderLayout());
-        jpSellShares.add(jpShareList, BorderLayout.CENTER);
-        jpSellShares.add(jbSell, BorderLayout.SOUTH);
-
-        JScrollPane jpScroll = new JScrollPane(jpSellShares);
-        jpScroll.setPreferredSize(new Dimension(400, 300));
-        jpRight.add(jpScroll, BorderLayout.SOUTH);
+        jpScrollShares = new JScrollPane(jpShareList);
+        jpScrollShares.setBackground(color.getBLACK());
+        jpScrollShares.setPreferredSize(new Dimension(350, 250));
+        jpRight.add(jpScrollShares, BorderLayout.CENTER);
     }
 
     private void createLabel(String text, Font font) {
@@ -275,9 +278,10 @@ public class CompanyDetailView extends JPanel {
             case 4:
                 JOptionPane.showMessageDialog(null, ERROR_MESSAGE_4);
                 break;
-
+            case 5:
+                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_5);
+                break;
         }
-
     }
 
     public int confirmAction(String message) {

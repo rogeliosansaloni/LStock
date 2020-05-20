@@ -121,7 +121,8 @@ public class MainController implements ActionListener {
      */
     public void updateViewsAfterPurchase(float totalBalance, int companyId) {
         model.updateUserBalance(totalBalance);
-        view.updateViewsAfterPurchase(totalBalance);
+        view.updateTotalBalance(totalBalance);
         companyController.sendUserShares(companyId);
+        //TODO: add the share view controller and send the tunnel to get its information
     }
 }

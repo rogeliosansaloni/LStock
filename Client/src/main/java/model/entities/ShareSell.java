@@ -13,7 +13,6 @@ public class ShareSell {
     public ShareSell() {
     }
 
-
     public ShareSell(int userId, int companyId, int shareId, String companyName, float shareValue, int shareQuantity) {
         this.userId = userId;
         this.companyId = companyId;

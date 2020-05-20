@@ -11,7 +11,7 @@ public interface ShareMapper {
 
     Company shareTradeToCompany (ShareTrade shareTrade);
 
-    ShareTrade userCompanyToShareTrade (User user, Company company, int[] numShares);
+    ShareTrade userCompanyToShareTrade (User user, Company company);
 
     ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList);
 

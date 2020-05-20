@@ -16,7 +16,10 @@ public class CompanyDao {
     private DBConnector dbConnector;
     private static final String SHARE_INFORMATION_ERROR = "Error getting information from the company share";
     private static final String INFORMATION_ERROR = "Error getting information from the company";
-    private static final String GETTING_COMPANIES_ERROR = "Error getting all companies";
+    private static final String GETTING_COMPANY_VALUE = "Error getting teh current company value.";
+    private static final String GETTING_COMPANIES_ERROR = "Error getting all companies.";
+    private static final String GETTING_COMPANIES_ERROR_DETAIL = "Error getting all companies detail.";
+    private static final String GETTING_COMPANIES_ERROR_CHANGE = "Error getting all companies change.";
 
     public CompanyDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
@@ -88,7 +91,7 @@ public class CompanyDao {
                 companies.add(toCompanyChange(retrieved));
             }
         } catch (SQLException e) {
-            System.out.println(GETTING_COMPANIES_ERROR);
+            System.out.println(GETTING_COMPANIES_ERROR_CHANGE);
         }
         return companies;
     }
@@ -107,10 +110,10 @@ public class CompanyDao {
         ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + userId + ", " + companyId + ");");
         try {
             if(retrievedShares.next() != false){
-                numUserShares = retrievedShares.getInt("numShares");
+                numUserShares = retrievedShares.getInt("numUserShares");
             }
         } catch (SQLException e) {
-            System.out.println(GETTING_COMPANIES_ERROR);
+            System.out.println(GETTING_COMPANIES_ERROR_DETAIL);
         }
 
         for(int i=0; i<10; i++){
@@ -131,7 +134,7 @@ public class CompanyDao {
                     }
                 }
             } catch (SQLException e) {
-                System.out.println(GETTING_COMPANIES_ERROR);
+                System.out.println(GETTING_COMPANIES_ERROR_DETAIL);
             }
 
         }
@@ -234,6 +237,19 @@ public class CompanyDao {
         return null;
     }
 
+    public float getCompanyCurrenValue(int companyId) {
+        float currentValue = 0;
+        ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyCurrentValue(" + companyId + ");");
+        try {
+            while(retrieved.next()){
+                currentValue = retrieved.getFloat("currentValue");
+            }
+        } catch (SQLException e) {
+            System.out.println(GETTING_COMPANY_VALUE);
+        }
+        return currentValue;
+    }
+
     /**
      * Inserts company recalculated value
      *
@@ -252,6 +268,8 @@ public class CompanyDao {
             System.out.println(SHARE_INFORMATION_ERROR);
         }
     }
+
+
 
 
 }
