@@ -19,12 +19,6 @@ public class BotMenuView extends JPanel {
     private BotsRemoveView botsRemoveView;
     private BotsListView botsListView;
 
-    // Main panels
-    private JPanel jpHeader;
-    private JPanel jpMain;
-
-    // Buttons
-    private JPanel jpButtons;
     private JButton jbCreate;
     private JButton jbRemove;
     private JButton jbShowList;
@@ -35,12 +29,13 @@ public class BotMenuView extends JPanel {
         initUI();
     }
 
-    public void initUI() {
+    private void initUI() {
         this.setBackground(color.getWHITE());
         JPanel jpCenter = new JPanel();
         jpCenter.setBackground(color.getWHITE());
 
-        jpButtons = new JPanel(new GridLayout(4, 1, 50, 50));
+        // Buttons
+        JPanel jpButtons = new JPanel(new GridLayout(4, 1, 50, 50));
         jpButtons.setBackground(Color.WHITE);
 
         jbCreate = createMenuButton("Create");

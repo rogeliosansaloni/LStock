@@ -14,7 +14,6 @@ import java.util.ArrayList;
  * View for bot creation
  */
 public class BotsCreateView extends JPanel {
-    private static final String PATH_ARROW_ICON = "/Images/dropdown.png";
     private static final String FONT = "Segoe UI";
     private static final String FONT_BUTTON = "Segoe UI Semibold";
     private static final String TITLE = "Create Bot";
@@ -24,18 +23,16 @@ public class BotsCreateView extends JPanel {
     private static final String CANCEL = "CANCEL";
     private static final int WIDTH = 200;
     private static final int HEIGHT = 20;
-    private JPanel jpButtons;
     private JComboBox<String> jcbCompany;
     private JTextField[] jtField;
     private JButton jbCreate;
     private JButton jbCancel;
-    private StockColors color;
 
     /**
      * Creates the view for bot creation
      */
     public BotsCreateView() {
-        color = new StockColors();
+        StockColors color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
 
         this.setLayout(new GridLayout(6,1,0,15));
@@ -74,7 +71,7 @@ public class BotsCreateView extends JPanel {
         jtField[1].setBackground(color.getTEXTFIELD());
         this.add(jtField[1]);
 
-        jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
+        JPanel jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
         jpButtons.setBackground(color.getWHITE());
 
         Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
@@ -184,17 +181,9 @@ public class BotsCreateView extends JPanel {
     }
 
     /**
-     * Gets all JTextFields
-     * @return array of all JTextFields of the view
-     */
-    public JTextField[] getJtField() {
-        return jtField;
-    }
-
-    /**
      * Gets a specific JTextFrield
-     * @param i id of the JTextField
-     * @return
+     * @param i index of the JTextField
+     * @return JTextField
      */
     public JTextField getJTextField(int i) {
         return jtField[i];
@@ -202,8 +191,8 @@ public class BotsCreateView extends JPanel {
 
     /**
      * Sets the texts of a specific JTextField
-     * @param i
-     * @param text
+     * @param i index of the JTextField
+     * @param text text to show in JTextField
      */
     public void setJTextField(int i, String text){
         jtField[i].setText(text);
