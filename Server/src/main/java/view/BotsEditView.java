@@ -16,7 +16,6 @@ public class BotsEditView extends JPanel {
     private static final String FONT_BUTTON = "Segoe UI Semibold";
     private static final String TITLE = "Edit Bot";
     private static final String ENABLE = "ENABLE";
-    private static final String BUTTON = "ENABLE/DISABLE";
     private static final String DISABLE = "DISABLE";
     private static final String CANCEL = "CANCEL";
     private static final int WIDTH = 200;
@@ -24,7 +23,6 @@ public class BotsEditView extends JPanel {
     private StockColors color;
     private JComboBox<String> jcbBot;
     private JComboBox<String> jcbCompany;
-    private JPanel jpButtons;
     private JButton jbEnable;
     private JButton jbCancel;
 
@@ -62,12 +60,12 @@ public class BotsEditView extends JPanel {
         this.add(jcbBot);
 
         //Buttons
-        jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
+        JPanel jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
         jpButtons.setBackground(color.getWHITE());
         Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
 
 
-        jbEnable = new JButton(BUTTON);
+        jbEnable = new JButton();
         jbEnable.setFont(buttonFont);
         jbEnable.setForeground(color.getBLACK());
         jbEnable.setBorder(null);
@@ -124,8 +122,11 @@ public class BotsEditView extends JPanel {
      * @return id of the selected bot
      */
     public int getBotId() {
-        String name = jcbBot.getSelectedItem().toString();
-        return Integer.parseInt(name.replaceAll("[^0-9]", ""));
+        if (jcbBot.getSelectedItem() != null) {
+            String name = jcbBot.getSelectedItem().toString();
+            return Integer.parseInt(name.replaceAll("[^0-9]", ""));
+        }
+        return -1;
     }
 
     /**
@@ -134,7 +135,7 @@ public class BotsEditView extends JPanel {
      * @return name of the selected company
      */
     public String getCompanyName() {
-        return jcbCompany.getSelectedItem().toString();
+        return jcbCompany.getSelectedItem() != null ? jcbCompany.getSelectedItem().toString() : "";
     }
 
     /**
@@ -157,7 +158,7 @@ public class BotsEditView extends JPanel {
     /**
      * Registers the controller for buttons
      *
-     * @param controller
+     * @param controller controller that implements ActionListener
      */
     public void registerController(ActionListener controller) {
         jbEnable.addActionListener(controller);
