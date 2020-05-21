@@ -102,10 +102,7 @@ public class ShareDao {
 
     private ShareSell toShareSell(ResultSet resultSet) throws SQLException {
         ShareSell shareSell = new ShareSell();
-        shareSell.setUserId(resultSet.getInt("userId"));
-        shareSell.setCompanyId(resultSet.getInt("companyId"));
         shareSell.setShareId(resultSet.getInt("shareId"));
-        shareSell.setCompanyName(resultSet.getString("companyName"));
         shareSell.setShareValue(resultSet.getFloat("shareValue"));
         shareSell.setShareQuantity(resultSet.getInt("shareQuantity"));
         return shareSell;

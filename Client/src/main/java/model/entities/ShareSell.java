@@ -3,40 +3,17 @@ package model.entities;
 
 public class ShareSell {
 
-    private int userId;
-    private int companyId;
     private int shareId;
-    private String companyName;
     private float shareValue;
     private int shareQuantity;
 
     public ShareSell() {
     }
 
-    public ShareSell(int userId, int companyId, int shareId, String companyName, float shareValue, int shareQuantity) {
-        this.userId = userId;
-        this.companyId = companyId;
+    public ShareSell(int shareId, float shareValue, int shareQuantity) {
         this.shareId = shareId;
-        this.companyName = companyName;
         this.shareValue = shareValue;
         this.shareQuantity = shareQuantity;
-    }
-
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public float getShareValue() {
@@ -53,14 +30,6 @@ public class ShareSell {
 
     public void setShareQuantity(int shareQuantity) {
         this.shareQuantity = shareQuantity;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getShareId() {

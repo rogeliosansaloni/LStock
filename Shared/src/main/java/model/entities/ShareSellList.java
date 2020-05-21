@@ -4,10 +4,7 @@ import java.io.Serializable;
 
 public class ShareSellList implements Serializable {
 
-    private int userId;
-    private int companyId;
     private int[] shareId;
-    private String companyName;
     private float[] shareValue;
     private int[] shareQuantity;
 
@@ -20,21 +17,6 @@ public class ShareSellList implements Serializable {
     public ShareSellList() {
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
 
     public int[] getShareId() {
         return shareId;
@@ -42,14 +24,6 @@ public class ShareSellList implements Serializable {
 
     public void setShareId(int i, int shareId) {
         this.shareId[i] = shareId;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public float[] getShareValue() {
