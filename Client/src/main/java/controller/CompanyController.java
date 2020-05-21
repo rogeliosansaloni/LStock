@@ -25,20 +25,9 @@ public class CompanyController implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()) {
-            case "Company 1":
-                System.out.println("Company 1");
-                break;
-            case "Company 2":
-                System.out.println("Company 2");
-                break;
-            case "Company 3":
-                System.out.println("Company 3");
-                break;
-            case "Company 4":
-                System.out.println("Company 4");
-                break;
-        }
+        int companyId = Integer.parseInt(e.getActionCommand());
+
+
     }
     /**
      * Proc that shows the companies on the view's table
