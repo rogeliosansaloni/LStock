@@ -111,8 +111,9 @@ public class NetworkManager extends Thread {
         this.loginController = new LoginController(loginView, registerView);
         this.registerController = new RegisterController(registerView, loginView);
         loginView.registerController(loginController);
+        loginView.registerFocusController();
         registerView.registerController(registerController);
-
+        registerView.registerFocusController();
         // We only show the login view as the first screen
         loginView.setVisible(true);
     }

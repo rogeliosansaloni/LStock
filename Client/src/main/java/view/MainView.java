@@ -10,6 +10,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import model.entities.Company;
 
+/**
+ * Main view
+ */
 public class MainView extends JFrame {
 
     //logo de stock
@@ -44,6 +47,9 @@ public class MainView extends JFrame {
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
 
+    /**
+     * Creates and initializes the main view
+     */
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);

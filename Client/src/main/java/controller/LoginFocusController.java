@@ -1,28 +1,28 @@
 package controller;
 
-import view.BotsCreateView;
+import view.LoginView;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 /**
- * Controller for the focus effect of JTextField of BotsCreateView
+ * Controller for the focus effect of JTextfields of LoginView
  */
-public class BotCreateFocusController implements FocusListener {
-    private BotsCreateView view;
+public class LoginFocusController implements FocusListener {
+    private LoginView view;
     private int id;
-    private String labelName;
+    private String label;
 
     /**
      * Creates and initializes the controller
-     * @param view view for creating a bot
+     * @param view login view
      * @param id id of the text field to control
-     * @param labelName label of the text field
+     * @param label label of the text field
      */
-    public BotCreateFocusController(BotsCreateView view, int id, String labelName) {
+    public LoginFocusController(LoginView view, int id, String label) {
         this.view = view;
         this.id = id;
-        this.labelName = labelName;
+        this.label = label;
     }
 
     /**
@@ -31,8 +31,9 @@ public class BotCreateFocusController implements FocusListener {
      */
     @Override
     public void focusGained(FocusEvent e) {
-        if (view.getJTextField(id).getText().equals(labelName))
+        if (view.getJTextField(id).getText().equals(label)) {
             view.setJTextField(id,"");
+        }
     }
 
     /**
@@ -41,7 +42,8 @@ public class BotCreateFocusController implements FocusListener {
      */
     @Override
     public void focusLost(FocusEvent e) {
-        if(view.getJTextField(id).getText().equals(""))
-            view.setJTextField(id, labelName);
+        if (view.getJTextField(id).getText().equals("")) {
+            view.setJTextField(id, label);
+        }
     }
 }

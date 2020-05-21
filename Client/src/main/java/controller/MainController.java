@@ -7,6 +7,9 @@ import view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Main controller of the client different views
+ */
 public class MainController implements ActionListener {
     private static final String CARD_COMPANY = "Companies";
     private static final String CARD_PROFILE = "My Profile";
@@ -19,6 +22,12 @@ public class MainController implements ActionListener {
     private BalanceController balanceController;
     private CompanyController companyController;
 
+    /**
+     * Creates and initializes the controller and views
+     * @param view Main view
+     * @param model StockManager
+     * @param loginView Login view
+     */
     public MainController(MainView view, StockManager model, LoginView loginView) {
         this.view = view;
         this.loginView = loginView;
