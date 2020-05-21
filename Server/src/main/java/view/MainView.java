@@ -16,6 +16,7 @@ public class MainView extends JFrame {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
+    private static final String CARD_TOPTEN = "Top 10 Companies";
     private static final int PANEL_WIDTH = 1080;
     private static final int PANEL_HEIGHT = 740;
     private JLabel labelLogo;
@@ -30,6 +31,7 @@ public class MainView extends JFrame {
     private StockColors color;
     private HomeView jpHomeView;
     private SharesListView jpSharesView;
+    private TopTenCompaniesView jpTopTenCompaniesView;
 
     public MainView() {
         color = new StockColors();
@@ -49,6 +51,7 @@ public class MainView extends JFrame {
      * Initializes all views
      */
     public void initAllViews() {
+        jpTopTenCompaniesView = new TopTenCompaniesView();
         jpHomeView = new HomeView();
         jpSharesView = new SharesListView();
         //TODO: Add the rest of views
@@ -59,6 +62,7 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
+        jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
         jpCenter.add(jpHomeView, CARD_HOME);
         jpCenter.add(jpSharesView, CARD_USERS);
         //TODO: Add the rest of views
