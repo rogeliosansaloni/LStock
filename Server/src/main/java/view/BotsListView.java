@@ -4,7 +4,6 @@ import model.entities.Bot;
 import utils.StockColors;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
@@ -16,12 +15,10 @@ import java.util.ArrayList;
  * Bots list view
  */
 public class BotsListView extends JPanel {
-    private static final String[] columnNames = {"Company", "Bot", "Buy percentage", "Activation Time", "Status"};
+    private static final String[] COLUMN_NAMES = {"Company", "Bot", "Buy percentage", "Activation Time", "Status"};
     private static final String RETURN = "Return";
     private static final String STATUS_OK = "Enabled";
     private static final String STATUS_KO = "Disabled";
-    private JPanel jpCenter;
-    private JPanel jpSouth;
     private JTable jtBotsList;
     private JButton jbReturn;
     private StockColors color;
@@ -41,11 +38,11 @@ public class BotsListView extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBackground(color.getWHITE());
 
-        jpCenter = new JPanel(new BorderLayout());
+        JPanel jpCenter = new JPanel(new BorderLayout());
         jpCenter.setBackground(color.getWHITE());
 
         //Initializes table with columns and 0 rows.
-        DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+        DefaultTableModel model = new DefaultTableModel(COLUMN_NAMES, 0) {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -62,7 +59,7 @@ public class BotsListView extends JPanel {
         this.add(jpCenter, BorderLayout.CENTER);
 
         //Button
-        jpSouth = new JPanel();
+        JPanel jpSouth = new JPanel();
         jpSouth.setLayout(new BoxLayout(jpSouth, BoxLayout.Y_AXIS));
         jpSouth.setBackground(color.getWHITE());
 
