@@ -149,8 +149,11 @@ public class BotsRemoveView extends JPanel {
      * @return id of the bot
      */
     public int getBotId() {
-        String name = jcbBot.getSelectedItem().toString();
-        return Integer.parseInt(name.replaceAll("[^0-9]", ""));
+        if (jcbBot.getSelectedItem() != null) {
+            String name = jcbBot.getSelectedItem().toString();
+            return Integer.parseInt(name.replaceAll("[^0-9]", ""));
+        }
+        return -1;
     }
 
     /**
