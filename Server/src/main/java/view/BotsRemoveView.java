@@ -19,17 +19,13 @@ public class BotsRemoveView extends JPanel {
     private static final String CANCEL = "CANCEL";
     private static final int WIDTH = 200;
     private static final int HEIGHT = 20;
-    private StockColors color;
     private JComboBox<String> jcbBot;
     private JComboBox<String> jcbCompany;
-    private JPanel jpButtons;
-    private JLabel jlStatus;
     private JButton jbRemove;
     private JButton jbCancel;
-    private String selectedItem;
 
     public BotsRemoveView() {
-        color = new StockColors();
+        StockColors color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
 
         this.setLayout(new GridLayout(6,1,0,15));
@@ -62,14 +58,14 @@ public class BotsRemoveView extends JPanel {
         this.add(jcbBot);
 
         //Status
-        jlStatus = new JLabel();
+        JLabel jlStatus = new JLabel();
         jlStatus.setPreferredSize(new Dimension(200, 1));
         jlStatus.setHorizontalAlignment(JLabel.CENTER);
         jlStatus.setFont(font);
         this.add(jlStatus);
 
         //Buttons
-        jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
+        JPanel jpButtons = new JPanel(new GridLayout(1, 2, 30, 0));
         jpButtons.setBackground(color.getWHITE());
 
         Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
@@ -108,10 +104,8 @@ public class BotsRemoveView extends JPanel {
      * @param companies list of the companies
      */
     public void showCompanies(ArrayList<Company> companies) {
-        Font font = new Font(FONT, Font.ITALIC, 20);
-        int numCompanies = companies.size();
-        for (int i = 0; i < numCompanies; i++) {
-            Company company = (Company) companies.get(i);
+        jcbCompany.removeAllItems();
+        for (Company company : companies) {
             jcbCompany.addItem(company.getName());
         }
     }
@@ -125,10 +119,7 @@ public class BotsRemoveView extends JPanel {
         jcbBot.removeAllItems();
 
         // Add retrieved bots to the list
-        Font font = new Font(FONT, Font.ITALIC, 20);
-        int numBots = bots.size();
-        for (int i = 0; i < numBots; i++) {
-            Bot bot = (Bot) bots.get(i);
+        for (Bot bot : bots) {
             jcbBot.addItem(String.format("Bot %d", bot.getBotId()));
         }
     }
@@ -158,7 +149,19 @@ public class BotsRemoveView extends JPanel {
      * @return id of the bot
      */
     public int getBotId() {
-        String name = jcbBot.getSelectedItem().toString();
-        return Integer.parseInt(name.replaceAll("[^0-9]", ""));
+        if (jcbBot.getSelectedItem() != null) {
+            String name = jcbBot.getSelectedItem().toString();
+            return Integer.parseInt(name.replaceAll("[^0-9]", ""));
+        }
+        return -1;
+    }
+
+    /**
+     * Shows message when a bot activity status change
+     * @param message the message
+     */
+    public void showMessages(String message) {
+        JOptionPane.showMessageDialog(null,message);
+
     }
 }

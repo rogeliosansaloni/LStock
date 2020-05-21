@@ -6,7 +6,6 @@ import model.managers.BotManager;
 import view.BotsCreateView;
 import view.MainView;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,6 +24,8 @@ public class BotsCreateController implements ActionListener {
     private static final String BOT_PROB_VALUE_ERROR = "Probability value is wrong (Only 0-100%).";
     private static final String BOT_ACT_ERROR = "You have to indicate an activation time.";
     private static final String BOT_ACT_VALUE_ERROR = "Activation time value is wrong.";
+    private static final String SUCCESS_MESSAGE = "New bot has been created successfully";
+    private static final String ERROR_MESSAGE = "There was a problem with creating a new bot.";
     private BotsCreateView view;
     private MainView mainView;
     private BotManager model;
@@ -64,6 +65,10 @@ public class BotsCreateController implements ActionListener {
                     bot.setProbability(Float.parseFloat(percentage));
                     if (model.createBot(bot) >= 0) {
                         initView();
+                        model.updateCompanyBots();
+                        view.showErrorMessage(SUCCESS_MESSAGE);
+                    } else {
+                        view.showErrorMessage(ERROR_MESSAGE);
                     }
                 }
                 break;

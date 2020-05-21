@@ -3,7 +3,7 @@ package controller;
 import model.entities.Bot;
 import model.entities.Company;
 import model.managers.BotManager;
-import view.BotsRemoveView;
+import view.BotsEditView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -13,14 +13,14 @@ import java.util.ArrayList;
 /**
  * Controller for Bot removal
  */
-public class BotsRemoveController implements ActionListener {
-    private static final String REMOVE = "REMOVE";
+public class BotsEditController implements ActionListener {
+    private static final String ENABLE = "ENABLE";
+    private static final String DISABLE = "DISABLE";
     private static final String CANCEL = "CANCEL";
+    private static final String MESSAGE = "The bot you selected was ";
     private static final String CARD_BOTS = "Manage Bots";
-    private static final String SUCCESS_MESSAGE = "The bot %d has been removed successfully";
-    private static final String ERROR_MESSAGE = "There was a problem with removing the bot.";
     private MainView mainView;
-    private BotsRemoveView view;
+    private BotsEditView view;
     private BotManager model;
 
     /**
@@ -29,7 +29,7 @@ public class BotsRemoveController implements ActionListener {
      * @param mainView the main view for Client
      * @param model BotManager
      */
-    public BotsRemoveController(BotsRemoveView view, MainView mainView, BotManager model) {
+    public BotsEditController(BotsEditView view, MainView mainView, BotManager model) {
         this.view = view;
         this.mainView = mainView;
         this.model = model;
@@ -42,16 +42,9 @@ public class BotsRemoveController implements ActionListener {
      */
     public void initView() {
         view.showCompanies(model.getCompaniesWithBots());
+        ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
         view.showBots(getInitBots());
-    }
-
-    /**
-     * Gets the company id of the selected company name from the combobox
-     * @return if of the company
-     */
-    private int getSelectedCompanyId() {
-        String companyName = mainView.getBotsRemoveView().getCompanyName();
-        return model.getCompanyId(companyName);
+        view.showStatusButton(bots.get(0));
     }
 
     /**
@@ -77,26 +70,30 @@ public class BotsRemoveController implements ActionListener {
         return getCompany(model.getCompaniesWithBots(), getSelectedCompanyId()).getBots();
     }
 
+    /**
+     * Gets the company id of the selected company name from the combobox
+     * @return if of the company
+     */
+    private int getSelectedCompanyId() {
+        String companyName = mainView.getBotsRemoveView().getCompanyName();
+        return model.getCompanyId(companyName);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         switch(e.getActionCommand()) {
-            case REMOVE:
-                int botId = mainView.getBotsRemoveView().getBotId();
-                if (model.deleteBot(botId)) {
-                    view.showMessages(String.format(SUCCESS_MESSAGE, botId));
-                    model.updateCompanyBots();
-                    ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
-                    if (bots.isEmpty()) {
-                        initView();
-                    } else {
-                        view.showBots(bots);
-                    }
-                } else {
-                    view.showMessages(ERROR_MESSAGE);
-                }
-                break;
             case CANCEL:
                 mainView.updateView(CARD_BOTS);
+                break;
+            default:
+                int botId = view.getBotId();
+                int status = model.getBot(botId).getStatus();
+                String action = ENABLE;
+                if (status == 1) { action = DISABLE; }
+                model.configureBot(botId,action);
+                model.updateCompanyBots();
+                view.showMessages(MESSAGE + action.toLowerCase() + "d");
+                view.showStatusButton(model.getBot(botId));
                 break;
         }
     }
