@@ -29,6 +29,8 @@ public class TopTenCompaniesView extends JPanel {
         jlTitle.setHorizontalAlignment(JLabel.CENTER);
         jlTitle.setFont(font);
 
+        JPanel jpBarchart = new JPanel(new FlowLayout());
+
 
         JPanel jpButtom = new JPanel(new GridLayout(2,1,0,0));
         jpButtom.setBackground(color.getWHITE());
