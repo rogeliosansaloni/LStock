@@ -72,7 +72,7 @@ public class BotsEditController implements ActionListener {
 
     /**
      * Gets the company id of the selected company name from the combobox
-     * @return if of the company
+     * @return id of the company
      */
     private int getSelectedCompanyId() {
         String companyName = mainView.getBotsRemoveView().getCompanyName();
