@@ -10,9 +10,6 @@ import java.awt.event.FocusListener;
  * Controller for the focus effect of JTextField of BotsCreateView
  */
 public class BotCreateFocusController implements FocusListener {
-    private static final String NAME_LABEL = "Name";
-    private static final String BUY_PERCENTAGE_LABEL = "Buy Percentatge";
-    private static final String ACTIVATE_TIME_LABEL = "Activate time";
     private BotsCreateView view;
     private int id;
     private String labelName;
