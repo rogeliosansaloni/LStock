@@ -11,9 +11,9 @@ import java.awt.*;
 
 
 public class SharesListView extends JPanel{
-    private static final String[] userColumns = { "Users", "Email", "Stock Value", "Total Balance"};
-    private static final String[] shareColumns = { "Company", "Shares", "Share Price", "Total Value"};
-    private String[][] userList = {{ "", "", "", ""}};
+    private static final String[] COLUMNS_USER = { "Users", "Email", "Stock Value", "Total Balance"};
+    private static final String[] COLUMNS_SHARE = { "Company", "Shares", "Share Price", "Total Value"};
+    private String[][] ROWS = {{ "", "", "", ""}};
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
     protected StockColors color;
@@ -38,7 +38,7 @@ public class SharesListView extends JPanel{
         jpCenter = new JPanel(new BorderLayout());
         jpCenter.setBackground(color.getWHITE());
         String[][] userRow = {};
-        jtSharesList = new JTable(userList, userColumns);
+        jtSharesList = new JTable(ROWS, COLUMNS_USER);
         jtSharesList.setRowHeight(40);
         jtSharesList.setBackground(Color.WHITE);
         selectionModel = jtSharesList.getSelectionModel();
@@ -95,10 +95,10 @@ public class SharesListView extends JPanel{
     /**
      * Sets the new data for the table and updates it
      *
-     * @param userList String list with data
+     * @param rows String list with data
      */
-    public void setUserList(String[][] userList) {
-        this.userList = userList;
+    public void setTableRow(String[][] rows) {
+        this.ROWS = rows;
     }
 
     /**
@@ -117,10 +117,10 @@ public class SharesListView extends JPanel{
         this.jtSharesList.setModel(new DefaultTableModel());
         DefaultTableModel model = (DefaultTableModel) jtSharesList.getModel();
         model.setRowCount(0);
-        for (String col : userColumns) {
+        for (String col : COLUMNS_USER) {
             model.addColumn(col);
         }
-        for (String[] row : userList) {
+        for (String[] row : ROWS) {
             model.addRow(row);
         }
         this.jtSharesList.setModel(model);
@@ -133,10 +133,10 @@ public class SharesListView extends JPanel{
         this.jtSharesList.setModel(new DefaultTableModel());
         DefaultTableModel model = (DefaultTableModel) jtSharesList.getModel();
         model.setRowCount(0);
-        for (String col : shareColumns) {
+        for (String col : COLUMNS_SHARE) {
             model.addColumn(col);
         }
-        for (String[] row : userList) {
+        for (String[] row : ROWS) {
             model.addRow(row);
         }
         this.jtSharesList.setModel(model);

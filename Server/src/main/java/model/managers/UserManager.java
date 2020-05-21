@@ -22,6 +22,11 @@ public class UserManager {
         connector.connect();
     }
 
+    /**
+     * It will get all the users registered in LStock
+     *
+     * @return Registered users
+     */
     public String[][] getUserList(){
         return userDao.getAllUserList();
     }
@@ -30,7 +35,12 @@ public class UserManager {
         return userDao.getAllUsers();
     }
 
-    public void getUserShares(String name){
-        userDao.getUserInfo(name);
+    /**
+     * It will return all the shares from the selected user
+     *
+     * @return User shares list
+     */
+    public String[][] getUserShares(String name){
+        return userDao.getUserShares(name);
     }
 }

@@ -13,6 +13,7 @@ public class SharesListController implements ListSelectionListener {
     private UserManager userManager;
     private ListSelectionModel selectionModel;
     private int selectedRow = 0;
+    private boolean selectedUser;
 
     public SharesListController(SharesListView sharesListView){
         this.view = sharesListView;
@@ -25,6 +26,7 @@ public class SharesListController implements ListSelectionListener {
      *  Get User data from User Manager and Database
      */
     public void loadUsers(){
+        this.selectedUser = false;
         loadUserList(userManager.getUserList());
     }
 
@@ -34,7 +36,7 @@ public class SharesListController implements ListSelectionListener {
      * @param data String array containing data for the table
      */
     public void loadUserList(String[][] data){
-        this.view.setUserList(data);
+        this.view.setTableRow(data);
         this.view.emptyTable();
         this.view.fillUserData();
     }
@@ -44,19 +46,20 @@ public class SharesListController implements ListSelectionListener {
      */
     @Override
     public void valueChanged(ListSelectionEvent listSelectionEvent) {
-
         selectionModel = this.view.getSelectionModel();
-        if (!listSelectionEvent.getValueIsAdjusting()) {
-            if (!selectionModel.isSelectionEmpty()){
-                selectedRow = selectionModel.getMinSelectionIndex();
-
-                System.out.println("controller clicked for User: "+this.view.getSelectedUser(selectedRow));
-
-                userManager.getUserShares(this.view.getSelectedUser(selectedRow));
-                this.view.emptyTable();
-                this.view.fillShareData();
+        if (!selectedUser) {
+            if (!listSelectionEvent.getValueIsAdjusting()) {
+                if (!selectionModel.isSelectionEmpty()) {
+                    selectedRow = selectionModel.getMinSelectionIndex();
+                    String[][] shares = userManager.getUserShares(this.view.getSelectedUser(selectedRow));
+                    if (shares != null){
+                        this.view.setTableRow(userManager.getUserShares(this.view.getSelectedUser(selectedRow)));
+                        this.view.emptyTable();
+                        this.view.fillShareData();
+                        this.selectedUser = true;
+                    }
+                }
             }
         }
-        //TODO get user data company shares
     }
 }
