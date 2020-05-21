@@ -6,7 +6,6 @@ import model.managers.BotManager;
 import view.BotsCreateView;
 import view.MainView;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
