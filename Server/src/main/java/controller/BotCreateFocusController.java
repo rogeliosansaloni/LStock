@@ -2,7 +2,6 @@ package controller;
 
 import view.BotsCreateView;
 
-import javax.swing.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
