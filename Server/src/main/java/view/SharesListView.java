@@ -11,7 +11,8 @@ import java.awt.*;
 
 
 public class SharesListView extends JPanel{
-    private static final String[] columnNames = { "Users", "Email", "Stock Value", "Total Balance"};
+    private static final String[] userColumns = { "Users", "Email", "Stock Value", "Total Balance"};
+    private static final String[] shareColumns = { "Company", "Shares", "Share Price", "Total Value"};
     private String[][] userList = {{ "", "", "", ""}};
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 768;
@@ -37,7 +38,7 @@ public class SharesListView extends JPanel{
         jpCenter = new JPanel(new BorderLayout());
         jpCenter.setBackground(color.getWHITE());
         String[][] userRow = {};
-        jtSharesList = new JTable(userList, columnNames);
+        jtSharesList = new JTable(userList, userColumns);
         jtSharesList.setRowHeight(40);
         jtSharesList.setBackground(Color.WHITE);
         selectionModel = jtSharesList.getSelectionModel();
@@ -110,13 +111,29 @@ public class SharesListView extends JPanel{
     }
 
     /**
-     *  Fills table with userList and columnNames
+     *  Fills table with User data
      */
-    public void fillData() {
+    public void fillUserData() {
         this.jtSharesList.setModel(new DefaultTableModel());
         DefaultTableModel model = (DefaultTableModel) jtSharesList.getModel();
         model.setRowCount(0);
-        for (String col : columnNames) {
+        for (String col : userColumns) {
+            model.addColumn(col);
+        }
+        for (String[] row : userList) {
+            model.addRow(row);
+        }
+        this.jtSharesList.setModel(model);
+    }
+
+    /**
+     *  Fills table with Shares data
+     */
+    public void fillShareData() {
+        this.jtSharesList.setModel(new DefaultTableModel());
+        DefaultTableModel model = (DefaultTableModel) jtSharesList.getModel();
+        model.setRowCount(0);
+        for (String col : shareColumns) {
             model.addColumn(col);
         }
         for (String[] row : userList) {

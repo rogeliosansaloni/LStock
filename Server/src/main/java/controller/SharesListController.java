@@ -36,7 +36,7 @@ public class SharesListController implements ListSelectionListener {
     public void loadUserList(String[][] data){
         this.view.setUserList(data);
         this.view.emptyTable();
-        this.view.fillData();
+        this.view.fillUserData();
     }
 
     /**
@@ -49,6 +49,12 @@ public class SharesListController implements ListSelectionListener {
         if (!listSelectionEvent.getValueIsAdjusting()) {
             if (!selectionModel.isSelectionEmpty()){
                 selectedRow = selectionModel.getMinSelectionIndex();
+
+                System.out.println("controller clicked for User: "+this.view.getSelectedUser(selectedRow));
+
+                userManager.getUserShares(this.view.getSelectedUser(selectedRow));
+                this.view.emptyTable();
+                this.view.fillShareData();
             }
         }
         //TODO get user data company shares
