@@ -7,6 +7,7 @@ El cliente puede realizar varias operaciones como acceder a su cuenta, visualiza
 ## Requerimientos
 
 Es imprescindible tener IntelliJ IDEA y tener instalado Java 11 SDK. Es un proyecto desarrollado en Java soportado por el framework Maven. El proyecto tiene 3 módulos: Client, Server y Shared.
+Para ver las vistas correctamente, es imprescindible usar Windows.
 
 ## Instalación
 
