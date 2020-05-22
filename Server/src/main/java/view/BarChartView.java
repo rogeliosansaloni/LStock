@@ -78,12 +78,9 @@ public class BarChartView extends Panel{
             Rectangle rec = new Rectangle(xLeft, yTopLeft, barWidth, height);
 
             g2.setColor(getRandomColor());
-            //g2.draw(rec);
             g2.fill(rec);
 
-            counter++;
         }
-
         g2.setColor(original);
     }
 
@@ -121,7 +118,6 @@ public class BarChartView extends Panel{
     }
 
     private Color getRandomColor() {
-        // see https://stackoverflow.com/questions/4246351/creating-random-colour-in-java
         Random rand = new Random();
 
         float r = rand.nextFloat();
