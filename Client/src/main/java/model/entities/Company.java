@@ -1,15 +1,11 @@
 package model.entities;
 
-import java.util.ArrayList;
-
-
 public class Company {
     private int companyId;
     private String name;
     private float value;
     private int shares;
     private User user;
-    private ArrayList<Bot> bots;
 
     /**
      * It will create a company
@@ -27,7 +23,6 @@ public class Company {
         this.value = value;
         this.shares = shares;
         this.user = user;
-        this.bots = new ArrayList<Bot>();
     }
 
     public Company(int companyId, String name, float value, int shares) {
@@ -35,7 +30,6 @@ public class Company {
         this.name = name;
         this.value = value;
         this.shares = shares;
-        this.bots = new ArrayList<Bot>();
     }
 
     public Company() {
