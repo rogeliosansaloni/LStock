@@ -1,9 +1,7 @@
 package database;
 
-import model.entities.Company;
-import model.entities.Share;
-import model.entities.ShareChange;
-import model.entities.User;
+import model.entities.*;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,14 +13,27 @@ import java.util.ArrayList;
 public class ShareDao {
 
     private DBConnector dbConnector;
+    private static final String UPDATE_PURCHASE_ERROR = "Error updating the purchase.";
+    private static final String GETTING_SHARES_ERROR = "Error getting the shares.";
 
     public ShareDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
-    public void insertPurchasedShare (User user, Company company) {
-        dbConnector.insertQuery("INSERT INTO Purchase (user_id, share_id, company_id, share_quantity) " + "VALUES (" + user.getUserId() + ", "
-                                + company.getShareId() + ", " + company.getCompanyId() + ", " + company.getValue() + ");");
+    public void updatePurchasedShare (Purchase purchase) {
+        //First we need to know if that purchase already exists in the Purchase value of the database
+        ResultSet retrievedCheck = dbConnector.selectQuery("CALL checkIfPurchaseExists(" + purchase.getUserId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareId() + ");");
+        try {
+            if(retrievedCheck.next() == false){
+                dbConnector.callProcedure("CALL insertPurchase(" + purchase.getUserId() + ", "
+                        + purchase.getCompanyId()+ ", " + purchase.getShareId() + ", " + purchase.getShareQuantity() + ");");
+            } else{
+                dbConnector.callProcedure("CALL updatePurchase(" + purchase.getUserId() + ", "
+                        + purchase.getCompanyId() + ", " + purchase.getShareId() + ", " + purchase.getShareQuantity() + ");");
+            }
+        } catch (SQLException e) {
+            System.out.println(UPDATE_PURCHASE_ERROR);
+        }
     }
 
     /**
@@ -48,23 +59,29 @@ public class ShareDao {
     }
 
 
-    /**
-     * It will get all the shares in the LStock
-     *
-     * @return ArrayList<Share> all shares
-     */
-    public ArrayList<Share> getAllShares() {
-        ResultSet retrievedShare = dbConnector.selectQuery("SELECT * FROM Shares;");
-        ArrayList<Share> shares = null;
+    public int getNumShares(User user, Company company){
+        int numShares = 0;
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + user.getUserId() + ", " + company.getCompanyId() + ");");
         try {
-            shares = new ArrayList<Share>();
-            while (retrievedShare.next()) {
-                //No tengo muy claro que se tiene que coger
-                Share s = toShare(retrievedShare);
-                shares.add(s);
+            while(retrievedShares.next()){
+                numShares = retrievedShares.getInt("numUserShares");
             }
         } catch (SQLException e) {
-            System.out.println("Error getting all shares");
+            System.out.println(GETTING_SHARES_ERROR);
+        }
+        return numShares;
+    }
+
+    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
+        ResultSet retrieved = dbConnector.selectQuery("CALL getSharesSell(" + userId + "," + companyId + ");");
+        ArrayList<ShareSell> shares = null;
+        try {
+            shares = new ArrayList<ShareSell>();
+            while (retrieved.next()) {
+                shares.add(toShareSell(retrieved));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting shares sell");
         }
         return shares;
     }
@@ -101,6 +118,14 @@ public class ShareDao {
         share.setPrice(resultSet.getFloat("price"));
         share.getCompany().setCompanyId(resultSet.getInt("company_id"));
         return share;
+    }
+
+    private ShareSell toShareSell(ResultSet resultSet) throws SQLException {
+        ShareSell shareSell = new ShareSell();
+        shareSell.setShareId(resultSet.getInt("shareId"));
+        shareSell.setShareValue(resultSet.getFloat("shareValue"));
+        shareSell.setShareQuantity(resultSet.getInt("shareQuantity"));
+        return shareSell;
     }
 
     private ShareChange toShareChange(ResultSet resultSet) throws SQLException {

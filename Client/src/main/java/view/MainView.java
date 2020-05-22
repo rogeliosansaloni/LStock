@@ -1,15 +1,22 @@
 package view;
 
-import utils.StockColors;
 import model.entities.CompanyChange;
+import model.entities.CompanyDetail;
+import model.entities.ShareSell;
+import utils.StockColors;
 import model.entities.ShareChange;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
+/**
+ * Main view
+ */
 public class MainView extends JFrame {
 
     //logo de stock
@@ -28,10 +35,12 @@ public class MainView extends JFrame {
     private JLabel labelStock;
     private JLabel labelUserPhoto;
     private JLabel labelViewName;
+    private JLabel labelCurrentPrice;
     private JLabel labelBalance;
     private String userName = "Peter Fox";
     private String userBalance = "00.00";
     private JPanel jpHeader;
+    private JPanel jpCenterHeader;
     private JPanel jpLogo;
     private JPanel jpOptions;
     private JPanel jpMenu;
@@ -45,6 +54,9 @@ public class MainView extends JFrame {
     private CompanyView jpCompanyView;
     private SharesView jpShares;
 
+    /**
+     * Creates and initializes the main view
+     */
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
@@ -102,19 +114,30 @@ public class MainView extends JFrame {
         jpLogo.add(labelLogo, BorderLayout.CENTER);
         jpLogo.setBackground(color.getDarkGreyHeader());
 
-        Font fontLogo = new Font("Segoe UI", Font.PLAIN, 30);
+        Font fontLogo = new Font("Roboto", Font.PLAIN, 30);
         labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         labelStock.setFont(fontLogo);
         labelStock.setForeground(color.getDarkGreyText());
         jpLogo.add(labelStock, BorderLayout.SOUTH);
         jpHeader.add(jpLogo, BorderLayout.WEST);
 
-        //Here we change the content of this label depending on the view we create
+        jpCenterHeader = new JPanel(new BorderLayout());
+        jpCenterHeader.setBackground(color.getDarkGreyHeader());
+
         labelViewName = new JLabel("COMPANIES", SwingConstants.CENTER);
-        Font fontNameView = new Font("Segoe UI", Font.PLAIN, 50);
+        Font fontNameView = new Font("Roboto", Font.PLAIN, 50);
         labelViewName.setFont(fontNameView);
         labelViewName.setForeground(color.getWHITE());
-        jpHeader.add(labelViewName, BorderLayout.CENTER);
+        labelViewName.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        jpCenterHeader.add(labelViewName, BorderLayout.CENTER);
+
+        labelCurrentPrice = new JLabel("", SwingConstants.CENTER);
+        Font fontActualPrice = new Font("Roboto", Font.PLAIN, 30);
+        labelCurrentPrice.setFont(fontActualPrice);
+        labelCurrentPrice.setForeground(color.getWHITE());
+        labelCurrentPrice.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        jpCenterHeader.add(labelCurrentPrice, BorderLayout.SOUTH);
+        jpHeader.add(jpCenterHeader, BorderLayout.CENTER);
 
         jpOptions = new JPanel(new BorderLayout());
         jpOptions.setBackground(color.getDarkGreyHeader());
@@ -128,7 +151,7 @@ public class MainView extends JFrame {
 
         createMenuBar();
 
-        Font fontBalance = new Font("Segoe UI", Font.PLAIN, 25);
+        Font fontBalance = new Font("Roboto", Font.PLAIN, 25);
 
         //Here we put the user's balance
         labelBalance = new JLabel("Balance: " + userBalance + " $");
@@ -139,13 +162,12 @@ public class MainView extends JFrame {
 
         jpHeader.add(jpOptions, BorderLayout.EAST);
 
-        jpHeader.setBorder(BorderFactory.createEmptyBorder(30, 50, 15, 50));
+        jpHeader.setBorder(BorderFactory.createEmptyBorder(30, 50, 15, 10));
         jpMain.add(jpHeader, BorderLayout.NORTH);
 
         //Here we edit the jpCenter depending on the view the create
         jpCenter = new JPanel();
         jpCenter.setLayout(new CardLayout());
-
         jpCenter.setBackground(color.getBLACK());
         jpMain.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpMain);
@@ -156,8 +178,7 @@ public class MainView extends JFrame {
      * Creates Menu Bar
      */
     public void createMenuBar() {
-
-        Font fontName = new Font("Segoe UI", Font.BOLD, 30);
+        Font fontName = new Font("Roboto", Font.BOLD, 30);
         jpMenu = new JPanel(new BorderLayout());
         jpMenu.setBackground(color.getDarkGreyHeader());
 
@@ -199,7 +220,7 @@ public class MainView extends JFrame {
     }
 
     public void addOptionBar (JMenuItem option){
-        Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
+        Font fontOptions = new Font("Roboto", Font.PLAIN, 28);
         Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
         option.setHorizontalAlignment(SwingConstants.CENTER);
         option.setBackground(color.getDarkGreyHeader());
@@ -288,6 +309,9 @@ public class MainView extends JFrame {
      */
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
+        if(!card.equals(CARD_COMPANYDETAILS)){
+            labelCurrentPrice.setText("");
+        }
         switch (card) {
             case CARD_COMPANY:
                 labelViewName.setText(CARD_COMPANY);
@@ -310,14 +334,43 @@ public class MainView extends JFrame {
                 updateOptionsBalance();
                 break;
             case CARD_COMPANYDETAILS:
-                labelViewName.setText(CARD_COMPANYDETAILS);
                 cardLayout.show(jpCenter, CARD_COMPANYDETAILS);
                 break;
         }
     }
 
+    /**
+     * Sets the value of the labelCurrentPrice depending on the value it receives
+     */
+
+    public void setTitleCompanyDetail(float value, String companyName){
+        String text = "CURRENT PRICE: " + value + " €";
+        labelCurrentPrice.setText(text);
+        labelViewName.setText(companyName);
+    }
+
+    public String getNumSharesBuy(){
+        String text = jpCompanyDetailsView.getSharesBuy();
+        return text;
+    }
+
+    public String[] getNumSharesSell(){
+        String[] text = jpCompanyDetailsView.getSharesSell();
+        return text;
+    }
+
+    public void showErrorCompanyDetail(int error){
+        jpCompanyDetailsView.showErrorTextfield(error);
+    }
+
     public void updateCompanyList(ArrayList<CompanyChange> companies){
         jpCompanyView.showCompanies(companies);
+    }
+
+    public void updateCompanyDetailView(ArrayList<ShareSell> sharesSell, ArrayList<CompanyDetail> companyDetails, float maxValue){
+
+        jpCompanyDetailsView.updateCompanyDetailView(companyDetails, maxValue);
+        jpCompanyDetailsView.updateSharesToSell(sharesSell);
     }
 
     /**
@@ -340,10 +393,6 @@ public class MainView extends JFrame {
         labelBalance.setText("Balance: " + strDouble + " $");
     }
 
-    public void initFirstView (ArrayList<CompanyChange> companies) {
-        updateCompanyList(companies);
-    }
-
     /**
      * Updates total balance of the user in the header
      * @param totalBalance Current balance of the user
@@ -360,7 +409,6 @@ public class MainView extends JFrame {
      */
     public int confirmAction (String message) {
         return jpCompanyDetailsView.confirmAction(message);
-
     }
 
     /**
@@ -383,6 +431,16 @@ public class MainView extends JFrame {
         String strValue = String.format("%.2f", value);
         jpBalanceView.updateCurrentBalance(strBalance);
         jpCompanyDetailsView.updateValue(strValue);
+    }
+
+    /**
+     * Update the user and the company new values in the view
+     * @param totalBalance new balance of the user
+     */
+    public void updateViewsAfterPurchase(float totalBalance) {
+        String strBalance = String.format("%.2f", totalBalance);
+        updateTotalBalance(totalBalance);
+        jpBalanceView.updateCurrentBalance(strBalance);
     }
 
     /**

@@ -17,7 +17,12 @@ public class CompanyView extends JPanel {
 
     public CompanyView() {
         color = new StockColors();
+        this.setBackground(color.getBLACK());
         this.setLayout(new BorderLayout());
+        jpTable = new JPanel();
+        jpTable.setBackground(color.getBLACK());
+        jpScroll = new JScrollPane(jpTable);
+        this.add(jpScroll, BorderLayout.CENTER);
         this.setBorder(BorderFactory.createEmptyBorder(50, 20, 50, 20));
         this.setBackground(color.getBLACK());
     }
@@ -32,7 +37,7 @@ public class CompanyView extends JPanel {
         for (int i = 0; i < jlCompanies.length; i++) {
             for (int j = 0; j < 4; j++) {
                 jlCompanies[i][j].addActionListener(actionListener);
-                jlCompanies[i][j].setActionCommand(Float.toString(companies.get(i).getChange()));
+                jlCompanies[i][j].setActionCommand(Integer.toString(companies.get(i).getCompanyId()));
             }
         }
     }
@@ -75,7 +80,7 @@ public class CompanyView extends JPanel {
         jlCompanies = new JButton[companies.size()][4];
         for (int i = 0; i < companies.size(); i++) {
             createDataLabel(companies.get(i).getName(), color.getWHITE(), i, 0);
-            createDataLabel(companies.get(i).getShareValue() + "€", color.getGreenTable(), i, 1);
+            createDataLabel(companies.get(i).getCurrentShare() + "€", color.getGreenTable(), i, 1);
             if(companies.get(i).getChange() < 0){
                 createDataLabel( companies.get(i).getChange() + "€", color.getRedTable(), i, 2);
                 createDataLabel(companies.get(i).getChangePer() + "%", color.getRedTable(), i, 3);

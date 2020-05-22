@@ -1,6 +1,7 @@
 package controller;
 
 import model.entities.ShareChangeList;
+import model.entities.CompanyChangeList;
 import model.entities.StockManager;
 import model.entities.TunnelObject;
 import network.NetworkManager;
@@ -11,11 +12,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Main controller of the client different views
+ */
 public class MainController implements ActionListener {
     private static final String CARD_COMPANY = "Companies";
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
+    private static final String CARD_COMPANYDETAILS = "Company Details";
     private final MainView view;
     private final LoginView loginView;
     private StockManager model;
@@ -24,6 +29,12 @@ public class MainController implements ActionListener {
     private CompanyController companyController;
     private SharesController sharesController;
 
+    /**
+     * Creates and initializes the controller and views
+     * @param view Main view
+     * @param model StockManager
+     * @param loginView Login view
+     */
     public MainController(MainView view, StockManager model, LoginView loginView) {
         this.view = view;
         this.loginView = loginView;
@@ -37,8 +48,13 @@ public class MainController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "company":
-                updateCompanyList();
+                try {
+                    NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 view.updateView(CARD_COMPANY);
+                updateCompanyList();
                 break;
             case "profile":
                 view.updateView(CARD_PROFILE);
@@ -99,17 +115,34 @@ public class MainController implements ActionListener {
 
     public void updateCompanyList () {
         companyController.updateCompanyList(model.getCompaniesChange());
+        this.view.registerCompanyController(companyController, model.getCompaniesChange());
+    }
+
+    /**
+     * Updates the CompanyDetailView depending on the values received from the database
+     */
+    public void updateCompanyDetails () {
+        view.updateCompanyDetailView(model.getSharesSell(), model.getCompanyDetails(), model.getMaxDetailShareValue());
+        view.setTitleCompanyDetail(model.getCurrentShareValue(), model.getCompanyDetailName());
+        view.updateView(CARD_COMPANYDETAILS);
     }
 
     /**
      * Updates company and users value in the view
      *
      * @param totalBalance the new balance of the user
-     * @param value the new value of the company
+     * @param companyId the company id
      */
     public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
         //TODO: Update company in the model
         companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
+    }
+
+    public void updateViewsAfterPurchase(float totalBalance, int companyId) {
+        model.updateUserBalance(totalBalance);
+        view.updateTotalBalance(totalBalance);
+        companyController.sendUserShares(companyId);
+        //TODO: add the share view controller and send the tunnel to get its information
     }
 
     /**

@@ -1,5 +1,11 @@
 package network;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+
 import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
@@ -11,12 +17,6 @@ import utils.UserMapperImpl;
 import view.LoginView;
 import view.MainView;
 import view.RegisterView;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
 
 public class NetworkManager extends Thread {
     private Socket serverSocket;
@@ -95,9 +95,8 @@ public class NetworkManager extends Thread {
         model.setCompaniesChange(companyChange);
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
-        this.mainView.initFirstView(model.getCompaniesChange());
+        this.mainController.updateCompanyList();
         this.mainView.registerMainController(mainController);
-        this.mainView.registerCompanyController(this.mainController.getCompanyController(), model.getCompaniesChange());
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
@@ -113,8 +112,9 @@ public class NetworkManager extends Thread {
         this.loginController = new LoginController(loginView, registerView);
         this.registerController = new RegisterController(registerView, loginView);
         loginView.registerController(loginController);
+        loginView.registerFocusController();
         registerView.registerController(registerController);
-
+        registerView.registerFocusController();
         // We only show the login view as the first screen
         loginView.setVisible(true);
     }
@@ -153,7 +153,7 @@ public class NetworkManager extends Thread {
      * @param object object that contains user information for company details menu
      * @throws IOException
      */
-    public void sendCompanyDetails(CompanyInfo object) throws IOException {
+    public void sendUserShares(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
@@ -164,13 +164,13 @@ public class NetworkManager extends Thread {
     public void sendUserProfileInfo (TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
+
     public void sendCurrentShares(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
     public void sendShareChange(TunnelObject object) throws IOException {
         oos.writeObject(object);
-    }
 
     /**
      * Runs the main client thread and receives objects coming from the server
@@ -213,16 +213,26 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof ShareTrade) {
                     ShareTrade info = ((ShareTrade) received);
-                    mainController.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
+                    mainController.updateViewsAfterPurchase(info.getTotalBalance(),  info.getCompanyId());
                 }
 
                 if (received instanceof CompanyChangeList) {
                     CompanyChangeList companies = (CompanyChangeList) received;
+                    ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
                     if (mainView == null) {
-                        initMainView(companyMapper.convertToCompaniesChange(companies));
-                        mainController.updateCompanyList();
-                        mainView.setVisible(true);
+                        initMainView(companiesChange);
+                    } else{
+                        model.setCompaniesChange(companiesChange);
+                        this.mainController.updateCompanyList();
                     }
+                }
+
+                if (received instanceof DetailViewInfo) {
+                    CompanyDetailList companyDetails = ((DetailViewInfo) received).getCompanyDetailList();
+                    ShareSellList sharesSells = ((DetailViewInfo) received).getShareSellList();
+                    model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
+                    model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
+                    mainController.updateCompanyDetails();
                 }
 
                 if (received instanceof ShareChangeList) {
@@ -236,6 +246,4 @@ public class NetworkManager extends Thread {
             e.printStackTrace();
         }
     }
-
-
 }

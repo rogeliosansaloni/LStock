@@ -18,4 +18,8 @@ public interface ShareMapper {
     ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList);
 
     ShareChangeList convertToShareChangeList(ArrayList<ShareChange> sharesChange);
+
+    ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList);
+
+    ShareSellList convertToShareSellList(ArrayList<ShareSell> shareSells);
 }
