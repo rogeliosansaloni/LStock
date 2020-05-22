@@ -180,7 +180,7 @@ public class UserDao {
      * @param name Selected user name
      * @return Selected user information Arraylist
      */
-    public ArrayList<CompanyDetail> getUserInfo(String name) {
+    public ArrayList<CompanyDetail> userShare(String name) {
         ResultSet result = dbConnector.selectQuery("SELECT user_id FROM User WHERE nickname = '"+name+"';");
         ArrayList<CompanyDetail> userSharesList= null;
         try {
@@ -202,7 +202,6 @@ public class UserDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
             System.out.println(PROFILE_MESSAGE_1);
         }
         return userSharesList;
@@ -215,14 +214,14 @@ public class UserDao {
      */
     public String[][] getUserShares(String name) {
         String[][] shares;
-        ArrayList<CompanyDetail> userShares = getUserInfo(name);
+        ArrayList<CompanyDetail> userShares = userShare(name);
         shares = new String[userShares.size()][4];
         if (!userShares.isEmpty()){
             for (int i = 0; i < userShares.size(); i++){
-                shares[i][0] = String.valueOf(userShares.get(i).getCompanyId());
-                shares[i][1] = userShares.get(i).getName();
+                shares[i][0] = userShares.get(i).getName();
+                shares[i][1] = String.valueOf(userShares.get(i).getShares());
                 shares[i][2] = String.valueOf(userShares.get(i).getValue());
-                shares[i][3] = String.valueOf(userShares.get(i).getShares());
+                shares[i][3] = String.valueOf(userShares.get(i).getShares()*userShares.get(i).getValue());
             }
             return shares;
         }
