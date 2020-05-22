@@ -1,5 +1,6 @@
 package controller;
 
+import model.entities.CompanyChangeList;
 import model.entities.StockManager;
 import model.entities.TunnelObject;
 import model.entities.UserProfileInfo;
@@ -19,6 +20,7 @@ public class MainController implements ActionListener {
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
+    private static final String CARD_COMPANYDETAILS = "Company Details";
     private final MainView view;
     private final LoginView loginView;
     private StockManager model;
@@ -45,6 +47,11 @@ public class MainController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "company":
+                try {
+                    NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 view.updateView(CARD_COMPANY);
                 updateCompanyList();
                 break;
@@ -112,6 +119,16 @@ public class MainController implements ActionListener {
      */
     public void updateCompanyList () {
         companyController.updateCompanyList(model.getCompaniesChange());
+        this.view.registerCompanyController(companyController, model.getCompaniesChange());
+    }
+
+    /**
+     * Updates the CompanyDetailView depending on the values received from the database
+     */
+    public void updateCompanyDetails () {
+        view.updateCompanyDetailView(model.getSharesSell(), model.getCompanyDetails(), model.getMaxDetailShareValue());
+        view.setTitleCompanyDetail(model.getCurrentShareValue(), model.getCompanyDetailName());
+        view.updateView(CARD_COMPANYDETAILS);
     }
 
     /**
@@ -126,11 +143,13 @@ public class MainController implements ActionListener {
      * Updates company and users value in the view
      *
      * @param totalBalance the new balance of the user
-     * @param value the new value of the company
+     * @param companyId the company id
      */
-    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
-        //TODO: Update company in the model
-        companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
+    public void updateViewsAfterPurchase(float totalBalance, int companyId) {
+        model.updateUserBalance(totalBalance);
+        view.updateTotalBalance(totalBalance);
+        companyController.sendUserShares(companyId);
+        //TODO: add the share view controller and send the tunnel to get its information
     }
 
     /**

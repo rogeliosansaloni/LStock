@@ -1,12 +1,15 @@
 package model.entities;
 
 public class CompanyChangeList extends TunnelObject {
+
+    private int[] companyId;
     private String[] companyName;
     private float[] companyCurrentShare;
     private float[] companyChange;
     private float[] companyChangePer;
 
     public CompanyChangeList(int numCompanies) {
+        this.companyId = new int[numCompanies];
         this.companyName = new String[numCompanies];
         this.companyCurrentShare = new float[numCompanies];
         this.companyChange = new float[numCompanies];
@@ -14,6 +17,10 @@ public class CompanyChangeList extends TunnelObject {
     }
 
     public CompanyChangeList() {
+    }
+
+    public int[] getCompanyId() {
+        return companyId;
     }
 
     public String[] getCompanyName() {
@@ -30,6 +37,10 @@ public class CompanyChangeList extends TunnelObject {
 
     public float[] getCompanyChangePer() {
         return companyChangePer;
+    }
+
+    public void setCompanyId(int i, int companyId) {
+        this.companyId[i] = companyId;
     }
 
     public void setCompanyName(int i, String companyName) {

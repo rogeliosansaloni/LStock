@@ -12,6 +12,7 @@ import controller.RegisterController;
 import model.entities.*;
 import utils.CompanyMapperImpl;
 import utils.JSONReader;
+import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
 import view.LoginView;
 import view.MainView;
@@ -32,6 +33,7 @@ public class NetworkManager extends Thread {
     private LoginView loginView;
     private UserMapperImpl mapper;
     private CompanyMapperImpl companyMapper;
+    private ShareMapperImpl shareMapper;
     private StockManager model;
 
     /**
@@ -83,6 +85,7 @@ public class NetworkManager extends Thread {
     private void init() {
         this.mapper = new UserMapperImpl();
         this.companyMapper = new CompanyMapperImpl();
+        this.shareMapper = new ShareMapperImpl();
     }
 
     /**
@@ -92,9 +95,8 @@ public class NetworkManager extends Thread {
         model.setCompaniesChange(companyChange);
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
-        this.mainView.initFirstView(model.getCompaniesChange());
+        this.mainController.updateCompanyList();
         this.mainView.registerMainController(mainController);
-        this.mainView.registerCompanyController(this.mainController.getCompanyController());
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
@@ -151,7 +153,7 @@ public class NetworkManager extends Thread {
      * @param object object that contains user information for company details menu
      * @throws IOException
      */
-    public void sendCompanyDetails(CompanyInfo object) throws IOException {
+    public void sendUserShares(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
@@ -208,16 +210,26 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof ShareTrade) {
                     ShareTrade info = ((ShareTrade) received);
-                    mainController.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
+                    mainController.updateViewsAfterPurchase(info.getTotalBalance(),  info.getCompanyId());
                 }
 
                 if (received instanceof CompanyChangeList) {
                     CompanyChangeList companies = (CompanyChangeList) received;
+                    ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
                     if (mainView == null) {
-                        initMainView(companyMapper.convertToCompaniesChange(companies));
-                        mainController.updateCompanyList();
-                        mainView.setVisible(true);
+                        initMainView(companiesChange);
+                    } else{
+                        model.setCompaniesChange(companiesChange);
+                        this.mainController.updateCompanyList();
                     }
+                }
+
+                if (received instanceof DetailViewInfo) {
+                    CompanyDetailList companyDetails = ((DetailViewInfo) received).getCompanyDetailList();
+                    ShareSellList sharesSells = ((DetailViewInfo) received).getShareSellList();
+                    model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
+                    model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
+                    mainController.updateCompanyDetails();
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

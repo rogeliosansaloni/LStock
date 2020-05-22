@@ -16,6 +16,7 @@ public class StockManager {
     private DBConnector connector;
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
+    private ArrayList<CompanyDetail> companyDetails;
     private UserDao userDao;
     private CompanyDao companyDao;
     private ShareDao shareDao;
@@ -122,17 +123,28 @@ public class StockManager {
      * @param company the company
      * @return ShareTrade with the new values of users total balance and company value
      */
-    public ShareTrade createUserCompanyShare (User user, Company company) {
-        //Creates the purchased share
-        shareDao.insertPurchasedShare(user, company);
-        //Updates de the user balance
-        userDao.updateUserBalance(user, company);
+    public ShareTrade updatePurchaseBuy (User user, Company company, Purchase[] purchases, String action) {
+        //Updates the user balance
+        userDao.updateUserBalance(user);
+        //If the acttion is Sell, we want to decrease the number of shares.
+        if(action.equals("BUY")){
+            //Updates the purchased share
+            shareDao.updatePurchasedShare(purchases[0]);
+        } else{
+            for(int i=0; i<purchases.length; i++){
+                purchases[i].setShareQuantity(-purchases[i].getShareQuantity());
+                //Updates the purchased share
+                shareDao.updatePurchasedShare(purchases[i]);
+            }
+        }
         //Recalculates the new value of the company
-        company.setValue(company.recalculateValue(BUY_ACTION, company.getValue()));
+        float currentValue = companyDao.getCompanyCurrenValue(company.getCompanyId());
+        company.setValue(currentValue);
+        company.recalculateValue(action);
+
         //Updates the company new value
-        companyDao.insertCompanyNewShare(company);
+        companyDao.updateCompanyNewValue(company);
         ShareTrade info = shareMapper.userCompanyToShareTrade(user, company);
-        info.setActionToDo(BUY_ACTION);
         return info;
     }
 
@@ -144,6 +156,16 @@ public class StockManager {
     public ArrayList<CompanyChange> getCompaniesChange() {
         companiesChange = companyDao.getCompaniesChange();
         return companiesChange;
+    }
+
+    public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
+        companyDetails = companyDao.getCompanyDetails(userId, companyId);
+        return companyDetails;
+    }
+
+    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
+        ArrayList<ShareSell> sharesSell = shareDao.getSharesSell(userId, companyId);
+        return sharesSell;
     }
 }
 

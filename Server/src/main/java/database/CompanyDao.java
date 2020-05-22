@@ -3,6 +3,7 @@ package database;
 
 import model.entities.Company;
 import model.entities.CompanyChange;
+import model.entities.CompanyDetail;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +16,10 @@ public class CompanyDao {
     private DBConnector dbConnector;
     private static final String SHARE_INFORMATION_ERROR = "Error getting information from the company share";
     private static final String INFORMATION_ERROR = "Error getting information from the company";
-    private static final String GETTING_COMPANIES_ERROR = "Error getting all companies";
+    private static final String GETTING_COMPANY_VALUE = "Error getting teh current company value.";
+    private static final String GETTING_COMPANIES_ERROR = "Error getting all companies.";
+    private static final String GETTING_COMPANIES_ERROR_DETAIL = "Error getting all companies detail.";
+    private static final String GETTING_COMPANIES_ERROR_CHANGE = "Error getting all companies change.";
 
     public CompanyDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
@@ -79,15 +83,7 @@ public class CompanyDao {
      */
 
     public ArrayList<CompanyChange> getCompaniesChange() {
-        ResultSet retrieved = dbConnector.selectQuery("SELECT c.name as name, s1.price as current_share, (s1.price - s2.price) as share_change, ((s1.price - s2.price)/s1.price)*100 as change_per\n" +
-                "FROM Company as c LEFT JOIN Share as s1 ON c.company_id = s1.company_id RIGHT JOIN Share as s2 ON s2.company_id = c.company_id\n" +
-                "WHERE s1.time = (SELECT MAX(s3.time) \n" +
-                "FROM Share as s3 \n" +
-                "WHERE s3.company_id = s1.company_id)\n" +
-                "AND s2.time = (SELECT MAX(s4.time) \n" +
-                "FROM Share as s4 \n" +
-                "WHERE s4.company_id = s2.company_id \n" +
-                "AND s4.time <= ADDDATE(NOW(), INTERVAL -5 MINUTE));");
+        ResultSet retrieved = dbConnector.selectQuery("CALL getCompaniesChange();");
         ArrayList<CompanyChange> companies = null;
         try {
             companies = new ArrayList<CompanyChange>();
@@ -95,7 +91,52 @@ public class CompanyDao {
                 companies.add(toCompanyChange(retrieved));
             }
         } catch (SQLException e) {
-            System.out.println(GETTING_COMPANIES_ERROR);
+            System.out.println(GETTING_COMPANIES_ERROR_CHANGE);
+        }
+        return companies;
+    }
+
+    /**
+     * Gets the value of the share of an specific company the last 10 minutes
+     * before the last change in the value of the share
+     *
+     * @return ArrayList<CompanyChange> an list of the information mentioned before
+     */
+
+    public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
+        ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
+        int numUserShares = 0;
+
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + userId + ", " + companyId + ");");
+        try {
+            if(retrievedShares.next()){
+                numUserShares = retrievedShares.getInt("numUserShares");
+            }
+        } catch (SQLException e) {
+            System.out.println(GETTING_COMPANIES_ERROR_DETAIL);
+        }
+
+        for(int i=0; i<10; i++){
+            ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
+            try {
+                if(!retrieved.next()){
+                    ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
+                    retrievedCompanyName.next();
+                    companies.add(new CompanyDetail(numUserShares, 5, retrievedCompanyName.getString("companyName"), i));
+                }else{
+                    retrieved.beforeFirst();
+                    while (retrieved.next()) {
+                        companies.add(toCompanyDetail(numUserShares, retrieved));
+                    }
+                    ResultSet retrievedMaxMin = dbConnector.selectQuery("CALL getMaxMinValues(" + i + ", " + companyId + ");");
+                    while (retrievedMaxMin.next()) {
+                        companies.set(i, extractMaxMinDetail(retrievedMaxMin, companies.get(i)));
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println(GETTING_COMPANIES_ERROR_DETAIL);
+            }
+
         }
         return companies;
     }
@@ -139,11 +180,38 @@ public class CompanyDao {
 
     private CompanyChange toCompanyChange(ResultSet resultSet) throws SQLException {
         CompanyChange companyChange = new CompanyChange();
+        companyChange.setCompanyId(resultSet.getInt("companyId"));
         companyChange.setName(resultSet.getString("name"));
         companyChange.setCurrentShare(resultSet.getFloat("current_share"));
         companyChange.setChange(resultSet.getFloat("share_change"));
         companyChange.setChangePer(resultSet.getFloat("change_per"));
         return companyChange;
+    }
+
+    private CompanyDetail toCompanyDetail(int  numUserShares, ResultSet resultSet) throws SQLException {
+        CompanyDetail companyDetail = new CompanyDetail();
+        companyDetail.setNumUserShares(numUserShares);
+        companyDetail.setCompanyId(resultSet.getInt("companyId"));
+        companyDetail.setCompanyName(resultSet.getString("name"));
+        companyDetail.setShareIdOpen(resultSet.getInt("shareIdOpen"));
+        companyDetail.setValueOpen(resultSet.getFloat("valueOpen"));
+        companyDetail.setShareIdClose(resultSet.getInt("shareIdClose"));
+        companyDetail.setValueClose(resultSet.getFloat("valueClose"));
+        companyDetail.setValueOpen(resultSet.getFloat("valueOpen"));
+        companyDetail.setMinutesBefore(resultSet.getInt("minutesBefore"));
+        return companyDetail;
+    }
+
+    private CompanyDetail extractMaxMinDetail(ResultSet retrievedMaxMin, CompanyDetail companyDetail) throws SQLException {
+        companyDetail.setMaxValue(retrievedMaxMin.getFloat("maximumValue"));
+        companyDetail.setMinValue(retrievedMaxMin.getFloat("minimumValue"));
+        if(companyDetail.getValueOpen() > companyDetail.getMaxValue()){
+            companyDetail.setMaxValue(companyDetail.getValueOpen());
+        }
+        if(companyDetail.getValueOpen() < companyDetail.getMinValue()){
+            companyDetail.setMinValue(companyDetail.getValueOpen());
+        }
+        return companyDetail;
     }
 
     /**
@@ -169,12 +237,25 @@ public class CompanyDao {
         return null;
     }
 
+    public float getCompanyCurrenValue(int companyId) {
+        float currentValue = 0;
+        ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyCurrentValue(" + companyId + ");");
+        try {
+            while(retrieved.next()){
+                currentValue = retrieved.getFloat("currentValue");
+            }
+        } catch (SQLException e) {
+            System.out.println(GETTING_COMPANY_VALUE);
+        }
+        return currentValue;
+    }
+
     /**
      * Inserts company recalculated value
      *
      * @param company the company
      */
-    public void insertCompanyNewShare (Company company) {
+    public void updateCompanyNewValue (Company company) {
         dbConnector.insertQuery("INSERT INTO Share (company_id, price) VALUES (" + company.getCompanyId() + ", " + company.getValue() + ");");
         ResultSet result = dbConnector.selectQuery("SELECT * FROM Share WHERE company_id = " + company.getCompanyId() + " AND price = " + company.getValue() + ";");
         try {
@@ -187,6 +268,8 @@ public class CompanyDao {
             System.out.println(SHARE_INFORMATION_ERROR);
         }
     }
+
+
 
 
 }
