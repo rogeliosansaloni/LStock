@@ -28,15 +28,19 @@ public class StockManager {
         return sharesSell;
     }
 
+    /**
+     * Gets the ids of all shares that the user has in the CompanyDetailView
+     */
     public int[] getSharesSellSharesId() {
         int[] sharesId = new int[sharesSell.size()];
         for(int i=0; i<sharesSell.size(); i++){
-            System.out.println(sharesSell.get(i).getShareId());
             sharesId[i] = sharesSell.get(i).getShareId();
         }
         return sharesId;
     }
-
+    /**
+     * Gets the values of all shares that the user has in the CompanyDetailView
+     */
     public float[] getSharesSellSharesValue() {
         float[] sharesValue = new float[sharesSell.size()];
         for(int i=0; i<sharesSell.size(); i++){
@@ -49,6 +53,9 @@ public class StockManager {
         return companyDetails.get(0).getValueClose();
     }
 
+    /**
+     * Gets the maximum value of all the prices that are in the Candlestick Chart of CompanyDetailView
+     */
     public float getMaxDetailShareValue() {
         float maxValue = companyDetails.get(0).getMaxValue();
         for(int i=1; i<companyDetails.size(); i++){
@@ -57,10 +64,6 @@ public class StockManager {
             }
         }
         return maxValue;
-    }
-
-    public float getMinShareValue() {
-        return companyDetails.get(0).getValueClose();
     }
 
     public int getCurrentShareId() {
@@ -91,16 +94,25 @@ public class StockManager {
         this.companiesChange = companiesChange;
     }
 
+    /**
+     * Checks if the user has enough value to buy the shares in the CompanyDetailView.
+     */
     public float checkUserBalance (int quantityShares){
         float totalPurchase = quantityShares * getCurrentShareValue();
         float userBalance = user.getTotalBalance() - totalPurchase;
         return userBalance;
     }
 
+    /**
+     * Updates the user balance
+     */
     public void updateUserBalance (float newBalance){
         this.user.setTotalBalance(newBalance);
     }
 
+    /**
+     * Checks if the has enough shares of each type to sell them
+     */
     public float checkNumUserShares (int[] quantityShares){
         float benefitSale = 0;
         for(int i=0; i<quantityShares.length; i++){

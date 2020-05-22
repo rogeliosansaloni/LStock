@@ -26,8 +26,6 @@ public class CompanyDetail {
      * @param valueOpen     value of the share at the beginning of that minute
      * @param shareIdClose      shareId of the close value
      * @param valueClose    value of the share at the end of that minute
-     * @param maxValue      shareId of the close value
-     * @param minValue    value of the share at the end of that minute
      * @param minutesBefore      minutes before tha last change in the value of the share
      */
     public CompanyDetail(int numUserShares, int companyId, String companyName, int shareIdOpen, float valueOpen, int shareIdClose, float valueClose, float maxValue, float minValue, int minutesBefore) {
@@ -41,6 +39,19 @@ public class CompanyDetail {
         this.maxValue = maxValue;
         this.minValue = minValue;
         this.minutesBefore = minutesBefore;
+    }
+
+    public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore) {
+        this.numUserShares = numUserShares;
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.minutesBefore = minutesBefore;
+        this.shareIdOpen = -1;
+        this.shareIdClose = -1;
+        this.valueOpen = -1;
+        this.valueClose = -1;
+        this.maxValue = -1;
+        this.minValue = -1;
     }
 
     public int getNumUserShares() {
@@ -123,6 +134,7 @@ public class CompanyDetail {
         this.minutesBefore = minutesBefore;
     }
 }
+
 
 
 

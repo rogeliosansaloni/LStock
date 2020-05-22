@@ -123,7 +123,7 @@ public class CompanyDao {
 
         ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + userId + ", " + companyId + ");");
         try {
-            if(retrievedShares.next() != false){
+            if(retrievedShares.next()){
                 numUserShares = retrievedShares.getInt("numUserShares");
             }
         } catch (SQLException e) {
@@ -133,10 +133,10 @@ public class CompanyDao {
         for(int i=0; i<10; i++){
             ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
             try {
-                if(retrieved.next() == false){
+                if(!retrieved.next()){
                     ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
                     retrievedCompanyName.next();
-                    companies.add(new CompanyDetail(numUserShares, 5, retrievedCompanyName.getString("companyName"), -1, -1, -1, -1,-1, -1, i));
+                    companies.add(new CompanyDetail(numUserShares, 5, retrievedCompanyName.getString("companyName"), i));
                 }else{
                     retrieved.beforeFirst();
                     while (retrieved.next()) {

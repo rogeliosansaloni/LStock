@@ -1,5 +1,8 @@
 package model.entities;
 
+/**
+ * This class has all the necessary information to show in the CompanyDetailView
+ */
 public class DetailViewInfo extends TunnelObject {
 
     private CompanyDetailList companyDetailList;

@@ -41,6 +41,19 @@ public class CompanyDetail {
         this.minutesBefore = minutesBefore;
     }
 
+    public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore) {
+        this.numUserShares = numUserShares;
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.minutesBefore = minutesBefore;
+        this.shareIdOpen = -1;
+        this.shareIdClose = -1;
+        this.valueOpen = -1;
+        this.valueClose = -1;
+        this.maxValue = -1;
+        this.minValue = -1;
+    }
+
     public int getNumUserShares() {
         return numUserShares;
     }
