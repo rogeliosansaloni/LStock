@@ -14,11 +14,11 @@ import java.io.IOException;
 public class CompanyDetailController implements ActionListener {
     private static final String CONFIRM_BUY_ACTION = "Do you want to buy these shares?";
     private static final String CONFIRM_SELL_ACTION = "Do you want to sell these shares?";
+    private static final String CARD_COMPANY = "Companies";
     private static final String BUY_ACTION = "BUY";
     private static final String SELL_ACTION = "SELL";
     private static final int CONFIRMED = 0;
     private static final int NOT_CONFIRMED = 1;
-
     private MainView view;
     private StockManager model;
 
@@ -34,45 +34,49 @@ public class CompanyDetailController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("buyShare")) {
-            String textfieldText = view.getNumSharesBuy();
-            //Check if the text introduced is an integer
-            int numShares = checkInteger(textfieldText);
-            if(numShares > 0){
-                //Check if the user has enough money
-                float userBalance = model.checkUserBalance(numShares);
-                if(userBalance > 0){
-                    //If user confirms to buy the share
-                    if (view.confirmAction(CONFIRM_BUY_ACTION) == CONFIRMED) {
-                        sendShareTradeBuy(numShares, userBalance);
+        String whichButton = e.getActionCommand();
+        switch(whichButton){
+            case "buyShare":
+                String textfieldText = view.getNumSharesBuy();
+                //Check if the text introduced is an integer
+                int numShares = checkInteger(textfieldText);
+                if(numShares > 0){
+                    //Check if the user has enough money
+                    float userBalance = model.checkUserBalance(numShares);
+                    if(userBalance > 0){
+                        //If user confirms to buy the share
+                        if (view.confirmAction(CONFIRM_BUY_ACTION) == CONFIRMED) {
+                            sendShareTradeBuy(numShares, userBalance);
+                        }
+                    } else{
+                        view.showErrorCompanyDetail(2);
                     }
                 } else{
-                    view.showErrorCompanyDetail(2);
+                    view.showErrorCompanyDetail(1);
                 }
-            } else{
-                view.showErrorCompanyDetail(1);
-            }
-
-        }
-        if (e.getActionCommand().equals("sellShare")) {
-            String[] textShareSells = view.getNumSharesSell();
-            //Check if the text introduced is an integer
-            int[] numShares = checkAllFields(textShareSells);
-            if(numShares[0] == -1) {
-                view.showErrorCompanyDetail(3);
-            } else if(numShares[0] == -2) {
-                view.showErrorCompanyDetail(4);
-            }else{
-                float userBalance = model.checkNumUserShares(numShares);
-                if(userBalance > 0){
-                    if (view.confirmAction(CONFIRM_SELL_ACTION) == CONFIRMED) {
-                        sendShareTradeSell(numShares, userBalance);
+                break;
+            case "sellShare":
+                String[] textShareSells = view.getNumSharesSell();
+                //Check if the text introduced is an integer
+                int[] numSharesSell = checkAllFields(textShareSells);
+                if(numSharesSell[0] == -1) {
+                    view.showErrorCompanyDetail(3);
+                } else if(numSharesSell[0] == -2) {
+                    view.showErrorCompanyDetail(4);
+                }else{
+                    float userBalance = model.checkNumUserShares(numSharesSell);
+                    if(userBalance > 0){
+                        if (view.confirmAction(CONFIRM_SELL_ACTION) == CONFIRMED) {
+                            sendShareTradeSell(numSharesSell, userBalance);
+                        }
+                    } else{
+                        view.showErrorCompanyDetail(5);
                     }
-                } else{
-                    view.showErrorCompanyDetail(5);
                 }
-            }
-
+                break;
+            case "back":
+                view.updateView(CARD_COMPANY);
+                break;
         }
     }
     /**

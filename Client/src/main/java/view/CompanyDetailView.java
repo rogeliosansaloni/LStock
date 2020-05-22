@@ -28,6 +28,7 @@ public class CompanyDetailView extends JPanel {
     private JScrollPane jpScrollShares;
     private JButton jbBuy;
     private JButton jbSell;
+    private JButton jbBack;
     private JTextField jtBuyShares;
     private JPanel[] jpSellShares;
     private JTextField[] jtSellShares;
@@ -110,6 +111,13 @@ public class CompanyDetailView extends JPanel {
         jpLeft = new JPanel(new BorderLayout());
         jpLeft.setBackground(color.getWHITE());
         jpLeft.setPreferredSize(new Dimension(600, this.getHeight()));
+
+        jbBack = new JButton("BACK");
+        jbBack.setActionCommand("back");
+        jbBack.setBackground(color.getWHITE());
+        jbBack.setPreferredSize(new Dimension(400, 50));
+        jbBack.setFont(sellFont);
+        jpRight.add(jbBack, BorderLayout.SOUTH);
 
         //Adding in the main panel
         this.add(jpRight, BorderLayout.EAST);
@@ -288,8 +296,7 @@ public class CompanyDetailView extends JPanel {
     }
 
     public int confirmAction(String message) {
-        int verify = JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.YES_NO_OPTION);
-        return verify;
+        return JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.YES_NO_OPTION);
     }
 
     public void showErrorMessage(String message) {
@@ -297,8 +304,9 @@ public class CompanyDetailView extends JPanel {
     }
 
     public void registerController(ActionListener controller) {
-        this.jbBuy.addActionListener(controller);
-        this.jbSell.addActionListener(controller);
+        jbBuy.addActionListener(controller);
+        jbSell.addActionListener(controller);
+        jbBack.addActionListener(controller);
     }
 
     public void registerFocusController(FocusListener controller) {
