@@ -22,10 +22,9 @@ public class BotDao {
      * Creates a bot associated to a company
      *
      * @param bot     bot to be created
-     * @param company company to which the bot belongs to
      * @return id of the newly created bot. It will return -1 in case there is an error.
      */
-    public int createBot(Bot bot, Company company) {
+    public int createBot(Bot bot) {
         final String insertQuery = "INSERT INTO Bots (company_id, active_time, probability, activity_status) " +
                 "VALUES (%d, %f, %f, TRUE);";
         final String selectQuery = "SELECT * FROM Bots WHERE company_id = %d ORDER BY created_at DESC LIMIT 1;";
@@ -33,17 +32,19 @@ public class BotDao {
         final String errorMessage = "Error in creating bot for %s";
 
         // Create the new bot for the specified company
-        dbConnector.insertQuery(String.format(insertQuery, company.getCompanyId(), bot.getActiveTime(),
+        dbConnector.insertQuery(String.format(insertQuery, bot.getCompany().getCompanyId(), bot.getActiveTime(),
                 bot.getProbability()));
 
         // Get the latest bot created for the specified company
-        ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, company.getCompanyId()));
+        ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, bot.getCompany().getCompanyId()));
         try {
-            int botId = Integer.parseInt(verify.getObject("bot_id").toString());
-            System.out.println(String.format(successMessage, botId));
-            return botId;
+            while (verify.next()) {
+                int botId = verify.getInt("bot_id");
+                System.out.println(String.format(successMessage, botId));
+                return botId;
+            }
         } catch (SQLException e) {
-            System.out.println(String.format(errorMessage, company.getName()));
+            System.out.println(String.format(errorMessage, bot.getCompany().getCompanyId()));
         }
         return -1;
     }
@@ -71,9 +72,31 @@ public class BotDao {
 
     /**
      * Gets all existing bots
+     * @return a list of all existing bots
      */
     public ArrayList<Bot> getAllBots() {
-        ResultSet retrievedBots = dbConnector.selectQuery("SELECT * FROM Bots;");
+        ResultSet retrievedBots = dbConnector.selectQuery("SELECT c.name, bot_id, active_time, probability, activity_status" +
+                " FROM Bots as b, Company as c WHERE b.company_id = c.company_id;");
+        ArrayList<Bot> bots = null;
+        try {
+            bots = new ArrayList<Bot>();
+            while (retrievedBots.next()) {
+                bots.add(toBot(retrievedBots));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting all bots");
+        }
+        return bots;
+    }
+
+    /**
+     * Gets all bots for a specific company
+     * @param companyId company id
+     * @return a list of all bots associated to a company
+     */
+    public ArrayList<Bot> getAllBotsByCompany(int companyId) {
+        final String selectQuery = "SELECT * FROM Bots WHERE company_id = %d;";
+        ResultSet retrievedBots = dbConnector.selectQuery(String.format(selectQuery, companyId));
         ArrayList<Bot> bots = null;
         try {
             bots = new ArrayList<Bot>();
@@ -95,10 +118,16 @@ public class BotDao {
      */
     private Bot toBot(ResultSet resultSet) throws SQLException {
         Bot bot = new Bot();
-        bot.setBotId(Integer.parseInt(resultSet.getObject("id").toString()));
-        bot.setActiveTime(Float.parseFloat(resultSet.getObject("active_time").toString()));
-        bot.setProbability(Float.parseFloat(resultSet.getObject("probability").toString()));
-        bot.setCompany(new Company(Integer.parseInt(resultSet.getObject("company_id").toString())));
+        try {
+            bot.setBotId(resultSet.getInt("bot_id"));
+            bot.setActiveTime(resultSet.getFloat("active_time"));
+            bot.setProbability(resultSet.getFloat("probability"));
+            bot.setStatus(resultSet.getInt("activity_status"));
+            bot.setCompany(new Company(resultSet.getString("name")));
+        } catch (SQLException e) {
+            // If column 'name' does not exist, parse the company_id
+            bot.setCompany(new Company(resultSet.getInt("company_id")));
+        }
         return bot;
     }
 
@@ -131,56 +160,42 @@ public class BotDao {
     }
 
     /**
-     * Updates bot information
-     *
-     * @param bot bot that contains the new information
-     * @return true if the update is successful. If not, false.
+     * Updates the activity of a bot
+     * @param botId id of the bot to be configured
+     * @param activate indicates if the bot should be enabled or disabled
+     * @return true if the bot activity has been changed. If not, false.
      */
-    public boolean updateBot(Bot bot) {
-        final String updateQuery = "UPDATE Bots SET company_id = %d, active_time = %f, probability = %f WHERE " +
+    public boolean updateBot(int botId, String activate) {
+        final String updateQuery = "UPDATE Bots SET activity_status = %s WHERE " +
                 "bot_id = %d;";
         final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
-        final String errorMessage = "Error updating bot with id %d";
+        final String errorMessage = "Error updating bot activity with id %d";
+        final String successMessage = "Bot with id %d has been %s";
+
+
+        Bot bot = getBotById(botId);
+
+        // Determine if we should enable or disable the bot
+        int newActivity;
+        if (activate.equals("ENABLE")) {
+            newActivity = 1;
+        } else if (activate.equals("DISABLE")) {
+            newActivity = 0;
+        } else { // No change
+            newActivity = bot.getStatus();
+        }
 
         // Consult the database to get information on the bot to be updated
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, bot.getBotId()));
+        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, botId));
         try {
             while (result.next()) {
                 // If the bot exists, update the information
-                if (result.getInt("bot_id") == bot.getBotId()) {
-                    dbConnector.updateQuery(String.format(updateQuery, bot.getCompany().getCompanyId(),
-                            bot.getActiveTime(), bot.getProbability(), bot.getBotId()));
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(String.format(errorMessage, bot.getBotId()));
-        }
-        return false;
-    }
-
-    /**
-     * Activates or deactivates a bot
-     *
-     * @param botId    id of the bot
-     * @param activity new bot activity status
-     * @return true if the bot status has been updated. If not, false.
-     */
-    public boolean updateBotActivity(int botId, boolean activity) {
-        final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
-        final String updateQuery = "UPDATE Bots SET activity_status = %s WHERE bot_id = %d;";
-        final String errorMessage = "Error updating bot activity of bot %d";
-
-        ResultSet resultSet = dbConnector.selectQuery(String.format(selectQuery, botId));
-        try {
-            while (resultSet.next()) {
-                if (resultSet.getInt("bot_id") == botId) {
-                    if (activity) {
-                        // Activate bot
-                        dbConnector.updateQuery(String.format(updateQuery, "TRUE", botId));
+                if (result.getInt("bot_id") == botId) {
+                    dbConnector.updateQuery(String.format(updateQuery, newActivity, botId));
+                    if(newActivity == 1) {
+                        System.out.println(String.format(successMessage, botId, "enabled."));
                     } else {
-                        // Deactivate bot
-                        dbConnector.updateQuery(String.format(updateQuery, "FALSE", botId));
+                        System.out.println(String.format(successMessage, botId, "disabled."));
                     }
                     return true;
                 }
