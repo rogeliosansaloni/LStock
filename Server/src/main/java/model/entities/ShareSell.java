@@ -1,6 +1,8 @@
 package model.entities;
 
-
+/**
+ * This class has the info of the shares the user has. This information is shown in the CompanyDetailView
+ */
 public class ShareSell {
 
     private int shareId;
@@ -10,6 +12,13 @@ public class ShareSell {
     public ShareSell() {
     }
 
+    /**
+     * It will create a shareSell
+     *
+     * @param shareId      share id
+     * @param shareValue      the value that share had when the user bought it
+     * @param shareQuantity      the quantity that the user has of this share
+     */
     public ShareSell(int shareId, float shareValue, int shareQuantity) {
         this.shareId = shareId;
         this.shareValue = shareValue;

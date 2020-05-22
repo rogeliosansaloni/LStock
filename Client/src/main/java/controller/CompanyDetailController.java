@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Controller for the company detail view
+ */
 public class CompanyDetailController implements ActionListener {
     private static final String CONFIRM_BUY_ACTION = "Do you want to buy these shares?";
     private static final String CONFIRM_SELL_ACTION = "Do you want to sell these shares?";
@@ -19,6 +22,11 @@ public class CompanyDetailController implements ActionListener {
     private MainView view;
     private StockManager model;
 
+    /**
+     * Creates and initializes the controller and the Main view
+     * @param view Main view
+     * @param model StockManager
+     */
     public CompanyDetailController(MainView view, StockManager model) {
         this.view = view;
         this.model = model;
@@ -67,7 +75,10 @@ public class CompanyDetailController implements ActionListener {
 
         }
     }
-
+    /**
+     * Checks if the number introduced in the JTextfield is an integer or not
+     * @param text the text introduced
+     */
     public int checkInteger(String text){
         if(text.equals("")){
             return -2;
@@ -85,6 +96,10 @@ public class CompanyDetailController implements ActionListener {
         }
     }
 
+    /**
+     * Checks all the values introduced in the JTextfield of the shares sell
+     * @param valuesString the string array of the texts introduced
+     */
     public int[] checkAllFields(String[] valuesString){
         int totalNumShares = 0;
         int value;
@@ -108,6 +123,11 @@ public class CompanyDetailController implements ActionListener {
         return valuesInt;
     }
 
+    /**
+     * Sends a ShareTrade if the the buy is valid
+     * @param numShares the number of sells to buy
+     * @param userBalance the balance of the user updated
+     */
     public void sendShareTradeBuy(int numShares, float userBalance){
         int userId = model.getUser().getUserId();
         int companyId = model.getCompanyDetailId();
@@ -121,6 +141,11 @@ public class CompanyDetailController implements ActionListener {
         }
     }
 
+    /**
+     * Sends a ShareTrade if the the sell is valid
+     * @param numShares the array of all the shares that the user wants to sell
+     * @param userBalance the balance of the user updated
+     */
     public void sendShareTradeSell(int[] numShares, float userBalance){
         int userId = model.getUser().getUserId();
         int companyId = model.getCompanyDetailId();
