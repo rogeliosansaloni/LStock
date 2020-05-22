@@ -1,8 +1,6 @@
 package view;
 
-import model.entities.Company;
-import model.entities.Share;
-import model.entities.User;
+import model.entities.Top10;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -10,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class BarChartView extends Panel{
-    private ArrayList<Share> shares;
+    private ArrayList<Top10> topTen;
     public static final int TOP_BUFFER = 30; // For the title
     public static final int AXIS_OFFSET = 20;
     public static final String COMPANIES = "Companies";
@@ -18,16 +16,9 @@ public class BarChartView extends Panel{
     private int chartwidth, chartheight, chartX, chartY;
     private String xLabel, yLabel;
 
-    public BarChartView (ArrayList<Share> shares)
+    public BarChartView (ArrayList<Top10> topTen)
     {
-       // this.shares = shares;
-        this.shares = new ArrayList<Share>();
-        User user = new User (1, "mary","email","aloha",20,"cute",50,null);
-        Company com1= new Company(1, "comp1", 20,20, user, null);
-        this.shares.add(new Share(user,com1,10));
-        User user2 = new User (1, "lol","lol1","aloha",20,"cute",50,null);
-        Company com2= new Company(1, "comp1", 10,30, user, null);
-        this.shares.add(new Share(user2,com2,10));
+       this.topTen = topTen;
 
     }
 
@@ -67,8 +58,8 @@ public class BarChartView extends Panel{
 
         int value, height, xLeft, yTopLeft;
         int counter = 0;
-        for (Share share : shares) {
-            value = (int) share.getPrice();
+        for (Top10 barTopten : topTen) {
+            value = (int) barTopten.getPrice();
 
             double height2 = (value/max)*chartheight;
             height = (int) height2;
@@ -112,9 +103,9 @@ public class BarChartView extends Panel{
 
     private void drawText(Graphics2D g2) {
 
-        int size = shares.size();
+        int size = topTen.size();
         g2.drawString("Number of classes: " + size, AXIS_OFFSET +10, 15) ;
-        g2.drawString("Number of counts: " + shares.size(), AXIS_OFFSET +10, 30) ;
+        g2.drawString("Number of counts: " + topTen.size(), AXIS_OFFSET +10, 30) ;
     }
 
     private Color getRandomColor() {

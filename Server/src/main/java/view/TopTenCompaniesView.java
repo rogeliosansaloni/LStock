@@ -1,7 +1,7 @@
 package view;
 
 
-import model.entities.Share;
+import model.entities.Top10;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -18,7 +18,7 @@ public class TopTenCompaniesView extends JPanel {
     private static final int HEIGHT = 20;
     private JLabel jlUser;
     private JButton jbShare;
-    private ArrayList<Share> shares;
+    private ArrayList<Top10> topTen;
     private BarChartView barchart;
 
     public TopTenCompaniesView(){
@@ -49,7 +49,7 @@ public class TopTenCompaniesView extends JPanel {
         jbShare.setBackground(color.getYELLOW());
         jbShare.setPreferredSize(new Dimension(200, 50));
 
-        barchart = new BarChartView(shares);
+        barchart = new BarChartView(topTen);
         this.add(barchart);
 
 
