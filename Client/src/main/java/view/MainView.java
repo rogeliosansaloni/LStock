@@ -1,6 +1,7 @@
 package view;
 
 import model.entities.CompanyChange;
+import model.entities.User;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -46,6 +47,7 @@ public class MainView extends JFrame {
     private JMenuItem optionProfile, optionShares, optionBalance, optionCompany, optionLogout;
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
+    private ProfileView jpProfileView;
 
     /**
      * Creates and initializes the main view
@@ -69,6 +71,7 @@ public class MainView extends JFrame {
         jpCompanyView = new CompanyView();
         jpBalanceView = new BalanceView();
         jpCompanyDetailsView = new CompanyDetailView();
+        jpProfileView = new ProfileView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -80,6 +83,7 @@ public class MainView extends JFrame {
         jpCenter.add(jpCompanyView, CARD_COMPANY);
         jpCenter.add(jpCompanyDetailsView, CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
+        jpCenter.add(jpProfileView, CARD_PROFILE);
         //TODO: Add the rest of views
     }
 
@@ -295,7 +299,7 @@ public class MainView extends JFrame {
                 break;
             case CARD_PROFILE:
                 labelViewName.setText(CARD_PROFILE);
-                //cardLayout.show(jpCenter, CARD_PROFILE);
+                cardLayout.show(jpCenter, CARD_PROFILE);
                 updateOptionsProfile();
                 break;
             case CARD_SHARES:
@@ -317,6 +321,10 @@ public class MainView extends JFrame {
 
     public void updateCompanyList(ArrayList<CompanyChange> companies){
         jpCompanyView.showCompanies(companies);
+    }
+
+    public void updateProfileView(User user){
+        jpProfileView.updateProfileView(user);
     }
 
     /**

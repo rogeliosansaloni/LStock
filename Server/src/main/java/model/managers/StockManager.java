@@ -104,6 +104,19 @@ public class StockManager {
     }
 
     /**
+     * Gets the profile info of the user.
+     *
+     * @param user The user
+     * @return UserProfileInfo with the the update information of the user
+     */
+    public UserProfileInfo getUserProfileInfo(User user) {
+        userDao.getUserProfileInfo(user);
+        UserProfileInfo info = mapper.userToUserProfileInfo(user);
+        info.setAction("profileView");
+        return info;
+    }
+
+    /**
      * Creates a new share between company and user.
      * @param user the user
      * @param company the company

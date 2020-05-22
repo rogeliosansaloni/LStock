@@ -1,11 +1,15 @@
 package controller;
 
 import model.entities.StockManager;
+import model.entities.TunnelObject;
+import model.entities.UserProfileInfo;
+import network.NetworkManager;
 import view.LoginView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * Main controller of the client different views
@@ -45,8 +49,8 @@ public class MainController implements ActionListener {
                 updateCompanyList();
                 break;
             case "profile":
+                sendUserProfileInfo();
                 view.updateView(CARD_PROFILE);
-                //TODO: Profile
                 break;
             case "shares":
                 view.updateView(CARD_SHARES);
@@ -102,6 +106,11 @@ public class MainController implements ActionListener {
         companyController.updateCompanyList(model.getCompaniesChange());
     }
 
+    public void updateProfileView () {
+        view.updateProfileView(model.getUser());
+    }
+
+
     /**
      * Updates company and users value in the view
      *
@@ -111,5 +120,15 @@ public class MainController implements ActionListener {
     public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
         //TODO: Update company in the model
         companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
+    }
+
+    public void sendUserProfileInfo(){
+        int userId = model.getUser().getUserId();
+        TunnelObject info = new UserProfileInfo(userId, "profileView");
+        try {
+            NetworkManager.getInstance().sendUserProfileInfo(info);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

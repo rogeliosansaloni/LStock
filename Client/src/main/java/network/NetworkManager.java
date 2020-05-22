@@ -199,6 +199,10 @@ public class NetworkManager extends Thread {
                     UserProfileInfo info = (UserProfileInfo) received;
                     if (info.getAction().equals("balance")) {
                         mainController.updateTotalBalance(info.getTotalBalance());
+                    } else if(info.getAction().equals("profileView")){
+                        User user = mapper.userProfileInfoToUser(info);
+                        model.updateUserInfo(user);
+                        mainController.updateProfileView();
                     }
                 }
 

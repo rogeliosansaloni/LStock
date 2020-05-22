@@ -88,11 +88,12 @@ public class DedicatedServer extends Thread {
                     if (userInfo.getAction().equals("balance")) {
                         UserProfileInfo userProfileInfo = stockModel.updateUserBalance(user);
                         oos.writeObject(userProfileInfo);
-                    } else {
-                        if (userInfo.getAction().equals("information")) {
-                            UserProfileInfo userProfileInfo = stockModel.updateUserInformation(user);
-                            oos.writeObject(userProfileInfo);
-                        }
+                    } else if (userInfo.getAction().equals("information")) {
+                        UserProfileInfo userProfileInfo = stockModel.updateUserInformation(user);
+                        oos.writeObject(userProfileInfo);
+                    } else if (userInfo.getAction().equals("profileView")){
+                        UserProfileInfo userProfileInfo = stockModel.getUserProfileInfo(user);
+                        oos.writeObject(userProfileInfo);
                     }
                 }
 

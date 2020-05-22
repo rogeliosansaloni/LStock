@@ -131,6 +131,24 @@ public class UserDao {
     }
 
     /**
+     * It will get user necessary for the Client Profile View
+     *
+     * @param user User information
+     */
+    public void getUserProfileInfo(User user) {
+        ResultSet result = dbConnector.selectQuery("CALL getUserProfileInfo(" + user.getUserId() + ");");
+        try {
+            while (result.next()) {
+                user.setNickname(result.getString("nickname"));
+                user.setEmail(result.getString("email"));
+                user.setDescription(result.getString("description"));
+            }
+        } catch (SQLException e) {
+            System.out.println(BALANCE_MESSAGE_1);
+        }
+    }
+
+    /**
      * Updates de the users discounted balance after buying a share from a company
      * @param user the user
      * @param company the company we're buying the share from
@@ -188,4 +206,5 @@ public class UserDao {
             System.out.println(PROFILE_MESSAGE_1);
         }
     }
+
 }

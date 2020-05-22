@@ -37,4 +37,11 @@ public class StockManager {
     public void setCompaniesChange(ArrayList<CompanyChange> companiesChange) {
         this.companiesChange = companiesChange;
     }
+
+    public void updateUserInfo(User user) {
+        this.user.setNickname(user.getNickname());
+        this.user.setEmail(user.getEmail());
+        this.user.setDescription(user.getDescription());
+    }
+
 }
