@@ -3,6 +3,7 @@ package database;
 
 import java.util.ArrayList;
 
+import model.entities.CompanyDetail;
 import model.entities.User;
 
 import java.sql.ResultSet;
@@ -92,7 +93,7 @@ public class UserDao {
     /**
      * It will get all the users registered in LStock
      *
-     * @return ArrayList<String> all users registered
+     * @return All registered users Arraylist
      */
     public ArrayList<User> getAllUsers() {
         ResultSet getUsers = dbConnector.selectQuery("SELECT * FROM User;");
@@ -100,11 +101,14 @@ public class UserDao {
         try {
             users = new ArrayList<User>();
             while (getUsers.next()) {
+                float value = 0;
+                if (userShare(getUsers.getObject("nickname").toString()) != null){
+                    value = getUserValue((String) getUsers.getObject("nickname"));
+                }
                 users.add(new User(
                         getUsers.getObject("nickname").toString(),
                         getUsers.getObject("email").toString(),
-                        //TODO add stock value to this user for SharesListView
-                        -1,
+                        value,
                         Float.parseFloat(getUsers.getObject("total_balance").toString())
                 ));
             }
@@ -117,13 +121,12 @@ public class UserDao {
     /**
      * It will get all the users registered in LStock
      *
-     * @return String[][] all users registered
+     * @return All registered users
      */
     public String[][] getAllUserList() {
         String[][] users;
         ArrayList<User> userList = getAllUsers();
         users = new String[userList.size()][4];
-
         for (int i = 0; i < userList.size(); i++){
             users[i][0] = userList.get(i).getNickname();
             users[i][1] = userList.get(i).getEmail();
@@ -131,6 +134,21 @@ public class UserDao {
             users[i][3] = String.valueOf(userList.get(i).getTotalBalance());
         }
         return users;
+    }
+
+    /**
+     * It will update the information of one user
+     *
+     * @param name User nickname
+     * @return userValue of all the shares owned
+     */
+    public float getUserValue(String name){
+        ArrayList<CompanyDetail> userShares = userShare(name);
+        float userValue = 0;
+        for (CompanyDetail c : userShares){
+            userValue += c.getShares()*c.getValue();
+        }
+        return userValue;
     }
 
     /**
@@ -174,22 +192,56 @@ public class UserDao {
     }
 
     /**
-     * Gets the users information
+     * Gets the users share data from the database
      *
-     * @param user the User
-     * @return user User and its information
+     * @param name Selected user name
+     * @return Selected user information Arraylist
      */
-    public void getUserInfo(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
-
+    public ArrayList<CompanyDetail> userShare(String name) {
+        ResultSet result = dbConnector.selectQuery("SELECT user_id FROM User WHERE nickname = '"+name+"';");
+        ArrayList<CompanyDetail> userSharesList= null;
         try {
             while (result.next()) {
-                if (result.getInt("user_id") == user.getUserId()) {
-                    user.setDescription(result.getString("description"));
+                int user_id = result.getInt("user_id");
+                result = dbConnector.selectQuery(
+                        "SELECT DISTINCT Purchase.share_quantity, Share.price, Company.name, Company.company_id FROM Share " +
+                        "INNER JOIN Purchase ON Share.share_id = Purchase.share_id " +
+                        "INNER JOIN Company ON Company.company_id = Purchase.company_id " +
+                        "INNER JOIN User ON Purchase.user_id = '"+user_id+"';");
+                userSharesList = new ArrayList<CompanyDetail>();
+                while (result.next()) {
+                    userSharesList.add(new CompanyDetail(
+                            result.getInt("company_id"),
+                            result.getString("name"),
+                            result.getFloat("price"),
+                            result.getInt("share_quantity")
+                    ));
                 }
             }
         } catch (SQLException e) {
             System.out.println(PROFILE_MESSAGE_1);
         }
+        return userSharesList;
+    }
+    /**
+     * Returns all the shares of the selected user
+     *
+     * @param name Selected user name
+     * @return Shares from selected user
+     */
+    public String[][] getUserShares(String name) {
+        String[][] shares;
+        ArrayList<CompanyDetail> userShares = userShare(name);
+        shares = new String[userShares.size()][4];
+        if (!userShares.isEmpty()){
+            for (int i = 0; i < userShares.size(); i++){
+                shares[i][0] = userShares.get(i).getName();
+                shares[i][1] = String.valueOf(userShares.get(i).getShares());
+                shares[i][2] = String.valueOf(userShares.get(i).getValue());
+                shares[i][3] = String.valueOf(userShares.get(i).getShares()*userShares.get(i).getValue());
+            }
+            return shares;
+        }
+        return null;
     }
 }
