@@ -101,11 +101,15 @@ public class UserDao {
         try {
             users = new ArrayList<User>();
             while (getUsers.next()) {
+                float value = 0;
+                if (userShare(getUsers.getObject("nickname").toString()) != null){
+                    value = getUserValue((String) getUsers.getObject("nickname"));
+                }
                 users.add(new User(
                         getUsers.getObject("nickname").toString(),
                         getUsers.getObject("email").toString(),
                         //TODO add stock value to this user for SharesListView
-                        -1,
+                        value,
                         Float.parseFloat(getUsers.getObject("total_balance").toString())
                 ));
             }
@@ -133,6 +137,25 @@ public class UserDao {
         }
         return users;
     }
+
+    /**
+     * It will update the information of one user
+     *
+     * @param name User nickname
+     * @return userValue of all the shares owned
+     */
+    public float getUserValue(String name){
+
+        ArrayList<CompanyDetail> userShares = userShare(name);
+        float userValue = 0;
+        for (CompanyDetail c : userShares){
+            userValue += c.getShares()*c.getValue();
+        }
+        return userValue;
+    }
+
+
+
 
     /**
      * It will update the information of one user
