@@ -68,7 +68,7 @@ public class SharesView extends JPanel {
             jpAlert.setVisible(true);
         } else{
             jpAlert.setVisible(false);
-            jpAlert.removeAll();
+            jpTable.removeAll();
             jpTable.setPreferredSize(new Dimension(700, 100*shares.size()));
             createLabel("COMPANY", Font.BOLD, color.getWHITE());
             createLabel("ACTION VALUE", Font.BOLD, color.getWHITE());

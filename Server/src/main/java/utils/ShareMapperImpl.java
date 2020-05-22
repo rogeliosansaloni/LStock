@@ -49,7 +49,6 @@ public class ShareMapperImpl implements ShareMapper {
     public ShareTrade companyToShareTrade (Company company) {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setCompanyId(company.getCompanyId());
-        shareTrade.setShareId(company.getShareId());
         return shareTrade;
     }
 

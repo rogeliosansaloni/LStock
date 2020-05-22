@@ -127,17 +127,6 @@ public class MainController implements ActionListener {
         view.updateView(CARD_COMPANYDETAILS);
     }
 
-    /**
-     * Updates company and users value in the view
-     *
-     * @param totalBalance the new balance of the user
-     * @param companyId the company id
-     */
-    public void updateCompanyUserValueAndBalance (float totalBalance, float value) {
-        //TODO: Update company in the model
-        companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
-    }
-
     public void updateViewsAfterPurchase(float totalBalance, int companyId) {
         model.updateUserBalance(totalBalance);
         view.updateTotalBalance(totalBalance);

@@ -171,6 +171,7 @@ public class NetworkManager extends Thread {
 
     public void sendShareChange(TunnelObject object) throws IOException {
         oos.writeObject(object);
+    }
 
     /**
      * Runs the main client thread and receives objects coming from the server

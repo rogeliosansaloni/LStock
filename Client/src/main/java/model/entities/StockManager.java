@@ -90,6 +90,8 @@ public class StockManager {
 
     public void setSharesSell(ArrayList<ShareSell> sharesSell) {
         this.sharesSell = sharesSell;
+    }
+
     public ArrayList<ShareChange> getSharesChange() {
         return sharesChange;
     }

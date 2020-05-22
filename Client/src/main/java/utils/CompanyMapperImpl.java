@@ -56,7 +56,6 @@ public class CompanyMapperImpl implements CompanyMapper {
         for (CompanyChange c : companiesChange) {
             companyChangeList.setCompanyId(i, c.getCompanyId());
             companyChangeList.setCompanyName(i, c.getName());
-            companyChangeList.setCompanyCurrentShare(i, c.getShareValue());
             companyChangeList.setCompanyChange(i, c.getChange());
             companyChangeList.setCompanyChangePer(i, c.getChangePer());
             i++;

@@ -31,6 +31,8 @@ public class ShareMapperImpl implements ShareMapper {
             i++;
         }
         return shareSellList;
+    }
+
     @Override
     public User shareTradeToUser(ShareTrade shareTrade) {
         User user = new User();
@@ -51,7 +53,6 @@ public class ShareMapperImpl implements ShareMapper {
     public Company shareTradeToCompany (ShareTrade shareTrade) {
         Company company = new Company();
         company.setCompanyId(shareTrade.getCompanyId());
-        company.setValue(shareTrade.getSharePrice());
         return company;
     }
 
@@ -59,7 +60,6 @@ public class ShareMapperImpl implements ShareMapper {
     public ShareTrade companyToShareTrade (Company company) {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setCompanyId(company.getCompanyId());
-        shareTrade.setSharePrice(company.getValue());
         return shareTrade;
     }
 
@@ -69,7 +69,6 @@ public class ShareMapperImpl implements ShareMapper {
         shareTrade.setUserId(user.getUserId());
         shareTrade.setTotalBalance(user.getTotalBalance());
         shareTrade.setCompanyId(company.getCompanyId());
-        shareTrade.setSharePrice(company.getValue());
         return shareTrade;
     }
 
