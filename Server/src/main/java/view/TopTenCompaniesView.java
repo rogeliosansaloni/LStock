@@ -1,10 +1,12 @@
 package view;
 
 
+import model.entities.Share;
 import utils.StockColors;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class TopTenCompaniesView extends JPanel {
     private static final String FONT = "Segoe UI";
@@ -16,6 +18,8 @@ public class TopTenCompaniesView extends JPanel {
     private static final int HEIGHT = 20;
     private JLabel jlUser;
     private JButton jbShare;
+    private ArrayList<Share> shares;
+    private BarChartView barchart;
 
     public TopTenCompaniesView(){
         StockColors color = new StockColors();
@@ -44,6 +48,22 @@ public class TopTenCompaniesView extends JPanel {
         jbShare.setBorder(null);
         jbShare.setBackground(color.getYELLOW());
         jbShare.setPreferredSize(new Dimension(200, 50));
+
+        barchart = new BarChartView(shares);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         jlUser = new JLabel(USER+ "Peter");

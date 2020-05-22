@@ -132,5 +132,9 @@ public class StockManager {
         companiesChange = companyDao.getCompaniesChange();
         return companiesChange;
     }
+
+    public ArrayList<Share> getShares{
+        shareDao = shareDao.getAllShares();
+    }
 }
 
