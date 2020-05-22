@@ -17,10 +17,11 @@ public class ShareChange {
     /**
      * It will create a companyChange
      *
-     * @param name      company name
-     * @param shareValue     current company's share price
-     * @param change    difference between current price and the price the company had 5 minutes ago
-     * @param changePer      the change value but in % format
+     * @param shareId      share
+     * @param companyName     company name
+     * @param shareValue     the price of the share when the user bought it
+     * @param sharesQuantity     the quantity of shares the user has
+     * @param profitLoss     (the price of the share when the user bought it - its current price) * sharesQuantity
      */
     public ShareChange(int shareId, String companyName, float shareValue, int sharesQuantity, float profitLoss) {
         this.shareId = shareId;
