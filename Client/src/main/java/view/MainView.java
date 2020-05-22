@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -204,7 +205,7 @@ public class MainView extends JFrame {
         jpOptions.add(jpMenu, BorderLayout.CENTER);
     }
 
-    public void initializeOptions(){
+    public void initializeOptions() {
         //Option Companies
         optionCompany = new JMenuItem("Companies list");
         //Option Profile
@@ -217,7 +218,7 @@ public class MainView extends JFrame {
         optionLogout = new JMenuItem("Log out");
     }
 
-    public void addOptionBar (JMenuItem option){
+    public void addOptionBar(JMenuItem option) {
         Font fontOptions = new Font("Roboto", Font.PLAIN, 28);
         Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
         option.setHorizontalAlignment(SwingConstants.CENTER);
@@ -228,7 +229,7 @@ public class MainView extends JFrame {
         menuOptions.add(option);
     }
 
-    public void updateOptionsCompany() {
+    private void updateOptionsCompany() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
         addOptionBar(optionShares);
@@ -236,7 +237,7 @@ public class MainView extends JFrame {
         addOptionBar(optionLogout);
     }
 
-    public void updateOptionsBalance() {
+    private void updateOptionsBalance() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
         addOptionBar(optionCompany);
@@ -244,7 +245,7 @@ public class MainView extends JFrame {
         addOptionBar(optionLogout);
     }
 
-    public void updateOptionsShares() {
+    private void updateOptionsShares() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
         addOptionBar(optionCompany);
@@ -252,7 +253,7 @@ public class MainView extends JFrame {
         addOptionBar(optionLogout);
     }
 
-    public void updateOptionsProfile() {
+    private void updateOptionsProfile() {
         menuOptions.removeAll();
         addOptionBar(optionCompany);
         addOptionBar(optionShares);
@@ -280,12 +281,12 @@ public class MainView extends JFrame {
     }
 
     public int confirmLogOutWindow() {
-        int verify = JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Log Out", JOptionPane.YES_NO_OPTION);
-        return verify;
+        return JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Log Out", JOptionPane.YES_NO_OPTION);
     }
 
-    public void registerCompanyDetailViewController(ActionListener controller) {
+    public void registerCompanyDetailViewController(ActionListener controller, FocusListener focusController) {
         jpCompanyDetailsView.registerController(controller);
+        jpCompanyDetailsView.registerFocusController(focusController);
     }
 
     public void registerBalanceController(ActionListener controller) {
@@ -303,7 +304,7 @@ public class MainView extends JFrame {
      */
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
-        if(!card.equals(CARD_COMPANYDETAILS)){
+        if (!card.equals(CARD_COMPANYDETAILS)) {
             labelCurrentPrice.setText("");
         }
         switch (card) {
@@ -337,31 +338,31 @@ public class MainView extends JFrame {
      * Sets the value of the labelCurrentPrice depending on the value it receives
      */
 
-    public void setTitleCompanyDetail(float value, String companyName){
+    public void setTitleCompanyDetail(float value, String companyName) {
         String text = "CURRENT PRICE: " + value + " €";
         labelCurrentPrice.setText(text);
         labelViewName.setText(companyName);
     }
 
-    public String getNumSharesBuy(){
+    public String getNumSharesBuy() {
         String text = jpCompanyDetailsView.getSharesBuy();
         return text;
     }
 
-    public String[] getNumSharesSell(){
+    public String[] getNumSharesSell() {
         String[] text = jpCompanyDetailsView.getSharesSell();
         return text;
     }
 
-    public void showErrorCompanyDetail(int error){
+    public void showErrorCompanyDetail(int error) {
         jpCompanyDetailsView.showErrorTextfield(error);
     }
 
-    public void updateCompanyList(ArrayList<CompanyChange> companies){
+    public void updateCompanyList(ArrayList<CompanyChange> companies) {
         jpCompanyView.showCompanies(companies);
     }
 
-    public void updateCompanyDetailView(ArrayList<ShareSell> sharesSell, ArrayList<CompanyDetail> companyDetails, float maxValue){
+    public void updateCompanyDetailView(ArrayList<ShareSell> sharesSell, ArrayList<CompanyDetail> companyDetails, float maxValue) {
 
         jpCompanyDetailsView.updateCompanyDetailView(companyDetails, maxValue);
         jpCompanyDetailsView.updateSharesToSell(sharesSell);
@@ -369,9 +370,10 @@ public class MainView extends JFrame {
 
     /**
      * Updates profile view
+     *
      * @param user the user
      */
-    public void updateProfileView(User user){
+    public void updateProfileView(User user) {
         jpProfileView.updateProfileView(user);
     }
 
@@ -386,10 +388,11 @@ public class MainView extends JFrame {
 
     /**
      * Update the total balance of the user in the header
-     * @param nickname Users nickname
+     *
+     * @param nickname     Users nickname
      * @param totalBalance Current balance of the user
      */
-    public void initHeaderInformation (String nickname, float totalBalance) {
+    public void initHeaderInformation(String nickname, float totalBalance) {
         String strDouble = String.format("%.2f", totalBalance);
         menuOptions.setText(nickname);
         labelBalance.setText("Balance: " + strDouble + " $");
@@ -397,19 +400,21 @@ public class MainView extends JFrame {
 
     /**
      * Updates total balance of the user in the header
+     *
      * @param totalBalance Current balance of the user
      */
-    public void updateTotalBalance (float totalBalance) {
+    public void updateTotalBalance(float totalBalance) {
         String strDouble = String.format("%.2f", totalBalance);
         labelBalance.setText("Balance: " + strDouble + " $");
     }
 
     /**
      * Shows a window to confirm action
+     *
      * @param message the message
      * @return true if confirmed
      */
-    public int confirmAction (String message) {
+    public int confirmAction(String message) {
         return jpCompanyDetailsView.confirmAction(message);
     }
 
@@ -418,12 +423,13 @@ public class MainView extends JFrame {
      *
      * @param message the error message
      */
-    public void showNoEnoughBalanceErrorMessage (String message) {
+    public void showNoEnoughBalanceErrorMessage(String message) {
         jpCompanyDetailsView.showErrorMessage(message);
     }
 
     /**
      * Update the user and the company new values in the view
+     *
      * @param totalBalance new balance of the user
      */
     public void updateViewsAfterPurchase(float totalBalance) {
@@ -437,20 +443,26 @@ public class MainView extends JFrame {
      *
      * @return Balance View
      */
-    public BalanceView getBalanceView () { return jpBalanceView; }
+    public BalanceView getBalanceView() {
+        return jpBalanceView;
+    }
 
     /**
      * Gets the company view
      *
      * @return Company View
      */
-    public CompanyView getCompanyView() { return jpCompanyView; }
+    public CompanyView getCompanyView() {
+        return jpCompanyView;
+    }
 
     /**
      * Gets the Company Details View
      *
      * @return Company Details View
      */
-    public CompanyDetailView getCompanyDetailsView() { return jpCompanyDetailsView; }
+    public CompanyDetailView getCompanyDetailsView() {
+        return jpCompanyDetailsView;
+    }
 
 }
