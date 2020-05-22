@@ -13,7 +13,7 @@ public class CompanyView extends JPanel {
     private JScrollPane jpScroll;
     private JPanel jpTable;
     private JButton[][] jlCompanies;
-    protected StockColors color;
+    private StockColors color;
 
     public CompanyView() {
         color = new StockColors();
@@ -90,9 +90,4 @@ public class CompanyView extends JPanel {
         jpScroll = new JScrollPane(jpTable);
         this.add(jpScroll, BorderLayout.CENTER);
     }
-
-    /**
-     * Gets the amount selected
-     * @return amount selected
-     */
 }
