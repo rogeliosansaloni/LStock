@@ -133,8 +133,6 @@ public class StockManager {
         return companiesChange;
     }
 
-    public ArrayList<Share> getShares{
-        shareDao = shareDao.getAllShares();
-    }
+
 }
 

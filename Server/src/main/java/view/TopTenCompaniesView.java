@@ -50,19 +50,7 @@ public class TopTenCompaniesView extends JPanel {
         jbShare.setPreferredSize(new Dimension(200, 50));
 
         barchart = new BarChartView(shares);
-
-
-
-
-
-
-
-
-
-
-
-
-
+        this.add(barchart);
 
 
 

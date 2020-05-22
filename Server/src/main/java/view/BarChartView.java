@@ -1,6 +1,8 @@
 package view;
 
+import model.entities.Company;
 import model.entities.Share;
+import model.entities.User;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -9,36 +11,29 @@ import java.util.Random;
 
 public class BarChartView extends Panel{
     private ArrayList<Share> shares;
-    public static final int TOP_BUFFER = 30; // where additional text is drawn
+    public static final int TOP_BUFFER = 30; // For the title
     public static final int AXIS_OFFSET = 20;
     public static final String COMPANIES = "Companies";
     public static final String VALUE = "Value";
     private int chartwidth, chartheight, chartX, chartY;
     private String xLabel, yLabel;
-    //private ArrayList<Integer> list;
-    //private Map<Integer, Integer> counts = new HashMap<>();
 
-    public BarChartView (ArrayList<Share> companyArrayList){
-        this.shares = companyArrayList;
+    public BarChartView (ArrayList<Share> shares)
+    {
+       // this.shares = shares;
+        this.shares = new ArrayList<Share>();
+        User user = new User (1, "mary","email","aloha",20,"cute",50,null);
+        Company com1= new Company(1, "comp1", 20,20, user, null);
+        this.shares.add(new Share(user,com1,10));
+        User user2 = new User (1, "lol","lol1","aloha",20,"cute",50,null);
+        Company com2= new Company(1, "comp1", 10,30, user, null);
+        this.shares.add(new Share(user2,com2,10));
+
     }
 
-
-    private void setupCounts() {
-        counts.clear();
-
-        for (int i : shares) {
-            if (counts.containsKey(i)) {
-                counts.put(i, counts.get(i) + 1);
-            } else {
-                counts.put(i, 1);
-            }
-        }
-    }
 
     public void paintComponent(Graphics g) {
-        setupCounts();
         computeSize();
-
         Graphics2D g2 = (Graphics2D) g;
         drawBars(g2);
         drawAxes(g2);
@@ -64,20 +59,16 @@ public class BarChartView extends Panel{
 
         Color original = g2.getColor();
 
-        double numBars = counts.keySet().size();
+        //numero de companias que tendra del user
+        //double numBars = counts.keySet().size();
+        int numBars = 4;
         double max = 0.;
-
-        for (Integer wrapper : counts.values()) {
-            if (max < wrapper)
-                max = wrapper;
-        }
-        System.out.println("max "+max);
         int barWidth = (int) (chartwidth/numBars);
 
         int value, height, xLeft, yTopLeft;
         int counter = 0;
-        for (Integer bar : counts.keySet()) {
-            value = counts.get(bar);
+        for (Share share : shares) {
+            value = (int) share.getPrice();
 
             double height2 = (value/max)*chartheight;
             height = (int) height2;
@@ -105,13 +96,10 @@ public class BarChartView extends Panel{
         int topY = chartY - chartheight;
 
         g2.drawLine(chartX, chartY, rightX, chartY);
-
         g2.drawLine(chartX, chartY, chartX, topY);
-
         g2.drawString(xLabel, chartX + chartwidth/2, chartY + AXIS_OFFSET/2 +3) ;
 
         // draw vertical string
-
         Font original = g2.getFont();
 
         Font font = new Font(null, original.getStyle(), original.getSize());
@@ -127,10 +115,8 @@ public class BarChartView extends Panel{
 
     private void drawText(Graphics2D g2) {
 
-        int size = counts.keySet().size();
-
+        int size = shares.size();
         g2.drawString("Number of classes: " + size, AXIS_OFFSET +10, 15) ;
-
         g2.drawString("Number of counts: " + shares.size(), AXIS_OFFSET +10, 30) ;
     }
 
