@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.Map;
 
+/**
+ * Profile view
+ */
 public class ProfileView extends JPanel {
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
     protected StockColors color;
@@ -19,6 +22,9 @@ public class ProfileView extends JPanel {
     private JPanel jpNickname, jpEmail, jpDescription;
     private JLabel jlUserPhoto;
 
+    /**
+     * Creates the Profile view
+     */
     public ProfileView (){
 
         //General window setup
@@ -117,6 +123,9 @@ public class ProfileView extends JPanel {
         this.add(jpInformation);
     }
 
+    /**
+     * Updates the user information: nickname, email and description.
+     */
     public void updateProfileView(User user){
         jlNickname.setText(user.getNickname());
         jlEmail.setText(user.getEmail());

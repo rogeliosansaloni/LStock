@@ -87,6 +87,11 @@ public class MainController implements ActionListener {
         return balanceController;
     }
 
+    /**
+     * Returns the company controller of the CompanyView
+     *
+     * @return company controller
+     */
     public CompanyController getCompanyController() {
         return companyController;
     }
@@ -102,10 +107,16 @@ public class MainController implements ActionListener {
         view.updateTotalBalance(totalBalance);
     }
 
+    /**
+     * Updates the company list with the database information
+     */
     public void updateCompanyList () {
         companyController.updateCompanyList(model.getCompaniesChange());
     }
 
+    /**
+     * Updates the profilw view with the database information
+     */
     public void updateProfileView () {
         view.updateProfileView(model.getUser());
     }
@@ -122,6 +133,9 @@ public class MainController implements ActionListener {
         companyDetailController.updateCompanyUserValueAndBalance(totalBalance, value);
     }
 
+    /**
+     * Sends a ProfileInfo class when the user presses "My Profile" option in the menu bar
+     */
     public void sendUserProfileInfo(){
         int userId = model.getUser().getUserId();
         TunnelObject info = new UserProfileInfo(userId, "profileView");
