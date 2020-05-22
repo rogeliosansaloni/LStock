@@ -120,7 +120,13 @@ public class ProfileView extends JPanel {
     public void updateProfileView(User user){
         jlNickname.setText(user.getNickname());
         jlEmail.setText(user.getEmail());
-        jlDescription.setText(user.getDescription());
+        String description = user.getDescription();
+        if(description == null || description.equals("")){
+            jpDescription.setVisible(false);
+        }else{
+            jpDescription.setVisible(true);
+            jlDescription.setText(user.getDescription());
+        }
     }
 
 }
