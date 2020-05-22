@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * The Profile View
+ */
+
 public class SharesView extends JPanel {
     private JScrollPane jpScroll;
     private JPanel jpTable;
@@ -44,7 +48,7 @@ public class SharesView extends JPanel {
     }
 
     /**
-     * Adds actionListener to load button
+     * Adds actionListener to load the sell all shares buttons
      * @param actionListener ActionListener
      */
     public void registerController(ActionListener actionListener, ArrayList<ShareChange> shares) {
@@ -55,6 +59,10 @@ public class SharesView extends JPanel {
         }
     }
 
+    /**
+     * Updates the list of shares the user has
+     * @param shares arraylist with the information of the shares
+     */
     public void updateSharesView (ArrayList<ShareChange> shares){
         if(shares.size() == 0){
             jpAlert.setVisible(true);
@@ -84,7 +92,12 @@ public class SharesView extends JPanel {
         }
 
     }
-
+    /**
+     * Creates a label for the table of shares
+     * @param text the text to put in the label
+     * @param type the type of the font
+     * @param colorLabel the color of the label
+     */
     public void createLabel(String text, int type, Color colorLabel){
         JLabel label = new JLabel(text);
         label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -96,6 +109,10 @@ public class SharesView extends JPanel {
         jpTable.add(label);
     }
 
+    /**
+     * Creates a button to sell all the shares
+     * @param i the index of the array of buttons
+     */
     public void createSellButton (int i){
         jbSellShares[i] = new JButton("SELL ALL SHARES");
         jbSellShares[i].setHorizontalAlignment(SwingConstants.CENTER);

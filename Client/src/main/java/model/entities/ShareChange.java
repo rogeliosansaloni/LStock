@@ -1,5 +1,8 @@
 package model.entities;
 
+/**
+ * The information of the
+ */
 public class ShareChange {
 
     private int shareId;
@@ -11,7 +14,14 @@ public class ShareChange {
     public ShareChange() {
 
     }
-
+    /**
+     * It will create a companyChange
+     *
+     * @param name      company name
+     * @param shareValue     current company's share price
+     * @param change    difference between current price and the price the company had 5 minutes ago
+     * @param changePer      the change value but in % format
+     */
     public ShareChange(int shareId, String companyName, float shareValue, int sharesQuantity, float profitLoss) {
         this.shareId = shareId;
         this.companyName = companyName;
