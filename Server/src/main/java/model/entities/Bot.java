@@ -7,6 +7,7 @@ public class Bot extends Thread {
     private int botId;
     private float activeTime;
     private float probability;
+    private int status;
     private Company company;
 
     /**
@@ -57,6 +58,10 @@ public class Bot extends Thread {
         return botId;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
     /**
      * Setters
      */
@@ -75,5 +80,9 @@ public class Bot extends Thread {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }
