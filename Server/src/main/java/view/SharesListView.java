@@ -148,4 +148,13 @@ public class SharesListView extends JPanel{
     public ListSelectionModel getSelectionModel() {
         return selectionModel;
     }
+
+    /**
+     * Shows error message
+     *
+     * @param message the error message
+     */
+    public void showErrorMessage (String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
 }

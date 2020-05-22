@@ -12,6 +12,7 @@ public class SharesListController implements ListSelectionListener {
     private SharesListView view;
     private UserManager userManager;
     private ListSelectionModel selectionModel;
+    private static final String NO_SHARES_AVAILABLE = "This User doesn't have any shares to display!";
     private int selectedRow = 0;
     private boolean selectedUser;
 
@@ -57,6 +58,8 @@ public class SharesListController implements ListSelectionListener {
                         this.view.emptyTable();
                         this.view.fillShareData();
                         this.selectedUser = true;
+                    }else{
+                        this.view.showErrorMessage(NO_SHARES_AVAILABLE);
                     }
                 }
             }
