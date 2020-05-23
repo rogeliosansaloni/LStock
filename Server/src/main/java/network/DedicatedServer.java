@@ -1,17 +1,16 @@
 package network;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Date;
-
 import model.entities.*;
 import model.managers.StockManager;
 import utils.CompanyMapperImpl;
 import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
 
 public class DedicatedServer extends Thread {
     private static final String BUY_ACTION = "BUY";
@@ -146,5 +145,8 @@ public class DedicatedServer extends Thread {
             System.out.println("Stopped client connection to the server...");
             e.printStackTrace();
         }
+    }
+    public ObjectOutputStream getOos() {
+        return oos;
     }
 }

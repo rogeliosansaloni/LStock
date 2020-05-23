@@ -1,16 +1,17 @@
 package network;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.LinkedList;
-
 import controller.BotsEditComboBoxController;
 import controller.BotsRemoveComboBoxController;
 import controller.MainController;
 import model.managers.BotManager;
 import utils.JSONReader;
 import view.MainView;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.LinkedList;
 
 public class Server extends Thread {
     private String ip;
@@ -108,6 +109,13 @@ public class Server extends Thread {
         // Stop all dedicated servers when we are not listening to petitions
         for (DedicatedServer client : clients) {
             client.stopServerConnection();
+        }
+    }
+
+    public void updateAllClients(){
+        ObjectOutputStream oos;
+        for (DedicatedServer client : clients) {
+            oos = client.getOos();
         }
     }
 }
