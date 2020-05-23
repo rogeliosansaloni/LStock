@@ -186,7 +186,7 @@ public class CompanyDetailView extends JPanel {
                 float valueClose = companyDetails.get(i).getValueClose();
                 float maxValue = companyDetails.get(i).getMaxValue();
                 float minValue = companyDetails.get(i).getMinValue();
-                if(valueOpen != valueClose){
+                if(valueOpen != -1){
                     posYMaxValue = heightGraph - (int)((float)(limitYValues)/maxTotalValue*maxValue);
                     posYMinValue = heightGraph - (int)((float)(limitYValues)/maxTotalValue*minValue);
                     if(valueClose > valueOpen){

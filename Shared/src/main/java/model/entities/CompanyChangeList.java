@@ -58,6 +58,4 @@ public class CompanyChangeList extends TunnelObject {
     public void setCompanyChangePer(int i, float companyChangePer) {
         this.companyChangePer[i] = companyChangePer;
     }
-
-
 }

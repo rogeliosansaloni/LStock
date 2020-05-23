@@ -2,7 +2,6 @@ package model.entities;
 
 import java.util.ArrayList;
 
-
 public class Company {
     private int companyId;
     private String name;
@@ -10,6 +9,7 @@ public class Company {
     private int shares;
     private User user;
     private ArrayList<Bot> bots;
+    private ArrayList<Share> sharesList;
 
     /**
      * It will create a company
@@ -43,6 +43,10 @@ public class Company {
     }
 
     public void listBots() {
+    }
+
+    public void addToShares (Share share){
+
     }
 
     /**

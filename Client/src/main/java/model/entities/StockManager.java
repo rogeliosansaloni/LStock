@@ -7,6 +7,8 @@ public class StockManager {
     private ArrayList<CompanyDetail> companyDetails;
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareSell> sharesSell;
+    private ArrayList<ShareChange> sharesChange;
+
 
     public StockManager(User user) {
         this.user = user;
@@ -90,8 +92,16 @@ public class StockManager {
         this.sharesSell = sharesSell;
     }
 
+    public ArrayList<ShareChange> getSharesChange() {
+        return sharesChange;
+    }
+
     public void setCompaniesChange(ArrayList<CompanyChange> companiesChange) {
         this.companiesChange = companiesChange;
+    }
+
+    public void setSharesChange(ArrayList<ShareChange> sharesChange) {
+        this.sharesChange = sharesChange;
     }
 
     /**

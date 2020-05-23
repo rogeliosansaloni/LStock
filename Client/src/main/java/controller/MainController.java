@@ -1,7 +1,9 @@
 package controller;
 
+import model.entities.ShareChangeList;
 import model.entities.CompanyChangeList;
 import model.entities.StockManager;
+import model.entities.TunnelObject;
 import network.NetworkManager;
 import view.LoginView;
 import view.MainView;
@@ -25,6 +27,7 @@ public class MainController implements ActionListener {
     private CompanyDetailController companyDetailController;
     private BalanceController balanceController;
     private CompanyController companyController;
+    private SharesController sharesController;
 
     /**
      * Creates and initializes the controller and views
@@ -59,7 +62,7 @@ public class MainController implements ActionListener {
                 break;
             case "shares":
                 view.updateView(CARD_SHARES);
-                //TODO: Shares
+                sendSharesChange();
                 break;
             case "load":
                 view.updateView(CARD_BALANCE);
@@ -96,6 +99,9 @@ public class MainController implements ActionListener {
         return companyController;
     }
 
+    public SharesController getSharesController() {
+        return sharesController;
+    }
 
     /**
      * Updates the new total balance of the user
@@ -121,16 +127,28 @@ public class MainController implements ActionListener {
         view.updateView(CARD_COMPANYDETAILS);
     }
 
-    /**
-     * Updates company and users value in the view
-     *
-     * @param totalBalance the new balance of the user
-     * @param companyId the company id
-     */
     public void updateViewsAfterPurchase(float totalBalance, int companyId) {
         model.updateUserBalance(totalBalance);
         view.updateTotalBalance(totalBalance);
         companyController.sendUserShares(companyId);
         //TODO: add the share view controller and send the tunnel to get its information
+    }
+
+    /**
+     * Updates the shares table in the SharesView
+     */
+    public void updateShareView () {
+        view.getSharesView().updateSharesView(model.getSharesChange());
+        view.registerSharesController(sharesController, model.getSharesChange());
+    }
+
+    public void sendSharesChange(){
+        TunnelObject info = new ShareChangeList();
+        ((ShareChangeList) info).setUserId(model.getUser().getUserId());
+        try {
+            NetworkManager.getInstance().sendShareChange(info);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

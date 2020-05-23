@@ -4,6 +4,7 @@ import model.entities.CompanyChange;
 import model.entities.CompanyDetail;
 import model.entities.ShareSell;
 import utils.StockColors;
+import model.entities.ShareChange;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -51,6 +52,7 @@ public class MainView extends JFrame {
     private JMenuItem optionProfile, optionShares, optionBalance, optionCompany, optionLogout;
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
+    private SharesView jpShares;
 
     /**
      * Creates and initializes the main view
@@ -74,6 +76,7 @@ public class MainView extends JFrame {
         jpCompanyView = new CompanyView();
         jpBalanceView = new BalanceView();
         jpCompanyDetailsView = new CompanyDetailView();
+        jpShares = new SharesView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -85,6 +88,7 @@ public class MainView extends JFrame {
         jpCenter.add(jpCompanyView, CARD_COMPANY);
         jpCenter.add(jpCompanyDetailsView, CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
+        jpCenter.add(jpShares, CARD_SHARES);
         //TODO: Add the rest of views
     }
 
@@ -294,6 +298,10 @@ public class MainView extends JFrame {
         jpCompanyView.registerController(controller, companies);
     }
 
+    public void registerSharesController(ActionListener controller, ArrayList<ShareChange> shares) {
+        jpShares.registerController(controller, shares);
+    }
+
     /**
      * Shows desired view
      *
@@ -317,7 +325,7 @@ public class MainView extends JFrame {
                 break;
             case CARD_SHARES:
                 labelViewName.setText(CARD_SHARES);
-                //cardLayout.show(jpCenter, CARD_SHARES);
+                cardLayout.show(jpCenter, CARD_SHARES);
                 updateOptionsShares();
                 break;
             case CARD_BALANCE:
@@ -412,6 +420,7 @@ public class MainView extends JFrame {
         jpCompanyDetailsView.showErrorMessage(message);
     }
 
+
     /**
      * Update the user and the company new values in the view
      * @param totalBalance new balance of the user
@@ -443,4 +452,5 @@ public class MainView extends JFrame {
      */
     public CompanyDetailView getCompanyDetailsView() { return jpCompanyDetailsView; }
 
+    public SharesView getSharesView(){ return jpShares; }
 }
