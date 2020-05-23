@@ -8,18 +8,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * View for Top Ten Company chart
+ */
 public class TopTenCompaniesView extends JPanel {
     private static final String FONT = "Segoe UI";
     private static final String FONT_BUTTON = "Segoe UI Semibold";
     private static final String TITLE = "Top 10 Companies";
     private static final String SHARE = "SHARE";
-    private static final String USER = "User: ";
-    private static final int WIDTH = 200;
-    private static final int HEIGHT = 20;
     private JButton jbShare;
     private ArrayList<Top10> topTen;
     private BarChartView barchart;
 
+    /**
+     * Constructor for the TopTenCompaniesView
+     *
+     * @param topTen Input list with the Top Ten Companies
+     */
     public TopTenCompaniesView(ArrayList<Top10> topTen){
         StockColors color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
@@ -35,7 +40,6 @@ public class TopTenCompaniesView extends JPanel {
         jlTitle.setFont(font);
         JPanel jpTitle = new JPanel(new FlowLayout());
         jpTitle.setBackground(color.getWHITE());
-
 
         JPanel jpButtonAux = new JPanel( new FlowLayout());
         jpButtonAux.setBackground(color.getWHITE());
@@ -62,15 +66,5 @@ public class TopTenCompaniesView extends JPanel {
         jpGeneral.add(jpButtonAux);
 
         this.add(jpGeneral);
-
-
-    }
-
-    public void setTopTen(ArrayList<Top10> topTen) {
-        this.topTen = topTen;
-    }
-
-    public void setBarChartData(ArrayList<Top10> topTenlist) {
-
     }
 }

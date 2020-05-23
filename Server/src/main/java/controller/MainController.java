@@ -42,11 +42,9 @@ public class MainController implements ActionListener {
                 view.updateView(CARD_USERS);
                 break;
             case CARD_BOTS:
-                System.out.println("BOTS BEEP BOOP");
                 break;
             case CARD_TOPTEN:
                 view.updateView(CARD_TOPTEN);
-                System.out.println("top 10 selected");
                 break;
         }
     }

@@ -6,20 +6,26 @@ import view.TopTenCompaniesView;
 
 import java.util.ArrayList;
 
-
+/**
+ * Controller for the TopTenCompanies View
+ */
 public class TopTenController {
     private TopTenCompaniesView view;
     private StockManager stockManager;
 
+    /**
+     * Creates and initializes the controller
+     */
     public TopTenController(){
-//        this.view = view;
         this.stockManager = new StockManager();
     }
 
+    /**
+     * Return the Top 10 Company List
+     *
+     * @return TopTenList
+     */
     public ArrayList<Top10> getTopTenCompanies(){
-//        for (Top10 top : stockManager.getTopTenlist()){
-//            System.out.println("CONTROLLER TOP TEN---- Company: "+top.getName()+" ("+top.getPrice()+"€/share)");
-//        }
        return stockManager.getTopTenlist();
     }
 }
