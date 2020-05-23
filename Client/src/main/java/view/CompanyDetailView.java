@@ -124,7 +124,8 @@ public class CompanyDetailView extends JPanel {
         jlMyShares.setText("Your quantity of shares of this company is: " + numShares);
     }
 
-    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails, float maxTotalValue) {
+    public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails, float maxTotalValue){
+        jpLeft.removeAll();
         updateNumberShares(companyDetails.get(0).getNumUserShares());
         int widthGraph = jpLeft.getWidth() - 20;
         int heightGraph = jpLeft.getHeight() - 70;
