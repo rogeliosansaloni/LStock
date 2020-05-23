@@ -59,8 +59,6 @@ public class BarChartView extends JPanel {
      */
     public void drawBars(Graphics2D g2) {
 
-        Color original = g2.getColor();
-
         int numBars = topTen.size();
         float max = 1;
         //Find the maximum share value
@@ -84,7 +82,7 @@ public class BarChartView extends JPanel {
             xLeft = AXIS_OFFSET + counter * barWidth + barWidth/4;
             yTopLeft = chartY - height;
             Rectangle rec = new Rectangle(xLeft, yTopLeft, barWidth/2, height);
-            g2.setColor(getRandomColor());
+            g2.setColor(new Color(255, 102, 0));
             g2.fill(rec);
 
             //Add text tag for each Company
@@ -92,7 +90,6 @@ public class BarChartView extends JPanel {
             g2.drawString(Integer.toString(value) + "€", xLeft + 10,yTopLeft-2);
             counter++;
         }
-        g2.setColor(original);
     }
 
     /**
@@ -122,18 +119,6 @@ public class BarChartView extends JPanel {
         g2.drawString(yLabel,AXIS_OFFSET/2+3, chartY - chartheight/2);
         g2.setFont(original);
 
-    }
-
-    /**
-     * Generates a random colour
-     */
-    private Color getRandomColor() {
-        Random rand = new Random();
-        float r = rand.nextFloat();
-        float g = rand.nextFloat();
-        float b = rand.nextFloat();
-
-        return new Color(r, g, b);
     }
 
     public void setTopTen(ArrayList<Top10> topTen) {
