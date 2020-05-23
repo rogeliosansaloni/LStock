@@ -78,12 +78,12 @@ public class MainController implements ActionListener {
     }
 
     /**
-     * Returns the company detail controller of the CompanyDetailsView
+     * Returns the balance controller of the BalanceView
      *
-     * @return the company detail controller
+     * @return the balance controller
      */
-    public CompanyDetailController getCompanyDetailController() {
-        return companyDetailController;
+    public BalanceController getBalanceController() {
+        return balanceController;
     }
 
     /**
