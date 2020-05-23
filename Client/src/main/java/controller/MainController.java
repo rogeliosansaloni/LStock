@@ -98,6 +98,9 @@ public class MainController implements ActionListener {
         view.updateTotalBalance(totalBalance);
     }
 
+    /**
+     * Updates the company list
+     */
     public void updateCompanyList () {
         companyController.updateCompanyList(model.getCompaniesChange());
     }

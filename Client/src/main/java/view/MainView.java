@@ -203,10 +203,10 @@ public class MainView extends JFrame {
 
     public void addOptionBar (JMenuItem option){
         Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
-        Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
+        Border borderOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
         option.setHorizontalAlignment(SwingConstants.CENTER);
         option.setBackground(color.getDarkGreyHeader());
-        option.setBorder(bordeOptions);
+        option.setBorder(borderOptions);
         option.setForeground(color.getDarkGreyText());
         option.setFont(fontOptions);
         menuOptions.add(option);
@@ -341,6 +341,7 @@ public class MainView extends JFrame {
 
     public void initFirstView (ArrayList<CompanyChange> companies) {
         updateCompanyList(companies);
+        updateView(CARD_COMPANY);
     }
 
     /**
