@@ -64,9 +64,10 @@ public class MainView extends JFrame {
         this.jpHomeView = homeView;
         this.jpSharesView = sharesView;
         this.jpTopTenCompaniesView = topTenCompaniesView;
+        jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
         jpCenter.add(jpHomeView, CARD_HOME);
         jpCenter.add(jpSharesView, CARD_USERS);
-        jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
+
         //TODO: Add the rest of views
     }
 

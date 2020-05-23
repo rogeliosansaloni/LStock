@@ -16,7 +16,6 @@ public class TopTenCompaniesView extends JPanel {
     private static final String USER = "User: ";
     private static final int WIDTH = 200;
     private static final int HEIGHT = 20;
-    private JLabel jlUser;
     private JButton jbShare;
     private ArrayList<Top10> topTen;
     private BarChartView barchart;
@@ -24,19 +23,19 @@ public class TopTenCompaniesView extends JPanel {
     public TopTenCompaniesView(ArrayList<Top10> topTen){
         StockColors color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
-        this.setLayout(new GridLayout(3,1,0,0));
+        this.setLayout(new GridLayout(1,1,0,0));
+        this.setBackground(color.getWHITE());
+
+        JPanel jpGeneral = new JPanel();
+        jpGeneral.setLayout(new BoxLayout(jpGeneral,BoxLayout.Y_AXIS));
         this.setBackground(color.getWHITE());
 
         JLabel jlTitle = new JLabel(TITLE);
-        jlTitle.setPreferredSize(new Dimension(200, 1));
-        jlTitle.setHorizontalAlignment(JLabel.CENTER);
+        jlTitle.setPreferredSize(new Dimension(200, 30));
         jlTitle.setFont(font);
+        JPanel jpTitle = new JPanel(new FlowLayout());
+        jpTitle.setBackground(color.getWHITE());
 
-        JPanel jpBarchart = new JPanel(new FlowLayout());
-
-
-        JPanel jpButtom = new JPanel(new GridLayout(2,1,0,0));
-        jpButtom.setBackground(color.getWHITE());
 
         JPanel jpButtonAux = new JPanel( new FlowLayout());
         jpButtonAux.setBackground(color.getWHITE());
@@ -47,24 +46,24 @@ public class TopTenCompaniesView extends JPanel {
         jbShare.setBorder(null);
         jbShare.setBackground(color.getYELLOW());
         jbShare.setPreferredSize(new Dimension(200, 50));
+        jpButtonAux.add(jbShare);
 
         this.topTen = topTen;
+        JPanel bar = new JPanel(new FlowLayout());
+        bar.setBackground(color.getWHITE());
         barchart = new BarChartView(topTen);
-        barchart.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
+        barchart.setBorder(BorderFactory.createEmptyBorder(180,500,180,500));
+        barchart.setBackground(color.getWHITE());
+
+        jpTitle.add(jlTitle);
+        jpGeneral.add(jpTitle);
+        bar.add(barchart);
+        jpGeneral.add(bar);
+        jpGeneral.add(jpButtonAux);
+
+        this.add(jpGeneral);
 
 
-//        jlUser = new JLabel(USER+ "Peter");
-//        jlUser.setHorizontalAlignment(JLabel.CENTER);
-//        jlUser.setPreferredSize(new Dimension(500, 500));
-//        jlUser.setFont(font);
-//
-//        jpButtom.add(jlUser);
-        jpButtonAux.add(jbShare);
-        jpButtom.add(jpButtonAux);
-
-//        this.add(jlTitle);
-        this.add(barchart);
-        this.add(jpButtom);
     }
 
     public void setTopTen(ArrayList<Top10> topTen) {

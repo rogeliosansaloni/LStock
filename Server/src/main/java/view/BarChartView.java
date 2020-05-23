@@ -10,10 +10,9 @@ import java.util.Random;
 
 public class BarChartView extends JPanel {
     private ArrayList<Top10> topTen;
-    public static final int TOP_BUFFER = 30; // For the title
-    public static final int AXIS_OFFSET = 50;
-    public static final String COMPANIES = "Top 10 Companies";
-    public static final String VALUE = "Value";
+    public static final int AXIS_OFFSET = 30;
+    public static final String COMPANIES = "COMPANIES";
+    public static final String VALUE = "VALUE";
     private int chartwidth, chartheight, chartX, chartY;
     private String xLabel, yLabel;
 
@@ -26,24 +25,19 @@ public class BarChartView extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         drawBars(g2);
         drawAxes(g2);
-//        drawText(g2);
     }
 
     private void computeSize() {
-        int width = this.getWidth();
-        int height = this.getHeight();
-
-        System.out.println(height);
+        int height = 350;
 
         // chart area size
-        chartwidth = width - 2*AXIS_OFFSET;
-//        chartheight = height - 2*AXIS_OFFSET - TOP_BUFFER;
+        chartwidth = 1000;
+        chartheight = height - 2*AXIS_OFFSET;
         chartheight = height;
-//        System.out.println(chartheight + " (chartheight) = "+height+" (height) - "+2*AXIS_OFFSET+" (2*AXIS_OFFSET) - "+TOP_BUFFER+" (TOP_BUFFER)");
 
         // Chart origin coords
         chartX = AXIS_OFFSET;
-        chartY = height - AXIS_OFFSET;
+        chartY = height;
 
     }
 
@@ -51,8 +45,6 @@ public class BarChartView extends JPanel {
 
         Color original = g2.getColor();
 
-        //numero de companias que tendra del user
-        //double numBars = counts.keySet().size();
         int numBars = topTen.size();
         float max = 1;
         for (Top10 top : topTen){
@@ -62,7 +54,7 @@ public class BarChartView extends JPanel {
             }
         }
 
-        int barWidth = (int) (chartwidth/numBars);
+        int barWidth = (chartwidth/numBars);
         int value, height, xLeft, yTopLeft;
         int counter = 0;
 
@@ -73,11 +65,11 @@ public class BarChartView extends JPanel {
 
             xLeft = AXIS_OFFSET + counter * barWidth + barWidth/4;
             yTopLeft = chartY - height;
-            System.out.println(barWidth);
             Rectangle rec = new Rectangle(xLeft, yTopLeft, barWidth/2, height);
 
             g2.setColor(getRandomColor());
             g2.fill(rec);
+            g2.drawString(barTopten.getName() + Integer.toString(value), xLeft - 2,yTopLeft - 4);
             counter++;
         }
         g2.setColor(original);
@@ -88,18 +80,16 @@ public class BarChartView extends JPanel {
         yLabel = VALUE;
 
         int rightX = chartX + chartwidth;
-        System.out.println(rightX + " (rightX) = "+chartX+" (chartX) + "+chartwidth+" (chartwidth)");
         int topY = chartY - chartheight;
-        System.out.println(topY + " (topY) = "+chartY+" (chartY) - "+chartheight+" (chartheight)");
 
         g2.drawLine(chartX, chartY, rightX, chartY);
         g2.drawLine(chartX, chartY, chartX, topY);
-        g2.drawString(xLabel, chartX + chartwidth/2, chartY + AXIS_OFFSET/2 +3) ;
+        g2.drawString(xLabel, chartX + chartwidth/2 - 60, chartY + AXIS_OFFSET/2 + 3) ;
 
         // draw vertical string
         Font original = g2.getFont();
 
-        Font font = new Font(null, original.getStyle(), original.getSize());
+        Font font = new Font(   null, original.getStyle(), original.getSize());
         AffineTransform affineTransform = new AffineTransform();
         affineTransform.rotate(Math.toRadians(-90), 0, 0);
         Font rotatedFont = font.deriveFont(affineTransform);
@@ -107,14 +97,6 @@ public class BarChartView extends JPanel {
         g2.drawString(yLabel,AXIS_OFFSET/2+3, chartY - chartheight/2);
         g2.setFont(original);
 
-
-    }
-
-    private void drawText(Graphics2D g2) {
-
-        int size = topTen.size();
-        g2.drawString("Number of classes: " + size, AXIS_OFFSET +10, 15);
-        g2.drawString("Number of counts: " + topTen.size(), AXIS_OFFSET +10, 30);
     }
 
     private Color getRandomColor() {
