@@ -54,12 +54,15 @@ public class MainController implements ActionListener {
         switch (e.getActionCommand()) {
             case "company":
                 sendCompaniesChange();
+                view.updateView(CARD_COMPANY);
                 break;
             case "profile":
                 sendUserProfileInfo();
+                view.updateView(CARD_PROFILE);
                 break;
             case "shares":
                 sendSharesChange();
+                view.updateView(CARD_SHARES);
                 break;
             case "load":
                 view.updateView(CARD_BALANCE);
@@ -113,7 +116,6 @@ public class MainController implements ActionListener {
      */
     public void updateCompanyList () {
         companyController.updateCompanyList();
-        view.updateView(CARD_COMPANY);
     }
 
     /**
@@ -130,7 +132,6 @@ public class MainController implements ActionListener {
      */
     public void updateProfileView () {
         view.updateProfileView(model.getUser());
-        view.updateView(CARD_PROFILE);
     }
 
     /**
@@ -138,7 +139,6 @@ public class MainController implements ActionListener {
      */
     public void updateShareView () {
         sharesController.updateSharesView();
-        view.updateView(CARD_SHARES);
     }
 
     /**
