@@ -123,6 +123,7 @@ public class NetworkManager extends Thread {
     private void reinitMainView(ArrayList<CompanyChange> companyChange) {
         initCompanies(companyChange);
         mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
+        mainController.getBalanceController().refreshBalanceView();
     }
 
     /**

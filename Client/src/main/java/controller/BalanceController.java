@@ -42,4 +42,11 @@ public class BalanceController implements ActionListener {
             }
         }
     }
+
+    /**
+     * Refreshes the balance view
+     */
+    public void refreshBalanceView() {
+        view.refreshComboboxBalance();
+    }
 }
