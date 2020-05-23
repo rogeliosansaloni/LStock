@@ -119,19 +119,20 @@ public class StockManager {
 
     /**
      * Creates a new share between company and user.
-     * @param user the user
+     *
+     * @param user    the user
      * @param company the company
      * @return ShareTrade with the new values of users total balance and company value
      */
-    public ShareTrade updatePurchaseBuy (User user, Company company, Purchase[] purchases, String action) {
+    public ShareTrade updatePurchaseBuy(User user, Company company, Purchase[] purchases, String action) {
         //Updates the user balance
         userDao.updateUserBalance(user);
         //If the acttion is Sell, we want to decrease the number of shares.
-        if(action.equals("BUY")){
+        if (action.equals("BUY")) {
             //Updates the purchased share
             shareDao.updatePurchasedShare(purchases[0]);
-        } else{
-            for(int i=0; i<purchases.length; i++){
+        } else {
+            for (int i = 0; i < purchases.length; i++) {
                 purchases[i].setShareQuantity(-purchases[i].getShareQuantity());
                 //Updates the purchased share
                 shareDao.updatePurchasedShare(purchases[i]);
