@@ -21,10 +21,9 @@ public class TopTenCompaniesView extends JPanel {
     private ArrayList<Top10> topTen;
     private BarChartView barchart;
 
-    public TopTenCompaniesView(){
+    public TopTenCompaniesView(ArrayList<Top10> topTen){
         StockColors color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
-
         this.setLayout(new GridLayout(3,1,0,0));
         this.setBackground(color.getWHITE());
 
@@ -49,24 +48,30 @@ public class TopTenCompaniesView extends JPanel {
         jbShare.setBackground(color.getYELLOW());
         jbShare.setPreferredSize(new Dimension(200, 50));
 
+        this.topTen = topTen;
         barchart = new BarChartView(topTen);
-        this.add(barchart);
+        barchart.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
 
 
-
-        jlUser = new JLabel(USER+ "Peter");
-        jlUser.setHorizontalAlignment(JLabel.CENTER);
-        jlUser.setPreferredSize(new Dimension(500, 500));
-        jlUser.setFont(font);
-
-        jpButtom.add(jlUser);
+//        jlUser = new JLabel(USER+ "Peter");
+//        jlUser.setHorizontalAlignment(JLabel.CENTER);
+//        jlUser.setPreferredSize(new Dimension(500, 500));
+//        jlUser.setFont(font);
+//
+//        jpButtom.add(jlUser);
         jpButtonAux.add(jbShare);
         jpButtom.add(jpButtonAux);
 
-        this.add(jlTitle);
+//        this.add(jlTitle);
+        this.add(barchart);
         this.add(jpButtom);
-
     }
 
+    public void setTopTen(ArrayList<Top10> topTen) {
+        this.topTen = topTen;
+    }
 
+    public void setBarChartData(ArrayList<Top10> topTenlist) {
+
+    }
 }

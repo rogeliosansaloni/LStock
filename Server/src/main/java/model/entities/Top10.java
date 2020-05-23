@@ -13,6 +13,11 @@ public class Top10 {
         this.share_quantity = share_quantity;
     }
 
+    public Top10(String name, float price){
+        this.name = name;
+        this.price = price;
+    }
+
     public int getCompany_id() {
         return company_id;
     }

@@ -134,10 +134,8 @@ public class StockManager {
     }
 
     public ArrayList<Top10> getTopTenlist(){
-        return userDao.getTopTen("hola");
-
+        return companyDao.getTopTen();
     }
-
 
 }
 

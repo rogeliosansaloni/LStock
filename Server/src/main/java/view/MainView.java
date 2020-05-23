@@ -27,7 +27,7 @@ public class MainView extends JFrame {
     private JPanel jpMenu;
     private JMenuBar menuBar;
     private JMenu menuOptions;
-    private JMenuItem option1,option2, option3;
+    private JMenuItem option1,option2, option3, option4;
     private StockColors color;
     private HomeView jpHomeView;
     private SharesListView jpSharesView;
@@ -43,28 +43,30 @@ public class MainView extends JFrame {
         this.setLayout(new BorderLayout());
         this.setResizable(false);
         initUI();
-        initAllViews();
-
+//        initAllViews();
     }
 
-    /**
-     * Initializes all views
-     */
-    public void initAllViews() {
-        jpTopTenCompaniesView = new TopTenCompaniesView();
-        jpHomeView = new HomeView();
-        jpSharesView = new SharesListView();
-        //TODO: Add the rest of views
-        addToCardLayout();
-    }
+//    /**
+//     * Initializes all views
+//     */
+//    public void initAllViews() {
+//        jpHomeView = new HomeView();
+//        jpSharesView = new SharesListView();
+//        jpTopTenCompaniesView = new TopTenCompaniesView();
+//        //TODO: Add the rest of views
+//        addToCardLayout();
+//    }
 
     /**
      * Add diferent views to layout
      */
-    private void addToCardLayout() {
-        jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
+    public void addToCardLayout(HomeView homeView, SharesListView sharesView, TopTenCompaniesView topTenCompaniesView) {
+        this.jpHomeView = homeView;
+        this.jpSharesView = sharesView;
+        this.jpTopTenCompaniesView = topTenCompaniesView;
         jpCenter.add(jpHomeView, CARD_HOME);
         jpCenter.add(jpSharesView, CARD_USERS);
+        jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
         //TODO: Add the rest of views
     }
 
@@ -136,6 +138,16 @@ public class MainView extends JFrame {
         menuOptions.add(option3);
         jpMenu.add(menuBar, BorderLayout.CENTER);
 
+        //Option4
+        option4 = new JMenuItem("TOP 10 Companies");
+        option4.setHorizontalAlignment(SwingConstants.CENTER);
+        option4.setBackground(Color.WHITE);
+        option4.setBorder(borderOptions);
+        option4.setForeground(color.getDarkGreyText());
+        option4.setFont(fontMenu);
+        menuOptions.add(option4);
+        jpMenu.add(menuBar, BorderLayout.CENTER);
+
         jpLogo.add(jpMenu, BorderLayout.SOUTH);
         jpNorth.add(jpLogo, BorderLayout.CENTER);
 
@@ -162,6 +174,8 @@ public class MainView extends JFrame {
         option2.setActionCommand(CARD_USERS);
         option3.addActionListener(actionListener);
         option3.setActionCommand(CARD_BOTS);
+        option4.addActionListener(actionListener);
+        option4.setActionCommand(CARD_TOPTEN);
     }
 
     public void registerHomeController(HomeController controller) {
@@ -184,6 +198,8 @@ public class MainView extends JFrame {
             case CARD_BOTS:
                 cardLayout.show(jpCenter, CARD_BOTS);
                 break;
+            case CARD_TOPTEN:
+                cardLayout.show(jpCenter, CARD_TOPTEN);
         }
     }
 }

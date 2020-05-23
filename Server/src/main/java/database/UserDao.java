@@ -23,7 +23,7 @@ public class UserDao {
     private static final String PROFILE_MESSAGE_1 = "Error getting the user information";
     private static final String PROFILE_MESSAGE_2 = "Error updating the user information";
     private static final String BALANCE_MESSAGE_1 = "Error updating the user total balance";
-    private static final String TOPTEN_MESSAGE = "Error finding top 10 companies of User";
+
 
     /**
      * Represents the DAO for the User table
@@ -191,30 +191,5 @@ public class UserDao {
         }
     }
 
-    public ArrayList<Top10> getTopTen(String userName){
-        ResultSet result = dbConnector.selectQuery("SELECT user_id FROM User WHERE nickname = '" + userName + "';");
-        ArrayList<Top10> top10List = null;
-        try {
-            while (result.next()) {
-                int user_id = result.getInt("user_id");
-                result = dbConnector.selectQuery(
-                  "SELECT DISTINCT Purchase.share_quantity, Share. price, Company.name, Company.company_id FROM SHARE"+
-                          "INNER JOIN Purchase ON Share-share_id = Purchase.share_id"+
-                          "INNER JOIN Company ON Company.company_id = Purchase-company_id"+
-                          "INNER JOIN User ON Purchase.user_id = '" + user_id+ "';"
-                );
-                while (result.next()){
-                    top10List.add(new Top10(
-                            result.getInt("company_id"),
-                            result.getString("name"),
-                            result.getFloat("price"),
-                            result.getInt("share_quantity"))
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(TOPTEN_MESSAGE);
-        }
-        return top10List;
-    }
+
 }
