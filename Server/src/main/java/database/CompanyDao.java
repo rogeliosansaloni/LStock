@@ -120,7 +120,7 @@ public class CompanyDao {
             ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
             try {
                 if(!retrieved.next()){
-                    ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = 5;");
+                    ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName FROM Company as c WHERE c.company_id = " + companyId + ";");
                     retrievedCompanyName.next();
                     companies.add(new CompanyDetail(numUserShares, 5, retrievedCompanyName.getString("companyName"), i));
                 }else{
