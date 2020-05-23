@@ -14,23 +14,18 @@ import java.util.ArrayList;
 
 public class CompanyDetailView extends JPanel {
     private static final String ERROR_MESSAGE_1 = "The value introduced must be a number bigger than 0.";
-    private static final String ERROR_MESSAGE_2 = "You don't have enough balance to buy ";
+    private static final String ERROR_MESSAGE_2 = "You don't have enough balance to buy %s shares.";
     private static final String ERROR_MESSAGE_3 = "All quantities introduced must be a number bigger than 0.";
     private static final String ERROR_MESSAGE_4 = "Introduce at least 1 valid number.";
     private static final String ERROR_MESSAGE_5 = "Sale cancelled. You are trying to sell more sells than you actually have.";
     private static final String LABEL_SHARES_BUY = "Number of shares you want to buy";
-    private JPanel jpRight;
-    private JPanel jpRightTop;
     private JPanel jpRightCenter;
     private JPanel jpLeft;
-    private JPanel jpBuy;
     private JPanel jpShareList;
-    private JScrollPane jpScrollShares;
     private JButton jbBuy;
     private JButton jbSell;
     private JButton jbBack;
     private JTextField jtBuyShares;
-    private JPanel[] jpSellShares;
     private JTextField[] jtSellShares;
     private JLabel jlMyShares;
     private StockColors color;
@@ -42,13 +37,13 @@ public class CompanyDetailView extends JPanel {
         this.setBackground(color.getBLACK());
 
         //Panel South
-        jpRight = new JPanel();
+        JPanel jpRight = new JPanel();
         jpRight.setLayout(new BorderLayout());
         jpRight.setBackground(color.getBLACK());
         jpRight.setAlignmentX(SwingConstants.CENTER);
 
         //Panel South
-        jpRightTop = new JPanel();
+        JPanel jpRightTop = new JPanel();
         jpRightTop.setLayout(new BorderLayout());
         jpRightTop.setBackground(color.getBLACK());
         jpRightTop.setAlignmentX(SwingConstants.CENTER);
@@ -61,7 +56,7 @@ public class CompanyDetailView extends JPanel {
         jlMyShares.setHorizontalAlignment(SwingConstants.CENTER);
 
         //A panel for the buy option
-        jpBuy = new JPanel();
+        JPanel jpBuy = new JPanel();
         jpBuy.setLayout(new FlowLayout());
         jpBuy.setBackground(color.getBLACK());
         jpBuy.setPreferredSize(new Dimension(400, 60));
@@ -241,7 +236,7 @@ public class CompanyDetailView extends JPanel {
                 jtSellShares[i].setHorizontalAlignment(SwingConstants.CENTER);
                 jpShareList.add(jtSellShares[i]);
             }
-            jpScrollShares = new JScrollPane(jpShareList);
+            JScrollPane jpScrollShares = new JScrollPane(jpShareList);
             jpScrollShares.setBackground(color.getBLACK());
             jpScrollShares.setPreferredSize(new Dimension(400, 300));
             jpRightCenter.add(jpScrollShares, BorderLayout.CENTER);
@@ -281,7 +276,7 @@ public class CompanyDetailView extends JPanel {
                 JOptionPane.showMessageDialog(null, ERROR_MESSAGE_1);
                 break;
             case 2:
-                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_2 + getSharesBuy() + " shares.");
+                JOptionPane.showMessageDialog(null, String.format(ERROR_MESSAGE_2, getSharesBuy()));
                 break;
             case 3:
                 JOptionPane.showMessageDialog(null, ERROR_MESSAGE_3);

@@ -9,8 +9,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.text.ParseException;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 /**
@@ -30,21 +29,13 @@ public class MainView extends JFrame {
     private static final String CARD_BALANCE = "Load Balance";
     private static final int PANEL_WIDTH = 1080;
     private static final int PANEL_HEIGHT = 768;
-    private JLabel labelLogo;
-    private JLabel labelStock;
-    private JLabel labelUserPhoto;
     private JLabel labelViewName;
     private JLabel labelCurrentPrice;
     private JLabel labelBalance;
     private String userName = "Peter Fox";
     private String userBalance = "00.00";
-    private JPanel jpHeader;
-    private JPanel jpCenterHeader;
-    private JPanel jpLogo;
     private JPanel jpOptions;
-    private JPanel jpMenu;
     private JPanel jpCenter;
-    private JMenuBar menuBar;
     private JMenu menuOptions;
     private StockColors color;
     private CompanyDetailView jpCompanyDetailsView;
@@ -102,27 +93,27 @@ public class MainView extends JFrame {
         jpMain.setBackground(color.getBLACK());
 
         //We create the JPanel for the header
-        jpHeader = new JPanel(new BorderLayout());
+        JPanel jpHeader = new JPanel(new BorderLayout());
         jpHeader.setBackground(color.getDarkGreyHeader());
-        jpLogo = new JPanel(new BorderLayout());
+        JPanel jpLogo = new JPanel(new BorderLayout());
 
         // Create logo
         ImageIcon imageIcon = new ImageIcon(MainView.class.getResource(
                 PATH_LOGO));
         Image scaleImage = imageIcon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
-        labelLogo = new JLabel(imageIcon);
+        JLabel labelLogo = new JLabel(imageIcon);
         jpLogo.add(labelLogo, BorderLayout.CENTER);
         jpLogo.setBackground(color.getDarkGreyHeader());
 
         Font fontLogo = new Font("Roboto", Font.PLAIN, 30);
-        labelStock = new JLabel("StockLS", SwingConstants.CENTER);
+        JLabel labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         labelStock.setFont(fontLogo);
         labelStock.setForeground(color.getDarkGreyText());
         jpLogo.add(labelStock, BorderLayout.SOUTH);
         jpHeader.add(jpLogo, BorderLayout.WEST);
 
-        jpCenterHeader = new JPanel(new BorderLayout());
+        JPanel jpCenterHeader = new JPanel(new BorderLayout());
         jpCenterHeader.setBackground(color.getDarkGreyHeader());
 
         labelViewName = new JLabel("COMPANIES", SwingConstants.CENTER);
@@ -147,7 +138,7 @@ public class MainView extends JFrame {
                 PATH_USER_PHOTO));
         Image scaleImageUser = imageIconUser.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);
         imageIconUser = new ImageIcon(scaleImageUser);
-        labelUserPhoto = new JLabel(imageIconUser);
+        JLabel labelUserPhoto = new JLabel(imageIconUser);
         jpOptions.add(labelUserPhoto, BorderLayout.NORTH);
 
         createMenuBar();
@@ -180,7 +171,7 @@ public class MainView extends JFrame {
      */
     public void createMenuBar() {
         Font fontName = new Font("Roboto", Font.BOLD, 30);
-        jpMenu = new JPanel(new BorderLayout());
+        JPanel jpMenu = new JPanel(new BorderLayout());
         jpMenu.setBackground(color.getDarkGreyHeader());
 
         ImageIcon imageArrow = new ImageIcon(MainView.class.getResource(
@@ -188,7 +179,7 @@ public class MainView extends JFrame {
         Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
 
-        menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(color.getDarkGreyHeader());
         menuBar.setBorder(null);
         menuBar.setBorderPainted(false);
@@ -351,13 +342,11 @@ public class MainView extends JFrame {
     }
 
     public String getNumSharesBuy() {
-        String text = jpCompanyDetailsView.getSharesBuy();
-        return text;
+        return jpCompanyDetailsView.getSharesBuy();
     }
 
     public String[] getNumSharesSell() {
-        String[] text = jpCompanyDetailsView.getSharesSell();
-        return text;
+        return jpCompanyDetailsView.getSharesSell();
     }
 
     public void showErrorCompanyDetail(int error) {
@@ -472,5 +461,7 @@ public class MainView extends JFrame {
         return jpCompanyDetailsView;
     }
 
-    public SharesView getSharesView(){ return jpShares; }
+    public SharesView getSharesView() {
+        return jpShares;
+    }
 }

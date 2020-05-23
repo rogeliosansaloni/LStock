@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import model.entities.Company;
+
 
 public class CompanyView extends JPanel {
     private JScrollPane jpScroll;
@@ -68,7 +68,7 @@ public class CompanyView extends JPanel {
         jpTable.add(jlCompanies[i][j]);
     }
 
-    public void showCompanies(ArrayList<CompanyChange> companies){
+    public void showCompanies(ArrayList<CompanyChange> companies) {
         jpTable = new JPanel();
         jpTable.setBackground(color.getBLACK());
         // Create a row for each company available
@@ -81,14 +81,14 @@ public class CompanyView extends JPanel {
         for (int i = 0; i < companies.size(); i++) {
             createDataLabel(companies.get(i).getName(), color.getWHITE(), i, 0);
             createDataLabel(companies.get(i).getCurrentShare() + "€", color.getGreenTable(), i, 1);
-            if(companies.get(i).getChange() < 0){
-                createDataLabel( companies.get(i).getChange() + "€", color.getRedTable(), i, 2);
+            if (companies.get(i).getChange() < 0) {
+                createDataLabel(companies.get(i).getChange() + "€", color.getRedTable(), i, 2);
                 createDataLabel(companies.get(i).getChangePer() + "%", color.getRedTable(), i, 3);
-            } else if(companies.get(i).getChange() > 0){
-                createDataLabel( companies.get(i).getChange() + "€", color.getGreenTable(), i, 2);
+            } else if (companies.get(i).getChange() > 0) {
+                createDataLabel(companies.get(i).getChange() + "€", color.getGreenTable(), i, 2);
                 createDataLabel(companies.get(i).getChangePer() + "%", color.getGreenTable(), i, 3);
-            } else{
-                createDataLabel( companies.get(i).getChange() + "€", color.getWHITE(), i, 2);
+            } else {
+                createDataLabel(companies.get(i).getChange() + "€", color.getWHITE(), i, 2);
                 createDataLabel(companies.get(i).getChangePer() + "%", color.getWHITE(), i, 3);
             }
         }

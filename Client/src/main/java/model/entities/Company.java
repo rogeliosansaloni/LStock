@@ -43,7 +43,7 @@ public class Company {
     public void listBots() {
     }
 
-    public void addToShares (Share share){
+    public void addToShares(Share share) {
 
     }
 
