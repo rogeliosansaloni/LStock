@@ -44,7 +44,7 @@ public class MainController implements ActionListener {
         this.balanceController = new BalanceController(view.getBalanceView(), model);
         this.balanceController.registerController();
         this.companyController = new CompanyController(view.getCompanyView(), model);
-        this.companyDetailController = new CompanyDetailController(view, view.getCompanyDetailsView(), model);
+        this.companyDetailController = new CompanyDetailController(view.getCompanyDetailsView(), model);
         this.companyDetailController.registerController();
         this.sharesController = new SharesController(view.getSharesView(), model);
     }
@@ -54,19 +54,15 @@ public class MainController implements ActionListener {
         switch (e.getActionCommand()) {
             case "company":
                 sendCompaniesChange();
-                view.updateView(CARD_COMPANY);
                 break;
             case "profile":
                 sendUserProfileInfo();
-                view.updateView(CARD_PROFILE);
                 break;
             case "shares":
-                view.updateView(CARD_SHARES);
                 sendSharesChange();
                 break;
             case "load":
                 view.updateView(CARD_BALANCE);
-                //TODO: Load Balance
                 break;
             case "logout":
                 if(view.confirmLogOutWindow() == 0){
@@ -110,6 +106,7 @@ public class MainController implements ActionListener {
      */
     public void updateCompanyList () {
         companyController.updateCompanyList();
+        view.updateView(CARD_COMPANY);
     }
 
     /**
@@ -126,6 +123,7 @@ public class MainController implements ActionListener {
      */
     public void updateProfileView () {
         view.updateProfileView(model.getUser());
+        view.updateView(CARD_PROFILE);
     }
 
     /**
@@ -133,6 +131,7 @@ public class MainController implements ActionListener {
      */
     public void updateShareView () {
         sharesController.updateSharesView();
+        view.updateView(CARD_SHARES);
     }
 
     /**
