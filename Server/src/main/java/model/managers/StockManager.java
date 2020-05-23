@@ -112,7 +112,7 @@ public class StockManager {
      * @param company the company
      * @return ShareTrade with the new values of users total balance and company value
      */
-    public ShareTrade updatePurchaseBuy (User user, Company company, Purchase[] purchases, String action) {
+    public ShareTrade updatePurchaseBuy (User user, Company company, Purchase[] purchases, String action, String view) {
         //Updates the user balance
         userDao.updateUserBalance(user);
         //If the acttion is Sell, we want to decrease the number of shares.
@@ -134,6 +134,7 @@ public class StockManager {
         //Updates the company new value
         companyDao.updateCompanyNewValue(company);
         ShareTrade info = shareMapper.userCompanyToShareTrade(user, company);
+        info.setView(view);
         return info;
     }
 

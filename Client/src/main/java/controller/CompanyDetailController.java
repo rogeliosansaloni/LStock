@@ -16,6 +16,7 @@ public class CompanyDetailController implements ActionListener {
     private static final String CONFIRM_SELL_ACTION = "Do you want to sell these shares?";
     private static final String BUY_ACTION = "BUY";
     private static final String SELL_ACTION = "SELL";
+    private static final String VIEW = "CompanyDetail";
     private static final int CONFIRMED = 0;
     private static final int NOT_CONFIRMED = 1;
 
@@ -133,7 +134,7 @@ public class CompanyDetailController implements ActionListener {
         int companyId = model.getCompanyDetailId();
         int shareId = model.getCurrentShareId();
         float currentShareValue = model.getCurrentShareValue();
-        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, numShares,  BUY_ACTION);
+        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, numShares,  BUY_ACTION, VIEW);
         try {
             NetworkManager.getInstance().sendShareTrade(shareTrade);
         } catch (IOException e1) {
@@ -151,7 +152,7 @@ public class CompanyDetailController implements ActionListener {
         int companyId = model.getCompanyDetailId();
         int[] shareId = model.getSharesSellSharesId();
         float[] shareValue = model.getSharesSellSharesValue();
-        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, shareValue, numShares,  SELL_ACTION);
+        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, shareValue, numShares,  SELL_ACTION, VIEW);
         try {
             NetworkManager.getInstance().sendShareTrade(shareTrade);
         } catch (IOException e1) {

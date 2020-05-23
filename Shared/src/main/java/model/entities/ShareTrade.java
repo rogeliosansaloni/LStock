@@ -12,6 +12,8 @@ public class ShareTrade extends TunnelObject {
     private int[] numShares;
     private String actionToDo;
 
+    private String view;
+
     public ShareTrade () { }
 
     /**
@@ -22,8 +24,9 @@ public class ShareTrade extends TunnelObject {
      * @param sharePrice price of the share
      * @param numShares number of shares that the users wants to buy/sell
      * @param actionToDo action to do with the share: buy or sell
+     * @param view view from we send the ShareTrade
      */
-    public ShareTrade(int userId, float totalBalance, int companyId, int[] shareId, float[] sharePrice, int[] numShares, String actionToDo) {
+    public ShareTrade(int userId, float totalBalance, int companyId, int[] shareId, float[] sharePrice, int[] numShares, String actionToDo, String view) {
         this.userId = userId;
         this.totalBalance = totalBalance;
         this.companyId = companyId;
@@ -31,9 +34,10 @@ public class ShareTrade extends TunnelObject {
         this.sharePrice = sharePrice;
         this.numShares = numShares;
         this.actionToDo = actionToDo;
+        this.view = view;
     }
 
-    public ShareTrade(int userId, float totalBalance, int companyId, int shareId, float sharePrice, int numShares, String actionToDo) {
+    public ShareTrade(int userId, float totalBalance, int companyId, int shareId, float sharePrice, int numShares, String actionToDo, String view) {
         this.userId = userId;
         this.totalBalance = totalBalance;
         this.companyId = companyId;
@@ -44,6 +48,7 @@ public class ShareTrade extends TunnelObject {
         this.sharePrice[0] = sharePrice;
         this.numShares[0] = numShares;
         this.actionToDo = actionToDo;
+        this.view = view;
     }
 
     public int getUserId() {
@@ -100,6 +105,14 @@ public class ShareTrade extends TunnelObject {
 
     public void setActionToDo(String actionToDo) {
         this.actionToDo = actionToDo;
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public void setView(String view) {
+        this.view = view;
     }
 
 }

@@ -42,6 +42,7 @@ public class MainController implements ActionListener {
         this.balanceController = new BalanceController(view.getBalanceView(), model);
         this.companyController = new CompanyController(view, model);
         this.companyDetailController = new CompanyDetailController(view, model);
+        this.sharesController = new SharesController(view.getSharesView(), model);
     }
 
     @Override
@@ -95,10 +96,20 @@ public class MainController implements ActionListener {
         return balanceController;
     }
 
+    /**
+     * Returns the company controller of the CompanyView
+     *
+     * @return company controller
+     */
     public CompanyController getCompanyController() {
         return companyController;
     }
 
+    /**
+     * Returns the shares controller of the SharesView
+     *
+     * @return shares controller
+     */
     public SharesController getSharesController() {
         return sharesController;
     }
@@ -131,7 +142,7 @@ public class MainController implements ActionListener {
         model.updateUserBalance(totalBalance);
         view.updateTotalBalance(totalBalance);
         companyController.sendUserShares(companyId);
-        //TODO: add the share view controller and send the tunnel to get its information
+        sendSharesChange();
     }
 
     /**

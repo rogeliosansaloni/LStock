@@ -130,9 +130,12 @@ public class ShareDao {
 
     private ShareChange toShareChange(ResultSet resultSet) throws SQLException {
         ShareChange shareChange = new ShareChange();
+        shareChange.setUserId(resultSet.getInt("userId"));
+        shareChange.setCompanyId(resultSet.getInt("companyId"));
         shareChange.setShareId(resultSet.getInt("shareId"));
         shareChange.setCompanyName(resultSet.getString("companyName"));
-        shareChange.setShareValue(resultSet.getFloat("shareValue"));
+        shareChange.setShareOriginalValue(resultSet.getFloat("shareOriginalValue"));
+        shareChange.setShareCurrentValue(resultSet.getFloat("shareCurrentValue"));
         shareChange.setSharesQuantity(resultSet.getInt("sharesQuantity"));
         shareChange.setProfitLoss(resultSet.getFloat("profitLoss"));
 

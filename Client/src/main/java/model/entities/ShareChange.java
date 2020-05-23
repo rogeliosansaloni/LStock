@@ -5,9 +5,12 @@ package model.entities;
  */
 public class ShareChange {
 
+    private int userId;
+    private int companyId;
     private int shareId;
     private String companyName;
-    private float shareValue;
+    private float shareOriginalValue;
+    private float shareCurrentValue;
     private int sharesQuantity;
     private float profitLoss;
 
@@ -16,19 +19,40 @@ public class ShareChange {
     }
     /**
      * It will create a companyChange
-     *
-     * @param shareId      share
+     * @param userId user id
+     * @param companyId company id
+     * @param shareId      share id
      * @param companyName     company name
-     * @param shareValue     the price of the share when the user bought it
+     * @param shareOriginalValue     the price of the share when the user bought it
+     * @param shareCurrentValue the current price of the share
      * @param sharesQuantity     the quantity of shares the user has
      * @param profitLoss     (the price of the share when the user bought it - its current price) * sharesQuantity
      */
-    public ShareChange(int shareId, String companyName, float shareValue, int sharesQuantity, float profitLoss) {
+    public ShareChange(int userId, int companyId, int shareId, String companyName, float shareOriginalValue, float shareCurrentValue, int sharesQuantity, float profitLoss) {
+        this.userId = userId;
+        this.companyId = companyId;
         this.shareId = shareId;
         this.companyName = companyName;
-        this.shareValue = shareValue;
+        this.shareOriginalValue = shareOriginalValue;
+        this.shareCurrentValue = shareCurrentValue;
         this.sharesQuantity = sharesQuantity;
         this.profitLoss = profitLoss;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
     }
 
     public int getShareId() {
@@ -47,12 +71,20 @@ public class ShareChange {
         this.companyName = companyName;
     }
 
-    public float getShareValue() {
-        return shareValue;
+    public float getShareOriginalValue() {
+        return shareOriginalValue;
     }
 
-    public void setShareValue(float shareValue) {
-        this.shareValue = shareValue;
+    public void setShareOriginalValue(float shareOriginalValue) {
+        this.shareOriginalValue = shareOriginalValue;
+    }
+
+    public float getShareCurrentValue() {
+        return shareCurrentValue;
+    }
+
+    public void setShareCurrentValue(float shareCurrentValue) {
+        this.shareCurrentValue = shareCurrentValue;
     }
 
     public int getSharesQuantity() {

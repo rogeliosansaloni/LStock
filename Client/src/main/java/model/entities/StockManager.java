@@ -96,6 +96,15 @@ public class StockManager {
         return sharesChange;
     }
 
+    public ShareChange getShareChangeInfo(int shareId) {
+        for(int i=0; i<sharesChange.size(); i++){
+            if(sharesChange.get(i).getShareId() == shareId){
+                return sharesChange.get(i);
+            }
+        }
+        return null;
+    }
+
     public void setCompaniesChange(ArrayList<CompanyChange> companiesChange) {
         this.companiesChange = companiesChange;
     }

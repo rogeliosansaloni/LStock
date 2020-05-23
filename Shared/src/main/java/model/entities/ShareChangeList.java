@@ -3,9 +3,11 @@ package model.entities;
 public class ShareChangeList extends TunnelObject {
 
     private int userId;
+    private int[] companyId;
     private int[] shareId;
     private String[] companyName;
-    private float[] shareValue;
+    private float[] shareOriginalValue;
+    private float[] shareCurrentValue;
     private int[] sharesQuantity;
     private float[] profitLoss;
 
@@ -13,9 +15,11 @@ public class ShareChangeList extends TunnelObject {
     }
 
     public ShareChangeList(int numShares) {
+        this.companyId = new int[numShares];
         this.shareId = new int[numShares];
         this.companyName = new String[numShares];
-        this.shareValue = new float[numShares];
+        this.shareOriginalValue = new float[numShares];
+        this.shareCurrentValue = new float[numShares];
         this.sharesQuantity = new int[numShares];
         this.profitLoss = new float[numShares];
     }
@@ -26,6 +30,14 @@ public class ShareChangeList extends TunnelObject {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int[] getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int i, int companyId) {
+        this.companyId[i] = companyId;
     }
 
     public int[] getShareId() {
@@ -44,12 +56,20 @@ public class ShareChangeList extends TunnelObject {
         this.companyName[i] = companyName;
     }
 
-    public float[] getShareValue() {
-        return shareValue;
+    public float[] getShareOriginalValue() {
+        return shareOriginalValue;
     }
 
-    public void setShareValue(int i, float shareValue) {
-        this.shareValue[i] = shareValue;
+    public void setShareOriginalValue(int i, float shareValue) {
+        this.shareOriginalValue[i] = shareValue;
+    }
+
+    public float[] getShareCurrentValue() {
+        return shareCurrentValue;
+    }
+
+    public void setShareCurrentValue(int i, float shareValue) {
+        this.shareCurrentValue[i] = shareValue;
     }
 
     public int[] getSharesQuantity() {

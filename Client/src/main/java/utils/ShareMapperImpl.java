@@ -76,13 +76,16 @@ public class ShareMapperImpl implements ShareMapper {
     public ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList) {
         ArrayList<ShareChange> shares = new ArrayList<ShareChange>();
         int sharesLen = shareChangeList.getCompanyName().length;
+        int userId = shareChangeList.getUserId();
+        int[] companyId = shareChangeList.getCompanyId();
         int[] sharesId = shareChangeList.getShareId();
         String[] companyNames = shareChangeList.getCompanyName();
-        float[] actionValue = shareChangeList.getShareValue();
+        float[] shareOriginalValue = shareChangeList.getShareOriginalValue();
+        float[] shareCurrentValue = shareChangeList.getShareCurrentValue();
         int[] sharesQuantity = shareChangeList.getSharesQuantity();
         float[] profitLoss = shareChangeList.getProfitLoss();
         for (int i = 0; i < sharesLen; i++) {
-            shares.add(new ShareChange(sharesId[i], companyNames[i], actionValue[i], sharesQuantity[i], profitLoss[i]));
+            shares.add(new ShareChange(userId, companyId[i], sharesId[i], companyNames[i], shareOriginalValue[i], shareCurrentValue[i], sharesQuantity[i], profitLoss[i]));
         }
         return shares;
     }
@@ -90,11 +93,14 @@ public class ShareMapperImpl implements ShareMapper {
     @Override
     public ShareChangeList convertToShareChangeList(ArrayList<ShareChange> sharesChange) {
         ShareChangeList shareChangeList = new ShareChangeList(sharesChange.size());
+        shareChangeList.setUserId(sharesChange.get(0).getUserId());
         int i = 0;
         for (ShareChange s : sharesChange) {
+            shareChangeList.setCompanyId(i, s.getCompanyId());
             shareChangeList.setShareId(i, s.getShareId());
             shareChangeList.setCompanyName(i, s.getCompanyName());
-            shareChangeList.setShareValue(i, s.getShareValue());
+            shareChangeList.setShareOriginalValue(i, s.getShareOriginalValue());
+            shareChangeList.setShareCurrentValue(i, s.getShareCurrentValue());
             shareChangeList.setSharesQuantity(i, s.getSharesQuantity());
             shareChangeList.setProfitLoss(i, s.getProfitLoss());
             i++;

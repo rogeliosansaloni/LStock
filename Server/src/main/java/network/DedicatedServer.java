@@ -102,7 +102,7 @@ public class DedicatedServer extends Thread {
                     Purchase[] purchases = shareMapper.shareTradeToPurchase(shareTrade);
                     User user = shareMapper.shareTradeToUser(shareTrade);
                     Company company = shareMapper.shareTradeToCompany(shareTrade);
-                    ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchases, shareTrade.getActionToDo());
+                    ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchases, shareTrade.getActionToDo(), shareTrade.getView());
                     oos.writeObject(share);
                 }
 

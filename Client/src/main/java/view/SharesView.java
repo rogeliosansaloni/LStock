@@ -55,7 +55,7 @@ public class SharesView extends JPanel {
         // Add an actionListener for each share
         for (int i = 0; i < shares.size(); i++) {
             jbSellShares[i].addActionListener(actionListener);
-            jbSellShares[i].setActionCommand(Float.toString(shares.get(i).getShareId()));
+            jbSellShares[i].setActionCommand(Integer.toString(shares.get(i).getShareId()));
         }
     }
 
@@ -70,41 +70,43 @@ public class SharesView extends JPanel {
             jpAlert.setVisible(false);
             jpTable.removeAll();
             jpTable.setPreferredSize(new Dimension(700, 100*shares.size()));
-            createLabel("COMPANY", Font.BOLD, color.getWHITE());
-            createLabel("ACTION VALUE", Font.BOLD, color.getWHITE());
-            createLabel("MY ACTIONS", Font.BOLD, color.getWHITE());
-            createLabel("PROFIT & LOSS", Font.BOLD, color.getWHITE());
+            Font fontTitle = new Font("Roboto", Font.BOLD, 20);
+            createLabel("COMPANY", fontTitle, color.getWHITE());
+            createLabel("CURRENT VALUE", fontTitle, color.getWHITE());
+            createLabel("MY ACTIONS", fontTitle, color.getWHITE());
+            createLabel("PROFIT & LOSS", fontTitle, color.getWHITE());
             jpTable.add(new JLabel());
             jbSellShares = new JButton[shares.size()];
+            Font fontInfo = new Font("Roboto", Font.PLAIN, 24);
             for (int i = 0; i < shares.size(); i++) {
-                createLabel(shares.get(i).getCompanyName(), Font.PLAIN, color.getWHITE());
-                createLabel(shares.get(i).getShareValue() + "€", Font.PLAIN, color.getWHITE());
-                createLabel(shares.get(i).getSharesQuantity() + "", Font.PLAIN, color.getWHITE());
+                createLabel(shares.get(i).getCompanyName(), fontInfo, color.getWHITE());
+                createLabel(shares.get(i).getShareCurrentValue() + "€", fontInfo, color.getWHITE());
+                createLabel(shares.get(i).getSharesQuantity() + "", fontInfo, color.getWHITE());
                 if(shares.get(i).getProfitLoss() < 0){
-                    createLabel(shares.get(i).getProfitLoss() + "", Font.PLAIN, color.getRedTable());
+                    createLabel(shares.get(i).getProfitLoss() + "", fontInfo, color.getRedTable());
                 } else if(shares.get(i).getProfitLoss() > 0){
-                    createLabel(shares.get(i).getProfitLoss() + "", Font.PLAIN, color.getGreenTable());
+                    createLabel(shares.get(i).getProfitLoss() + "", fontInfo, color.getGreenTable());
                 } else{
-                    createLabel(shares.get(i).getProfitLoss() + "", Font.PLAIN, color.getWHITE());
+                    createLabel(shares.get(i).getProfitLoss() + "", fontInfo, color.getWHITE());
                 }
                 createSellButton(i);
             }
+            jpScroll.revalidate();
+            jpScroll.repaint();
         }
-
     }
     /**
      * Creates a label for the table of shares
      * @param text the text to put in the label
-     * @param type the type of the font
+     * @param font the type of the font
      * @param colorLabel the color of the label
      */
-    public void createLabel(String text, int type, Color colorLabel){
+    public void createLabel(String text, Font font, Color colorLabel){
         JLabel label = new JLabel(text);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setBackground(colorLabel);
         label.setForeground(color.getBLACK());
         label.setOpaque(true);
-        Font font = new Font("Roboto", type, 25);
         label.setFont(font);
         jpTable.add(label);
     }

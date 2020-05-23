@@ -2,7 +2,6 @@ package controller;
 
 import model.entities.*;
 import network.NetworkManager;
-import view.MainView;
 import view.SharesView;
 
 import java.awt.event.ActionEvent;
@@ -10,6 +9,9 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class SharesController implements ActionListener {
+    private static final String SELL_ACTION = "SELL";
+    private static final String CONFIRM_SELL_ACTION = "Do you want to sell all these shares?";
+    private static final String VIEW = "Shares";
     private SharesView view;
     private StockManager model;
 
@@ -20,11 +22,14 @@ public class SharesController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        TunnelObject currentShares = new CurrentShares(model.getUser().getUserId(), Integer.parseInt(e.getActionCommand()));
+        int shareId = Integer.parseInt(e.getActionCommand());
+        ShareChange shareChange = model.getShareChangeInfo(shareId);
+        float userBalance = shareChange.getSharesQuantity()*shareChange.getShareCurrentValue() + model.getUser().getTotalBalance();
+        ShareTrade shareTrade = new ShareTrade(shareChange.getUserId(), userBalance, shareChange.getCompanyId(), shareId, shareChange.getShareCurrentValue(), shareChange.getSharesQuantity(),  SELL_ACTION, VIEW);
         try {
-            NetworkManager.getInstance().sendCurrentShares(currentShares);
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            NetworkManager.getInstance().sendShareTrade(shareTrade);
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
     }
 
