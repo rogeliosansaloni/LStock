@@ -128,6 +128,16 @@ public class DedicatedServer extends Thread {
                     oos.writeObject(detailViewInfo);
                 }
 
+
+                if (tunnelObject instanceof ShareChangeList) {
+                    ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(((ShareChangeList) tunnelObject).getUserId());
+                    ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
+                    oos.writeObject(sharesChangeList);
+                }
+
+                if (tunnelObject instanceof CurrentShares) {
+
+                }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

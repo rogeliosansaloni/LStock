@@ -168,49 +168,49 @@ public class CompanyDetailView extends JPanel {
                     g2.drawString(Integer.toString(10 - i), x_axis_lines - 3, heightGraph + 20);
                     value_y_axis += value_increase;
 
-                }
-                int limitYValues = heightGraph - y_axis_lines;
-                int posYCandleSup;
-                int posYCandleInf;
-                int posYMaxValue;
-                int posYMinValue;
-                for (int i = 0; i < 10; i++) {
-                    //Draw the candles
-                    float valueOpen = companyDetails.get(i).getValueOpen();
-                    float valueClose = companyDetails.get(i).getValueClose();
-                    float maxValue = companyDetails.get(i).getMaxValue();
-                    float minValue = companyDetails.get(i).getMinValue();
-                    if (valueOpen != valueClose) {
-                        posYMaxValue = heightGraph - (int) ((float) (limitYValues) / maxTotalValue * maxValue);
-                        posYMinValue = heightGraph - (int) ((float) (limitYValues) / maxTotalValue * minValue);
-                        if (valueClose > valueOpen) {
-                            g2.setColor(color.getGREEN());
-                            posYCandleSup = heightGraph - (int) ((float) (limitYValues) / maxTotalValue * valueClose);
-                            posYCandleInf = heightGraph - (int) ((float) (limitYValues) / maxTotalValue * valueOpen);
-                        } else {
-                            g2.setColor(color.getRED());
-                            posYCandleSup = heightGraph - (int) ((float) (limitYValues) / maxTotalValue * valueOpen);
-                            posYCandleInf = heightGraph - (int) ((float) (limitYValues) / maxTotalValue * valueClose);
-                        }
-                        int widthCandle = 20;
-                        g2.fillRect(x_axis_lines - widthCandle / 2, posYCandleSup, widthCandle, posYCandleInf - posYCandleSup);
-                        g2.setColor(color.getBLACK());
-                        g2.setStroke(new BasicStroke(2));
-                        g2.drawRect(x_axis_lines - widthCandle / 2, posYCandleSup, widthCandle, posYCandleInf - posYCandleSup);
-                        g2.drawLine(x_axis_lines, posYMaxValue, x_axis_lines, posYCandleSup);
-                        g2.drawLine(x_axis_lines, posYCandleInf, x_axis_lines, posYMinValue);
+            }
+            int limitYValues = heightGraph - y_axis_lines;
+            int posYCandleSup;
+            int posYCandleInf;
+            int posYMaxValue;
+            int posYMinValue;
+            for(int i=0; i<10; i++) {
+                //Draw the candles
+                float valueOpen = companyDetails.get(i).getValueOpen();
+                float valueClose = companyDetails.get(i).getValueClose();
+                float maxValue = companyDetails.get(i).getMaxValue();
+                float minValue = companyDetails.get(i).getMinValue();
+                if(valueOpen != -1){
+                    posYMaxValue = heightGraph - (int)((float)(limitYValues)/maxTotalValue*maxValue);
+                    posYMinValue = heightGraph - (int)((float)(limitYValues)/maxTotalValue*minValue);
+                    if(valueClose > valueOpen){
+                        g2.setColor(color.getGREEN());
+                        posYCandleSup = heightGraph - (int)((float)(limitYValues)/maxTotalValue*valueClose);
+                        posYCandleInf = heightGraph - (int)((float)(limitYValues)/maxTotalValue*valueOpen);
+                    } else{
+                        g2.setColor(color.getRED());
+                        posYCandleSup = heightGraph - (int)((float)(limitYValues)/maxTotalValue*valueOpen);
+                        posYCandleInf = heightGraph - (int)((float)(limitYValues)/maxTotalValue*valueClose);
                     }
-                    x_axis_lines -= x_increase;
+                    int widthCandle = 20;
+                    g2.fillRect(x_axis_lines - widthCandle/2, posYCandleSup, widthCandle, posYCandleInf - posYCandleSup);
+                    g2.setColor(color.getBLACK());
+                    g2.setStroke(new BasicStroke(2));
+                    g2.drawRect(x_axis_lines - widthCandle/2, posYCandleSup, widthCandle, posYCandleInf - posYCandleSup);
+                    g2.drawLine(x_axis_lines, posYMaxValue, x_axis_lines, posYCandleSup);
+                    g2.drawLine(x_axis_lines, posYCandleInf, x_axis_lines, posYMinValue);
                 }
-                Font fontTitle = new Font("Roboto", Font.BOLD, 25);
-                g2.setFont(fontTitle);
-                g2.drawString("Shares Candlestick Chart", 150, y_axis_start - 20);
-                Font fontNameAxis = new Font("Roboto", Font.PLAIN, 16);
-                g2.setFont(fontNameAxis);
-                g2.drawString("Minutes before last update", widthGraph / 2 - 50, heightGraph + 50);
-                g2.translate(x_axis_start - 55, heightGraph / 2 + 65);
-                g2.rotate(-Math.PI / 2);
-                g2.drawString("Share value", 0, 0);
+                x_axis_lines -= x_increase;
+            }
+            Font fontTitle = new Font("Roboto", Font.BOLD, 25);
+            g2.setFont(fontTitle);
+            g2.drawString("Shares Candlestick Chart", 150, y_axis_start - 20);
+            Font fontNameAxis = new Font("Roboto", Font.PLAIN, 16);
+            g2.setFont(fontNameAxis);
+            g2.drawString("Minutes before last update", widthGraph/2 - 50, heightGraph + 50);
+            g2.translate(x_axis_start - 55, heightGraph/2 + 65);
+            g2.rotate(-Math.PI / 2);
+            g2.drawString("Share value", 0, 0);
             }
         };
         jpGraph.setBackground(color.getWHITE());

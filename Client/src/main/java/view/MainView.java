@@ -3,12 +3,12 @@ package view;
 import model.entities.CompanyChange;
 import model.entities.*;
 import utils.StockColors;
+import model.entities.ShareChange;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -52,6 +52,7 @@ public class MainView extends JFrame {
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
     private ProfileView jpProfileView;
+    private SharesView jpShares;
 
     /**
      * Creates and initializes the main view
@@ -76,6 +77,7 @@ public class MainView extends JFrame {
         jpBalanceView = new BalanceView();
         jpCompanyDetailsView = new CompanyDetailView();
         jpProfileView = new ProfileView();
+        jpShares = new SharesView();
         //TODO: Add the rest of views
         addToCardLayout();
     }
@@ -88,7 +90,7 @@ public class MainView extends JFrame {
         jpCenter.add(jpCompanyDetailsView, CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
         jpCenter.add(jpProfileView, CARD_PROFILE);
-        //TODO: Add the rest of views
+        jpCenter.add(jpShares, CARD_SHARES);
     }
 
     /**
@@ -297,6 +299,10 @@ public class MainView extends JFrame {
         jpCompanyView.registerController(controller, companies);
     }
 
+    public void registerSharesController(ActionListener controller, ArrayList<ShareChange> shares) {
+        jpShares.registerController(controller, shares);
+    }
+
     /**
      * Shows desired view
      *
@@ -320,7 +326,7 @@ public class MainView extends JFrame {
                 break;
             case CARD_SHARES:
                 labelViewName.setText(CARD_SHARES);
-                //cardLayout.show(jpCenter, CARD_SHARES);
+                cardLayout.show(jpCenter, CARD_SHARES);
                 updateOptionsShares();
                 break;
             case CARD_BALANCE:
@@ -427,6 +433,7 @@ public class MainView extends JFrame {
         jpCompanyDetailsView.showErrorMessage(message);
     }
 
+
     /**
      * Update the user and the company new values in the view
      *
@@ -465,4 +472,5 @@ public class MainView extends JFrame {
         return jpCompanyDetailsView;
     }
 
+    public SharesView getSharesView(){ return jpShares; }
 }
