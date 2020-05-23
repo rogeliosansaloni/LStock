@@ -19,6 +19,9 @@ import view.LoginView;
 import view.MainView;
 import view.RegisterView;
 
+/**
+ * Manages the connection with the Server
+ */
 public class NetworkManager extends Thread {
     private Socket serverSocket;
     private ObjectInputStream ois;
@@ -83,6 +86,9 @@ public class NetworkManager extends Thread {
         start();
     }
 
+    /**
+     * Initialize the mappers
+     */
     private void init() {
         this.mapper = new UserMapperImpl();
         this.companyMapper = new CompanyMapperImpl();
@@ -100,6 +106,32 @@ public class NetworkManager extends Thread {
         mainView.registerMainController(mainController);
         mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
         mainView.setVisible(true);
+    }
+
+    /**
+     * Sets the company changes in the model
+     * @param companyChange list of company changes
+     */
+    private void initCompanies(ArrayList<CompanyChange> companyChange) {
+        model.setCompaniesChange(companyChange);
+    }
+
+    /**
+     * Reinitialize the main view with the new login information.
+     * @param companyChange the list of company changes
+     */
+    private void reinitMainView(ArrayList<CompanyChange> companyChange) {
+        // Set new list of companies in model
+        initCompanies(companyChange);
+
+        // Initialize the first view for the new user
+        mainView.initFirstView(model.getCompaniesChange());
+
+        // Refresh the header information with new user information
+        mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
+
+        // Refresh the balance view
+        mainController.getBalanceController().refreshBalanceView();
     }
 
     /**
@@ -156,10 +188,20 @@ public class NetworkManager extends Thread {
         oos.writeObject(object);
     }
 
+    /**
+     * Sends information of the buy/sell of shares
+     * @param object object that contains information for buy and sell of shares
+     * @throws IOException
+     */
     public void sendShareTrade(ShareTrade object) throws IOException {
         oos.writeObject(object);
     }
 
+    /**
+     * Sends user profile information
+     * @param object object that contains the user profile information
+     * @throws IOException
+     */
     public void sendUserProfileInfo(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }

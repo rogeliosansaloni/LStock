@@ -282,7 +282,8 @@ public class MainView extends JFrame {
     }
 
     public int confirmLogOutWindow() {
-        return JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Log Out", JOptionPane.YES_NO_OPTION);
+        int verify = JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Log Out", JOptionPane.YES_NO_OPTION);
+        return verify;
     }
 
     /**
