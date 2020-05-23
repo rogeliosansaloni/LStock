@@ -69,7 +69,6 @@ public class MainView extends JFrame {
         jpCompanyDetailsView = new CompanyDetailView();
         jpProfileView = new ProfileView();
         jpShares = new SharesView();
-        //TODO: Add the rest of views
         addToCardLayout();
     }
 
@@ -169,7 +168,7 @@ public class MainView extends JFrame {
     /**
      * Creates Menu Bar
      */
-    public void createMenuBar() {
+    private void createMenuBar() {
         Font fontName = new Font("Roboto", Font.BOLD, 30);
         JPanel jpMenu = new JPanel(new BorderLayout());
         jpMenu.setBackground(color.getDarkGreyHeader());
@@ -297,7 +296,7 @@ public class MainView extends JFrame {
     /**
      * Shows desired view
      *
-     * @param card
+     * @param card the card that we want to show
      */
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();

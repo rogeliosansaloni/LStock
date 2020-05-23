@@ -18,7 +18,6 @@ public class CompanyDetailController implements ActionListener {
     private static final String BUY_ACTION = "BUY";
     private static final String SELL_ACTION = "SELL";
     private static final int CONFIRMED = 0;
-    private static final int NOT_CONFIRMED = 1;
     private MainView view;
     private StockManager model;
 
@@ -147,6 +146,7 @@ public class CompanyDetailController implements ActionListener {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        // TODO: Refresh the textfield for buying actions after buying
     }
 
     /**
@@ -166,5 +166,6 @@ public class CompanyDetailController implements ActionListener {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+        // TODO: Refresh the textfield for selling actions after selling
     }
 }
