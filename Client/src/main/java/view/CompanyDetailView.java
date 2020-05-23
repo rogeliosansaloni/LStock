@@ -278,6 +278,10 @@ public class CompanyDetailView extends JPanel {
         return jtBuyShares.getText();
     }
 
+    /**
+     * Sets the text for buy shares
+     * @param text text to be placed in text field
+     */
     public void setJtBuyShares(String text) {
         jtBuyShares.setText(text);
     }

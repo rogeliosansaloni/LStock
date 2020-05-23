@@ -168,7 +168,7 @@ public class CompanyDetailController implements ActionListener {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        // TODO: Refresh the textfield for buying actions after buying
+        companyDetailView.setJtBuyShares("");
     }
 
     /**
@@ -188,7 +188,6 @@ public class CompanyDetailController implements ActionListener {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-        // TODO: Refresh the textfield for selling actions after selling
     }
 
     /**
