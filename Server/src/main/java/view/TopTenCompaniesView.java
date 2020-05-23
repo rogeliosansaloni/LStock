@@ -49,7 +49,13 @@ public class TopTenCompaniesView extends JPanel {
         this.add(jpGeneral);
     }
 
+    /**
+     * Updates de Top 10 Company list and repaints it
+     *
+     * @param topTenCompanies updated Top 10 Company List
+     */
     public void showTopTen(ArrayList<Top10> topTenCompanies) {
         barchart.setTopTen(topTenCompanies);
+        this.repaint();
     }
 }
