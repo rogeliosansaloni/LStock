@@ -113,6 +113,13 @@ public class StockManager {
         this.sharesChange = sharesChange;
     }
 
+
+    public void updateUserInfo(User user) {
+        this.user.setNickname(user.getNickname());
+        this.user.setEmail(user.getEmail());
+        this.user.setDescription(user.getDescription());
+    }
+
     /**
      * Checks if the user has enough value to buy the shares in the CompanyDetailView.
      */
@@ -142,4 +149,5 @@ public class StockManager {
         }
         return user.getTotalBalance() + benefitSale;
     }
+
 }

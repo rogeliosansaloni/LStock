@@ -27,7 +27,6 @@ public class Company {
         this.value = value;
         this.shares = shares;
         this.user = user;
-        this.bots = new ArrayList<Bot>();
     }
 
     public Company(int companyId, String name, float value, int shares) {
@@ -35,7 +34,6 @@ public class Company {
         this.name = name;
         this.value = value;
         this.shares = shares;
-        this.bots = new ArrayList<Bot>();
     }
 
     public Company() {
@@ -45,7 +43,7 @@ public class Company {
     public void listBots() {
     }
 
-    public void addToShares (Share share){
+    public void addToShares(Share share) {
 
     }
 

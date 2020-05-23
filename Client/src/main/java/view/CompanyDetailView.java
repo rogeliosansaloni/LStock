@@ -8,30 +8,27 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 public class CompanyDetailView extends JPanel {
     private static final String ERROR_MESSAGE_1 = "The value introduced must be a number bigger than 0.";
-    private static final String ERROR_MESSAGE_2 = "You don't have enough balance to buy ";
+    private static final String ERROR_MESSAGE_2 = "You don't have enough balance to buy %s shares.";
     private static final String ERROR_MESSAGE_3 = "All quantities introduced must be a number bigger than 0.";
     private static final String ERROR_MESSAGE_4 = "Introduce at least 1 valid number.";
     private static final String ERROR_MESSAGE_5 = "Sale cancelled. You are trying to sell more sells than you actually have.";
-    private JPanel jpRight;
-    private JPanel jpRightTop;
+    private static final String LABEL_SHARES_BUY = "Number of shares you want to buy";
     private JPanel jpRightCenter;
     private JPanel jpLeft;
-    private JPanel jpBuy;
     private JPanel jpShareList;
-    private JScrollPane jpScrollShares;
+    private JPanel jpRightBottom;
     private JButton jbBuy;
     private JButton jbSell;
+    private JButton jbBack;
     private JTextField jtBuyShares;
-    private JPanel[] jpSellShares;
     private JTextField[] jtSellShares;
     private JLabel jlMyShares;
-    protected StockColors color;
+    private StockColors color;
 
     public CompanyDetailView() {
         //General window setup
@@ -40,13 +37,13 @@ public class CompanyDetailView extends JPanel {
         this.setBackground(color.getBLACK());
 
         //Panel South
-        jpRight = new JPanel();
+        JPanel jpRight = new JPanel();
         jpRight.setLayout(new BorderLayout());
         jpRight.setBackground(color.getBLACK());
         jpRight.setAlignmentX(SwingConstants.CENTER);
 
         //Panel South
-        jpRightTop = new JPanel();
+        JPanel jpRightTop = new JPanel();
         jpRightTop.setLayout(new BorderLayout());
         jpRightTop.setBackground(color.getBLACK());
         jpRightTop.setAlignmentX(SwingConstants.CENTER);
@@ -59,35 +56,20 @@ public class CompanyDetailView extends JPanel {
         jlMyShares.setHorizontalAlignment(SwingConstants.CENTER);
 
         //A panel for the buy option
-        jpBuy = new JPanel();
+        JPanel jpBuy = new JPanel();
         jpBuy.setLayout(new FlowLayout());
         jpBuy.setBackground(color.getBLACK());
         jpBuy.setPreferredSize(new Dimension(400, 60));
 
         //Textfield number of shares to sell or buy
         Font fontTextfield = new Font("Roboto", Font.PLAIN, 18);
-        jtBuyShares = new JTextField("Number of shares you want to buy");
+        jtBuyShares = new JTextField(LABEL_SHARES_BUY);
         jtBuyShares.setFont(fontTextfield);
         jtBuyShares.setForeground(Color.GRAY);
-        jtBuyShares.setPreferredSize(new Dimension(290,60));
+        jtBuyShares.setPreferredSize(new Dimension(290, 60));
         jtBuyShares.setBorder(null);
         jtBuyShares.setBackground(color.getTEXTFIELD());
         jtBuyShares.setHorizontalAlignment(SwingConstants.CENTER);
-        jtBuyShares.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (jtBuyShares.getText().equals("Number of shares you want to buy")) {
-                    jtBuyShares.setText("");
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (jtBuyShares.getText().equals("")) {
-                    jtBuyShares.setText("Number of shares you want to buy");
-                }
-            }
-        });
         jpBuy.add(jtBuyShares);
 
         Font buyFont = new Font("Roboto", Font.BOLD, 22);
@@ -95,7 +77,7 @@ public class CompanyDetailView extends JPanel {
         jbBuy = new JButton("BUY");
         jbBuy.setActionCommand("buyShare");
         jbBuy.setBackground(color.getWHITE());
-        jbBuy.setPreferredSize(new Dimension(90,60));
+        jbBuy.setPreferredSize(new Dimension(90, 60));
         jbBuy.setFont(buyFont);
         jpBuy.add(jbBuy);
 
@@ -104,7 +86,7 @@ public class CompanyDetailView extends JPanel {
         jpRightTop.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
         jpRight.add(jpRightTop, BorderLayout.NORTH);
 
-        //Panel South
+        //Panel right center
         jpRightCenter = new JPanel();
         jpRightCenter.setLayout(new BorderLayout());
         jpRightCenter.setBackground(color.getBLACK());
@@ -112,13 +94,31 @@ public class CompanyDetailView extends JPanel {
         jpRightCenter.setPreferredSize(new Dimension(400, 300));
         jpRight.add(jpRightCenter, BorderLayout.CENTER);
 
+        jpRightBottom = new JPanel(new BorderLayout());
+        jpRightBottom.setBackground(color.getBLACK());
+        jpRightBottom.setAlignmentX(SwingConstants.CENTER);
+
         Font sellFont = new Font("Roboto", Font.BOLD, 25);
         //Sell button
         jbSell = new JButton("SELL SHARES");
         jbSell.setActionCommand("sellShare");
         jbSell.setBackground(color.getWHITE());
-        jbSell.setPreferredSize(new Dimension(400,50));
+        jbSell.setPreferredSize(new Dimension(400, 50));
         jbSell.setFont(sellFont);
+        jpRightBottom.add(jbSell, BorderLayout.NORTH);
+
+        JLabel fill = new JLabel();
+        fill.setPreferredSize(new Dimension(400, 10));
+        jpRightBottom.add(fill, BorderLayout.CENTER);
+
+        Font backFont = new Font("Roboto", Font.BOLD, 22);
+        jbBack = new JButton("BACK TO COMPANIES LIST");
+        jbBack.setActionCommand("back");
+        jbBack.setBackground(color.getWHITE());
+        jbBack.setPreferredSize(new Dimension(400, 35));
+        jbBack.setFont(backFont);
+        jpRightBottom.add(jbBack, BorderLayout.SOUTH);
+        jpRight.add(jpRightBottom, BorderLayout.SOUTH);
 
         //Left JPanel
         jpLeft = new JPanel(new BorderLayout());
@@ -139,41 +139,41 @@ public class CompanyDetailView extends JPanel {
         jpLeft.removeAll();
         updateNumberShares(companyDetails.get(0).getNumUserShares());
         int widthGraph = jpLeft.getWidth() - 20;
-        int heightGraph = jpLeft.getHeight() -70;
+        int heightGraph = jpLeft.getHeight() - 70;
         JPanel jpGraph = new JPanel() {
             @Override
             public void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            int y_axis_start = 60;
-            int x_axis_start = 90;
-            //Draw the y axis of the graph
-            g2.drawLine(x_axis_start, y_axis_start, x_axis_start, heightGraph);
-            //Draw the x axis of the graph
-            g2.drawLine(x_axis_start, heightGraph, widthGraph, heightGraph);
+                super.paintComponent(g);
+                Graphics2D g2 = (Graphics2D) g;
+                int y_axis_start = 60;
+                int x_axis_start = 90;
+                //Draw the y axis of the graph
+                g2.drawLine(x_axis_start, y_axis_start, x_axis_start, heightGraph);
+                //Draw the x axis of the graph
+                g2.drawLine(x_axis_start, heightGraph, widthGraph, heightGraph);
 
-            int y_increase = 34;
-            int x_increase = 45;
-            float value_increase = maxTotalValue/10;
-            int y_axis_lines = heightGraph;
-            int x_axis_lines = x_axis_start;
-            float value_y_axis = value_increase;
-            Font fontAxis = new Font("Roboto", Font.PLAIN, 12);
-            g2.setFont(fontAxis);
-            //Draw the axis values
-            for(int i=0; i<10; i++) {
-                y_axis_lines -= y_increase;
-                x_axis_lines += x_increase;
+                int y_increase = 34;
+                int x_increase = 45;
+                float value_increase = maxTotalValue / 10;
+                int y_axis_lines = heightGraph;
+                int x_axis_lines = x_axis_start;
+                float value_y_axis = value_increase;
+                Font fontAxis = new Font("Roboto", Font.PLAIN, 12);
+                g2.setFont(fontAxis);
+                //Draw the axis values
+                for (int i = 0; i < 10; i++) {
+                    y_axis_lines -= y_increase;
+                    x_axis_lines += x_increase;
 
-                //Draw lines on the y axis
-                g2.drawLine(x_axis_start - 5, y_axis_lines, widthGraph, y_axis_lines);
-                //Draw values on the y axis
-                g2.drawString(Float.toString((int)value_y_axis), x_axis_start - 35, y_axis_lines + 4);
-                //Draw lines on the x axis
-                g2.drawLine(x_axis_lines, heightGraph - 5, x_axis_lines, heightGraph + 5);
-                //Draw the minutes on the x axis
-                g2.drawString(Integer.toString(10 - i), x_axis_lines - 3, heightGraph + 20);
-                value_y_axis += value_increase;
+                    //Draw lines on the y axis
+                    g2.drawLine(x_axis_start - 5, y_axis_lines, widthGraph, y_axis_lines);
+                    //Draw values on the y axis
+                    g2.drawString(Float.toString((int) value_y_axis), x_axis_start - 35, y_axis_lines + 4);
+                    //Draw lines on the x axis
+                    g2.drawLine(x_axis_lines, heightGraph - 5, x_axis_lines, heightGraph + 5);
+                    //Draw the minutes on the x axis
+                    g2.drawString(Integer.toString(10 - i), x_axis_lines - 3, heightGraph + 20);
+                    value_y_axis += value_increase;
 
             }
             int limitYValues = heightGraph - y_axis_lines;
@@ -224,9 +224,9 @@ public class CompanyDetailView extends JPanel {
         jpLeft.add(jpGraph);
     }
 
-    public void updateSharesToSell(ArrayList<ShareSell> sharesSell){
+    public void updateSharesToSell(ArrayList<ShareSell> sharesSell) {
         jpRightCenter.removeAll();
-        if(sharesSell.size() > 0){
+        if (sharesSell.size() > 0) {
             jpShareList = new JPanel();
             jpShareList.removeAll();
             jpShareList.setLayout(new GridLayout(0, 3, 10, 10));
@@ -248,11 +248,12 @@ public class CompanyDetailView extends JPanel {
                 jtSellShares[i].setHorizontalAlignment(SwingConstants.CENTER);
                 jpShareList.add(jtSellShares[i]);
             }
-            jpScrollShares = new JScrollPane(jpShareList);
+            JScrollPane jpScrollShares = new JScrollPane(jpShareList);
             jpScrollShares.setBackground(color.getBLACK());
             jpScrollShares.setPreferredSize(new Dimension(400, 300));
             jpRightCenter.add(jpScrollShares, BorderLayout.CENTER);
-            jpRightCenter.add(jbSell, BorderLayout.SOUTH);
+            jpRightCenter.revalidate();
+            jpRightCenter.repaint();
         }
     }
 
@@ -266,26 +267,29 @@ public class CompanyDetailView extends JPanel {
         jpShareList.add(label);
     }
 
-    public String getSharesBuy (){
-        String numShares = jtBuyShares.getText();
-        return numShares;
+    public String getSharesBuy() {
+        return jtBuyShares.getText();
     }
 
-    public String[] getSharesSell (){
+    public void setJtBuyShares(String text) {
+        jtBuyShares.setText(text);
+    }
+
+    public String[] getSharesSell() {
         String[] textFields = new String[jtSellShares.length];
-        for(int i=0; i<jtSellShares.length; i++){
+        for (int i = 0; i < jtSellShares.length; i++) {
             textFields[i] = jtSellShares[i].getText();
         }
         return textFields;
     }
 
-    public void showErrorTextfield(int error){
+    public void showErrorTextfield(int error) {
         switch (error) {
             case 1:
                 JOptionPane.showMessageDialog(null, ERROR_MESSAGE_1);
                 break;
             case 2:
-                JOptionPane.showMessageDialog(null, ERROR_MESSAGE_2 + getSharesBuy() + " shares.");
+                JOptionPane.showMessageDialog(null, String.format(ERROR_MESSAGE_2, getSharesBuy()));
                 break;
             case 3:
                 JOptionPane.showMessageDialog(null, ERROR_MESSAGE_3);
@@ -300,16 +304,20 @@ public class CompanyDetailView extends JPanel {
     }
 
     public int confirmAction(String message) {
-        int verify = JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.YES_NO_OPTION);
-        return verify;
+        return JOptionPane.showConfirmDialog(null, message, "Confirm", JOptionPane.YES_NO_OPTION);
     }
 
-    public void showErrorMessage(String message){
-         JOptionPane.showMessageDialog(null, message);
+    public void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(null, message);
     }
 
     public void registerController(ActionListener controller) {
-        this.jbBuy.addActionListener(controller);
-        this.jbSell.addActionListener(controller);
+        jbBuy.addActionListener(controller);
+        jbSell.addActionListener(controller);
+        jbBack.addActionListener(controller);
+    }
+
+    public void registerFocusController(FocusListener controller) {
+        this.jtBuyShares.addFocusListener(controller);
     }
 }

@@ -19,6 +19,7 @@ public class CompanyController implements ActionListener {
         this.view = view;
         this.model = model;
     }
+
     /**
      * The controller of the CompanyView. Depending on the company that has been selected,
      * it will show the corresponding CompanyDetailView.
@@ -28,16 +29,17 @@ public class CompanyController implements ActionListener {
         int companyId = Integer.parseInt(e.getActionCommand());
         sendUserShares(companyId);
     }
+
     /**
      * Proc that shows the companies on the view's table
      *
      * @param companies that contains the list of companies
      */
-    public void updateCompanyList (ArrayList<CompanyChange> companies){
+    public void updateCompanyList(ArrayList<CompanyChange> companies) {
         this.view.updateCompanyList(companies);
     }
 
-    public void sendUserShares(int companyId){
+    public void sendUserShares(int companyId) {
         TunnelObject userShares = new UserShares(model.getUser().getUserId(), companyId);
         try {
             NetworkManager.getInstance().sendUserShares(userShares);

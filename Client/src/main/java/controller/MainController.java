@@ -4,6 +4,8 @@ import model.entities.ShareChangeList;
 import model.entities.CompanyChangeList;
 import model.entities.StockManager;
 import model.entities.TunnelObject;
+import model.entities.TunnelObject;
+import model.entities.UserProfileInfo;
 import network.NetworkManager;
 import view.LoginView;
 import view.MainView;
@@ -49,17 +51,12 @@ public class MainController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "company":
-                try {
-                    NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                sendCompaniesChange();
                 view.updateView(CARD_COMPANY);
-                updateCompanyList();
                 break;
             case "profile":
+                sendUserProfileInfo();
                 view.updateView(CARD_PROFILE);
-                //TODO: Profile
                 break;
             case "shares":
                 view.updateView(CARD_SHARES);
@@ -124,6 +121,9 @@ public class MainController implements ActionListener {
         view.updateTotalBalance(totalBalance);
     }
 
+    /**
+     * Updates the company list with the database information
+     */
     public void updateCompanyList () {
         companyController.updateCompanyList(model.getCompaniesChange());
         this.view.registerCompanyController(companyController, model.getCompaniesChange());
@@ -138,6 +138,20 @@ public class MainController implements ActionListener {
         view.updateView(CARD_COMPANYDETAILS);
     }
 
+    /**
+     * Updates the profilw view with the database information
+     */
+    public void updateProfileView () {
+        view.updateProfileView(model.getUser());
+    }
+
+
+    /**
+     * Updates company and users value in the view
+     *
+     * @param totalBalance the new balance of the user
+     * @param companyId the company id
+     */
     public void updateViewsAfterPurchase(float totalBalance, int companyId) {
         model.updateUserBalance(totalBalance);
         view.updateTotalBalance(totalBalance);
@@ -153,11 +167,38 @@ public class MainController implements ActionListener {
         view.registerSharesController(sharesController, model.getSharesChange());
     }
 
+    /**
+     * Sends a SharesChangeList class when the user presses "Shares" option in the menu bar
+     */
     public void sendSharesChange(){
         TunnelObject info = new ShareChangeList();
         ((ShareChangeList) info).setUserId(model.getUser().getUserId());
         try {
             NetworkManager.getInstance().sendShareChange(info);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends a CompaniesChangeList class when the user presses "Companies list" option in the menu bar
+     */
+    public void sendCompaniesChange(){
+        try {
+            NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends a ProfileInfo class when the user presses "My Profile" option in the menu bar
+     */
+    public void sendUserProfileInfo(){
+        int userId = model.getUser().getUserId();
+        TunnelObject info = new UserProfileInfo(userId, "profileView");
+        try {
+            NetworkManager.getInstance().sendUserProfileInfo(info);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

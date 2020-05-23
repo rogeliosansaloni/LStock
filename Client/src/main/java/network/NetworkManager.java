@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import controller.CompanyDetailFocusController;
 import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
@@ -93,15 +94,16 @@ public class NetworkManager extends Thread {
      */
     private void initMainView(ArrayList<CompanyChange> companyChange) {
         model.setCompaniesChange(companyChange);
-        this.mainView = new MainView();
-        this.mainController = new MainController(mainView, model, loginView);
-        this.mainController.updateCompanyList();
-        this.mainView.registerMainController(mainController);
-        this.mainView.registerBalanceController(this.mainController.getBalanceController());
-        this.mainView.registerCompanyController(this.mainController.getCompanyController(), model.getCompaniesChange());
-        this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
-        this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
-        this.mainView.setVisible(true);
+        mainView = new MainView();
+        mainController = new MainController(mainView, model, loginView);
+        mainController.updateCompanyList();
+        mainView.registerMainController(mainController);
+        mainView.registerBalanceController(this.mainController.getBalanceController());
+        mainView.registerCompanyController(this.mainController.getCompanyController(), model.getCompaniesChange());
+        mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController(),
+                new CompanyDetailFocusController(this.mainView.getCompanyDetailsView()));
+        mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
+        mainView.setVisible(true);
     }
 
     /**
@@ -162,7 +164,7 @@ public class NetworkManager extends Thread {
         oos.writeObject(object);
     }
 
-    public void sendUserProfileInfo (TunnelObject object) throws IOException {
+    public void sendUserProfileInfo(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
@@ -210,6 +212,10 @@ public class NetworkManager extends Thread {
                     UserProfileInfo info = (UserProfileInfo) received;
                     if (info.getAction().equals("balance")) {
                         mainController.updateTotalBalance(info.getTotalBalance());
+                    } else if (info.getAction().equals("profileView")) {
+                        User user = mapper.userProfileInfoToUser(info);
+                        model.updateUserInfo(user);
+                        mainController.updateProfileView();
                     }
                 }
 
@@ -228,7 +234,7 @@ public class NetworkManager extends Thread {
                     ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
                     if (mainView == null) {
                         initMainView(companiesChange);
-                    } else{
+                    } else {
                         model.setCompaniesChange(companiesChange);
                         this.mainController.updateCompanyList();
                     }

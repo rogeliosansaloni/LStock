@@ -87,7 +87,7 @@ public class StockManager {
      * @return UserProfileInfo with the updated information of the user
      */
     public UserProfileInfo updateUserBalance(User user) {
-        userDao.updateUserBalance(user);
+        userDao.updateUserBalanceLoad(user);
         UserProfileInfo info = mapper.userToUserProfileInfo(user);
         info.setAction("balance");
         return info;
@@ -107,20 +107,34 @@ public class StockManager {
     }
 
     /**
+     * Gets the profile info of the user.
+     *
+     * @param user The user
+     * @return UserProfileInfo with the the update information of the user
+     */
+    public UserProfileInfo getUserProfileInfo(User user) {
+        userDao.getUserProfileInfo(user);
+        UserProfileInfo info = mapper.userToUserProfileInfo(user);
+        info.setAction("profileView");
+        return info;
+    }
+
+    /**
      * Creates a new share between company and user.
-     * @param user the user
+     *
+     * @param user    the user
      * @param company the company
      * @return ShareTrade with the new values of users total balance and company value
      */
-    public ShareTrade updatePurchaseBuy (User user, Company company, Purchase[] purchases, String action, String view) {
+    public ShareTrade updatePurchaseBuy(User user, Company company, Purchase[] purchases, String action, String view) {
         //Updates the user balance
         userDao.updateUserBalance(user);
         //If the acttion is Sell, we want to decrease the number of shares.
-        if(action.equals("BUY")){
+        if (action.equals("BUY")) {
             //Updates the purchased share
             shareDao.updatePurchasedShare(purchases[0]);
-        } else{
-            for(int i=0; i<purchases.length; i++){
+        } else {
+            for (int i = 0; i < purchases.length; i++) {
                 purchases[i].setShareQuantity(-purchases[i].getShareQuantity());
                 //Updates the purchased share
                 shareDao.updatePurchasedShare(purchases[i]);
