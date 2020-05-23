@@ -8,6 +8,9 @@ import view.TopTenCompaniesView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ *  Main Controller for the Server
+ */
 public class MainController implements ActionListener {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
@@ -21,6 +24,12 @@ public class MainController implements ActionListener {
     private TopTenController topTenController;
     //TODO: Add the rest con controllers
 
+    /**
+     * Creates and initializes MainController
+     * with the main views and controllers for Server
+     *
+     * @param view MainView
+     */
     public MainController(MainView view) {
         this.view = view;
         this.homeView = new HomeView();
@@ -50,6 +59,11 @@ public class MainController implements ActionListener {
         }
     }
 
+    /**
+     * Returns the HomeController
+     *
+     * @return HomeController
+     */
     public HomeController getHomeController() {
         return homeController;
     }
