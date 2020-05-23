@@ -50,13 +50,8 @@ public class MainController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "company":
-                try {
-                    NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                sendCompaniesChange();
                 view.updateView(CARD_COMPANY);
-                updateCompanyList();
                 break;
             case "profile":
                 sendUserProfileInfo();
@@ -166,11 +161,25 @@ public class MainController implements ActionListener {
         view.registerSharesController(sharesController, model.getSharesChange());
     }
 
+    /**
+     * Sends a SharesChangeList class when the user presses "Shares" option in the menu bar
+     */
     public void sendSharesChange(){
         TunnelObject info = new ShareChangeList();
         ((ShareChangeList) info).setUserId(model.getUser().getUserId());
         try {
             NetworkManager.getInstance().sendShareChange(info);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Sends a CompaniesChangeList class when the user presses "Companies list" option in the menu bar
+     */
+    public void sendCompaniesChange(){
+        try {
+            NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
         } catch (IOException ex) {
             ex.printStackTrace();
         }

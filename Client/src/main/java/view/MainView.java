@@ -253,6 +253,15 @@ public class MainView extends JFrame {
         addOptionBar(optionLogout);
     }
 
+    private void updateOptionsCompanyDetail() {
+        menuOptions.removeAll();
+        addOptionBar(optionProfile);
+        addOptionBar(optionCompany);
+        addOptionBar(optionShares);
+        addOptionBar(optionBalance);
+        addOptionBar(optionLogout);
+    }
+
     /**
      * Register controllers to Menu Bar
      *
@@ -326,6 +335,7 @@ public class MainView extends JFrame {
                 break;
             case CARD_COMPANYDETAILS:
                 cardLayout.show(jpCenter, CARD_COMPANYDETAILS);
+                updateOptionsCompanyDetail();
                 break;
         }
     }

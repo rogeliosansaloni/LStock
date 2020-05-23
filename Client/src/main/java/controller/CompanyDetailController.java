@@ -75,6 +75,7 @@ public class CompanyDetailController implements ActionListener {
                 }
                 break;
             case "back":
+                sendCompaniesChange();
                 view.updateView(CARD_COMPANY);
                 break;
         }
@@ -167,5 +168,16 @@ public class CompanyDetailController implements ActionListener {
             e1.printStackTrace();
         }
         // TODO: Refresh the textfield for selling actions after selling
+    }
+
+    /**
+     * Sends a CompaniesChangeList class when the user presses the back button
+     */
+    public void sendCompaniesChange(){
+        try {
+            NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

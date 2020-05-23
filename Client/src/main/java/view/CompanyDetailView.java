@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
@@ -22,6 +21,7 @@ public class CompanyDetailView extends JPanel {
     private JPanel jpRightCenter;
     private JPanel jpLeft;
     private JPanel jpShareList;
+    private JPanel jpRightBottom;
     private JButton jbBuy;
     private JButton jbSell;
     private JButton jbBack;
@@ -86,13 +86,17 @@ public class CompanyDetailView extends JPanel {
         jpRightTop.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
         jpRight.add(jpRightTop, BorderLayout.NORTH);
 
-        //Panel South
+        //Panel right center
         jpRightCenter = new JPanel();
         jpRightCenter.setLayout(new BorderLayout());
         jpRightCenter.setBackground(color.getBLACK());
         jpRightCenter.setAlignmentX(SwingConstants.CENTER);
         jpRightCenter.setPreferredSize(new Dimension(400, 300));
         jpRight.add(jpRightCenter, BorderLayout.CENTER);
+
+        jpRightBottom = new JPanel(new BorderLayout());
+        jpRightBottom.setBackground(color.getBLACK());
+        jpRightBottom.setAlignmentX(SwingConstants.CENTER);
 
         Font sellFont = new Font("Roboto", Font.BOLD, 25);
         //Sell button
@@ -101,18 +105,25 @@ public class CompanyDetailView extends JPanel {
         jbSell.setBackground(color.getWHITE());
         jbSell.setPreferredSize(new Dimension(400, 50));
         jbSell.setFont(sellFont);
+        jpRightBottom.add(jbSell, BorderLayout.NORTH);
+
+        JLabel fill = new JLabel();
+        fill.setPreferredSize(new Dimension(400, 10));
+        jpRightBottom.add(fill, BorderLayout.CENTER);
+
+        Font backFont = new Font("Roboto", Font.BOLD, 22);
+        jbBack = new JButton("BACK TO COMPANIES LIST");
+        jbBack.setActionCommand("back");
+        jbBack.setBackground(color.getWHITE());
+        jbBack.setPreferredSize(new Dimension(400, 35));
+        jbBack.setFont(backFont);
+        jpRightBottom.add(jbBack, BorderLayout.SOUTH);
+        jpRight.add(jpRightBottom, BorderLayout.SOUTH);
 
         //Left JPanel
         jpLeft = new JPanel(new BorderLayout());
         jpLeft.setBackground(color.getWHITE());
         jpLeft.setPreferredSize(new Dimension(600, this.getHeight()));
-
-        jbBack = new JButton("BACK");
-        jbBack.setActionCommand("back");
-        jbBack.setBackground(color.getWHITE());
-        jbBack.setPreferredSize(new Dimension(400, 50));
-        jbBack.setFont(sellFont);
-        jpRight.add(jbBack, BorderLayout.SOUTH);
 
         //Adding in the main panel
         this.add(jpRight, BorderLayout.EAST);
@@ -241,7 +252,8 @@ public class CompanyDetailView extends JPanel {
             jpScrollShares.setBackground(color.getBLACK());
             jpScrollShares.setPreferredSize(new Dimension(400, 300));
             jpRightCenter.add(jpScrollShares, BorderLayout.CENTER);
-            jpRightCenter.add(jbSell, BorderLayout.SOUTH);
+            jpRightCenter.revalidate();
+            jpRightCenter.repaint();
         }
     }
 
