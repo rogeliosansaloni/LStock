@@ -100,6 +100,15 @@ public class CompanyDetailController implements ActionListener {
     }
 
     /**
+     * Updates the model
+     *
+     * @param model new model updated
+     */
+    public void updateModel(StockManager model) {
+        this.model = model;
+    }
+
+    /**
      * Checks if the number introduced in the JTextfield is an integer or not
      *
      * @param text the text introduced

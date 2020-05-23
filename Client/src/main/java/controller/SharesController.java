@@ -34,9 +34,21 @@ public class SharesController implements ActionListener {
         }
     }
 
+    /**
+     * Updates the SharesView
+     */
     public void updateSharesView(){
         view.updateSharesView(model.getSharesChange());
         view.registerController(this, model.getSharesChange());
+    }
+
+    /**
+     * Updates the model
+     *
+     * @param model new model updated
+     */
+    public void updateModel(StockManager model) {
+        this.model = model;
     }
 
 }

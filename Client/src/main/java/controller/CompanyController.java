@@ -40,6 +40,15 @@ public class CompanyController implements ActionListener {
     }
 
     /**
+     * Updates the model
+     *
+     * @param model new model updated
+     */
+    public void updateModel(StockManager model) {
+        this.model = model;
+    }
+
+    /**
      * Sends a UserShares class to change into the CompanyDetailView
      */
     public void sendUserShares(int companyId) {

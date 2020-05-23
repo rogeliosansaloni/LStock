@@ -254,6 +254,7 @@ public class NetworkManager extends Thread {
                     } else if (info.getAction().equals("profileView")) {
                         User user = mapper.userProfileInfoToUser(info);
                         model.updateUserInfo(user);
+                        mainController.updateModel(model);
                         mainController.updateProfileView();
                     }
                 }
@@ -276,6 +277,7 @@ public class NetworkManager extends Thread {
                     } else {
                         reinitMainView(companiesChange);
                     }
+                    mainController.updateModel(model);
                     mainView.setVisible(true);
                 }
 
@@ -284,6 +286,7 @@ public class NetworkManager extends Thread {
                     ShareSellList sharesSells = ((DetailViewInfo) received).getShareSellList();
                     model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
                     model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
+                    mainController.updateModel(model);
                     mainController.updateCompanyDetails();
                 }
 
@@ -291,6 +294,7 @@ public class NetworkManager extends Thread {
                     ShareChangeList shares = (ShareChangeList) received;
                     ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
                     model.setSharesChange(sharesChange);
+                    mainController.updateModel(model);
                     mainController.updateShareView();
                 }
             }

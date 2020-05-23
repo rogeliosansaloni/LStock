@@ -92,10 +92,17 @@ public class MainController implements ActionListener {
     }
 
     /**
-     * Updates the new total balance of the user
+     * Updates the model
      *
-     * @param totalBalance new total balance
+     * @param model new model updated
      */
+    public void updateModel (StockManager model) {
+        this.model = model;
+        companyController.updateModel(this.model);
+        companyDetailController.updateModel(this.model);
+        sharesController.updateModel(this.model);
+    }
+
     public void updateTotalBalance (float totalBalance) {
         model.getUser().setTotalBalance(totalBalance);
         view.updateTotalBalance(totalBalance);
