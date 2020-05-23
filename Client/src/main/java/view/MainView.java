@@ -1,12 +1,18 @@
 package view;
 
+import model.entities.CompanyChange;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import model.entities.Company;
 
+/**
+ * Main view
+ */
 public class MainView extends JFrame {
 
     //logo de stock
@@ -41,6 +47,9 @@ public class MainView extends JFrame {
     private BalanceView jpBalanceView;
     private CompanyView jpCompanyView;
 
+    /**
+     * Creates and initializes the main view
+     */
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
@@ -69,7 +78,7 @@ public class MainView extends JFrame {
      */
     private void addToCardLayout() {
         jpCenter.add(jpCompanyView, CARD_COMPANY);
-        jpCenter.add(jpCompanyDetailsView,CARD_COMPANYDETAILS);
+        jpCenter.add(jpCompanyDetailsView, CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
         //TODO: Add the rest of views
     }
@@ -306,6 +315,10 @@ public class MainView extends JFrame {
         }
     }
 
+    public void updateCompanyList(ArrayList<CompanyChange> companies){
+        jpCompanyView.showCompanies(companies);
+    }
+
     /**
      * Gets amount selected from the Load Balance view
      *
@@ -326,14 +339,17 @@ public class MainView extends JFrame {
         labelBalance.setText("Balance: " + strDouble + " $");
     }
 
+    public void initFirstView (ArrayList<CompanyChange> companies) {
+        updateCompanyList(companies);
+    }
+
     /**
-     * Updates total balance of the user
+     * Updates total balance of the user in the header
      * @param totalBalance Current balance of the user
      */
     public void updateTotalBalance (float totalBalance) {
         String strDouble = String.format("%.2f", totalBalance);
         labelBalance.setText("Balance: " + strDouble + " $");
-        jpBalanceView.updateCurrentBalance(strDouble);
     }
 
     /**
@@ -367,5 +383,26 @@ public class MainView extends JFrame {
         jpBalanceView.updateCurrentBalance(strBalance);
         jpCompanyDetailsView.updateValue(strValue);
     }
+
+    /**
+     * Gets the Balance View
+     *
+     * @return Balance View
+     */
+    public BalanceView getBalanceView () { return jpBalanceView; }
+
+    /**
+     * Gets the company view
+     *
+     * @return Company View
+     */
+    public CompanyView getCompanyView() { return jpCompanyView; }
+
+    /**
+     * Gets the Company Details View
+     *
+     * @return Company Details View
+     */
+    public CompanyDetailView getCompanyDetailsView() { return jpCompanyDetailsView; }
 
 }

@@ -1,29 +1,37 @@
 package controller;
 
-import model.entities.AuthenticationInfo;
 import model.entities.StockManager;
 import model.entities.TunnelObject;
 import model.entities.UserProfileInfo;
 import network.NetworkManager;
-import view.MainView;
+import view.BalanceView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Controller for the balance view
+ */
 public class BalanceController implements ActionListener {
-    private MainView view;
+    private final static String LOAD = "Load";
+    private BalanceView view;
     private StockManager model;
 
-    public BalanceController(MainView view, StockManager model) {
+    /**
+     * Creates and initializes the controller and the Balance view
+     * @param view Balance view
+     * @param model StockManager
+     */
+    public BalanceController(BalanceView view, StockManager model) {
         this.view = view;
         this.model = model;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("load")) {
-            String amountStr = view.getBalanceAmount().replace("$", "");
+        if (e.getActionCommand().equals(LOAD)) {
+            String amountStr = view.getAmount().replace("$", "");
             float newAmount = Float.parseFloat(amountStr);
             int userId = model.getUser().getUserId();
             TunnelObject info = new UserProfileInfo(userId, newAmount, "balance");
@@ -33,14 +41,5 @@ public class BalanceController implements ActionListener {
                 ex.printStackTrace();
             }
         }
-    }
-
-    /**
-     * Updates the new total balance of the user
-     *
-     * @param totalBalance new total balance
-     */
-    public void updateTotalBalance(float totalBalance) {
-        view.updateTotalBalance(totalBalance);
     }
 }

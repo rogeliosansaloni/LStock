@@ -88,12 +88,15 @@ public class NetworkManager extends Thread {
     /**
      * Initializes the main view and its controller
      */
-    private void initMainView(ArrayList<Company> companies) {
-        model.setCompanies(companies);
+    private void initMainView(ArrayList<CompanyChange> companyChange) {
+        model.setCompaniesChange(companyChange);
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
+        this.mainView.initFirstView(model.getCompaniesChange());
         this.mainView.registerMainController(mainController);
+        this.mainView.registerCompanyController(this.mainController.getCompanyController());
         this.mainView.registerBalanceController(this.mainController.getBalanceController());
+        this.mainView.registerCompanyController(this.mainController.getCompanyController());
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
         this.mainView.setVisible(true);
@@ -108,8 +111,9 @@ public class NetworkManager extends Thread {
         this.loginController = new LoginController(loginView, registerView);
         this.registerController = new RegisterController(registerView, loginView);
         loginView.registerController(loginController);
+        loginView.registerFocusController();
         registerView.registerController(registerController);
-
+        registerView.registerFocusController();
         // We only show the login view as the first screen
         loginView.setVisible(true);
     }
@@ -185,7 +189,7 @@ public class NetworkManager extends Thread {
                             User user = mapper.authenticationInfoToUser((AuthenticationInfo) received);
                             model = new StockManager(user);
                             loginController.closeLoginView();
-                            NetworkManager.getInstance().sendTunnelObject(new CompanyList());
+                            NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
                         } else {
                             loginController.sendErrorMessage(info.getResponseType());
                         }
@@ -204,12 +208,13 @@ public class NetworkManager extends Thread {
                     mainController.updateCompanyUserValueAndBalance(info.getTotalBalance(), info.getSharePrice());
                 }
 
-                if (received instanceof CompanyList) {
-                    CompanyList companies = (CompanyList) received;
-                    //if (mainView == null) {
-                        initMainView(companyMapper.convertToCompanies(companies));
+                if (received instanceof CompanyChangeList) {
+                    CompanyChangeList companies = (CompanyChangeList) received;
+                    if (mainView == null) {
+                        initMainView(companyMapper.convertToCompaniesChange(companies));
+                        mainController.updateCompanyList();
                         mainView.setVisible(true);
-                    //}
+                    }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

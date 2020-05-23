@@ -5,10 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 
+import controller.BotsEditComboBoxController;
+import controller.BotsRemoveComboBoxController;
 import controller.MainController;
+import model.managers.BotManager;
 import utils.JSONReader;
 import view.MainView;
-
 
 public class Server extends Thread {
     private String ip;
@@ -19,6 +21,7 @@ public class Server extends Thread {
     private ServerConfiguration serverConfiguration;
     private MainView mainView;
     private MainController mainController;
+    private BotManager botModel;
 
     public Server() throws IOException {
         initServerConfiguration();
@@ -54,7 +57,6 @@ public class Server extends Thread {
         // Stop main server thread
         isOn = false;
         stopListening();
-        //model.disconnectFromDatabase();
         this.interrupt();
     }
 
@@ -62,11 +64,19 @@ public class Server extends Thread {
      * Initializes main view
      */
     public void initMainView () {
-        this.mainView = new MainView();
-        this.mainController = new MainController(mainView);
+        botModel = new BotManager();
+        mainView = new MainView();
+        mainController = new MainController(mainView, botModel);
         mainView.registerController(mainController);
-        this.mainView.registerHomeController(this.mainController.getHomeController());
-        this.mainView.setVisible(true);
+        mainView.registerHomeController(mainController.getHomeController());
+        mainView.registerBotMenuController(mainController.getBotMenuController());
+        mainView.registerBotCreateController(mainController.getBotsCreateController());
+        mainView.registerBotRemoveController(mainController.getBotsRemoveController(),
+                new BotsRemoveComboBoxController(mainView.getBotsRemoveView(), botModel));
+        mainView.registerBotListController(mainController.getBotsListController());
+        mainView.registerBotEditController(mainController.getBotsEditController(),
+                new BotsEditComboBoxController(mainView.getBotsEditView(), botModel));
+        mainView.setVisible(true);
     }
 
     public void run() {
@@ -88,12 +98,14 @@ public class Server extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
+    /**
+     * Stop listening and stop server connection for each dedicated server
+     */
     public void stopListening() {
-        // Paramos todos los servidores dedicados creados cuando ya no atendemos más peticiones
+        // Stop all dedicated servers when we are not listening to petitions
         for (DedicatedServer client : clients) {
             client.stopServerConnection();
         }
