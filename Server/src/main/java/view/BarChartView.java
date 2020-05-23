@@ -60,7 +60,7 @@ public class BarChartView extends JPanel {
 
         for (Top10 barTopten : topTen) {
             value = (int) barTopten.getPrice();
-            double height2 = (value/max)*chartheight;
+            double height2 = (value/max)*chartheight-30;
             height = (int) height2;
 
             xLeft = AXIS_OFFSET + counter * barWidth + barWidth/4;
@@ -69,7 +69,8 @@ public class BarChartView extends JPanel {
 
             g2.setColor(getRandomColor());
             g2.fill(rec);
-            g2.drawString(barTopten.getName() + Integer.toString(value), xLeft - 2,yTopLeft - 4);
+            g2.drawString(barTopten.getName(), xLeft - 2,yTopLeft - 15);
+            g2.drawString(Integer.toString(value) + "€", xLeft + 10,yTopLeft-2);
             counter++;
         }
         g2.setColor(original);
@@ -101,7 +102,6 @@ public class BarChartView extends JPanel {
 
     private Color getRandomColor() {
         Random rand = new Random();
-
         float r = rand.nextFloat();
         float g = rand.nextFloat();
         float b = rand.nextFloat();

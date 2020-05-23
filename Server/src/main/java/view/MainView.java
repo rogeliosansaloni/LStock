@@ -114,6 +114,7 @@ public class MainView extends JFrame {
         menuOptions.setBorder(null);
         menuBar.add(menuOptions);
 
+        //Option1
         option1 = new JMenuItem("Home");
         option1.setHorizontalAlignment(SwingConstants.CENTER);
         option1.setBackground(Color.WHITE);
@@ -138,7 +139,6 @@ public class MainView extends JFrame {
         option3.setFont(fontMenu);
         menuOptions.add(option3);
         jpMenu.add(menuBar, BorderLayout.CENTER);
-
         //Option4
         option4 = new JMenuItem("TOP 10 Companies");
         option4.setHorizontalAlignment(SwingConstants.CENTER);
