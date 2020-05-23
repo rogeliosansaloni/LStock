@@ -7,6 +7,7 @@ import view.SharesView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class SharesController implements ActionListener {
     private static final String SELL_ACTION = "SELL";
@@ -31,6 +32,11 @@ public class SharesController implements ActionListener {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
+    }
+
+    public void updateSharesView(){
+        view.updateSharesView(model.getSharesChange());
+        view.registerController(this, model.getSharesChange());
     }
 
 }

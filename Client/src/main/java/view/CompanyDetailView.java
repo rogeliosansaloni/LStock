@@ -228,6 +228,7 @@ public class CompanyDetailView extends JPanel {
         jpRightCenter.removeAll();
         jtBuyShares.setText("");
         if (sharesSell.size() > 0) {
+            jbSell.setVisible(true);
             jpShareList = new JPanel();
             jpShareList.removeAll();
             jpShareList.setLayout(new GridLayout(0, 3, 10, 10));
@@ -255,6 +256,8 @@ public class CompanyDetailView extends JPanel {
             jpRightCenter.add(jpScrollShares, BorderLayout.CENTER);
             jpRightCenter.revalidate();
             jpRightCenter.repaint();
+        } else{
+            jbSell.setVisible(false);
         }
     }
 
@@ -268,6 +271,9 @@ public class CompanyDetailView extends JPanel {
         jpShareList.add(label);
     }
 
+    /**
+     * Gets the text in the JTextfield of buy.
+     */
     public String getSharesBuy() {
         return jtBuyShares.getText();
     }
@@ -276,6 +282,9 @@ public class CompanyDetailView extends JPanel {
         jtBuyShares.setText(text);
     }
 
+    /**
+     * Gets the text in all the JTextfields of shares.
+     */
     public String[] getSharesSell() {
         String[] textFields = new String[jtSellShares.length];
         for (int i = 0; i < jtSellShares.length; i++) {
@@ -284,6 +293,9 @@ public class CompanyDetailView extends JPanel {
         return textFields;
     }
 
+    /**
+     * Shows a dialog depending on the error.
+     */
     public void showErrorTextfield(int error) {
         switch (error) {
             case 1:

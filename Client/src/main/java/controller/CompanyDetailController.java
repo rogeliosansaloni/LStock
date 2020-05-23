@@ -2,14 +2,16 @@ package controller;
 
 import model.entities.*;
 import network.NetworkManager;
+import view.CompanyDetailView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
- * Controller for the company detail view
+ * Controller for the company detail companyDetailView
  */
 public class CompanyDetailController implements ActionListener {
     private static final String CONFIRM_BUY_ACTION = "Do you want to buy these shares?";
@@ -19,17 +21,19 @@ public class CompanyDetailController implements ActionListener {
     private static final String SELL_ACTION = "SELL";
     private static final String VIEW = "CompanyDetail";
     private static final int CONFIRMED = 0;
-    private MainView view;
+    private MainView mainView;
+    private CompanyDetailView companyDetailView;
     private StockManager model;
 
     /**
-     * Creates and initializes the controller and the Main view
+     * Creates and initializes the controller and the Main companyDetailView
      *
-     * @param view  Main view
+     * @param companyDetailView  Main companyDetailView
      * @param model StockManager
      */
-    public CompanyDetailController(MainView view, StockManager model) {
-        this.view = view;
+    public CompanyDetailController(MainView mainView, CompanyDetailView companyDetailView, StockManager model) {
+        this.mainView = mainView;
+        this.companyDetailView = companyDetailView;
         this.model = model;
     }
 
@@ -38,7 +42,7 @@ public class CompanyDetailController implements ActionListener {
         String whichButton = e.getActionCommand();
         switch (whichButton) {
             case "buyShare":
-                String textfieldText = view.getNumSharesBuy();
+                String textfieldText = companyDetailView.getSharesBuy();
                 //Check if the text introduced is an integer
                 int numShares = checkInteger(textfieldText);
                 if (numShares > 0) {
@@ -46,40 +50,56 @@ public class CompanyDetailController implements ActionListener {
                     float userBalance = model.checkUserBalance(numShares);
                     if (userBalance > 0) {
                         //If user confirms to buy the share
-                        if (view.confirmAction(CONFIRM_BUY_ACTION) == CONFIRMED) {
+                        if (companyDetailView.confirmAction(CONFIRM_BUY_ACTION) == CONFIRMED) {
                             sendShareTradeBuy(numShares, userBalance);
                         }
                     } else {
-                        view.showErrorCompanyDetail(2);
+                        companyDetailView.showErrorTextfield(2);
                     }
                 } else {
-                    view.showErrorCompanyDetail(1);
+                    companyDetailView.showErrorTextfield(1);
                 }
                 break;
             case "sellShare":
-                String[] textShareSells = view.getNumSharesSell();
+                String[] textShareSells = companyDetailView.getSharesSell();
                 //Check if the text introduced is an integer
                 int[] numSharesSell = checkAllFields(textShareSells);
                 if (numSharesSell[0] == -1) {
-                    view.showErrorCompanyDetail(3);
+                    companyDetailView.showErrorTextfield(3);
                 } else if (numSharesSell[0] == -2) {
-                    view.showErrorCompanyDetail(4);
+                    companyDetailView.showErrorTextfield(4);
                 } else {
                     float userBalance = model.checkNumUserShares(numSharesSell);
                     if (userBalance > 0) {
-                        if (view.confirmAction(CONFIRM_SELL_ACTION) == CONFIRMED) {
+                        if (companyDetailView.confirmAction(CONFIRM_SELL_ACTION) == CONFIRMED) {
                             sendShareTradeSell(numSharesSell, userBalance);
                         }
                     } else {
-                        view.showErrorCompanyDetail(5);
+                        companyDetailView.showErrorTextfield(5);
                     }
                 }
                 break;
             case "back":
                 sendCompaniesChange();
-                view.updateView(CARD_COMPANY);
+                mainView.updateView(CARD_COMPANY);
                 break;
         }
+    }
+
+    /**
+     * Registers the controller for the CompanyDetailView
+     */
+    public void registerController(){
+        companyDetailView.registerController(this);
+        companyDetailView.registerFocusController(new CompanyDetailFocusController(companyDetailView));
+    }
+
+    /**
+     * Updates the CompanyDetailView
+     */
+    public void updateCompanyDetailView() {
+        companyDetailView.updateCompanyDetailView(model.getCompanyDetails(), model.getMaxDetailShareValue());
+        companyDetailView.updateSharesToSell(model.getSharesSell());
     }
 
     /**

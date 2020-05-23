@@ -285,23 +285,6 @@ public class MainView extends JFrame {
         return JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Log Out", JOptionPane.YES_NO_OPTION);
     }
 
-    public void registerCompanyDetailViewController(ActionListener controller, FocusListener focusController) {
-        jpCompanyDetailsView.registerController(controller);
-        jpCompanyDetailsView.registerFocusController(focusController);
-    }
-
-    public void registerBalanceController(ActionListener controller) {
-        jpBalanceView.registerController(controller);
-    }
-
-    public void registerCompanyController(ActionListener controller, ArrayList<CompanyChange> companies) {
-        jpCompanyView.registerController(controller, companies);
-    }
-
-    public void registerSharesController(ActionListener controller, ArrayList<ShareChange> shares) {
-        jpShares.registerController(controller, shares);
-    }
-
     /**
      * Shows desired view
      *
@@ -348,28 +331,6 @@ public class MainView extends JFrame {
         String text = "CURRENT PRICE: " + value + " €";
         labelCurrentPrice.setText(text);
         labelViewName.setText(companyName);
-    }
-
-    public String getNumSharesBuy() {
-        return jpCompanyDetailsView.getSharesBuy();
-    }
-
-    public String[] getNumSharesSell() {
-        return jpCompanyDetailsView.getSharesSell();
-    }
-
-    public void showErrorCompanyDetail(int error) {
-        jpCompanyDetailsView.showErrorTextfield(error);
-    }
-
-    public void updateCompanyList(ArrayList<CompanyChange> companies) {
-        jpCompanyView.showCompanies(companies);
-    }
-
-    public void updateCompanyDetailView(ArrayList<ShareSell> sharesSell, ArrayList<CompanyDetail> companyDetails, float maxValue) {
-
-        jpCompanyDetailsView.updateCompanyDetailView(companyDetails, maxValue);
-        jpCompanyDetailsView.updateSharesToSell(sharesSell);
     }
 
     /**
@@ -429,18 +390,6 @@ public class MainView extends JFrame {
      */
     public void showNoEnoughBalanceErrorMessage(String message) {
         jpCompanyDetailsView.showErrorMessage(message);
-    }
-
-
-    /**
-     * Update the user and the company new values in the view
-     *
-     * @param totalBalance new balance of the user
-     */
-    public void updateViewsAfterPurchase(float totalBalance) {
-        String strBalance = String.format("%.2f", totalBalance);
-        updateTotalBalance(totalBalance);
-        jpBalanceView.updateCurrentBalance(strBalance);
     }
 
     /**

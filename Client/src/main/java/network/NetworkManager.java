@@ -98,10 +98,6 @@ public class NetworkManager extends Thread {
         mainController = new MainController(mainView, model, loginView);
         mainController.updateCompanyList();
         mainView.registerMainController(mainController);
-        mainView.registerBalanceController(this.mainController.getBalanceController());
-        mainView.registerCompanyController(this.mainController.getCompanyController(), model.getCompaniesChange());
-        mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController(),
-                new CompanyDetailFocusController(this.mainView.getCompanyDetailsView()));
         mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
         mainView.setVisible(true);
     }

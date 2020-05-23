@@ -42,4 +42,10 @@ public class BalanceController implements ActionListener {
             }
         }
     }
+
+    public void registerController(){
+        this.view.registerController(this);
+    }
+
+
 }

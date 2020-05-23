@@ -42,8 +42,10 @@ public class MainController implements ActionListener {
         this.loginView = loginView;
         this.model = model;
         this.balanceController = new BalanceController(view.getBalanceView(), model);
-        this.companyController = new CompanyController(view, model);
-        this.companyDetailController = new CompanyDetailController(view, model);
+        this.balanceController.registerController();
+        this.companyController = new CompanyController(view.getCompanyView(), model);
+        this.companyDetailController = new CompanyDetailController(view, view.getCompanyDetailsView(), model);
+        this.companyDetailController.registerController();
         this.sharesController = new SharesController(view.getSharesView(), model);
     }
 
@@ -85,30 +87,12 @@ public class MainController implements ActionListener {
     }
 
     /**
-     * Returns the balance controller of the BalanceView
-     *
-     * @return balance controller
-     */
-    public BalanceController getBalanceController() {
-        return balanceController;
-    }
-
-    /**
      * Returns the company controller of the CompanyView
      *
      * @return company controller
      */
     public CompanyController getCompanyController() {
         return companyController;
-    }
-
-    /**
-     * Returns the shares controller of the SharesView
-     *
-     * @return shares controller
-     */
-    public SharesController getSharesController() {
-        return sharesController;
     }
 
     /**
@@ -125,15 +109,14 @@ public class MainController implements ActionListener {
      * Updates the company list with the database information
      */
     public void updateCompanyList () {
-        companyController.updateCompanyList(model.getCompaniesChange());
-        this.view.registerCompanyController(companyController, model.getCompaniesChange());
+        companyController.updateCompanyList();
     }
 
     /**
      * Updates the CompanyDetailView depending on the values received from the database
      */
     public void updateCompanyDetails () {
-        view.updateCompanyDetailView(model.getSharesSell(), model.getCompanyDetails(), model.getMaxDetailShareValue());
+        companyDetailController.updateCompanyDetailView();
         view.setTitleCompanyDetail(model.getCurrentShareValue(), model.getCompanyDetailName());
         view.updateView(CARD_COMPANYDETAILS);
     }
@@ -149,8 +132,7 @@ public class MainController implements ActionListener {
      * Updates the shares table in the SharesView
      */
     public void updateShareView () {
-        view.getSharesView().updateSharesView(model.getSharesChange());
-        view.registerSharesController(sharesController, model.getSharesChange());
+        sharesController.updateSharesView();
     }
 
     /**

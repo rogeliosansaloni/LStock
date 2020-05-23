@@ -2,6 +2,7 @@ package controller;
 
 import model.entities.*;
 import network.NetworkManager;
+import view.CompanyView;
 import view.MainView;
 
 import java.awt.event.ActionEvent;
@@ -12,10 +13,10 @@ import java.util.ArrayList;
 
 public class CompanyController implements ActionListener {
 
-    private MainView view;
+    private CompanyView view;
     private StockManager model;
 
-    public CompanyController(MainView view, StockManager model) {
+    public CompanyController(CompanyView view, StockManager model) {
         this.view = view;
         this.model = model;
     }
@@ -32,13 +33,15 @@ public class CompanyController implements ActionListener {
 
     /**
      * Proc that shows the companies on the view's table
-     *
-     * @param companies that contains the list of companies
      */
-    public void updateCompanyList(ArrayList<CompanyChange> companies) {
-        this.view.updateCompanyList(companies);
+    public void updateCompanyList() {
+        this.view.showCompanies(model.getCompaniesChange());
+        view.registerController(this, model.getCompaniesChange());
     }
 
+    /**
+     * Sends a UserShares class to change into the CompanyDetailView
+     */
     public void sendUserShares(int companyId) {
         TunnelObject userShares = new UserShares(model.getUser().getUserId(), companyId);
         try {
