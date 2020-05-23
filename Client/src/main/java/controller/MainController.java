@@ -145,20 +145,6 @@ public class MainController implements ActionListener {
         view.updateProfileView(model.getUser());
     }
 
-
-    /**
-     * Updates company and users value in the view
-     *
-     * @param totalBalance the new balance of the user
-     * @param companyId the company id
-     */
-    public void updateViewsAfterPurchase(float totalBalance, int companyId) {
-        model.updateUserBalance(totalBalance);
-        view.updateTotalBalance(totalBalance);
-        companyController.sendUserShares(companyId);
-        sendSharesChange();
-    }
-
     /**
      * Updates the shares table in the SharesView
      */

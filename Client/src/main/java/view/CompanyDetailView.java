@@ -226,6 +226,7 @@ public class CompanyDetailView extends JPanel {
 
     public void updateSharesToSell(ArrayList<ShareSell> sharesSell) {
         jpRightCenter.removeAll();
+        jtBuyShares.setText("");
         if (sharesSell.size() > 0) {
             jpShareList = new JPanel();
             jpShareList.removeAll();
