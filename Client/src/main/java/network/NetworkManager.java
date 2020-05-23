@@ -89,7 +89,7 @@ public class NetworkManager extends Thread {
      * Initializes the main view and its controller
      */
     private void initMainView(ArrayList<CompanyChange> companyChange) {
-        model.setCompaniesChange(companyChange);
+        initCompanies(companyChange);
         this.mainView = new MainView();
         this.mainController = new MainController(mainView, model, loginView);
         this.mainView.initFirstView(model.getCompaniesChange());
@@ -100,6 +100,15 @@ public class NetworkManager extends Thread {
         this.mainView.registerCompanyDetailViewController(this.mainController.getCompanyDetailController());
         this.mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
         this.mainView.setVisible(true);
+    }
+
+    private void initCompanies(ArrayList<CompanyChange> companyChange) {
+        model.setCompaniesChange(companyChange);
+    }
+
+    private void reinitMainView(ArrayList<CompanyChange> companyChange) {
+        initCompanies(companyChange);
+        mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
     }
 
     /**
@@ -160,7 +169,7 @@ public class NetworkManager extends Thread {
         oos.writeObject(object);
     }
 
-    public void sendUserProfileInfo (TunnelObject object) throws IOException {
+    public void sendUserProfileInfo(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
 
@@ -210,11 +219,15 @@ public class NetworkManager extends Thread {
 
                 if (received instanceof CompanyChangeList) {
                     CompanyChangeList companies = (CompanyChangeList) received;
+                    ArrayList<CompanyChange> companyChanges = companyMapper.convertToCompaniesChange(companies);
                     if (mainView == null) {
-                        initMainView(companyMapper.convertToCompaniesChange(companies));
-                        mainController.updateCompanyList();
-                        mainView.setVisible(true);
+                        initMainView(companyChanges);
+                    } else {
+                        reinitMainView(companyChanges);
                     }
+                    mainController.updateCompanyList();
+                    mainView.setVisible(true);
+
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
