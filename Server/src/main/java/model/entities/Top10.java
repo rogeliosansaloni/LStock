@@ -6,6 +6,14 @@ public class Top10 {
     private float price;
     private  int share_quantity;
 
+    /**
+     * Constructor for a Top10 Company
+     *
+     * @param company_id company identification
+     * @param name      company name
+     * @param price     current company share price
+     * @param share_quantity number of shares
+     */
     public Top10(int company_id, String name, float price, int share_quantity) {
         this.company_id = company_id;
         this.name = name;
@@ -13,6 +21,12 @@ public class Top10 {
         this.share_quantity = share_quantity;
     }
 
+    /**
+     * Constructor for a Top10 Company
+     *
+     * @param name      company name
+     * @param price     current company share price
+     */
     public Top10(String name, float price){
         this.name = name;
         this.price = price;
