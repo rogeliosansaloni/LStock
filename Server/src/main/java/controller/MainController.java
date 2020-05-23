@@ -85,6 +85,6 @@ public class MainController implements ActionListener {
                 topTenController.updateTopTenView();
             }
         };
-        timer.schedule(task,0,2000);
+        timer.schedule(task,0,60000);
     }
 }

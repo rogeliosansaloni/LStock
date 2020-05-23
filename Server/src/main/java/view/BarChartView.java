@@ -82,10 +82,11 @@ public class BarChartView extends JPanel {
             xLeft = AXIS_OFFSET + counter * barWidth + barWidth/4;
             yTopLeft = chartY - height;
             Rectangle rec = new Rectangle(xLeft, yTopLeft, barWidth/2, height);
-            g2.setColor(new Color(255, 102, 0));
+            g2.setColor(new Color(255, 147, 49));
             g2.fill(rec);
 
             //Add text tag for each Company
+            g2.setColor(new Color(15, 15, 15));
             g2.drawString(barTopten.getName(), xLeft - 2,yTopLeft - 15);
             g2.drawString(Integer.toString(value) + "€", xLeft + 10,yTopLeft-2);
             counter++;
