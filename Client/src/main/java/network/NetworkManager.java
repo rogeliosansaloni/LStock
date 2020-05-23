@@ -206,10 +206,11 @@ public class NetworkManager extends Thread {
         oos.writeObject(object);
     }
 
-    public void sendCurrentShares(TunnelObject object) throws IOException {
-        oos.writeObject(object);
-    }
-
+    /**
+     * Sends share change information
+     * @param object object that contains the the id of the user from who we want to obtain the shares
+     * @throws IOException
+     */
     public void sendShareChange(TunnelObject object) throws IOException {
         oos.writeObject(object);
     }
@@ -273,9 +274,9 @@ public class NetworkManager extends Thread {
                     if (mainView == null) {
                         initMainView(companiesChange);
                     } else {
-                        model.setCompaniesChange(companiesChange);
-                        this.mainController.updateCompanyList();
+                        reinitMainView(companiesChange);
                     }
+                    mainView.setVisible(true);
                 }
 
                 if (received instanceof DetailViewInfo) {
