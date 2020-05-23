@@ -13,10 +13,7 @@ import java.util.ArrayList;
  */
 public class TopTenCompaniesView extends JPanel {
     private static final String FONT = "Segoe UI";
-    private static final String FONT_BUTTON = "Segoe UI Semibold";
     private static final String TITLE = "Top 10 Companies";
-    private static final String SHARE = "SHARE";
-    private JButton jbShare;
     private BarChartView barchart;
 
     /**
@@ -38,17 +35,6 @@ public class TopTenCompaniesView extends JPanel {
         JPanel jpTitle = new JPanel(new FlowLayout());
         jpTitle.setBackground(color.getWHITE());
 
-        JPanel jpButtonAux = new JPanel( new FlowLayout());
-        jpButtonAux.setBackground(color.getWHITE());
-        Font buttonFont = new Font(FONT_BUTTON, Font.PLAIN, 20);
-        jbShare = new JButton(SHARE);
-        jbShare.setFont(buttonFont);
-        jbShare.setForeground(color.getBLACK());
-        jbShare.setBorder(null);
-        jbShare.setBackground(color.getYELLOW());
-        jbShare.setPreferredSize(new Dimension(200, 50));
-        jpButtonAux.add(jbShare);
-
         JPanel bar = new JPanel(new FlowLayout());
         bar.setBackground(color.getWHITE());
         barchart = new BarChartView();
@@ -59,7 +45,6 @@ public class TopTenCompaniesView extends JPanel {
         jpGeneral.add(jpTitle);
         bar.add(barchart);
         jpGeneral.add(bar);
-        jpGeneral.add(jpButtonAux);
 
         this.add(jpGeneral);
     }
