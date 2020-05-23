@@ -17,15 +17,12 @@ public class TopTenCompaniesView extends JPanel {
     private static final String TITLE = "Top 10 Companies";
     private static final String SHARE = "SHARE";
     private JButton jbShare;
-    private ArrayList<Top10> topTen;
     private BarChartView barchart;
 
     /**
      * Constructor for the TopTenCompaniesView
-     *
-     * @param topTen Input list with the Top Ten Companies
      */
-    public TopTenCompaniesView(ArrayList<Top10> topTen){
+    public TopTenCompaniesView(){
         StockColors color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
         this.setLayout(new GridLayout(1,1,0,0));
@@ -52,10 +49,9 @@ public class TopTenCompaniesView extends JPanel {
         jbShare.setPreferredSize(new Dimension(200, 50));
         jpButtonAux.add(jbShare);
 
-        this.topTen = topTen;
         JPanel bar = new JPanel(new FlowLayout());
         bar.setBackground(color.getWHITE());
-        barchart = new BarChartView(topTen);
+        barchart = new BarChartView();
         barchart.setBorder(BorderFactory.createEmptyBorder(180,500,180,500));
         barchart.setBackground(color.getWHITE());
 
@@ -66,5 +62,9 @@ public class TopTenCompaniesView extends JPanel {
         jpGeneral.add(jpButtonAux);
 
         this.add(jpGeneral);
+    }
+
+    public void showTopTen(ArrayList<Top10> topTenCompanies) {
+        barchart.setTopTen(topTenCompanies);
     }
 }

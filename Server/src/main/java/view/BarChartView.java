@@ -22,11 +22,8 @@ public class BarChartView extends JPanel {
     /**
      * Contructor for the BarChart
      *
-     * @param topTen List with the Top 10 Companies
      */
-    public BarChartView (ArrayList<Top10> topTen) {
-       this.topTen = topTen;
-    }
+    public BarChartView () {}
 
     /**
      * Draws the components
@@ -137,5 +134,9 @@ public class BarChartView extends JPanel {
         float b = rand.nextFloat();
 
         return new Color(r, g, b);
+    }
+
+    public void setTopTen(ArrayList<Top10> topTen) {
+        this.topTen = topTen;
     }
 }

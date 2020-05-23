@@ -27,7 +27,8 @@ public class MainController implements ActionListener {
         this.homeController = new HomeController(view);
         this.sharesListView = new SharesListView();
         this.topTenController = new TopTenController();
-        this.topTenView = new TopTenCompaniesView(this.topTenController.getTopTenCompanies());
+        this.topTenView = new TopTenCompaniesView();
+        this.topTenView.showTopTen(this.topTenController.getTopTenCompanies());
         this.view.addToCardLayout(this.homeView, this.sharesListView,this.topTenView);
         //TODO: Initialize controllers
     }

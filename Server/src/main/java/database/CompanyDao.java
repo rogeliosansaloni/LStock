@@ -8,6 +8,7 @@ import model.entities.Top10;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Represents the DAO for the Company table
@@ -209,10 +210,7 @@ public class CompanyDao {
                 ));
             }
             //Reverse the List Order
-            for (int i = top10List.size() - 1; i >= 0; i--) {
-                top10List.add(top10List.get(i));
-                top10List.remove(i);
-            }
+            Collections.reverse(top10List);
         } catch (SQLException e) {
             System.out.println(TOPTEN_MESSAGE);
         }

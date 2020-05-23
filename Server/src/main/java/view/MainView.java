@@ -43,27 +43,15 @@ public class MainView extends JFrame {
         this.setLayout(new BorderLayout());
         this.setResizable(false);
         initUI();
-//        initAllViews();
     }
-
-//    /**
-//     * Initializes all views
-//     */
-//    public void initAllViews() {
-//        jpHomeView = new HomeView();
-//        jpSharesView = new SharesListView();
-//        jpTopTenCompaniesView = new TopTenCompaniesView();
-//        //TODO: Add the rest of views
-//        addToCardLayout();
-//    }
 
     /**
      * Add diferent views to layout
      */
     public void addToCardLayout(HomeView homeView, SharesListView sharesView, TopTenCompaniesView topTenCompaniesView) {
-        this.jpHomeView = homeView;
-        this.jpSharesView = sharesView;
-        this.jpTopTenCompaniesView = topTenCompaniesView;
+        jpHomeView = homeView;
+        jpSharesView = sharesView;
+        jpTopTenCompaniesView = topTenCompaniesView;
         jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
         jpCenter.add(jpHomeView, CARD_HOME);
         jpCenter.add(jpSharesView, CARD_USERS);
