@@ -1,10 +1,8 @@
 package controller;
 
 import model.entities.AuthenticationInfo;
-import model.entities.TunnelObject;
 import network.NetworkManager;
 import view.LoginView;
-import view.MainView;
 import view.RegisterView;
 
 import java.awt.event.ActionEvent;
@@ -23,7 +21,6 @@ public class LoginController implements ActionListener {
     private static final String PASSWORD_LABEL = "Password";
     private LoginView loginView;
     private RegisterView registerView;
-    private MainView view;
 
     /**
      * Initializes login controller and views
