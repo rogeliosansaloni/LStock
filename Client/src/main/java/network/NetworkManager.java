@@ -125,7 +125,7 @@ public class NetworkManager extends Thread {
         initCompanies(companyChange);
 
         // Initialize the first view for the new user
-        mainController.updateCompanyList();
+        mainController.startAtCompanyList();
 
         // Refresh the header information with new user information
         mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());

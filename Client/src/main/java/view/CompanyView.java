@@ -21,7 +21,9 @@ public class CompanyView extends JPanel {
         this.setLayout(new BorderLayout());
         jpTable = new JPanel();
         jpTable.setBackground(color.getBLACK());
+        jpTable.setLayout(new GridLayout(0, 4, 20, 20));
         jpScroll = new JScrollPane(jpTable);
+        jpScroll.setBackground(color.getBLACK());
         this.add(jpScroll, BorderLayout.CENTER);
         this.setBorder(BorderFactory.createEmptyBorder(50, 20, 50, 20));
         this.setBackground(color.getBLACK());
@@ -69,10 +71,7 @@ public class CompanyView extends JPanel {
     }
 
     public void showCompanies(ArrayList<CompanyChange> companies) {
-        jpTable = new JPanel();
-        jpTable.setBackground(color.getBLACK());
-        // Create a row for each company available
-        jpTable.setLayout(new GridLayout(0, 4, 20, 20));
+        jpTable.removeAll();
         createColumnLabel("COMPANY");
         createColumnLabel("PRICE 1");
         createColumnLabel("CHANGE (5 min)");
@@ -92,7 +91,7 @@ public class CompanyView extends JPanel {
                 createDataLabel(companies.get(i).getChangePer() + "%", color.getWHITE(), i, 3);
             }
         }
-        jpScroll = new JScrollPane(jpTable);
-        this.add(jpScroll, BorderLayout.CENTER);
+        jpScroll.revalidate();
+        jpScroll.repaint();
     }
 }

@@ -119,6 +119,14 @@ public class MainController implements ActionListener {
     }
 
     /**
+     * Updates the company list with the database information
+     */
+    public void startAtCompanyList () {
+        companyController.updateCompanyList();
+        view.updateView(CARD_COMPANY);
+    }
+
+    /**
      * Updates the CompanyDetailView depending on the values received from the database
      */
     public void updateCompanyDetails () {
