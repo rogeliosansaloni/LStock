@@ -136,6 +136,7 @@ public class CompanyDetailView extends JPanel {
     }
 
     public void updateCompanyDetailView(ArrayList<CompanyDetail> companyDetails, float maxTotalValue){
+        jpLeft.removeAll();
         updateNumberShares(companyDetails.get(0).getNumUserShares());
         int widthGraph = jpLeft.getWidth() - 20;
         int heightGraph = jpLeft.getHeight() -70;
