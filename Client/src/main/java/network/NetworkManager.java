@@ -278,6 +278,7 @@ public class NetworkManager extends Thread {
                     }
                     model.setCompaniesChange(companiesChange);
                     mainController.updateModel(model);
+                    mainController.updateCompanyList();
                     mainView.setVisible(true);
                 }
 

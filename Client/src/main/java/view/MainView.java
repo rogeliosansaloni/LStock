@@ -1,16 +1,12 @@
 package view;
 
-import model.entities.CompanyChange;
 import model.entities.*;
 import utils.StockColors;
-import model.entities.ShareChange;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
-import java.util.ArrayList;
 
 /**
  * Main view
@@ -22,6 +18,7 @@ public class MainView extends JFrame {
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
     private static final String PATH_ARROW_ICON = "/Images/dropdown-grey.png";
     private static final String TITLE = "StockLS - C2";
+    private String currentView = "";
     private static final String CARD_COMPANY = "Companies";
     private static final String CARD_COMPANYDETAILS = "Company Details";
     private static final String CARD_PROFILE = "My Profile";
@@ -293,31 +290,34 @@ public class MainView extends JFrame {
      */
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
-        if (!card.equals(CARD_COMPANYDETAILS)) {
-            labelCurrentPrice.setText("");
-        }
+        labelCurrentPrice.setText("");
         switch (card) {
             case CARD_COMPANY:
+                currentView = CARD_COMPANY;
                 labelViewName.setText(CARD_COMPANY);
                 cardLayout.show(jpCenter, CARD_COMPANY);
                 updateOptionsCompany();
                 break;
             case CARD_PROFILE:
+                currentView = CARD_PROFILE;
                 labelViewName.setText(CARD_PROFILE);
                 cardLayout.show(jpCenter, CARD_PROFILE);
                 updateOptionsProfile();
                 break;
             case CARD_SHARES:
+                currentView = CARD_SHARES;
                 labelViewName.setText(CARD_SHARES);
                 cardLayout.show(jpCenter, CARD_SHARES);
                 updateOptionsShares();
                 break;
             case CARD_BALANCE:
+                currentView = CARD_BALANCE;
                 labelViewName.setText(CARD_BALANCE);
                 cardLayout.show(jpCenter, CARD_BALANCE);
                 updateOptionsBalance();
                 break;
             case CARD_COMPANYDETAILS:
+                currentView = CARD_COMPANYDETAILS;
                 cardLayout.show(jpCenter, CARD_COMPANYDETAILS);
                 updateOptionsCompanyDetail();
                 break;
@@ -329,9 +329,12 @@ public class MainView extends JFrame {
      */
 
     public void setTitleCompanyDetail(float value, String companyName) {
-        String text = "CURRENT PRICE: " + value + " €";
-        labelCurrentPrice.setText(text);
-        labelViewName.setText(companyName);
+        if(currentView == CARD_COMPANYDETAILS){
+            String text = "CURRENT PRICE: " + value + " €";
+            labelCurrentPrice.setText(text);
+            labelViewName.setText(companyName);
+        }
+
     }
 
     /**
