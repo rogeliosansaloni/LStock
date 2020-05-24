@@ -24,6 +24,9 @@ public class StockManager {
     private UserMapperImpl mapper;
     private ShareMapperImpl shareMapper;
 
+    /**
+     * Constructor for a StockManager
+     */
     public StockManager() {
         connector = new DBConnector();
         userDao = new UserDao(connector);
@@ -32,6 +35,20 @@ public class StockManager {
         mapper = new UserMapperImpl();
         shareMapper = new ShareMapperImpl();
         connector.connect();
+    }
+
+    /**
+     * Constructor for a StockManager
+     *
+     * @param userDao Dao for the User Table
+     * @param companyDao Dao for the Company Table
+     */
+    public StockManager(UserDao userDao, CompanyDao companyDao) {
+        this.userDao = userDao;
+        this.companyDao = companyDao;
+        this.companies = new ArrayList<Company>();
+        this.companiesChange = new ArrayList<CompanyChange>();
+        this.sharesChange = new ArrayList<ShareChange>();
     }
 
     /**
@@ -144,15 +161,36 @@ public class StockManager {
         return info;
     }
 
+    /**
+     * Returns an Arraylist with all the companies
+     *
+     * @return ArrayList<Company> with all the companies
+     */
     public ArrayList<Company> getCompanies() {
         companies = companyDao.getAllCompanies();
         return companies;
     }
 
+    /**
+     * Gets all the companies in the LStock, with their name, current share price and
+     * the difference between the current price and the one that had 5 minutes ago
+     *
+     * @return ArrayList<CompanyChange> a list of the information mentioned before
+     */
     public ArrayList<CompanyChange> getCompaniesChange() {
         companiesChange = companyDao.getCompaniesChange();
         return companiesChange;
     }
+
+    /**
+     * Returns an Arraylist with the Top 10 Companies in share value
+     *
+     * @return ArrayList<Top10> with Top 10 Companies
+     */
+    public ArrayList<Top10> getTopTenlist(){
+        return companyDao.getTopTen();
+    }
+
 
     public ArrayList<ShareChange> getSharesChange(int userId) {
         sharesChange = shareDao.getSharesChange(userId);
