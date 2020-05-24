@@ -1,40 +1,48 @@
 package controller;
 
-import model.managers.BotManager;
+import view.HomeView;
 import view.MainView;
+import view.SharesListView;
+import view.TopTenCompaniesView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
- * Main controller for the Client
+ *  Main Controller for the Server
  */
 public class MainController implements ActionListener {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
+    private static final String CARD_TOPTEN = "Top 10 Companies";
     private final MainView view;
-    private BotManager botModel;
+    private HomeView homeView;
+    private final SharesListView sharesListView;
+    private final TopTenCompaniesView topTenView;
     private HomeController homeController;
-    private BotMenuController botMenuController;
-    private BotsCreateController botsCreateController;
-    private BotsListController botsListController;
-    private BotsRemoveController botsRemoveController;
-    private BotsEditController botsEditController;
+    private TopTenController topTenController;
+    //TODO: Add the rest con controllers
 
     /**
-     * Creates and initializes the controller
-     * @param view Main client view
+     * Creates and initializes MainController
+     * with the main views and controllers for Server
+     *
+     * @param view MainView
      */
-    public MainController(MainView view, BotManager botModel) {
+    public MainController(MainView view) {
         this.view = view;
-        this.botModel = botModel;
+        this.homeView = new HomeView();
         this.homeController = new HomeController(view);
-        this.botMenuController = new BotMenuController(this, view);
-        this.botsCreateController = new BotsCreateController(view.getBotsCreateView(), view, botModel);
-        this.botsRemoveController = new BotsRemoveController(view.getBotsRemoveView(), view, botModel);
-        this.botsListController = new BotsListController(view, view.getBotsListView(), botModel);
-        this.botsEditController = new BotsEditController(view.getBotsEditView(), view, botModel);
+        this.sharesListView = new SharesListView();
+        this.topTenView = new TopTenCompaniesView();
+        this.topTenController = new TopTenController(topTenView);
+        this.topTenView.showTopTen(this.topTenController.getTopTenCompanies());
+        this.view.addToCardLayout(this.homeView, this.sharesListView,this.topTenView);
+        updateTopTen();
+        //TODO: Initialize controllers
     }
 
     @Override
@@ -47,18 +55,35 @@ public class MainController implements ActionListener {
                 view.updateView(CARD_USERS);
                 break;
             case CARD_BOTS:
-                view.updateView(CARD_BOTS);
+                break;
+            case CARD_TOPTEN:
+                view.updateView(CARD_TOPTEN);
                 break;
         }
     }
 
     /**
-     * Gets home controller
+     * Returns the HomeController
      *
      * @return HomeController
      */
     public HomeController getHomeController() {
         return homeController;
+    }
+
+    /**
+     * Updates de Top 10 Company list after
+     * a desired time value
+     */
+    public void updateTopTen(){
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                topTenController.updateTopTenView();
+            }
+        };
+        timer.schedule(task,0,1000);
     }
 
     /**

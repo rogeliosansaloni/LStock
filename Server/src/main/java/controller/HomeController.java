@@ -15,7 +15,7 @@ public class HomeController implements ActionListener {
 
     /**
      * Creates and initializes the controller
-     * @param view Client main view
+     * @param view Server main view
      */
     public HomeController (MainView view) {
         this.view = view;
