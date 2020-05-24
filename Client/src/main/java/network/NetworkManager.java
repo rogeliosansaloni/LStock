@@ -39,7 +39,6 @@ public class NetworkManager extends Thread {
     private CompanyMapperImpl companyMapper;
     private ShareMapperImpl shareMapper;
     private StockManager model;
-    private ClientThread clientThread;
 
     /**
      * Represents a Singleton
@@ -67,8 +66,6 @@ public class NetworkManager extends Thread {
         // Get Network configuration from JSON
         JSONReader jsonReader = new JSONReader();
         configuration = jsonReader.getClientConfiguration();
-
-        ClientThread.getInstance().startServerConnection();
 
         // Set up the connection to the server
         this.serverSocket = new Socket(configuration.getIp(), configuration.getPort()); // pass ip and port from NetworkConfiguration
