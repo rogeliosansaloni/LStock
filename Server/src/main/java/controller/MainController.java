@@ -25,7 +25,9 @@ public class MainController implements ActionListener {
     private BotsRemoveView jpBotsRemoveView;
     private BotsListView jpBotsListView;
     private BotsEditView jpBotsEditView;
+    private BotManager botModel;
     private HomeController homeController;
+    private SharesListController sharesController;
     private TopTenController topTenController;
     private BotMenuController botMenuController;
     private BotsCreateController botsCreateController;
@@ -46,6 +48,9 @@ public class MainController implements ActionListener {
         this.homeView = new HomeView();
         this.homeController = new HomeController(view);
         this.sharesListView = new SharesListView();
+        this.homeController = new HomeController(view);
+        this.sharesController = new SharesListController(this.sharesListView);
+        this.sharesListView.registerController(this.sharesController);
         this.topTenView = new TopTenCompaniesView();
         this.jpMenuBots = new BotMenuView();
         this.jpBotsCreateView = new BotsCreateView();
@@ -60,8 +65,8 @@ public class MainController implements ActionListener {
         this.botsRemoveController = new BotsRemoveController(jpBotsRemoveView, view, botModel);
         this.botsListController = new BotsListController(view,jpBotsListView,botModel);
         this.botsEditController = new BotsEditController(jpBotsEditView,view,botModel);
+        this.view.addToCardLayout(homeView,sharesListView,topTenView,jpMenuBots,jpBotsCreateView,jpBotsRemoveView,jpBotsListView,jpBotsEditView);
         updateTopTen();
-        //TODO: Initialize controllers
     }
 
     @Override
@@ -71,6 +76,7 @@ public class MainController implements ActionListener {
                 view.updateView(CARD_HOME);
                 break;
             case CARD_USERS:
+                this.sharesController.loadUsers();
                 view.updateView(CARD_USERS);
                 break;
             case CARD_BOTS:

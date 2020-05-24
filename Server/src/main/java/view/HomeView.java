@@ -38,7 +38,6 @@ public class HomeView extends JPanel {
 
         jpButtons.add(jbUsers);
         jpButtons.add(jbBots);
-
         this.add(jpButtons);
     }
 

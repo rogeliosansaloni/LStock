@@ -78,9 +78,7 @@ public class MainView extends JFrame {
         jpCenter.add(jpBotsRemoveView, CARD_BOTS_REMOVE);
         jpCenter.add(jpBotsListView, CARD_BOTS_LIST);
         jpCenter.add(jpBotsEditView, CARD_BOTS_EDIT);
-
-
-        //TODO: Add the rest of views
+        jpCenter.add(jpSharesView, CARD_USERS);
     }
 
     /**
