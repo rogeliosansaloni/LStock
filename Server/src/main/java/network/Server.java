@@ -4,6 +4,7 @@ import controller.BotsEditComboBoxController;
 import controller.BotsRemoveComboBoxController;
 import controller.MainController;
 import model.managers.BotManager;
+import model.managers.StockManager;
 import utils.JSONReader;
 import view.MainView;
 
@@ -22,6 +23,7 @@ public class Server extends Thread {
     private MainView mainView;
     private MainController mainController;
     private BotManager botModel;
+    private StockManager stockModel;
 
     public Server() throws IOException {
         initServerConfiguration();
@@ -65,6 +67,7 @@ public class Server extends Thread {
      */
     public void initMainView () {
         botModel = new BotManager();
+        stockModel = new StockManager();
         mainView = new MainView();
         mainController = new MainController(mainView, botModel);
         mainView.registerController(mainController);
@@ -88,7 +91,7 @@ public class Server extends Thread {
                 Socket clientSocket = sSocket.accept();
 
                 // Create dedicated server to attend to the client
-                DedicatedServer client = new DedicatedServer(clientSocket);
+                DedicatedServer client = new DedicatedServer(clientSocket, stockModel);
                 clients.add(client);
                 for (DedicatedServer c : clients) {
                     c.setClients(clients);

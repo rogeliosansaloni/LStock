@@ -42,6 +42,7 @@ public class BotManager {
     public int createBot(Bot bot) {
         Company company = companyDao.getCompanyByName(bot.getCompany().getName());
         bot.setCompany(company);
+        //bot.start();
         return botDao.createBot(bot);
     }
 

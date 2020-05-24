@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DedicatedServer extends Thread {
-    private static final String BUY_ACTION = "BUY";
-    private static final String SELL_ACTION = "SELL";
     private boolean isOn;
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -32,9 +30,9 @@ public class DedicatedServer extends Thread {
      *
      * @param sClient client socket
      */
-    public DedicatedServer(Socket sClient) {
+    public DedicatedServer(Socket sClient, StockManager stockModel) {
         this.sClient = sClient;
-        this.stockModel = new StockManager();
+        this.stockModel = stockModel;
         this.mapper = new UserMapperImpl();
         this.companyMapper = new CompanyMapperImpl();
         this.shareMapper = new ShareMapperImpl();

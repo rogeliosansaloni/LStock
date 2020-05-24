@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Represents a Bot
  */
-public class Bot implements Runnable {
+public class Bot extends Thread {
     private static final String TRANSACTION_MESSAGE = "Bot %d has made a %s transaction.";
     private int botId;
     private float activeTime;
