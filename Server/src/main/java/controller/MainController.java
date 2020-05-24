@@ -7,7 +7,6 @@ import view.TopTenCompaniesView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -81,10 +80,9 @@ public class MainController implements ActionListener {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("new stonks loaded! "+ new Date());
                 topTenController.updateTopTenView();
             }
         };
-        timer.schedule(task,0,60000);
+        timer.schedule(task,0,1000);
     }
 }
