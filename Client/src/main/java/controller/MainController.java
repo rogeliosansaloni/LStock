@@ -44,7 +44,7 @@ public class MainController implements ActionListener {
         this.balanceController = new BalanceController(view.getBalanceView(), model);
         this.balanceController.registerController();
         this.companyController = new CompanyController(view.getCompanyView(), model, view);
-        this.companyDetailController = new CompanyDetailController(view.getCompanyDetailsView(), model);
+        this.companyDetailController = new CompanyDetailController(view, view.getCompanyDetailsView(), model);
         this.companyDetailController.registerController();
         this.sharesController = new SharesController(view.getSharesView(), model);
     }

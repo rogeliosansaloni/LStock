@@ -23,14 +23,16 @@ public class CompanyDetailController implements ActionListener {
     private static final int CONFIRMED = 0;
     private CompanyDetailView companyDetailView;
     private StockManager model;
+    private MainView mainView;
 
     /**
      * Creates and initializes the controller and the Main companyDetailView
-     *
+     * @param mainView MainView
      * @param companyDetailView  Main companyDetailView
      * @param model StockManager
      */
-    public CompanyDetailController(CompanyDetailView companyDetailView, StockManager model) {
+    public CompanyDetailController(MainView mainView, CompanyDetailView companyDetailView, StockManager model) {
+        this.mainView = mainView;
         this.companyDetailView = companyDetailView;
         this.model = model;
     }
@@ -79,6 +81,7 @@ public class CompanyDetailController implements ActionListener {
                 break;
             case "back":
                 sendCompaniesChange();
+                mainView.updateView(CARD_COMPANY);
                 break;
         }
     }
