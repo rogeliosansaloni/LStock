@@ -4,7 +4,6 @@ import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -19,13 +18,12 @@ public class BalanceView extends JPanel {
     private JLabel jlCurrent;
     private JButton jbLoad;
     private JComboBox<String> jcbAmount;
-    protected StockColors color;
 
     /**
      * Creates the balance view
      */
     public BalanceView () {
-        color = new StockColors();
+        StockColors color = new StockColors();
         //Balance
         this.setBackground(color.getBLACK());
         this.setLayout(new GridLayout(3,1));
@@ -40,7 +38,7 @@ public class BalanceView extends JPanel {
 
         JPanel jpMoney = new JPanel(new FlowLayout());
         jpMoney.setBackground(color.getBLACK());
-        String amount[] = {"10.00$", "20.00$", "30.00$", "40.00$"};
+        String[] amount = {"10.00$", "20.00$", "30.00$", "40.00$"};
         jcbAmount = new JComboBox<>(amount);
         Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
         jcbAmount.setFont(fontOptions);
@@ -86,7 +84,18 @@ public class BalanceView extends JPanel {
         return jcbAmount.getSelectedItem().toString();
     }
 
+    /**
+     * Update the current balance
+     * @param amount new amount
+     */
     public void updateCurrentBalance (String amount) {
         jlCurrent.setText("You have: " + amount + "$");
+    }
+
+    /**
+     * Shows first option in the list
+     */
+    public void refreshComboboxBalance() {
+        jcbAmount.setSelectedIndex(0);
     }
 }

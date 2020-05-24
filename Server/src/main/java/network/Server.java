@@ -1,16 +1,16 @@
 package network;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.LinkedList;
-
 import controller.BotsEditComboBoxController;
 import controller.BotsRemoveComboBoxController;
 import controller.MainController;
 import model.managers.BotManager;
 import utils.JSONReader;
 import view.MainView;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.LinkedList;
 
 public class Server extends Thread {
     private String ip;
@@ -90,7 +90,9 @@ public class Server extends Thread {
                 // Create dedicated server to attend to the client
                 DedicatedServer client = new DedicatedServer(clientSocket);
                 clients.add(client);
-
+                for (DedicatedServer c : clients) {
+                    c.setClients(clients);
+                }
                 System.out.println("Client has connected correctly!");
 
                 // Start dedicated server for the client

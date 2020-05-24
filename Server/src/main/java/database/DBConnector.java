@@ -103,6 +103,21 @@ public class DBConnector {
 
     }
 
+    public void callProcedure(String query) {
+        try {
+            s = (Statement) conn.createStatement();
+            s.executeQuery(query);
+
+        } catch (SQLException ex) {
+            System.out.println("Delete KO" + ex.getSQLState());
+            System.out.println("Query: " + query);
+            System.err.println(ex);
+        }
+
+    }
+
+
+
     public void disconnect() {
         try {
             conn.close();

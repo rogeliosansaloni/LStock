@@ -8,60 +8,6 @@ import java.util.ArrayList;
 public class ShareMapperImpl implements ShareMapper {
 
     @Override
-    public Purchase[] shareTradeToPurchase(ShareTrade shareTrade) {
-        int numPurchases = shareTrade.getShareId().length;
-        Purchase[] purchases = new Purchase[numPurchases];
-        for(int i=0; i<numPurchases; i++){
-            purchases[i] = new Purchase();
-            purchases[i].setUserId(shareTrade.getUserId());
-            purchases[i].setCompanyId(shareTrade.getCompanyId());
-            purchases[i].setShareId(shareTrade.getShareId()[i]);
-            purchases[i].setShareQuantity(shareTrade.getNumShares()[i]);
-        }
-        return purchases;
-    }
-
-    @Override
-    public User shareTradeToUser(ShareTrade shareTrade) {
-        User user = new User();
-        user.setUserId(shareTrade.getUserId());
-        user.setTotalBalance(shareTrade.getTotalBalance());
-        return user;
-    }
-
-    @Override
-    public ShareTrade userToShareTrade (User user) {
-        ShareTrade shareTrade = new ShareTrade();
-        shareTrade.setUserId(user.getUserId());
-        shareTrade.setTotalBalance(user.getTotalBalance());
-        return  shareTrade;
-    }
-
-    @Override
-    public Company shareTradeToCompany (ShareTrade shareTrade) {
-        Company company = new Company();
-        company.setCompanyId(shareTrade.getCompanyId());
-        company.setValue(shareTrade.getSharePrice()[0]);
-        return company;
-    }
-
-    @Override
-    public ShareTrade companyToShareTrade (Company company) {
-        ShareTrade shareTrade = new ShareTrade();
-        shareTrade.setCompanyId(company.getCompanyId());
-        return shareTrade;
-    }
-
-    @Override
-    public ShareTrade userCompanyToShareTrade (User user, Company company) {
-        ShareTrade shareTrade = new ShareTrade();
-        shareTrade.setUserId(user.getUserId());
-        shareTrade.setTotalBalance(user.getTotalBalance());
-        shareTrade.setCompanyId(company.getCompanyId());
-        return shareTrade;
-    }
-
-    @Override
     public ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList) {
         ArrayList<ShareSell> sharesSell = new ArrayList<ShareSell>();
         int sharesLen = shareSellList.getShareQuantity().length;
@@ -88,6 +34,45 @@ public class ShareMapperImpl implements ShareMapper {
     }
 
     @Override
+    public User shareTradeToUser(ShareTrade shareTrade) {
+        User user = new User();
+        user.setUserId(shareTrade.getUserId());
+        user.setTotalBalance(shareTrade.getTotalBalance());
+        return user;
+    }
+
+    @Override
+    public ShareTrade userToShareTrade (User user) {
+        ShareTrade shareTrade = new ShareTrade();
+        shareTrade.setUserId(user.getUserId());
+        shareTrade.setTotalBalance(user.getTotalBalance());
+        return  shareTrade;
+    }
+
+    @Override
+    public Company shareTradeToCompany (ShareTrade shareTrade) {
+        Company company = new Company();
+        company.setCompanyId(shareTrade.getCompanyId());
+        return company;
+    }
+
+    @Override
+    public ShareTrade companyToShareTrade (Company company) {
+        ShareTrade shareTrade = new ShareTrade();
+        shareTrade.setCompanyId(company.getCompanyId());
+        return shareTrade;
+    }
+
+    @Override
+    public ShareTrade userCompanyToShareTrade (User user, Company company) {
+        ShareTrade shareTrade = new ShareTrade();
+        shareTrade.setUserId(user.getUserId());
+        shareTrade.setTotalBalance(user.getTotalBalance());
+        shareTrade.setCompanyId(company.getCompanyId());
+        return shareTrade;
+    }
+
+    @Override
     public ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList) {
         ArrayList<ShareChange> shares = new ArrayList<ShareChange>();
         int sharesLen = shareChangeList.getCompanyName().length;
@@ -108,19 +93,17 @@ public class ShareMapperImpl implements ShareMapper {
     @Override
     public ShareChangeList convertToShareChangeList(ArrayList<ShareChange> sharesChange) {
         ShareChangeList shareChangeList = new ShareChangeList(sharesChange.size());
-        if(sharesChange.size() > 0){
-            shareChangeList.setUserId(sharesChange.get(0).getUserId());
-            int i = 0;
-            for (ShareChange s : sharesChange) {
-                shareChangeList.setCompanyId(i, s.getCompanyId());
-                shareChangeList.setShareId(i, s.getShareId());
-                shareChangeList.setCompanyName(i, s.getCompanyName());
-                shareChangeList.setShareOriginalValue(i, s.getShareOriginalValue());
-                shareChangeList.setShareCurrentValue(i, s.getShareCurrentValue());
-                shareChangeList.setSharesQuantity(i, s.getSharesQuantity());
-                shareChangeList.setProfitLoss(i, s.getProfitLoss());
-                i++;
-            }
+        shareChangeList.setUserId(sharesChange.get(0).getUserId());
+        int i = 0;
+        for (ShareChange s : sharesChange) {
+            shareChangeList.setCompanyId(i, s.getCompanyId());
+            shareChangeList.setShareId(i, s.getShareId());
+            shareChangeList.setCompanyName(i, s.getCompanyName());
+            shareChangeList.setShareOriginalValue(i, s.getShareOriginalValue());
+            shareChangeList.setShareCurrentValue(i, s.getShareCurrentValue());
+            shareChangeList.setSharesQuantity(i, s.getSharesQuantity());
+            shareChangeList.setProfitLoss(i, s.getProfitLoss());
+            i++;
         }
         return shareChangeList;
     }

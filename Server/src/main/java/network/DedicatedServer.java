@@ -1,16 +1,17 @@
 package network;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.util.ArrayList;
-
 import model.entities.*;
 import model.managers.StockManager;
 import utils.CompanyMapperImpl;
 import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class DedicatedServer extends Thread {
     private static final String BUY_ACTION = "BUY";
@@ -23,6 +24,8 @@ public class DedicatedServer extends Thread {
     private UserMapperImpl mapper;
     private CompanyMapperImpl companyMapper;
     private ShareMapperImpl shareMapper;
+    private LinkedList<DedicatedServer> clients;
+
 
     /**
      * DedicatedServer constructor
@@ -88,26 +91,23 @@ public class DedicatedServer extends Thread {
                     if (userInfo.getAction().equals("balance")) {
                         UserProfileInfo userProfileInfo = stockModel.updateUserBalance(user);
                         oos.writeObject(userProfileInfo);
-                    } else {
-                        if (userInfo.getAction().equals("information")) {
-                            UserProfileInfo userProfileInfo = stockModel.updateUserInformation(user);
-                            oos.writeObject(userProfileInfo);
-                        }
+                    } else if (userInfo.getAction().equals("information")) {
+                        UserProfileInfo userProfileInfo = stockModel.updateUserInformation(user);
+                        oos.writeObject(userProfileInfo);
+                    } else if (userInfo.getAction().equals("profileView")){
+                        UserProfileInfo userProfileInfo = stockModel.getUserProfileInfo(user);
+                        oos.writeObject(userProfileInfo);
                     }
                 }
 
                 if (tunnelObject instanceof ShareTrade) {
                     ShareTrade shareTrade = (ShareTrade) tunnelObject;
+                    Purchase[] purchases = shareMapper.shareTradeToPurchase(shareTrade);
                     User user = shareMapper.shareTradeToUser(shareTrade);
                     Company company = shareMapper.shareTradeToCompany(shareTrade);
-                    if (shareTrade.getActionToDo().equals(BUY_ACTION)) {
-                        ShareTrade share = stockModel.createUserCompanyShare(user, company);
-                        oos.writeObject(share);
-                    } else {
-                        if (shareTrade.getActionToDo().equals(SELL_ACTION)) {
-                             //stockModel.updateCompanyValue(shareTrade.getCompanyId(), "sell");
-                        }
-                    }
+                    ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchases, shareTrade.getActionToDo(), shareTrade.getView());
+                    oos.writeObject(share);
+                    updateAllClients();
                 }
 
                 if (tunnelObject instanceof CompanyList) {
@@ -121,6 +121,26 @@ public class DedicatedServer extends Thread {
                     CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
                     oos.writeObject(companyChangeList);
                 }
+
+                if (tunnelObject instanceof UserShares) {
+                    ArrayList<CompanyDetail> companies = stockModel.getCompanyDetails(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
+                    ArrayList<ShareSell> shares = stockModel.getSharesSell(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
+                    CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companies);
+                    ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
+                    DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
+                    oos.writeObject(detailViewInfo);
+                }
+
+
+                if (tunnelObject instanceof ShareChangeList) {
+                    ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(((ShareChangeList) tunnelObject).getUserId());
+                    ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
+                    oos.writeObject(sharesChangeList);
+                }
+
+                if (tunnelObject instanceof CurrentShares) {
+
+                }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -128,6 +148,28 @@ public class DedicatedServer extends Thread {
             stopServerConnection();
             System.out.println("Stopped client connection to the server...");
             e.printStackTrace();
+        }
+    }
+
+
+    public ObjectOutputStream getOos() {
+        return oos;
+    }
+
+    public void setClients(LinkedList<DedicatedServer> clients) {
+        this.clients = clients;
+    }
+
+    public void updateAllClients() throws IOException {
+        for (DedicatedServer client : clients) {
+            ObjectOutputStream oosClient = null;
+            if (client.isOn){
+                oosClient = client.getOos();
+                ThreadChange change = new ThreadChange();
+                if (oosClient != null) {
+                    oosClient.writeObject(change);
+                }
+            }
         }
     }
 }

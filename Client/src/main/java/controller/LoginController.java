@@ -1,7 +1,6 @@
 package controller;
 
 import model.entities.AuthenticationInfo;
-import model.entities.TunnelObject;
 import network.NetworkManager;
 import view.LoginView;
 import view.RegisterView;
