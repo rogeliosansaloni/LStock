@@ -25,8 +25,6 @@ public class MainController implements ActionListener {
     private BotsRemoveView jpBotsRemoveView;
     private BotsListView jpBotsListView;
     private BotsEditView jpBotsEditView;
-    private final SharesListView sharesListView;
-    private HomeView homeView;
     private BotManager botModel;
     private HomeController homeController;
     private SharesListController sharesController;
@@ -53,7 +51,6 @@ public class MainController implements ActionListener {
         this.homeController = new HomeController(view);
         this.sharesController = new SharesListController(this.sharesListView);
         this.sharesListView.registerController(this.sharesController);
-        this.view.addToCardLayout(homeView,sharesListView);
         this.topTenView = new TopTenCompaniesView();
         this.jpMenuBots = new BotMenuView();
         this.jpBotsCreateView = new BotsCreateView();
@@ -68,6 +65,7 @@ public class MainController implements ActionListener {
         this.botsRemoveController = new BotsRemoveController(jpBotsRemoveView, view, botModel);
         this.botsListController = new BotsListController(view,jpBotsListView,botModel);
         this.botsEditController = new BotsEditController(jpBotsEditView,view,botModel);
+        this.view.addToCardLayout(homeView,sharesListView,topTenView,jpMenuBots,jpBotsCreateView,jpBotsRemoveView,jpBotsListView,jpBotsEditView);
         updateTopTen();
     }
 
