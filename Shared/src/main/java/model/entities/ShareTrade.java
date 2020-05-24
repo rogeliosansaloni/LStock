@@ -7,57 +7,48 @@ public class ShareTrade extends TunnelObject {
     private int userId;
     private float totalBalance;
     private int companyId;
-    private int shareId;
-    private float sharePrice;
+    private int[] shareId;
+    private float[] sharePrice;
+    private int[] numShares;
     private String actionToDo;
+
+    private String view;
 
     public ShareTrade () { }
 
     /**
+     * @param userId  id of the user
+     * @param totalBalance user's balance
      * @param companyId  id of the company associated with the share
+     * @param shareId  id of the share
      * @param sharePrice price of the share
+     * @param numShares number of shares that the users wants to buy/sell
      * @param actionToDo action to do with the share: buy or sell
+     * @param view view from we send the ShareTrade
      */
-    public ShareTrade(int userId, float totalBalance, int companyId, int shareId, float sharePrice, String actionToDo) {
+    public ShareTrade(int userId, float totalBalance, int companyId, int[] shareId, float[] sharePrice, int[] numShares, String actionToDo, String view) {
         this.userId = userId;
         this.totalBalance = totalBalance;
         this.companyId = companyId;
         this.shareId = shareId;
         this.sharePrice = sharePrice;
+        this.numShares = numShares;
         this.actionToDo = actionToDo;
+        this.view = view;
     }
 
-    // Getters and setters
-    public String getActionToDo() {
-        return actionToDo;
-    }
-
-    public void setActionToDo(String actionToDo) {
-        this.actionToDo = actionToDo;
-    }
-
-    public float getSharePrice() {
-        return sharePrice;
-    }
-
-    public void setSharePrice(float sharePrice) {
-        this.sharePrice = sharePrice;
-    }
-
-    public int getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
+    public ShareTrade(int userId, float totalBalance, int companyId, int shareId, float sharePrice, int numShares, String actionToDo, String view) {
+        this.userId = userId;
+        this.totalBalance = totalBalance;
         this.companyId = companyId;
-    }
-
-    public int getShareId() {
-        return shareId;
-    }
-
-    public void setShareId(int shareId) {
-        this.shareId = shareId;
+        this.shareId = new int[1];
+        this.sharePrice = new float[1];
+        this.numShares = new int[1];
+        this.shareId[0] = shareId;
+        this.sharePrice[0] = sharePrice;
+        this.numShares[0] = numShares;
+        this.actionToDo = actionToDo;
+        this.view = view;
     }
 
     public int getUserId() {
@@ -75,4 +66,53 @@ public class ShareTrade extends TunnelObject {
     public void setTotalBalance(float totalBalance) {
         this.totalBalance = totalBalance;
     }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public int[] getShareId() {
+        return shareId;
+    }
+
+    public void setShareId(int[] shareId) {
+        this.shareId = shareId;
+    }
+
+    public float[] getSharePrice() {
+        return sharePrice;
+    }
+
+    public void setSharePrice(float[] sharePrice) {
+        this.sharePrice = sharePrice;
+    }
+
+    public int[] getNumShares() {
+        return numShares;
+    }
+
+    public void setNumShares(int[] numShares) {
+        this.numShares = numShares;
+    }
+
+    public String getActionToDo() {
+        return actionToDo;
+    }
+
+    public void setActionToDo(String actionToDo) {
+        this.actionToDo = actionToDo;
+    }
+
+    public String getView() {
+        return view;
+    }
+
+    public void setView(String view) {
+        this.view = view;
+    }
+
 }

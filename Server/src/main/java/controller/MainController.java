@@ -13,9 +13,6 @@ public class MainController implements ActionListener {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
-    private static final String CARD_BOTS_EDIT = "Edit Bot";
-    private static final String CARD_BOTS_REMOVE = "Remove Bot";
-    private static final String CARD_BOTS_LIST = "Bots";
     private final MainView view;
     private BotManager botModel;
     private HomeController homeController;
@@ -23,7 +20,7 @@ public class MainController implements ActionListener {
     private BotsCreateController botsCreateController;
     private BotsListController botsListController;
     private BotsRemoveController botsRemoveController;
-    //TODO: Add the rest con controllers
+    private BotsEditController botsEditController;
 
     /**
      * Creates and initializes the controller
@@ -37,7 +34,7 @@ public class MainController implements ActionListener {
         this.botsCreateController = new BotsCreateController(view.getBotsCreateView(), view, botModel);
         this.botsRemoveController = new BotsRemoveController(view.getBotsRemoveView(), view, botModel);
         this.botsListController = new BotsListController(view, view.getBotsListView(), botModel);
-        //TODO: Initialize controllers
+        this.botsEditController = new BotsEditController(view.getBotsEditView(), view, botModel);
     }
 
     @Override
@@ -87,5 +84,14 @@ public class MainController implements ActionListener {
      * @return BotsListController
      */
     public BotsListController getBotsListController() { return  botsListController; }
+
+
+    /**
+     * Gets the BotsEditController
+     * @return BotsEditController
+     */
+    public BotsEditController getBotsEditController() {
+        return botsEditController;
+    }
 
 }

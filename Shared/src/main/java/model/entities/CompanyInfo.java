@@ -9,6 +9,10 @@ public class CompanyInfo extends TunnelObject {
     private float value;
     private int shares;
 
+    public CompanyInfo(int companyId) {
+        this.companyId = companyId;
+    }
+
     public int getCompanyId() {
         return companyId;
     }

@@ -42,6 +42,7 @@ public class MainView extends JFrame {
     private BotsCreateView jpBotsCreateView;
     private BotsRemoveView jpBotsRemoveView;
     private BotsListView jpBotsListView;
+    private BotsEditView jpBotsEditView;
 
     public MainView() {
         color = new StockColors();
@@ -64,9 +65,9 @@ public class MainView extends JFrame {
         jpBotsCreateView = new BotsCreateView();
         jpBotsRemoveView = new BotsRemoveView();
         jpBotsListView = new BotsListView();
+        jpBotsEditView = new BotsEditView();
         jpHomeView = new HomeView();
         jpSharesView = new SharesListView();
-        //TODO: Add the rest of views
         addToCardLayout();
     }
 
@@ -79,8 +80,8 @@ public class MainView extends JFrame {
         jpCenter.add(jpBotsCreateView, CARD_BOTS_CREATE);
         jpCenter.add(jpBotsRemoveView, CARD_BOTS_REMOVE);
         jpCenter.add(jpBotsListView, CARD_BOTS_LIST);
+        jpCenter.add(jpBotsEditView, CARD_BOTS_EDIT);
         jpCenter.add(jpSharesView, CARD_USERS);
-        //TODO: Add the rest of views
     }
 
     /**
@@ -217,7 +218,10 @@ public class MainView extends JFrame {
         jpBotsRemoveView.registerComboBoxController(comboBoxController);
     }
 
-    public void registerBotEditController() {}
+    public void registerBotEditController(BotsEditController controller, BotsEditComboBoxController comboBoxController) {
+        jpBotsEditView.registerController(controller);
+        jpBotsEditView.registerComboBoxController(comboBoxController);
+    }
 
     /**
      * Registers controller for Bots List controller
@@ -229,13 +233,13 @@ public class MainView extends JFrame {
 
     /**
      * Gets the Bots List view
-     * @return Bots list view
+     * @return view for Bot list
      */
     public BotsListView getBotsListView () { return jpBotsListView; }
 
     /**
-     * Gets BotsRemoveView
-     * @return view for bot removal
+     * Gets Bots Remove view
+     * @return view for Bot removal
      */
     public BotsRemoveView getBotsRemoveView() { return  jpBotsRemoveView; }
 
@@ -245,6 +249,14 @@ public class MainView extends JFrame {
      */
     public BotsCreateView getBotsCreateView() {
         return jpBotsCreateView;
+    }
+
+    /**
+     * G3ets Bots Edit view
+     * @return view for Bot edition
+     */
+    public BotsEditView getBotsEditView() {
+        return jpBotsEditView;
     }
 
 
@@ -267,13 +279,14 @@ public class MainView extends JFrame {
             case CARD_BOTS_CREATE:
                 cardLayout.show(jpCenter, CARD_BOTS_CREATE);
                 break;
-            case CARD_BOTS_EDIT:
-                break;
             case CARD_BOTS_REMOVE:
                 cardLayout.show(jpCenter, CARD_BOTS_REMOVE);
                 break;
             case CARD_BOTS_LIST:
                 cardLayout.show(jpCenter, CARD_BOTS_LIST);
+                break;
+            case CARD_BOTS_EDIT:
+                cardLayout.show(jpCenter, CARD_BOTS_EDIT);
                 break;
         }
     }

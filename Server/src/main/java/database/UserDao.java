@@ -115,6 +115,15 @@ public class UserDao {
      * @param user User information
      */
     public void updateUserBalance(User user) {
+        dbConnector.callProcedure("CALL updateUserBalance( " + user.getUserId() + ", " + user.getTotalBalance() + ");");
+    }
+
+    /**
+     * It will update the information of one user
+     *
+     * @param user User information
+     */
+    public void updateUserBalanceLoad(User user) {
         ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
@@ -131,19 +140,17 @@ public class UserDao {
     }
 
     /**
-     * Updates de the users discounted balance after buying a share from a company
-     * @param user the user
-     * @param company the company we're buying the share from
+     * It will get user necessary for the Client Profile View
+     *
+     * @param user User information
      */
-    public void updateUserBalance (User user, Company company) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
+    public void getUserProfileInfo(User user) {
+        ResultSet result = dbConnector.selectQuery("CALL getUserProfileInfo(" + user.getUserId() + ");");
         try {
             while (result.next()) {
-                if (result.getInt("user_id") == user.getUserId()) {
-                    float totalAmount = result.getFloat("total_balance") - company.getValue();
-                    dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
-                    user.setTotalBalance(totalAmount);
-                }
+                user.setNickname(result.getString("nickname"));
+                user.setEmail(result.getString("email"));
+                user.setDescription(result.getString("description"));
             }
         } catch (SQLException e) {
             System.out.println(BALANCE_MESSAGE_1);
@@ -188,4 +195,5 @@ public class UserDao {
             System.out.println(PROFILE_MESSAGE_1);
         }
     }
+
 }
