@@ -4,10 +4,12 @@ package database;
 import model.entities.Company;
 import model.entities.CompanyChange;
 import model.entities.CompanyDetail;
+import model.entities.Top10;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Represents the DAO for the Company table
@@ -20,6 +22,7 @@ public class CompanyDao {
     private static final String GETTING_COMPANIES_ERROR = "Error getting all companies.";
     private static final String GETTING_COMPANIES_ERROR_DETAIL = "Error getting all companies detail.";
     private static final String GETTING_COMPANIES_ERROR_CHANGE = "Error getting all companies change.";
+    private static final String TOPTEN_MESSAGE = "Error finding top 10 companies of User";
 
     public CompanyDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
@@ -287,6 +290,31 @@ public class CompanyDao {
         }
     }
 
+
+    public ArrayList<Top10> getTopTen(){
+        ResultSet result = dbConnector.selectQuery(
+                "SELECT DISTINCT c.name, s1.price " +
+                        "FROM Company as c " +
+                        "JOIN Share as s1 ON s1.company_id = c.company_id " +
+                        "WHERE s1.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s1.company_id) " +
+                        "ORDER BY s1.price DESC LIMIT 10;");
+
+        ArrayList<Top10> top10List = null;
+        try {
+            top10List = new ArrayList<Top10>();
+            while (result.next()) {
+                top10List.add(new Top10(
+                        result.getString("name"),
+                        result.getFloat("price")
+                ));
+            }
+            //Reverse the List Order
+            Collections.reverse(top10List);
+        } catch (SQLException e) {
+            System.out.println(TOPTEN_MESSAGE);
+        }
+        return top10List;
+    }
 
 
 
