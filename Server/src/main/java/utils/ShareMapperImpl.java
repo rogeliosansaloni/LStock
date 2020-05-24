@@ -108,17 +108,19 @@ public class ShareMapperImpl implements ShareMapper {
     @Override
     public ShareChangeList convertToShareChangeList(ArrayList<ShareChange> sharesChange) {
         ShareChangeList shareChangeList = new ShareChangeList(sharesChange.size());
-        shareChangeList.setUserId(sharesChange.get(0).getUserId());
-        int i = 0;
-        for (ShareChange s : sharesChange) {
-            shareChangeList.setCompanyId(i, s.getCompanyId());
-            shareChangeList.setShareId(i, s.getShareId());
-            shareChangeList.setCompanyName(i, s.getCompanyName());
-            shareChangeList.setShareOriginalValue(i, s.getShareOriginalValue());
-            shareChangeList.setShareCurrentValue(i, s.getShareCurrentValue());
-            shareChangeList.setSharesQuantity(i, s.getSharesQuantity());
-            shareChangeList.setProfitLoss(i, s.getProfitLoss());
-            i++;
+        if(sharesChange.size() > 0){
+            shareChangeList.setUserId(sharesChange.get(0).getUserId());
+            int i = 0;
+            for (ShareChange s : sharesChange) {
+                shareChangeList.setCompanyId(i, s.getCompanyId());
+                shareChangeList.setShareId(i, s.getShareId());
+                shareChangeList.setCompanyName(i, s.getCompanyName());
+                shareChangeList.setShareOriginalValue(i, s.getShareOriginalValue());
+                shareChangeList.setShareCurrentValue(i, s.getShareCurrentValue());
+                shareChangeList.setSharesQuantity(i, s.getSharesQuantity());
+                shareChangeList.setProfitLoss(i, s.getProfitLoss());
+                i++;
+            }
         }
         return shareChangeList;
     }

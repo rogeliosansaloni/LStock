@@ -42,6 +42,7 @@ public class SharesView extends JPanel {
         jpTable.setLayout(new GridLayout(0, 5, 5, 20));
 
         jpScroll = new JScrollPane(jpTable);
+        jpScroll.setBorder(null);
         jpScroll.setBackground(color.getBLACK());
         this.add(jpAlert, BorderLayout.NORTH);
         this.add(jpScroll, BorderLayout.CENTER);
@@ -64,11 +65,11 @@ public class SharesView extends JPanel {
      * @param shares arraylist with the information of the shares
      */
     public void updateSharesView (ArrayList<ShareChange> shares){
+        jpTable.removeAll();
         if(shares.size() == 0){
             jpAlert.setVisible(true);
         } else{
             jpAlert.setVisible(false);
-            jpTable.removeAll();
             jpTable.setPreferredSize(new Dimension(700, 100*shares.size()));
             Font fontTitle = new Font("Roboto", Font.BOLD, 20);
             createLabel("COMPANY", fontTitle, color.getWHITE());
