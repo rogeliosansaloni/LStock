@@ -148,9 +148,12 @@ public class NetworkManager extends Thread {
     /**
      * Stops the connection to the server and interrupts the client thread
      */
-    public void stopServerConnection() {
+    public void stopServerConnection() throws IOException{
         running = false;
-        interrupt();
+        if(!serverSocket.isClosed()){
+            System.out.println("Client disconnected.");
+            serverSocket.close();
+        }
     }
 
     /**
@@ -216,8 +219,8 @@ public class NetworkManager extends Thread {
     @Override
     public void run() {
         System.out.println("Network Manager run");
-        try {
-            while (running) {
+        while (running) {
+            try {
                 System.out.println("Waiting for object to be received...");
                 TunnelObject received = (TunnelObject) ois.readObject();
 
@@ -258,9 +261,9 @@ public class NetworkManager extends Thread {
                 if (received instanceof ShareTrade) {
                     ShareTrade info = ((ShareTrade) received);
                     mainController.updateTotalBalance(info.getTotalBalance());
-                    if(info.getView().equals("CompanyDetail")){
+                    if (info.getView().equals("CompanyDetail")) {
                         mainController.getCompanyController().sendUserShares(info.getCompanyId());
-                    } else if(info.getView().equals("Shares")){
+                    } else if (info.getView().equals("Shares")) {
                         mainController.sendSharesChange();
                     }
                 }
@@ -270,7 +273,7 @@ public class NetworkManager extends Thread {
                     ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
                     if (mainView == null) {
                         initMainView(companiesChange);
-                    }else{
+                    } else {
                         reinitMainView(companiesChange);
                     }
                     model.setCompaniesChange(companiesChange);
@@ -297,18 +300,24 @@ public class NetworkManager extends Thread {
                 }
 
 
-                if (received instanceof ThreadChange){
+                if (received instanceof ThreadChange) {
                     ((ThreadChange) received).asdf();
                     mainController.sendCompaniesChange();
                     mainController.sendUserProfileInfo();
                     mainController.sendSharesChange();
-                    if (model.getCompanyDetails()!=null) {
+                    if (model.getCompanyDetails() != null) {
                         mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
                     }
                 }
+
+            } catch (IOException | ClassNotFoundException e) {
+                running = false;
+                try {
+                    serverSocket.close();
+                } catch (IOException e2) {
+                    System.out.println("Error closing the communication with the server.");
+                }
             }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

@@ -51,10 +51,10 @@ public class MainView extends JFrame{
         this.setTitle(TITLE);
         this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setBackground(color.getBLACK());
         this.addWindowListener(new FrameListener());
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         initUI();
         initAllViews();
     }
