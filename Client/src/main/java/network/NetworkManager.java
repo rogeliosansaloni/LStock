@@ -124,11 +124,6 @@ public class NetworkManager extends Thread {
      * @param companyChange the list of company changes
      */
     private void reinitMainView(ArrayList<CompanyChange> companyChange) {
-        // Set new list of companies in model
-        initCompanies(companyChange);
-
-        // Initialize the first view for the new user
-        mainController.startAtCompanyList();
 
         // Refresh the header information with new user information
         mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
@@ -281,6 +276,7 @@ public class NetworkManager extends Thread {
                     }else{
                         reinitMainView(companiesChange);
                     }
+                    model.setCompaniesChange(companiesChange);
                     mainController.updateModel(model);
                     mainView.setVisible(true);
                 }
