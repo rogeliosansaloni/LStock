@@ -11,9 +11,6 @@ import utils.UserMapperImpl;
 import java.util.ArrayList;
 
 public class StockManager {
-    private static final String BUY_ACTION = "BUY";
-    private static final String SELL_ACTION = "SELL";
-    private DBConnector connector;
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareChange> sharesChange;
@@ -28,7 +25,7 @@ public class StockManager {
      * Constructor for a StockManager
      */
     public StockManager() {
-        connector = new DBConnector();
+        DBConnector connector = new DBConnector();
         userDao = new UserDao(connector);
         shareDao = new ShareDao(connector);
         companyDao = new CompanyDao(connector);
@@ -138,7 +135,7 @@ public class StockManager {
     public ShareTrade updatePurchaseBuy(User user, Company company, Purchase[] purchases, String action, String view) {
         //Updates the user balance
         userDao.updateUserBalance(user);
-        //If the acttion is Sell, we want to decrease the number of shares.
+        //If the action is Sell, we want to decrease the number of shares.
         if (action.equals("BUY")) {
             //Updates the purchased share
             shareDao.updatePurchasedShare(purchases[0]);
@@ -159,6 +156,19 @@ public class StockManager {
         ShareTrade info = shareMapper.userCompanyToShareTrade(user, company);
         info.setView(view);
         return info;
+    }
+
+    public void buyShare(Purchase purchase) {
+        shareDao.updatePurchasedShare(purchase);
+    }
+
+    public void sellShare(Purchase purchase) {
+        purchase.setShareQuantity(-purchase.getShareQuantity());
+        shareDao.updatePurchasedShare(purchase);
+    }
+
+    public int getShareId(int id) {
+        return shareDao.getCurrentShareId(id);
     }
 
     /**
@@ -203,8 +213,7 @@ public class StockManager {
     }
 
     public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
-        ArrayList<ShareSell> sharesSell = shareDao.getSharesSell(userId, companyId);
-        return sharesSell;
+        return shareDao.getSharesSell(userId, companyId);
     }
 }
 

@@ -165,7 +165,7 @@ public class BotDao {
      * @param activate indicates if the bot should be enabled or disabled
      * @return true if the bot activity has been changed. If not, false.
      */
-    public boolean updateBot(int botId, String activate) {
+    public int updateBot(int botId, String activate) {
         final String updateQuery = "UPDATE Bots SET activity_status = %s WHERE " +
                 "bot_id = %d;";
         final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
@@ -197,12 +197,12 @@ public class BotDao {
                     } else {
                         System.out.println(String.format(successMessage, botId, "disabled."));
                     }
-                    return true;
+                    return newActivity;
                 }
             }
         } catch (SQLException e) {
             System.out.println(String.format(errorMessage, botId));
         }
-        return false;
+        return newActivity;
     }
 }

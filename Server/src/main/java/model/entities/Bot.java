@@ -1,14 +1,22 @@
 package model.entities;
 
+import model.managers.StockManager;
+
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  * Represents a Bot
  */
 public class Bot extends Thread {
+    private static final String TRANSACTION_MESSAGE = "Bot %d has made a %s transaction.";
+    private StockManager model;
     private int botId;
     private float activeTime;
     private float probability;
     private int status;
     private Company company;
+    private final ArrayList<Purchase> shares = new ArrayList<>();
 
     /**
      * Bot constructor
@@ -30,14 +38,6 @@ public class Bot extends Thread {
     public Bot() {
 
     }
-
-    public boolean checkBuySell() {
-        return false;
-    }
-
-    public void makeTransaction() {
-    }
-
 
     /**
      * Getters
@@ -84,5 +84,51 @@ public class Bot extends Thread {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+
+    public StockManager getModel() {
+        return model;
+    }
+
+    public void setModel(StockManager model) {
+        this.model = model;
+    }
+
+    @Override
+    public void run() {
+        try {
+            transact();
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void transact() throws InterruptedException {
+        synchronized (shares) {
+            while(status != 1) {
+                System.out.println("The bot " + botId + " is inactive.");
+                shares.wait();
+            }
+            System.out.println("The bot " + botId + " is active.");
+
+            // Bot works every after X seconds
+            Thread.sleep((long) (activeTime * 1000));
+
+            Purchase purchase = new Purchase(1, company.getCompanyId(), model.getShareId(company.getCompanyId()), 1);
+
+            // Checks if the bot should buy or sell according to probability
+            if (new Random().nextDouble() >= probability) {
+                System.out.println(String.format(TRANSACTION_MESSAGE, botId, "buy"));
+                model.buyShare(purchase);
+                shares.add(purchase);
+            } else {
+                System.out.println(String.format(TRANSACTION_MESSAGE, botId, "sell"));
+                model.sellShare(purchase);
+                shares.remove(purchase);
+            }
+
+            shares.notifyAll();
+        }
     }
 }

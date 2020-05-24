@@ -82,9 +82,10 @@ public class BotsRemoveController implements ActionListener {
         switch(e.getActionCommand()) {
             case REMOVE:
                 int botId = mainView.getBotsRemoveView().getBotId();
+                Bot botToBeDeleted = model.getBot(botId);
                 if (model.deleteBot(botId)) {
                     view.showMessages(String.format(SUCCESS_MESSAGE, botId));
-                    model.updateCompanyBots();
+                    model.removeBotFromCompany(botToBeDeleted);
                     ArrayList<Bot> bots = model.getAllBotsByCompany(getSelectedCompanyId());
                     if (bots.isEmpty()) {
                         initView();

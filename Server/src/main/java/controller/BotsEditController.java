@@ -25,9 +25,10 @@ public class BotsEditController implements ActionListener {
 
     /**
      * Creates and initializes the controller
-     * @param view MainView to be able to return to Bots Menu view
+     *
+     * @param view     MainView to be able to return to Bots Menu view
      * @param mainView the main view for Client
-     * @param model BotManager
+     * @param model    BotManager
      */
     public BotsEditController(BotsEditView view, MainView mainView, BotManager model) {
         this.view = view;
@@ -49,12 +50,13 @@ public class BotsEditController implements ActionListener {
 
     /**
      * Get the company from a list of companies by id
+     *
      * @param companies list of companies
-     * @param id id of the company
+     * @param id        id of the company
      * @return company
      */
     private Company getCompany(ArrayList<Company> companies, int id) {
-        for(Company c : companies) {
+        for (Company c : companies) {
             if (c.getCompanyId() == id) {
                 return c;
             }
@@ -64,6 +66,7 @@ public class BotsEditController implements ActionListener {
 
     /**
      * Get the bots of the selected company
+     *
      * @return bots of the company
      */
     private ArrayList<Bot> getInitBots() {
@@ -72,6 +75,7 @@ public class BotsEditController implements ActionListener {
 
     /**
      * Gets the company id of the selected company name from the combobox
+     *
      * @return id of the company
      */
     private int getSelectedCompanyId() {
@@ -81,7 +85,7 @@ public class BotsEditController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()) {
+        switch (e.getActionCommand()) {
             case CANCEL:
                 mainView.updateView(CARD_BOTS);
                 break;
@@ -89,9 +93,10 @@ public class BotsEditController implements ActionListener {
                 int botId = view.getBotId();
                 int status = model.getBot(botId).getStatus();
                 String action = ENABLE;
-                if (status == 1) { action = DISABLE; }
-                model.configureBot(botId,action);
-                model.updateCompanyBots();
+                if (status == 1) {
+                    action = DISABLE;
+                }
+                model.configureBot(botId, action);
                 view.showMessages(MESSAGE + action.toLowerCase() + "d");
                 view.showStatusButton(model.getBot(botId));
                 break;

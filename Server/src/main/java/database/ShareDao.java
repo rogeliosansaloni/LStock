@@ -24,7 +24,7 @@ public class ShareDao {
         //First we need to know if that purchase already exists in the Purchase value of the database
         ResultSet retrievedCheck = dbConnector.selectQuery("CALL checkIfPurchaseExists(" + purchase.getUserId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareId() + ");");
         try {
-            if(retrievedCheck.next() == false){
+            if(!retrievedCheck.next()){
                 dbConnector.callProcedure("CALL insertPurchase(" + purchase.getUserId() + ", "
                         + purchase.getCompanyId()+ ", " + purchase.getShareId() + ", " + purchase.getShareQuantity() + ");");
             } else{
