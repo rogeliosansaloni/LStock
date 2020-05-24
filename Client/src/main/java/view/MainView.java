@@ -7,11 +7,12 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import controller.FrameListener;
 
 /**
  * Main view
  */
-public class MainView extends JFrame {
+public class MainView extends JFrame{
 
     //logo de stock
     private static final String PATH_LOGO = "/Images/stock.png";
@@ -50,9 +51,10 @@ public class MainView extends JFrame {
         this.setTitle(TITLE);
         this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         this.setLocationRelativeTo(null);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setBackground(color.getBLACK());
+        this.addWindowListener(new FrameListener());
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         initUI();
         initAllViews();
     }

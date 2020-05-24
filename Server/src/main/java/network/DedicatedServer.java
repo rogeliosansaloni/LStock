@@ -7,6 +7,7 @@ import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
 
 import java.io.IOException;
+import java.io.EOFException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -144,6 +145,16 @@ public class DedicatedServer extends Thread {
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (EOFException e){
+            try{
+                if(!sClient.isClosed()){
+                    sClient.close();
+                }
+            }catch (IOException e2){
+                System.out.println("Error closing the communication with the server.");
+            }
+            stopServerConnection();
+            System.out.println("Stopped client connection to the server...");
         } catch (IOException e) {
             stopServerConnection();
             System.out.println("Stopped client connection to the server...");
