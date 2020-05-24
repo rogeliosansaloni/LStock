@@ -19,6 +19,7 @@ public class ShareChange {
     }
     /**
      * It will create a companyChange
+     *
      * @param userId user id
      * @param companyId company id
      * @param shareId      share id
@@ -38,6 +39,23 @@ public class ShareChange {
         this.sharesQuantity = sharesQuantity;
         this.profitLoss = profitLoss;
     }
+
+    /**
+     * It will create a companyChange
+     *
+     * @param companyId company id
+     * @param companyName     company name
+     * @param shareCurrentValue the current price of the share
+     * @param sharesQuantity     the quantity of shares the user has
+     */
+    public ShareChange(int companyId, String companyName, float shareCurrentValue, int sharesQuantity){
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.shareCurrentValue = shareCurrentValue;
+        this.sharesQuantity = sharesQuantity;
+    }
+
+
 
     public int getUserId() {
         return userId;

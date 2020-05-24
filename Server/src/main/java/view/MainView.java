@@ -1,15 +1,12 @@
 package view;
 
 import controller.*;
-import model.entities.Bot;
-import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class MainView extends JFrame {
 
@@ -80,6 +77,7 @@ public class MainView extends JFrame {
         jpCenter.add(homeView, CARD_HOME);
         jpCenter.add(sharesListView, CARD_USERS);
         //TODO: Add the rest of views
+    }
     private void addToCardLayout() {
         jpCenter.add(jpHomeView, CARD_HOME);
         jpCenter.add(jpMenuBots, CARD_BOTS);
@@ -191,7 +189,6 @@ public class MainView extends JFrame {
      *
      * @param controller Home controller
      */
-
     public void registerHomeController(HomeController controller) {
         jpHomeView.registerController(controller);
     }

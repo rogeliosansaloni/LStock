@@ -3,8 +3,7 @@ package database;
 
 import java.util.ArrayList;
 
-import model.entities.Company;
-import model.entities.CompanyDetail;
+import model.entities.ShareChange;
 import model.entities.User;
 
 import java.sql.ResultSet;
@@ -143,10 +142,10 @@ public class UserDao {
      * @return userValue of all the shares owned
      */
     public float getUserValue(String name){
-        ArrayList<CompanyDetail> userShares = userShare(name);
+        ArrayList<ShareChange> userShares = userShare(name);
         float userValue = 0;
-        for (CompanyDetail c : userShares){
-            userValue += c.getShares()*c.getValue();
+        for (ShareChange c : userShares){
+            userValue += c.getShareCurrentValue()*c.getSharesQuantity();
         }
         return userValue;
     }
@@ -244,9 +243,9 @@ public class UserDao {
      * @param name Selected user name
      * @return Selected user information Arraylist
      */
-    public ArrayList<CompanyDetail> userShare(String name) {
+    public ArrayList<ShareChange> userShare(String name) {
         ResultSet result = dbConnector.selectQuery("SELECT user_id FROM User WHERE nickname = '"+name+"';");
-        ArrayList<CompanyDetail> userSharesList= null;
+        ArrayList<ShareChange> userSharesList= null;
         try {
             while (result.next()) {
                 int user_id = result.getInt("user_id");
@@ -255,9 +254,9 @@ public class UserDao {
                                 "INNER JOIN Purchase ON Share.share_id = Purchase.share_id " +
                                 "INNER JOIN Company ON Company.company_id = Purchase.company_id " +
                                 "INNER JOIN User ON Purchase.user_id = '"+user_id+"';");
-                userSharesList = new ArrayList<CompanyDetail>();
+                userSharesList = new ArrayList<ShareChange>();
                 while (result.next()) {
-                    userSharesList.add(new CompanyDetail(
+                    userSharesList.add(new ShareChange(
                             result.getInt("company_id"),
                             result.getString("name"),
                             result.getFloat("price"),
@@ -279,14 +278,14 @@ public class UserDao {
      */
     public String[][] getUserShares(String name) {
         String[][] shares;
-        ArrayList<CompanyDetail> userShares = userShare(name);
+        ArrayList<ShareChange> userShares = userShare(name);
         shares = new String[userShares.size()][4];
         if (!userShares.isEmpty()){
             for (int i = 0; i < userShares.size(); i++){
-                shares[i][0] = userShares.get(i).getName();
-                shares[i][1] = String.valueOf(userShares.get(i).getShares());
-                shares[i][2] = String.valueOf(userShares.get(i).getValue());
-                shares[i][3] = String.valueOf(userShares.get(i).getShares()*userShares.get(i).getValue());
+                shares[i][0] = userShares.get(i).getCompanyName();
+                shares[i][1] = String.valueOf(userShares.get(i).getSharesQuantity());
+                shares[i][2] = String.valueOf(userShares.get(i).getShareCurrentValue());
+                shares[i][3] = String.valueOf(userShares.get(i).getSharesQuantity()*userShares.get(i).getShareCurrentValue());
             }
             return shares;
         }
