@@ -124,6 +124,7 @@ public class Bot extends Thread {
                 shares.add(purchase);
             } else {
                 System.out.println(String.format(TRANSACTION_MESSAGE, botId, "sell"));
+                model.sellShare(purchase);
                 shares.remove(purchase);
             }
 

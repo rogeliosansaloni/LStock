@@ -162,6 +162,11 @@ public class StockManager {
         shareDao.updatePurchasedShare(purchase);
     }
 
+    public void sellShare(Purchase purchase) {
+        purchase.setShareQuantity(-purchase.getShareQuantity());
+        shareDao.updatePurchasedShare(purchase);
+    }
+
     public int getShareId(int id) {
         return shareDao.getCurrentShareId(id);
     }
