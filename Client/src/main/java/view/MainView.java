@@ -112,7 +112,7 @@ public class MainView extends JFrame {
         JPanel jpCenterHeader = new JPanel(new BorderLayout());
         jpCenterHeader.setBackground(color.getDarkGreyHeader());
 
-        labelViewName = new JLabel("COMPANIES", SwingConstants.CENTER);
+        labelViewName = new JLabel(CARD_COMPANY, SwingConstants.CENTER);
         Font fontNameView = new Font("Roboto", Font.PLAIN, 50);
         labelViewName.setFont(fontNameView);
         labelViewName.setForeground(color.getWHITE());
