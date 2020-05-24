@@ -71,6 +71,7 @@ public class MainController implements ActionListener {
                 if(view.confirmLogOutWindow() == 0){
                     loginView.setVisible(true);
                     view.setVisible(false);
+                    view.updateView(CARD_COMPANY);
                 }
                 break;
         }

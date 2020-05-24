@@ -278,7 +278,7 @@ public class NetworkManager extends Thread {
                     ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
                     if (mainView == null) {
                         initMainView(companiesChange);
-                    } else {
+                    }else{
                         reinitMainView(companiesChange);
                     }
                     mainController.updateModel(model);
@@ -308,7 +308,9 @@ public class NetworkManager extends Thread {
                     mainController.sendCompaniesChange();
                     mainController.sendUserProfileInfo();
                     mainController.sendSharesChange();
-                    mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
+                    if (model.getCompanyDetails()!=null) {
+                        mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
+                    }
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
