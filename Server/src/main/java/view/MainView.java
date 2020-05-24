@@ -1,15 +1,12 @@
 package view;
 
 import controller.*;
-import model.entities.Bot;
-import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class MainView extends JFrame {
 
@@ -19,11 +16,12 @@ public class MainView extends JFrame {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
+    private static final String CARD_TOPTEN = "Top 10 Companies";
     private static final String CARD_BOTS_CREATE = "Create Bot";
     private static final String CARD_BOTS_EDIT = "Edit Bot";
     private static final String CARD_BOTS_REMOVE = "Remove Bot";
     private static final String CARD_BOTS_LIST = "Bots";
-    private static final int PANEL_WIDTH = 780;
+    private static final int PANEL_WIDTH = 1080;
     private static final int PANEL_HEIGHT = 740;
 
     private JLabel labelLogo;
@@ -34,10 +32,11 @@ public class MainView extends JFrame {
     private JPanel jpMenu;
     private JMenuBar menuBar;
     private JMenu menuOptions;
-    private JMenuItem option1,option2, option3;
+    private JMenuItem option1,option2, option3, option4;
     private StockColors color;
     private HomeView jpHomeView;
     private SharesListView jpSharesView;
+    private TopTenCompaniesView jpTopTenCompaniesView;
     private BotMenuView jpMenuBots;
     private BotsCreateView jpBotsCreateView;
     private BotsRemoveView jpBotsRemoveView;
@@ -54,34 +53,34 @@ public class MainView extends JFrame {
         this.setLayout(new BorderLayout());
         this.setResizable(false);
         initUI();
-        initAllViews();
-    }
-
-    /**
-     * Initializes all views
-     */
-    public void initAllViews() {
-        jpMenuBots = new BotMenuView();
-        jpBotsCreateView = new BotsCreateView();
-        jpBotsRemoveView = new BotsRemoveView();
-        jpBotsListView = new BotsListView();
-        jpBotsEditView = new BotsEditView();
-        jpHomeView = new HomeView();
-        jpSharesView = new SharesListView();
-        addToCardLayout();
     }
 
     /**
      * Add diferent views to layout
      */
-    private void addToCardLayout() {
+    public void addToCardLayout(HomeView homeView, SharesListView sharesView, TopTenCompaniesView topTenCompaniesView,
+                                BotMenuView menuBots, BotsCreateView botsCreateView, BotsRemoveView botsRemoveView,
+                                BotsListView botsListView, BotsEditView botsEditView) {
+        jpHomeView = homeView;
+        jpSharesView = sharesView;
+        jpTopTenCompaniesView = topTenCompaniesView;
+        jpMenuBots = menuBots;
+        jpBotsCreateView = botsCreateView;
+        jpBotsRemoveView = botsRemoveView;
+        jpBotsListView = botsListView;
+        jpBotsEditView = botsEditView;
+
         jpCenter.add(jpHomeView, CARD_HOME);
+        jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
+        jpCenter.add(jpSharesView, CARD_USERS);
         jpCenter.add(jpMenuBots, CARD_BOTS);
         jpCenter.add(jpBotsCreateView, CARD_BOTS_CREATE);
         jpCenter.add(jpBotsRemoveView, CARD_BOTS_REMOVE);
         jpCenter.add(jpBotsListView, CARD_BOTS_LIST);
         jpCenter.add(jpBotsEditView, CARD_BOTS_EDIT);
-        jpCenter.add(jpSharesView, CARD_USERS);
+
+
+        //TODO: Add the rest of views
     }
 
     /**
@@ -127,6 +126,7 @@ public class MainView extends JFrame {
         menuOptions.setBorder(null);
         menuBar.add(menuOptions);
 
+        //Option1
         option1 = new JMenuItem("Home");
         option1.setHorizontalAlignment(SwingConstants.CENTER);
         option1.setBackground(Color.WHITE);
@@ -150,6 +150,15 @@ public class MainView extends JFrame {
         option3.setForeground(color.getDarkGreyText());
         option3.setFont(fontMenu);
         menuOptions.add(option3);
+        jpMenu.add(menuBar, BorderLayout.CENTER);
+        //Option4
+        option4 = new JMenuItem("TOP 10 Companies");
+        option4.setHorizontalAlignment(SwingConstants.CENTER);
+        option4.setBackground(Color.WHITE);
+        option4.setBorder(borderOptions);
+        option4.setForeground(color.getDarkGreyText());
+        option4.setFont(fontMenu);
+        menuOptions.add(option4);
         jpMenu.add(menuBar, BorderLayout.CENTER);
 
         jpLogo.add(jpMenu, BorderLayout.SOUTH);
@@ -178,6 +187,8 @@ public class MainView extends JFrame {
         option2.setActionCommand(CARD_USERS);
         option3.addActionListener(actionListener);
         option3.setActionCommand(CARD_BOTS);
+        option4.addActionListener(actionListener);
+        option4.setActionCommand(CARD_TOPTEN);
     }
 
     /**
@@ -275,6 +286,9 @@ public class MainView extends JFrame {
                 break;
             case CARD_BOTS:
                 cardLayout.show(jpCenter, CARD_BOTS);
+                break;
+            case CARD_TOPTEN:
+                cardLayout.show(jpCenter, CARD_TOPTEN);
                 break;
             case CARD_BOTS_CREATE:
                 cardLayout.show(jpCenter, CARD_BOTS_CREATE);
