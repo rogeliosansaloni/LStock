@@ -11,9 +11,6 @@ import utils.UserMapperImpl;
 import java.util.ArrayList;
 
 public class StockManager {
-    private static final String BUY_ACTION = "BUY";
-    private static final String SELL_ACTION = "SELL";
-    private DBConnector connector;
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareChange> sharesChange;
@@ -25,7 +22,7 @@ public class StockManager {
     private ShareMapperImpl shareMapper;
 
     public StockManager() {
-        connector = new DBConnector();
+        DBConnector connector = new DBConnector();
         userDao = new UserDao(connector);
         shareDao = new ShareDao(connector);
         companyDao = new CompanyDao(connector);

@@ -54,7 +54,8 @@ public class BotManager {
      * @param action indicates if we should enable or disable a bot
      */
     public void configureBot(int botId, String action) {
-        botDao.updateBot(botId, action);
+        int newActivity = botDao.updateBot(botId, action);
+        changeBotStatus(getBot(botId), newActivity);
     }
 
     /**
@@ -168,7 +169,21 @@ public class BotManager {
         }
     }
 
-    public Bot getBotById(int botId) {
-        return botDao.getBotById(botId);
+    /**
+     * Change the bot status to new status
+     * @param bot bot which status will be changed
+     * @param newActivity new status
+     */
+    public void changeBotStatus(Bot bot, int newActivity) {
+        for(Company company : companies) {
+            if (company.getCompanyId() == bot.getCompany().getCompanyId()) {
+                for (Bot b : company.getBots()) {
+                    if (b.getBotId() == bot.getBotId()) {
+                        b.setStatus(newActivity);
+                    }
+                }
+                return;
+            }
+        }
     }
 }
