@@ -1,15 +1,12 @@
 package view;
 
 import controller.*;
-import model.entities.Bot;
-import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class MainView extends JFrame {
 
@@ -20,12 +17,11 @@ public class MainView extends JFrame {
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
     private static final String CARD_TOPTEN = "Top 10 Companies";
-    private static final int PANEL_WIDTH = 1080;
     private static final String CARD_BOTS_CREATE = "Create Bot";
     private static final String CARD_BOTS_EDIT = "Edit Bot";
     private static final String CARD_BOTS_REMOVE = "Remove Bot";
     private static final String CARD_BOTS_LIST = "Bots";
-    private static final int PANEL_WIDTH = 780;
+    private static final int PANEL_WIDTH = 1080;
     private static final int PANEL_HEIGHT = 740;
 
     private JLabel labelLogo;
@@ -57,38 +53,32 @@ public class MainView extends JFrame {
         this.setLayout(new BorderLayout());
         this.setResizable(false);
         initUI();
-        initAllViews();
-    }
-
-    /**
-     * Initializes all views
-     */
-    public void initAllViews() {
-        jpMenuBots = new BotMenuView();
-        jpBotsCreateView = new BotsCreateView();
-        jpBotsRemoveView = new BotsRemoveView();
-        jpBotsListView = new BotsListView();
-        jpBotsEditView = new BotsEditView();
-        jpHomeView = new HomeView();
-        jpSharesView = new SharesListView();
-        addToCardLayout();
     }
 
     /**
      * Add diferent views to layout
      */
-    public void addToCardLayout(HomeView homeView, SharesListView sharesView, TopTenCompaniesView topTenCompaniesView) {
+    public void addToCardLayout(HomeView homeView, SharesListView sharesView, TopTenCompaniesView topTenCompaniesView,
+                                BotMenuView menuBots, BotsCreateView botsCreateView, BotsRemoveView botsRemoveView,
+                                BotsListView botsListView, BotsEditView botsEditView) {
         jpHomeView = homeView;
         jpSharesView = sharesView;
         jpTopTenCompaniesView = topTenCompaniesView;
+        jpMenuBots = menuBots;
+        jpBotsCreateView = botsCreateView;
+        jpBotsRemoveView = botsRemoveView;
+        jpBotsListView = botsListView;
+        jpBotsEditView = botsEditView;
+
         jpCenter.add(jpHomeView, CARD_HOME);
+        jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
+        jpCenter.add(jpSharesView, CARD_USERS);
         jpCenter.add(jpMenuBots, CARD_BOTS);
         jpCenter.add(jpBotsCreateView, CARD_BOTS_CREATE);
         jpCenter.add(jpBotsRemoveView, CARD_BOTS_REMOVE);
         jpCenter.add(jpBotsListView, CARD_BOTS_LIST);
         jpCenter.add(jpBotsEditView, CARD_BOTS_EDIT);
-        jpCenter.add(jpSharesView, CARD_USERS);
-        jpCenter.add(jpTopTenCompaniesView, CARD_TOPTEN);
+
 
         //TODO: Add the rest of views
     }
@@ -299,6 +289,7 @@ public class MainView extends JFrame {
                 break;
             case CARD_TOPTEN:
                 cardLayout.show(jpCenter, CARD_TOPTEN);
+                break;
             case CARD_BOTS_CREATE:
                 cardLayout.show(jpCenter, CARD_BOTS_CREATE);
                 break;

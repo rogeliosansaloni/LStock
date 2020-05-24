@@ -90,6 +90,9 @@ public class BarChartView extends JPanel {
 
             //Add text tag for each Company
             g2.setColor(new Color(15, 15, 15));
+            if (yTopLeft - 15 >= 335){
+                yTopLeft = 345;
+            }
             g2.drawString(barTopten.getName(), xLeft - 2,yTopLeft - 15);
             g2.drawString(Integer.toString(value) + "€", xLeft + 10,yTopLeft-2);
             counter++;

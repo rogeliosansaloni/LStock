@@ -1,9 +1,7 @@
 package controller;
 
-import view.HomeView;
-import view.MainView;
-import view.SharesListView;
-import view.TopTenCompaniesView;
+import model.managers.BotManager;
+import view.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,8 +20,18 @@ public class MainController implements ActionListener {
     private HomeView homeView;
     private final SharesListView sharesListView;
     private final TopTenCompaniesView topTenView;
+    private BotMenuView jpMenuBots;
+    private BotsCreateView jpBotsCreateView;
+    private BotsRemoveView jpBotsRemoveView;
+    private BotsListView jpBotsListView;
+    private BotsEditView jpBotsEditView;
     private HomeController homeController;
     private TopTenController topTenController;
+    private BotMenuController botMenuController;
+    private BotsCreateController botsCreateController;
+    private BotsRemoveController botsRemoveController;
+    private BotsListController botsListController;
+    private BotsEditController botsEditController;
     //TODO: Add the rest con controllers
 
     /**
@@ -31,16 +39,27 @@ public class MainController implements ActionListener {
      * with the main views and controllers for Server
      *
      * @param view MainView
+     * @param botModel
      */
-    public MainController(MainView view) {
+    public MainController(MainView view, BotManager botModel) {
         this.view = view;
         this.homeView = new HomeView();
         this.homeController = new HomeController(view);
         this.sharesListView = new SharesListView();
         this.topTenView = new TopTenCompaniesView();
+        this.jpMenuBots = new BotMenuView();
+        this.jpBotsCreateView = new BotsCreateView();
+        this.jpBotsRemoveView = new BotsRemoveView();
+        this.jpBotsListView = new BotsListView();
+        this.jpBotsEditView = new BotsEditView();
         this.topTenController = new TopTenController(topTenView);
         this.topTenView.showTopTen(this.topTenController.getTopTenCompanies());
-        this.view.addToCardLayout(this.homeView, this.sharesListView,this.topTenView);
+        this.view.addToCardLayout(this.homeView, this.sharesListView,this.topTenView,this.jpMenuBots,this.jpBotsCreateView,this.jpBotsRemoveView,this.jpBotsListView,this.jpBotsEditView);
+        this.botMenuController = new BotMenuController(this,view);
+        this.botsCreateController = new BotsCreateController(jpBotsCreateView,view,botModel);
+        this.botsRemoveController = new BotsRemoveController(jpBotsRemoveView, view, botModel);
+        this.botsListController = new BotsListController(view,jpBotsListView,botModel);
+        this.botsEditController = new BotsEditController(jpBotsEditView,view,botModel);
         updateTopTen();
         //TODO: Initialize controllers
     }
@@ -55,6 +74,7 @@ public class MainController implements ActionListener {
                 view.updateView(CARD_USERS);
                 break;
             case CARD_BOTS:
+                view.updateView(CARD_BOTS);
                 break;
             case CARD_TOPTEN:
                 view.updateView(CARD_TOPTEN);
