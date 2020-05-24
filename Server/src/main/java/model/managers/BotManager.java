@@ -30,7 +30,7 @@ public class BotManager {
 
         // Initialize information
         companies = companyDao.getAllCompanyNames();
-        updateCompanyBots();
+        getCompanyBots();
     }
 
     /**
@@ -88,9 +88,12 @@ public class BotManager {
     /**
      * Updates bots of the companies
      */
-    public void updateCompanyBots() {
+    public void getCompanyBots() {
         for (Company company : companies) {
             ArrayList<Bot> bots = getAllBotsByCompany(company.getCompanyId());
+            for(Bot b : bots) {
+                b.start();
+            }
             company.setBots(bots);
         }
     }

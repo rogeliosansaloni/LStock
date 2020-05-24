@@ -95,8 +95,10 @@ public class Bot extends Thread {
     private void transact() throws InterruptedException {
         synchronized (shares) {
             while(status != 1) {
+                System.out.println("The bot " + botId + " is inactive.");
                 shares.wait();
             }
+            System.out.println("The bot " + botId + " is active.");
 
             // Bot works every after X seconds
             Thread.sleep((long) (activeTime * 1000));

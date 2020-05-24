@@ -97,7 +97,6 @@ public class BotsEditController implements ActionListener {
                     action = DISABLE;
                 }
                 model.configureBot(botId, action);
-                model.updateCompanyBots();
                 view.showMessages(MESSAGE + action.toLowerCase() + "d");
                 view.showStatusButton(model.getBot(botId));
                 break;
