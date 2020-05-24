@@ -68,15 +68,6 @@ public class SharesListView extends JPanel{
         //Return button
         jpSouth = new JPanel();
         jpSouth.setLayout(new BoxLayout(jpSouth, BoxLayout.Y_AXIS));
-        jbReturn = new JButton();
-        jbReturn.setText("RETURN");
-        jbReturn.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        jbReturn.setBackground(color.getYELLOW());
-        jbReturn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        jbReturn.setBorder(BorderFactory.createMatteBorder(5,40,5,40, color.getYELLOW()));
-        jbReturn.setContentAreaFilled(false);
-        jbReturn.setOpaque(true);
-        jpSouth.add(jbReturn);
         jpSouth.setBackground(Color.WHITE);
         jpSouth.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
         this.add(jpSouth, BorderLayout.SOUTH);
