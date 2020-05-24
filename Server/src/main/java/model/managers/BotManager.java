@@ -18,14 +18,16 @@ public class BotManager {
     private ArrayList<Company> companies;
     private BotDao botDao;
     private CompanyDao companyDao;
+    private StockManager stockModel;
 
     /**
      * Creates and initializes the BotManager
      */
-    public BotManager() {
+    public BotManager(StockManager stockModel) {
         DBConnector dbConnector = new DBConnector();
         this.botDao = new BotDao(dbConnector);
         this.companyDao = new CompanyDao(dbConnector);
+        this.stockModel = stockModel;
         dbConnector.connect();
 
         // Initialize information
@@ -93,6 +95,7 @@ public class BotManager {
             ArrayList<Bot> bots = getAllBotsByCompany(company.getCompanyId());
             for(Bot b : bots) {
                 b.start();
+                b.setModel(this.stockModel);
             }
             company.setBots(bots);
         }

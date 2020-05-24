@@ -30,7 +30,6 @@ public class Bot extends Thread {
         this.activeTime = activeTime;
         this.probability = probability;
         this.company = company;
-        this.model = model;
     }
 
     /**
