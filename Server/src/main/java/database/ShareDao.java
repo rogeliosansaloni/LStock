@@ -36,6 +36,19 @@ public class ShareDao {
         }
     }
 
+    public int getCurrentShareId(int companyId){
+        int shareId = 0;
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getMostCurrentShareId(" + companyId + ");");
+        try {
+            while(retrievedShares.next()){
+                shareId = retrievedShares.getInt("share_id");
+            }
+        } catch (SQLException e) {
+            System.out.println(GETTING_SHARES_ERROR);
+        }
+        return shareId;
+    }
+
     /**
      * It willl create a share in the database
      *
