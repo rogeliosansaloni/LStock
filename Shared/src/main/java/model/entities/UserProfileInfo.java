@@ -20,6 +20,11 @@ public class UserProfileInfo extends TunnelObject {
         this.action = action;
     }
 
+    public UserProfileInfo(int userId, String action) {
+        this.userId = userId;
+        this.action = action;
+    }
+
     public int getUserId() {
         return userId;
     }

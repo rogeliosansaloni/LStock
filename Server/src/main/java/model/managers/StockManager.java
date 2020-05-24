@@ -1,27 +1,36 @@
 package model.managers;
 
 import database.CompanyDao;
+import database.ShareDao;
 import database.UserDao;
-import model.entities.AuthenticationInfo;
-import model.entities.Company;
-import model.entities.User;
-import model.entities.UserProfileInfo;
+import model.entities.*;
 import database.DBConnector;
+import utils.ShareMapperImpl;
 import utils.UserMapperImpl;
 
 import java.util.ArrayList;
 
 public class StockManager {
+    private static final String BUY_ACTION = "BUY";
+    private static final String SELL_ACTION = "SELL";
     private DBConnector connector;
     private ArrayList<Company> companies;
+    private ArrayList<CompanyChange> companiesChange;
+    private ArrayList<ShareChange> sharesChange;
+    private ArrayList<CompanyDetail> companyDetails;
     private UserDao userDao;
     private CompanyDao companyDao;
+    private ShareDao shareDao;
     private UserMapperImpl mapper;
+    private ShareMapperImpl shareMapper;
 
     public StockManager() {
         connector = new DBConnector();
         userDao = new UserDao(connector);
+        shareDao = new ShareDao(connector);
+        companyDao = new CompanyDao(connector);
         mapper = new UserMapperImpl();
+        shareMapper = new ShareMapperImpl();
         connector.connect();
     }
 
@@ -29,6 +38,8 @@ public class StockManager {
         this.userDao = userDao;
         this.companyDao = companyDao;
         this.companies = new ArrayList<Company>();
+        this.companiesChange = new ArrayList<CompanyChange>();
+        this.sharesChange = new ArrayList<ShareChange>();
     }
 
     /**
@@ -76,7 +87,7 @@ public class StockManager {
      * @return UserProfileInfo with the updated information of the user
      */
     public UserProfileInfo updateUserBalance(User user) {
-        userDao.updateUserBalance(user);
+        userDao.updateUserBalanceLoad(user);
         UserProfileInfo info = mapper.userToUserProfileInfo(user);
         info.setAction("balance");
         return info;
@@ -95,16 +106,75 @@ public class StockManager {
         return info;
     }
 
+    /**
+     * Gets the profile info of the user.
+     *
+     * @param user The user
+     * @return UserProfileInfo with the the update information of the user
+     */
+    public UserProfileInfo getUserProfileInfo(User user) {
+        userDao.getUserProfileInfo(user);
+        UserProfileInfo info = mapper.userToUserProfileInfo(user);
+        info.setAction("profileView");
+        return info;
+    }
+
+    /**
+     * Creates a new share between company and user.
+     *
+     * @param user    the user
+     * @param company the company
+     * @return ShareTrade with the new values of users total balance and company value
+     */
+    public ShareTrade updatePurchaseBuy(User user, Company company, Purchase[] purchases, String action, String view) {
+        //Updates the user balance
+        userDao.updateUserBalance(user);
+        //If the acttion is Sell, we want to decrease the number of shares.
+        if (action.equals("BUY")) {
+            //Updates the purchased share
+            shareDao.updatePurchasedShare(purchases[0]);
+        } else {
+            for (int i = 0; i < purchases.length; i++) {
+                purchases[i].setShareQuantity(-purchases[i].getShareQuantity());
+                //Updates the purchased share
+                shareDao.updatePurchasedShare(purchases[i]);
+            }
+        }
+        //Recalculates the new value of the company
+        float currentValue = companyDao.getCompanyCurrenValue(company.getCompanyId());
+        company.setValue(currentValue);
+        company.recalculateValue(action);
+
+        //Updates the company new value
+        companyDao.updateCompanyNewValue(company);
+        ShareTrade info = shareMapper.userCompanyToShareTrade(user, company);
+        info.setView(view);
+        return info;
+    }
+
     public ArrayList<Company> getCompanies() {
+        companies = companyDao.getAllCompanies();
         return companies;
     }
 
-    public void updateCompanyValue(int companyId, String action) {
-        for (Company c : companies) {
-            if (c.getCompanyId() == companyId) {
-                c.recalculateValue(action);
-            }
-        }
+    public ArrayList<CompanyChange> getCompaniesChange() {
+        companiesChange = companyDao.getCompaniesChange();
+        return companiesChange;
+    }
+
+    public ArrayList<ShareChange> getSharesChange(int userId) {
+        sharesChange = shareDao.getSharesChange(userId);
+        return sharesChange;
+    }
+
+    public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
+        companyDetails = companyDao.getCompanyDetails(userId, companyId);
+        return companyDetails;
+    }
+
+    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
+        ArrayList<ShareSell> sharesSell = shareDao.getSharesSell(userId, companyId);
+        return sharesSell;
     }
 }
 

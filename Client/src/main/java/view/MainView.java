@@ -1,5 +1,6 @@
 package view;
 
+import model.entities.*;
 import utils.StockColors;
 
 import javax.swing.*;
@@ -7,6 +8,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Main view
+ */
 public class MainView extends JFrame {
 
     //logo de stock
@@ -14,35 +18,37 @@ public class MainView extends JFrame {
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
     private static final String PATH_ARROW_ICON = "/Images/dropdown-grey.png";
     private static final String TITLE = "StockLS - C2";
+    private String currentView = "";
     private static final String CARD_COMPANY = "Companies";
+    private static final String CARD_COMPANYDETAILS = "Company Details";
     private static final String CARD_PROFILE = "My Profile";
     private static final String CARD_SHARES = "Shares";
     private static final String CARD_BALANCE = "Load Balance";
-    private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 768;
-    private JLabel labelLogo;
-    private JLabel labelStock;
-    private JLabel labelUserPhoto;
+    private static final int PANEL_WIDTH = 1080;
+    private static final int PANEL_HEIGHT = 768;
     private JLabel labelViewName;
+    private JLabel labelCurrentPrice;
     private JLabel labelBalance;
     private String userName = "Peter Fox";
     private String userBalance = "00.00";
-    private JPanel jpHeader;
-    private JPanel jpLogo;
     private JPanel jpOptions;
-    private JPanel jpMenu;
     private JPanel jpCenter;
-    private JMenuBar menuBar;
     private JMenu menuOptions;
-    private JMenuItem option1, option2, option3, option4;
     private StockColors color;
     private CompanyDetailView jpCompanyDetailsView;
+    private JMenuItem optionProfile, optionShares, optionBalance, optionCompany, optionLogout;
     private BalanceView jpBalanceView;
+    private CompanyView jpCompanyView;
+    private ProfileView jpProfileView;
+    private SharesView jpShares;
 
+    /**
+     * Creates and initializes the main view
+     */
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
-        this.setSize(anchuraPanel, alturaPanel);
+        this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -55,9 +61,11 @@ public class MainView extends JFrame {
      * Initializes all views
      */
     public void initAllViews() {
+        jpCompanyView = new CompanyView();
         jpBalanceView = new BalanceView();
         jpCompanyDetailsView = new CompanyDetailView();
-        //TODO: Add the rest of views
+        jpProfileView = new ProfileView();
+        jpShares = new SharesView();
         addToCardLayout();
     }
 
@@ -65,8 +73,11 @@ public class MainView extends JFrame {
      * Add diferent views to layout
      */
     private void addToCardLayout() {
+        jpCenter.add(jpCompanyView, CARD_COMPANY);
+        jpCenter.add(jpCompanyDetailsView, CARD_COMPANYDETAILS);
         jpCenter.add(jpBalanceView, CARD_BALANCE);
-        //TODO: Add the rest of views
+        jpCenter.add(jpProfileView, CARD_PROFILE);
+        jpCenter.add(jpShares, CARD_SHARES);
     }
 
     /**
@@ -78,31 +89,43 @@ public class MainView extends JFrame {
         jpMain.setBackground(color.getBLACK());
 
         //We create the JPanel for the header
-        jpHeader = new JPanel(new BorderLayout());
+        JPanel jpHeader = new JPanel(new BorderLayout());
         jpHeader.setBackground(color.getDarkGreyHeader());
-        jpLogo = new JPanel(new BorderLayout());
-        //Creamos la imagen del logo
+        JPanel jpLogo = new JPanel(new BorderLayout());
+
+        // Create logo
         ImageIcon imageIcon = new ImageIcon(MainView.class.getResource(
                 PATH_LOGO));
         Image scaleImage = imageIcon.getImage().getScaledInstance(120, 120, Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
-        labelLogo = new JLabel(imageIcon);
+        JLabel labelLogo = new JLabel(imageIcon);
         jpLogo.add(labelLogo, BorderLayout.CENTER);
         jpLogo.setBackground(color.getDarkGreyHeader());
 
-        Font fontLogo = new Font("Segoe UI", Font.PLAIN, 30);
-        labelStock = new JLabel("StockLS", SwingConstants.CENTER);
+        Font fontLogo = new Font("Roboto", Font.PLAIN, 30);
+        JLabel labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         labelStock.setFont(fontLogo);
         labelStock.setForeground(color.getDarkGreyText());
         jpLogo.add(labelStock, BorderLayout.SOUTH);
         jpHeader.add(jpLogo, BorderLayout.WEST);
 
-        //Here we change the content of this label depending on the view we create
-        labelViewName = new JLabel("COMPANIES", SwingConstants.CENTER);
-        Font fontNameView = new Font("Segoe UI", Font.PLAIN, 50);
+        JPanel jpCenterHeader = new JPanel(new BorderLayout());
+        jpCenterHeader.setBackground(color.getDarkGreyHeader());
+
+        labelViewName = new JLabel(CARD_COMPANY, SwingConstants.CENTER);
+        Font fontNameView = new Font("Roboto", Font.PLAIN, 50);
         labelViewName.setFont(fontNameView);
         labelViewName.setForeground(color.getWHITE());
-        jpHeader.add(labelViewName, BorderLayout.CENTER);
+        labelViewName.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+        jpCenterHeader.add(labelViewName, BorderLayout.CENTER);
+
+        labelCurrentPrice = new JLabel("", SwingConstants.CENTER);
+        Font fontActualPrice = new Font("Roboto", Font.PLAIN, 30);
+        labelCurrentPrice.setFont(fontActualPrice);
+        labelCurrentPrice.setForeground(color.getWHITE());
+        labelCurrentPrice.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
+        jpCenterHeader.add(labelCurrentPrice, BorderLayout.SOUTH);
+        jpHeader.add(jpCenterHeader, BorderLayout.CENTER);
 
         jpOptions = new JPanel(new BorderLayout());
         jpOptions.setBackground(color.getDarkGreyHeader());
@@ -111,12 +134,13 @@ public class MainView extends JFrame {
                 PATH_USER_PHOTO));
         Image scaleImageUser = imageIconUser.getImage().getScaledInstance(100, 100, Image.SCALE_DEFAULT);
         imageIconUser = new ImageIcon(scaleImageUser);
-        labelUserPhoto = new JLabel(imageIconUser);
+        JLabel labelUserPhoto = new JLabel(imageIconUser);
         jpOptions.add(labelUserPhoto, BorderLayout.NORTH);
 
         createMenuBar();
 
-        Font fontBalance = new Font("Segoe UI", Font.PLAIN, 25);
+        Font fontBalance = new Font("Roboto", Font.PLAIN, 25);
+
         //Here we put the user's balance
         labelBalance = new JLabel("Balance: " + userBalance + " $");
         labelBalance.setFont(fontBalance);
@@ -126,13 +150,12 @@ public class MainView extends JFrame {
 
         jpHeader.add(jpOptions, BorderLayout.EAST);
 
-        jpHeader.setBorder(BorderFactory.createEmptyBorder(30, 50, 15, 50));
+        jpHeader.setBorder(BorderFactory.createEmptyBorder(30, 50, 15, 10));
         jpMain.add(jpHeader, BorderLayout.NORTH);
 
         //Here we edit the jpCenter depending on the view the create
         jpCenter = new JPanel();
         jpCenter.setLayout(new CardLayout());
-
         jpCenter.setBackground(color.getBLACK());
         jpMain.add(jpCenter, BorderLayout.CENTER);
         this.getContentPane().add(jpMain);
@@ -142,13 +165,9 @@ public class MainView extends JFrame {
     /**
      * Creates Menu Bar
      */
-    public void createMenuBar() {
-
-        Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
-        Font fontName = new Font("Segoe UI", Font.BOLD, 30);
-        Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
-
-        jpMenu = new JPanel(new BorderLayout());
+    private void createMenuBar() {
+        Font fontName = new Font("Roboto", Font.BOLD, 30);
+        JPanel jpMenu = new JPanel(new BorderLayout());
         jpMenu.setBackground(color.getDarkGreyHeader());
 
         ImageIcon imageArrow = new ImageIcon(MainView.class.getResource(
@@ -156,7 +175,7 @@ public class MainView extends JFrame {
         Image scaleImageArrow = imageArrow.getImage().getScaledInstance(20, 20, Image.SCALE_DEFAULT);
         imageArrow = new ImageIcon(scaleImageArrow);
 
-        menuBar = new JMenuBar();
+        JMenuBar menuBar = new JMenuBar();
         menuBar.setBackground(color.getDarkGreyHeader());
         menuBar.setBorder(null);
         menuBar.setBorderPainted(false);
@@ -169,40 +188,75 @@ public class MainView extends JFrame {
         menuOptions.setForeground(color.getDarkGreyText());
         menuOptions.setBorder(null);
         menuBar.add(menuOptions);
-        //Option1
-        option1 = new JMenuItem("My Profile");
-        option1.setHorizontalAlignment(SwingConstants.CENTER);
-        option1.setBackground(color.getDarkGreyHeader());
-        option1.setBorder(bordeOptions);
-        option1.setForeground(color.getDarkGreyText());
-        option1.setFont(fontOptions);
-        menuOptions.add(option1);
-        //Option2
-        option2 = new JMenuItem("Shares");
-        option2.setHorizontalAlignment(SwingConstants.CENTER);
-        option2.setBackground(color.getDarkGreyHeader());
-        option2.setBorder(bordeOptions);
-        option2.setForeground(color.getDarkGreyText());
-        option2.setFont(fontOptions);
-        menuOptions.add(option2);
-        //Option3
-        option3 = new JMenuItem("Load Balance");
-        option3.setHorizontalAlignment(SwingConstants.CENTER);
-        option3.setBackground(color.getDarkGreyHeader());
-        option3.setBorder(bordeOptions);
-        option3.setForeground(color.getDarkGreyText());
-        option3.setFont(fontOptions);
-        menuOptions.add(option3);
-        //Option4
-        option4 = new JMenuItem("Log out");
-        option4.setHorizontalAlignment(SwingConstants.CENTER);
-        option4.setBackground(color.getDarkGreyHeader());
-        option4.setBorder(bordeOptions);
-        option4.setForeground(color.getDarkGreyText());
-        option4.setFont(fontOptions);
-        menuOptions.add(option4);
+        initializeOptions();
+        updateOptionsCompany();
         jpMenu.add(menuBar, BorderLayout.CENTER);
         jpOptions.add(jpMenu, BorderLayout.CENTER);
+    }
+
+    public void initializeOptions() {
+        //Option Companies
+        optionCompany = new JMenuItem("Companies list");
+        //Option Profile
+        optionProfile = new JMenuItem("My Profile");
+        //Option Shares
+        optionShares = new JMenuItem("Shares");
+        //Option Load Balance
+        optionBalance = new JMenuItem("Load Balance");
+        //Option Logout
+        optionLogout = new JMenuItem("Log out");
+    }
+
+    public void addOptionBar(JMenuItem option) {
+        Font fontOptions = new Font("Roboto", Font.PLAIN, 28);
+        Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
+        option.setHorizontalAlignment(SwingConstants.CENTER);
+        option.setBackground(color.getDarkGreyHeader());
+        option.setBorder(bordeOptions);
+        option.setForeground(color.getDarkGreyText());
+        option.setFont(fontOptions);
+        menuOptions.add(option);
+    }
+
+    private void updateOptionsCompany() {
+        menuOptions.removeAll();
+        addOptionBar(optionProfile);
+        addOptionBar(optionShares);
+        addOptionBar(optionBalance);
+        addOptionBar(optionLogout);
+    }
+
+    private void updateOptionsBalance() {
+        menuOptions.removeAll();
+        addOptionBar(optionProfile);
+        addOptionBar(optionCompany);
+        addOptionBar(optionShares);
+        addOptionBar(optionLogout);
+    }
+
+    private void updateOptionsShares() {
+        menuOptions.removeAll();
+        addOptionBar(optionProfile);
+        addOptionBar(optionCompany);
+        addOptionBar(optionBalance);
+        addOptionBar(optionLogout);
+    }
+
+    private void updateOptionsProfile() {
+        menuOptions.removeAll();
+        addOptionBar(optionCompany);
+        addOptionBar(optionShares);
+        addOptionBar(optionBalance);
+        addOptionBar(optionLogout);
+    }
+
+    private void updateOptionsCompanyDetail() {
+        menuOptions.removeAll();
+        addOptionBar(optionProfile);
+        addOptionBar(optionCompany);
+        addOptionBar(optionShares);
+        addOptionBar(optionBalance);
+        addOptionBar(optionLogout);
     }
 
     /**
@@ -211,41 +265,85 @@ public class MainView extends JFrame {
      * @param actionListener ActionLister
      */
     public void registerMainController(ActionListener actionListener) {
-        option1.addActionListener(actionListener);
-        option1.setActionCommand("profile");
-        option2.addActionListener(actionListener);
-        option2.setActionCommand("shares");
-        option3.addActionListener(actionListener);
-        option3.setActionCommand("load");
-        option4.addActionListener(actionListener);
-        option4.setActionCommand("logout");
+        optionProfile.addActionListener(actionListener);
+        optionProfile.setActionCommand("profile");
+        optionShares.addActionListener(actionListener);
+        optionShares.setActionCommand("shares");
+        optionBalance.addActionListener(actionListener);
+        optionBalance.setActionCommand("load");
+        optionCompany.addActionListener(actionListener);
+        optionCompany.setActionCommand("company");
+        optionLogout.addActionListener(actionListener);
+        optionLogout.setActionCommand("logout");
+
     }
 
-    public void registerCompanyDetailViewController(ActionListener controller) {
-        jpCompanyDetailsView.registerController(controller);
-    }
-
-    public void registerBalanceController(ActionListener controller) {
-        jpBalanceView.registerController(controller);
+    public int confirmLogOutWindow() {
+        int verify = JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Log Out", JOptionPane.YES_NO_OPTION);
+        return verify;
     }
 
     /**
      * Shows desired view
      *
-     * @param card
+     * @param card the card that we want to show
      */
     public void updateView(String card) {
         CardLayout cardLayout = (CardLayout) jpCenter.getLayout();
+        labelCurrentPrice.setText("");
         switch (card) {
+            case CARD_COMPANY:
+                currentView = CARD_COMPANY;
+                labelViewName.setText(CARD_COMPANY);
+                cardLayout.show(jpCenter, CARD_COMPANY);
+                updateOptionsCompany();
+                break;
             case CARD_PROFILE:
+                currentView = CARD_PROFILE;
+                labelViewName.setText(CARD_PROFILE);
+                cardLayout.show(jpCenter, CARD_PROFILE);
+                updateOptionsProfile();
                 break;
             case CARD_SHARES:
+                currentView = CARD_SHARES;
+                labelViewName.setText(CARD_SHARES);
+                cardLayout.show(jpCenter, CARD_SHARES);
+                updateOptionsShares();
                 break;
             case CARD_BALANCE:
+                currentView = CARD_BALANCE;
                 labelViewName.setText(CARD_BALANCE);
                 cardLayout.show(jpCenter, CARD_BALANCE);
+                updateOptionsBalance();
+                break;
+            case CARD_COMPANYDETAILS:
+                currentView = CARD_COMPANYDETAILS;
+                cardLayout.show(jpCenter, CARD_COMPANYDETAILS);
+                updateOptionsCompanyDetail();
                 break;
         }
+    }
+
+    /**
+     * Sets the value of the labelCurrentPrice depending on the value it receives
+     */
+
+    public void setTitleCompanyDetail(float value, String companyName) {
+        if(currentView == CARD_COMPANYDETAILS){
+            String text = "CURRENT PRICE: " + value + " €";
+            labelCurrentPrice.setText(text);
+            labelViewName.setText(companyName);
+        }
+
+    }
+
+    /**
+     * Updates profile view
+     *
+     * @param user the user
+     */
+    public void updateProfileView(User user) {
+        jpProfileView.updateProfileView(user);
     }
 
     /**
@@ -259,23 +357,73 @@ public class MainView extends JFrame {
 
     /**
      * Update the total balance of the user in the header
-     * @param nickname Users nickname
+     *
+     * @param nickname     Users nickname
      * @param totalBalance Current balance of the user
      */
-    public void initHeaderInformation (String nickname, float totalBalance) {
+    public void initHeaderInformation(String nickname, float totalBalance) {
         String strDouble = String.format("%.2f", totalBalance);
         menuOptions.setText(nickname);
         labelBalance.setText("Balance: " + strDouble + " $");
     }
 
     /**
-     * Updates total balance of the user
+     * Updates total balance of the user in the header
+     *
      * @param totalBalance Current balance of the user
      */
-    public void updateTotalBalance (float totalBalance) {
+    public void updateTotalBalance(float totalBalance) {
         String strDouble = String.format("%.2f", totalBalance);
         labelBalance.setText("Balance: " + strDouble + " $");
-        jpBalanceView.updateCurrentBalance(strDouble);
     }
 
+    /**
+     * Shows a window to confirm action
+     *
+     * @param message the message
+     * @return true if confirmed
+     */
+    public int confirmAction(String message) {
+        return jpCompanyDetailsView.confirmAction(message);
+    }
+
+    /**
+     * Shows error message when user doesn't have enough money
+     *
+     * @param message the error message
+     */
+    public void showNoEnoughBalanceErrorMessage(String message) {
+        jpCompanyDetailsView.showErrorMessage(message);
+    }
+
+    /**
+     * Gets the Balance View
+     *
+     * @return Balance View
+     */
+    public BalanceView getBalanceView() {
+        return jpBalanceView;
+    }
+
+    /**
+     * Gets the company view
+     *
+     * @return Company View
+     */
+    public CompanyView getCompanyView() {
+        return jpCompanyView;
+    }
+
+    /**
+     * Gets the Company Details View
+     *
+     * @return Company Details View
+     */
+    public CompanyDetailView getCompanyDetailsView() {
+        return jpCompanyDetailsView;
+    }
+
+    public SharesView getSharesView() {
+        return jpShares;
+    }
 }

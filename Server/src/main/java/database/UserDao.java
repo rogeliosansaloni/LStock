@@ -3,6 +3,7 @@ package database;
 
 import java.util.ArrayList;
 
+import model.entities.Company;
 import model.entities.CompanyDetail;
 import model.entities.User;
 
@@ -43,8 +44,7 @@ public class UserDao {
             while (result.next()) {
                 if (result.getString("email").equals(user.getEmail())) {
                     message = REGISTER_MESSAGE_2;
-                }
-                else {
+                } else {
                     if (result.getString("nickname").equals(user.getNickname())) {
                         message = REGISTER_MESSAGE_3;
                     }
@@ -157,6 +157,15 @@ public class UserDao {
      * @param user User information
      */
     public void updateUserBalance(User user) {
+        dbConnector.callProcedure("CALL updateUserBalance( " + user.getUserId() + ", " + user.getTotalBalance() + ");");
+    }
+
+    /**
+     * It will update the information of one user
+     *
+     * @param user User information
+     */
+    public void updateUserBalanceLoad(User user) {
         ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
 
         try {
@@ -166,6 +175,24 @@ public class UserDao {
                     dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
                     user.setTotalBalance(totalAmount);
                 }
+            }
+        } catch (SQLException e) {
+            System.out.println(BALANCE_MESSAGE_1);
+        }
+    }
+
+    /**
+     * It will get user necessary for the Client Profile View
+     *
+     * @param user User information
+     */
+    public void getUserProfileInfo(User user) {
+        ResultSet result = dbConnector.selectQuery("CALL getUserProfileInfo(" + user.getUserId() + ");");
+        try {
+            while (result.next()) {
+                user.setNickname(result.getString("nickname"));
+                user.setEmail(result.getString("email"));
+                user.setDescription(result.getString("description"));
             }
         } catch (SQLException e) {
             System.out.println(BALANCE_MESSAGE_1);
@@ -192,6 +219,26 @@ public class UserDao {
     }
 
     /**
+     * Gets the users information
+     *
+     * @param user the User
+     * @return user User and its information
+     */
+    public void getUserInfo(User user) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
+
+        try {
+            while (result.next()) {
+                if (result.getInt("user_id") == user.getUserId()) {
+                    user.setDescription(result.getString("description"));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(PROFILE_MESSAGE_1);
+        }
+    }
+
+    /**
      * Gets the users share data from the database
      *
      * @param name Selected user name
@@ -205,9 +252,9 @@ public class UserDao {
                 int user_id = result.getInt("user_id");
                 result = dbConnector.selectQuery(
                         "SELECT DISTINCT Purchase.share_quantity, Share.price, Company.name, Company.company_id FROM Share " +
-                        "INNER JOIN Purchase ON Share.share_id = Purchase.share_id " +
-                        "INNER JOIN Company ON Company.company_id = Purchase.company_id " +
-                        "INNER JOIN User ON Purchase.user_id = '"+user_id+"';");
+                                "INNER JOIN Purchase ON Share.share_id = Purchase.share_id " +
+                                "INNER JOIN Company ON Company.company_id = Purchase.company_id " +
+                                "INNER JOIN User ON Purchase.user_id = '"+user_id+"';");
                 userSharesList = new ArrayList<CompanyDetail>();
                 while (result.next()) {
                     userSharesList.add(new CompanyDetail(
@@ -223,6 +270,7 @@ public class UserDao {
         }
         return userSharesList;
     }
+
     /**
      * Returns all the shares of the selected user
      *
@@ -244,4 +292,5 @@ public class UserDao {
         }
         return null;
     }
+
 }

@@ -1,12 +1,15 @@
 package view;
 
-import controller.HomeController;
+import controller.*;
+import model.entities.Bot;
+import model.entities.Company;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class MainView extends JFrame {
 
@@ -16,8 +19,13 @@ public class MainView extends JFrame {
     private static final String CARD_HOME = "Home";
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
-    private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 740;
+    private static final String CARD_BOTS_CREATE = "Create Bot";
+    private static final String CARD_BOTS_EDIT = "Edit Bot";
+    private static final String CARD_BOTS_REMOVE = "Remove Bot";
+    private static final String CARD_BOTS_LIST = "Bots";
+    private static final int PANEL_WIDTH = 780;
+    private static final int PANEL_HEIGHT = 740;
+
     private JLabel labelLogo;
     private JLabel labelStock;
     protected JPanel jpNorth;
@@ -30,17 +38,37 @@ public class MainView extends JFrame {
     private StockColors color;
     private HomeView jpHomeView;
     private SharesListView jpSharesView;
+    private BotMenuView jpMenuBots;
+    private BotsCreateView jpBotsCreateView;
+    private BotsRemoveView jpBotsRemoveView;
+    private BotsListView jpBotsListView;
+    private BotsEditView jpBotsEditView;
 
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
-        this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
-        this.setSize(anchuraPanel, alturaPanel);
+        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+        this.setSize(PANEL_WIDTH, PANEL_HEIGHT);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
         this.setResizable(false);
         initUI();
+        initAllViews();
+    }
+
+    /**
+     * Initializes all views
+     */
+    public void initAllViews() {
+        jpMenuBots = new BotMenuView();
+        jpBotsCreateView = new BotsCreateView();
+        jpBotsRemoveView = new BotsRemoveView();
+        jpBotsListView = new BotsListView();
+        jpBotsEditView = new BotsEditView();
+        jpHomeView = new HomeView();
+        jpSharesView = new SharesListView();
+        addToCardLayout();
     }
 
     /**
@@ -52,6 +80,14 @@ public class MainView extends JFrame {
         jpCenter.add(homeView, CARD_HOME);
         jpCenter.add(sharesListView, CARD_USERS);
         //TODO: Add the rest of views
+    private void addToCardLayout() {
+        jpCenter.add(jpHomeView, CARD_HOME);
+        jpCenter.add(jpMenuBots, CARD_BOTS);
+        jpCenter.add(jpBotsCreateView, CARD_BOTS_CREATE);
+        jpCenter.add(jpBotsRemoveView, CARD_BOTS_REMOVE);
+        jpCenter.add(jpBotsListView, CARD_BOTS_LIST);
+        jpCenter.add(jpBotsEditView, CARD_BOTS_EDIT);
+        jpCenter.add(jpSharesView, CARD_USERS);
     }
 
     /**
@@ -150,10 +186,86 @@ public class MainView extends JFrame {
         option3.setActionCommand(CARD_BOTS);
     }
 
+    /**
+     * Registers controller for the HomeView
+     *
+     * @param controller Home controller
+     */
 
     public void registerHomeController(HomeController controller) {
         jpHomeView.registerController(controller);
     }
+
+    /**
+     * Registers controller for the BotMenuView
+     *
+     * @param controller Bot menu controller
+     */
+    public void registerBotMenuController(BotMenuController controller) {
+        jpMenuBots.registerControllers(controller);
+    }
+
+    /**
+     * Registers controller for the Bot create view
+     *
+     * @param controller BotsCreate controller
+     */
+    public void registerBotCreateController(BotsCreateController controller) {
+        jpBotsCreateView.registerController(controller);
+        jpBotsCreateView.registerFocusController();
+    }
+
+    /**
+     * Registers controller for the Bot remove view
+     * @param controller BotsRemove controller
+     */
+    public void registerBotRemoveController(BotsRemoveController controller,
+                                            BotsRemoveComboBoxController comboBoxController) {
+        jpBotsRemoveView.registerController(controller);
+        jpBotsRemoveView.registerComboBoxController(comboBoxController);
+    }
+
+    public void registerBotEditController(BotsEditController controller, BotsEditComboBoxController comboBoxController) {
+        jpBotsEditView.registerController(controller);
+        jpBotsEditView.registerComboBoxController(comboBoxController);
+    }
+
+    /**
+     * Registers controller for Bots List controller
+     * @param controller BotsListController
+     */
+    public void registerBotListController(BotsListController controller) {
+        jpBotsListView.registerController(controller);
+    }
+
+    /**
+     * Gets the Bots List view
+     * @return view for Bot list
+     */
+    public BotsListView getBotsListView () { return jpBotsListView; }
+
+    /**
+     * Gets Bots Remove view
+     * @return view for Bot removal
+     */
+    public BotsRemoveView getBotsRemoveView() { return  jpBotsRemoveView; }
+
+    /**
+     * Gets Bots Create view
+     * @return view for Bot creation
+     */
+    public BotsCreateView getBotsCreateView() {
+        return jpBotsCreateView;
+    }
+
+    /**
+     * G3ets Bots Edit view
+     * @return view for Bot edition
+     */
+    public BotsEditView getBotsEditView() {
+        return jpBotsEditView;
+    }
+
 
     /**
      * Shows desired view
@@ -170,6 +282,18 @@ public class MainView extends JFrame {
                 break;
             case CARD_BOTS:
                 cardLayout.show(jpCenter, CARD_BOTS);
+                break;
+            case CARD_BOTS_CREATE:
+                cardLayout.show(jpCenter, CARD_BOTS_CREATE);
+                break;
+            case CARD_BOTS_REMOVE:
+                cardLayout.show(jpCenter, CARD_BOTS_REMOVE);
+                break;
+            case CARD_BOTS_LIST:
+                cardLayout.show(jpCenter, CARD_BOTS_LIST);
+                break;
+            case CARD_BOTS_EDIT:
+                cardLayout.show(jpCenter, CARD_BOTS_EDIT);
                 break;
         }
     }
