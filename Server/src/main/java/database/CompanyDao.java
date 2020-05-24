@@ -22,7 +22,6 @@ public class CompanyDao {
     private static final String GETTING_COMPANIES_ERROR = "Error getting all companies.";
     private static final String GETTING_COMPANIES_ERROR_DETAIL = "Error getting all companies detail.";
     private static final String GETTING_COMPANIES_ERROR_CHANGE = "Error getting all companies change.";
-    private static final String GETTING_COMPANIES_ERROR = "Error getting all companies";
     private static final String TOPTEN_MESSAGE = "Error finding top 10 companies of User";
 
     public CompanyDao(DBConnector dbConnector) {
