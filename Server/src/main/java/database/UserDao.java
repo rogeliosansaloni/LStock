@@ -3,6 +3,8 @@ package database;
 
 import java.util.ArrayList;
 
+import model.entities.Company;
+import model.entities.Top10;
 import model.entities.ShareChange;
 import model.entities.User;
 
@@ -22,6 +24,7 @@ public class UserDao {
     private static final String PROFILE_MESSAGE_1 = "Error getting the user information";
     private static final String PROFILE_MESSAGE_2 = "Error updating the user information";
     private static final String BALANCE_MESSAGE_1 = "Error updating the user total balance";
+
 
     /**
      * Represents the DAO for the User table
@@ -291,5 +294,7 @@ public class UserDao {
         }
         return null;
     }
+
+
 
 }
