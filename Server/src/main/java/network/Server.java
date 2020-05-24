@@ -66,8 +66,8 @@ public class Server extends Thread {
      * Initializes main view
      */
     public void initMainView () {
-        botModel = new BotManager();
         stockModel = new StockManager();
+        botModel = new BotManager();
         mainView = new MainView();
         mainController = new MainController(mainView, botModel);
         mainView.registerController(mainController);

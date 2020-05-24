@@ -13,7 +13,7 @@ public class Bot extends Thread {
     private float probability;
     private int status;
     private Company company;
-    private ArrayList<Share> shares;
+    private final ArrayList<Share> shares = new ArrayList<>();
 
     /**
      * Bot constructor
@@ -27,7 +27,6 @@ public class Bot extends Thread {
         this.activeTime = activeTime;
         this.probability = probability;
         this.company = company;
-        this.shares = new ArrayList<>();
     }
 
     /**

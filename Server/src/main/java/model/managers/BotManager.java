@@ -42,7 +42,8 @@ public class BotManager {
     public int createBot(Bot bot) {
         Company company = companyDao.getCompanyByName(bot.getCompany().getName());
         bot.setCompany(company);
-        //bot.start();
+        addBotToCompany(bot);
+        bot.start();
         return botDao.createBot(bot);
     }
 
@@ -134,6 +135,40 @@ public class BotManager {
      * @return a Bot that contains all of its information
      */
     public Bot getBot(int botId) {
+        return botDao.getBotById(botId);
+    }
+
+    /**
+     * Adds bot to a company
+     * @param bot bot to be added
+     */
+    public void addBotToCompany(Bot bot) {
+        for(Company company : companies) {
+            if (company.getCompanyId() == bot.getCompany().getCompanyId()) {
+                company.addBot(bot);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Removes a bot from the list of company bots
+     * @param bot bot to be removed
+     */
+    public void removeBotFromCompany(Bot bot) {
+        for(Company company : companies) {
+            if (company.getCompanyId() == bot.getCompany().getCompanyId()) {
+                for (Bot b : company.getBots()) {
+                    if (b.getBotId() == bot.getBotId()) {
+                        company.getBots().remove(b);
+                    }
+                }
+                return;
+            }
+        }
+    }
+
+    public Bot getBotById(int botId) {
         return botDao.getBotById(botId);
     }
 }

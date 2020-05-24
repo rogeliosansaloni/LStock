@@ -34,14 +34,6 @@ public class StockManager {
         connector.connect();
     }
 
-    public StockManager(UserDao userDao, CompanyDao companyDao) {
-        this.userDao = userDao;
-        this.companyDao = companyDao;
-        this.companies = new ArrayList<Company>();
-        this.companiesChange = new ArrayList<CompanyChange>();
-        this.sharesChange = new ArrayList<ShareChange>();
-    }
-
     /**
      * Function that registers a user if the conditions are met
      *
@@ -129,7 +121,7 @@ public class StockManager {
     public ShareTrade updatePurchaseBuy(User user, Company company, Purchase[] purchases, String action, String view) {
         //Updates the user balance
         userDao.updateUserBalance(user);
-        //If the acttion is Sell, we want to decrease the number of shares.
+        //If the action is Sell, we want to decrease the number of shares.
         if (action.equals("BUY")) {
             //Updates the purchased share
             shareDao.updatePurchasedShare(purchases[0]);
@@ -173,8 +165,7 @@ public class StockManager {
     }
 
     public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
-        ArrayList<ShareSell> sharesSell = shareDao.getSharesSell(userId, companyId);
-        return sharesSell;
+        return shareDao.getSharesSell(userId, companyId);
     }
 }
 
