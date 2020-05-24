@@ -5,6 +5,7 @@ import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
@@ -123,6 +124,13 @@ public class SharesListView extends JPanel{
         for (String[] row : ROWS) {
             model.addRow(row);
         }
+
+        //Sets cells value to center
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(JLabel.CENTER);
+        for (int col = 0; col < model.getColumnCount(); col++) {
+            jtSharesList.getColumnModel().getColumn(col).setCellRenderer(center);
+        }
         this.jtSharesList.setModel(model);
     }
 
@@ -138,6 +146,12 @@ public class SharesListView extends JPanel{
         }
         for (String[] row : ROWS) {
             model.addRow(row);
+        }
+        //Sets cells value to center
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(JLabel.CENTER);
+        for (int col = 0; col < model.getColumnCount(); col++) {
+            jtSharesList.getColumnModel().getColumn(col).setCellRenderer(center);
         }
         this.jtSharesList.setModel(model);
     }
