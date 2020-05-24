@@ -158,6 +158,14 @@ public class StockManager {
         return info;
     }
 
+    public void buyShare(Purchase purchase) {
+        shareDao.updatePurchasedShare(purchase);
+    }
+
+    public int getShareId(int id) {
+        return shareDao.getCurrentShareId(id);
+    }
+
     /**
      * Returns an Arraylist with all the companies
      *

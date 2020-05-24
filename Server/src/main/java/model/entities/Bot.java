@@ -1,5 +1,7 @@
 package model.entities;
 
+import model.managers.StockManager;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -8,12 +10,13 @@ import java.util.Random;
  */
 public class Bot extends Thread {
     private static final String TRANSACTION_MESSAGE = "Bot %d has made a %s transaction.";
+    private StockManager model;
     private int botId;
     private float activeTime;
     private float probability;
     private int status;
     private Company company;
-    private final ArrayList<Share> shares = new ArrayList<>();
+    private final ArrayList<Purchase> shares = new ArrayList<>();
 
     /**
      * Bot constructor
@@ -27,6 +30,7 @@ public class Bot extends Thread {
         this.activeTime = activeTime;
         this.probability = probability;
         this.company = company;
+        this.model = model;
     }
 
     /**
@@ -83,6 +87,15 @@ public class Bot extends Thread {
         this.status = status;
     }
 
+
+    public StockManager getModel() {
+        return model;
+    }
+
+    public void setModel(StockManager model) {
+        this.model = model;
+    }
+
     @Override
     public void run() {
         try {
@@ -102,16 +115,17 @@ public class Bot extends Thread {
 
             // Bot works every after X seconds
             Thread.sleep((long) (activeTime * 1000));
-            // TODO: Add buy or sell action here
-            Share share = new Share(); // TODO: Get the share that was bought or sold
+
+            Purchase purchase = new Purchase(1, company.getCompanyId(), model.getShareId(company.getCompanyId()), 1);
 
             // Checks if the bot should buy or sell according to probability
             if (new Random().nextDouble() >= probability) {
                 System.out.println(String.format(TRANSACTION_MESSAGE, botId, "buy"));
-                shares.add(share);
+                model.buyShare(purchase);
+                shares.add(purchase);
             } else {
                 System.out.println(String.format(TRANSACTION_MESSAGE, botId, "sell"));
-                shares.remove(share);
+                shares.remove(purchase);
             }
 
             shares.notifyAll();
