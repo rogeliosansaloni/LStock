@@ -43,7 +43,7 @@ public class MainController implements ActionListener {
         this.model = model;
         this.balanceController = new BalanceController(view.getBalanceView(), model);
         this.balanceController.registerController();
-        this.companyController = new CompanyController(view.getCompanyView(), model);
+        this.companyController = new CompanyController(view.getCompanyView(), model, view);
         this.companyDetailController = new CompanyDetailController(view.getCompanyDetailsView(), model);
         this.companyDetailController.registerController();
         this.sharesController = new SharesController(view.getSharesView(), model);
@@ -132,7 +132,6 @@ public class MainController implements ActionListener {
     public void updateCompanyDetails () {
         companyDetailController.updateCompanyDetailView();
         view.setTitleCompanyDetail(model.getCurrentShareValue(), model.getCompanyDetailName());
-        view.updateView(CARD_COMPANYDETAILS);
     }
 
     /**

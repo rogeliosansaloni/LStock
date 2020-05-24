@@ -103,6 +103,10 @@ public class ClientThread extends Thread{
                     mainController.updateModel(model);
                     mainController.updateShareView();
                 }
+
+
+
+
             }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

@@ -1,9 +1,17 @@
 package model.entities;
 
-public class ThreadChange {
+public class ThreadChange extends TunnelObject{
     private CompanyChangeList companyChangeList;
     private DetailViewInfo detailViewInfo;
     private ShareChangeList shareChangeList;
+
+    public ThreadChange() {
+        System.out.println("thread change invoked");
+    }
+
+    public void asdf(){
+        System.out.println("asdf ThreadChange");
+    }
 
     public ThreadChange(CompanyChangeList companyChangeList, DetailViewInfo detailViewInfo, ShareChangeList shareChangeList) {
         this.companyChangeList = companyChangeList;

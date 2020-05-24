@@ -223,6 +223,7 @@ public class NetworkManager extends Thread {
      */
     @Override
     public void run() {
+        System.out.println("Network Manager run");
         try {
             while (running) {
                 System.out.println("Waiting for object to be received...");
@@ -299,6 +300,15 @@ public class NetworkManager extends Thread {
                     model.setSharesChange(sharesChange);
                     mainController.updateModel(model);
                     mainController.updateShareView();
+                }
+
+
+                if (received instanceof ThreadChange){
+                    ((ThreadChange) received).asdf();
+                    mainController.sendCompaniesChange();
+                    mainController.sendUserProfileInfo();
+                    mainController.sendSharesChange();
+                    mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
                 }
             }
         } catch (IOException | ClassNotFoundException e) {

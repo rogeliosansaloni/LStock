@@ -11,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class DedicatedServer extends Thread {
     private static final String BUY_ACTION = "BUY";
@@ -23,6 +24,8 @@ public class DedicatedServer extends Thread {
     private UserMapperImpl mapper;
     private CompanyMapperImpl companyMapper;
     private ShareMapperImpl shareMapper;
+    private LinkedList<DedicatedServer> clients;
+
 
     /**
      * DedicatedServer constructor
@@ -104,6 +107,7 @@ public class DedicatedServer extends Thread {
                     Company company = shareMapper.shareTradeToCompany(shareTrade);
                     ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchases, shareTrade.getActionToDo(), shareTrade.getView());
                     oos.writeObject(share);
+                    updateAllClients();
                 }
 
                 if (tunnelObject instanceof CompanyList) {
@@ -146,7 +150,26 @@ public class DedicatedServer extends Thread {
             e.printStackTrace();
         }
     }
+
+
     public ObjectOutputStream getOos() {
         return oos;
+    }
+
+    public void setClients(LinkedList<DedicatedServer> clients) {
+        this.clients = clients;
+    }
+
+    public void updateAllClients() throws IOException {
+        for (DedicatedServer client : clients) {
+            ObjectOutputStream oosClient = null;
+            if (client.isOn){
+                oosClient = client.getOos();
+                ThreadChange change = new ThreadChange();
+                if (oosClient != null) {
+                    oosClient.writeObject(change);
+                }
+            }
+        }
     }
 }

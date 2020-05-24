@@ -15,10 +15,13 @@ public class CompanyController implements ActionListener {
 
     private CompanyView view;
     private StockManager model;
+    private MainView mainView;
+    private static final String CARD_COMPANYDETAILS = "Company Details";
 
-    public CompanyController(CompanyView view, StockManager model) {
+    public CompanyController(CompanyView view, StockManager model, MainView mainView) {
         this.view = view;
         this.model = model;
+        this.mainView = mainView;
     }
 
     /**
@@ -29,6 +32,7 @@ public class CompanyController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         int companyId = Integer.parseInt(e.getActionCommand());
         sendUserShares(companyId);
+        mainView.updateView(CARD_COMPANYDETAILS);
     }
 
     /**
