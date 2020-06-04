@@ -8,7 +8,6 @@ public class Company {
     private float value;
     private int shares;
     private User user;
-    private ArrayList<Bot> bots;
     private ArrayList<Share> sharesList;
 
     /**
