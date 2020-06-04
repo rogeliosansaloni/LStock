@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 public class SharesController implements ActionListener {
     private static final String SELL_ACTION = "SELL";
-    private static final String CONFIRM_SELL_ACTION = "Do you want to sell all these shares?";
     private static final String VIEW = "Shares";
     private SharesView view;
     private StockManager model;
@@ -25,8 +24,12 @@ public class SharesController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         int shareId = Integer.parseInt(e.getActionCommand());
         ShareChange shareChange = model.getShareChangeInfo(shareId);
-        float userBalance = shareChange.getSharesQuantity()*shareChange.getShareCurrentValue() + model.getUser().getTotalBalance();
-        ShareTrade shareTrade = new ShareTrade(shareChange.getUserId(), userBalance, shareChange.getCompanyId(), shareId, shareChange.getShareCurrentValue(), shareChange.getSharesQuantity(),  SELL_ACTION, VIEW);
+
+        // Calculates new user balance
+        float userBalance = shareChange.getSharesQuantity() * shareChange.getShareCurrentValue() +
+                model.getUser().getTotalBalance();
+        ShareTrade shareTrade = new ShareTrade(shareChange.getUserId(), userBalance, shareChange.getCompanyId(),
+                shareId, shareChange.getShareCurrentValue(), shareChange.getSharesQuantity(), SELL_ACTION, VIEW);
         try {
             NetworkManager.getInstance().sendShareTrade(shareTrade);
         } catch (IOException e1) {
@@ -37,7 +40,7 @@ public class SharesController implements ActionListener {
     /**
      * Updates the SharesView
      */
-    public void updateSharesView(){
+    public void updateSharesView() {
         view.updateSharesView(model.getSharesChange());
         view.registerController(this, model.getSharesChange());
     }

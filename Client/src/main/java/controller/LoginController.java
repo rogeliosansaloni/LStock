@@ -24,7 +24,8 @@ public class LoginController implements ActionListener {
 
     /**
      * Initializes login controller and views
-     * @param loginView Login view
+     *
+     * @param loginView    Login view
      * @param registerView Register view
      */
     public LoginController(LoginView loginView, RegisterView registerView) {
@@ -34,7 +35,7 @@ public class LoginController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals(LOGIN)){
+        if (e.getActionCommand().equals(LOGIN)) {
             String user = loginView.getNicknameEmail();
             String password = loginView.getPassword();
             if (validCredentials(user, password)) {
@@ -81,7 +82,7 @@ public class LoginController implements ActionListener {
     }
 
     /**
-     * Proc that sends the error message to the view
+     * Sends the error message to the view
      *
      * @param message that contains what error it is dealing with
      */

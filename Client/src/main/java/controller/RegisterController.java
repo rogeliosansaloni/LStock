@@ -34,8 +34,9 @@ public class RegisterController implements ActionListener {
 
     /**
      * Initializes the register controller and views
+     *
      * @param registerView Register view
-     * @param loginView Login view
+     * @param loginView    Login view
      */
     public RegisterController(RegisterView registerView, LoginView loginView) {
         this.registerView = registerView;
@@ -113,11 +114,10 @@ public class RegisterController implements ActionListener {
     }
 
     /**
-     * Function that validates a password. It must be at least 8 characters with a capital letter and a digit.
-     * The pattern is made from a regex.
+     * Validates a password. It must be at least 8 characters with a capital letter and a digit.
      *
      * @param password the password
-     * @return the corresponding error message
+     * @return result message
      */
     private String validatePassword(String password) {
         if (password.length() < 8) {
@@ -140,7 +140,7 @@ public class RegisterController implements ActionListener {
     /**
      * Sends the error message to the view
      *
-     * @param message that contains what error it is dealing with
+     * @param message message that contains what error it is dealing with
      */
     public void sendErrorMessage(String message) {
         registerView.showErrorMessages(message);

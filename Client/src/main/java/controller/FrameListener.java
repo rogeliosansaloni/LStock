@@ -6,16 +6,24 @@ import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
-public class FrameListener implements WindowListener{
+/**
+ * Controller for the window
+ */
+public class FrameListener implements WindowListener {
 
     public void windowOpened(WindowEvent e) {
     }
 
+    /**
+     * Closes the connection to the server when the window closes
+     *
+     * @param e window event
+     */
     public void windowClosing(WindowEvent e) {
-        try{
+        try {
             NetworkManager.getInstance().stopServerConnection();
-        }catch (IOException ex){
-            System.out.println("An error ocurred when the client was disconnected");
+        } catch (IOException ex) {
+            System.out.println("An error occurred when the client was disconnected");
         }
     }
 
