@@ -1,14 +1,11 @@
 package view;
 
-import controller.LoginFocusController;
 import controller.RegisterFocusController;
 import utils.StockColors;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.net.URL;
 
 /**
@@ -42,11 +39,6 @@ public class RegisterView extends JFrame {
 
     private static final int anchuraPanel = 1080;
     private static final int alturaPanel = 740;
-    private JLabel labelLogo;
-    private JLabel labelStock;
-    protected JPanel jpNorth;
-    private JPanel jpCenter;
-    private JPanel jpBotones;
     private JTextField[] jtField;
     private JButton jbLogin;
     private JButton jbRegister;
@@ -76,16 +68,16 @@ public class RegisterView extends JFrame {
         jpRegister.setBackground(Color.WHITE);
 
         //Header
-        jpNorth = new JPanel(new BorderLayout());
+        JPanel jpNorth = new JPanel(new BorderLayout());
         jpNorth.setBackground(Color.WHITE);
         URL url = getClass().getResource(PATH_LOGO);
         ImageIcon imageIcon = new ImageIcon(url);
         Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
-        labelLogo = new JLabel(imageIcon);
+        JLabel labelLogo = new JLabel(imageIcon);
 
         jpNorth.add(labelLogo, BorderLayout.CENTER);
-        labelStock = new JLabel("StockLS", SwingConstants.CENTER);
+        JLabel labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
         labelStock.setFont(fuenteLogo);
         jpNorth.add(labelStock, BorderLayout.SOUTH);
@@ -93,7 +85,7 @@ public class RegisterView extends JFrame {
         jpRegister.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the bottons
-        jpCenter = new JPanel();
+        JPanel jpCenter = new JPanel();
         jpCenter = new JPanel(new GridLayout(6, 1, 0, 15));
         jpCenter.setBackground(Color.WHITE);
 
@@ -135,7 +127,7 @@ public class RegisterView extends JFrame {
         relleno.setPreferredSize(new Dimension(200, 1));
         jpCenter.add(relleno);
 
-        jpBotones = new JPanel(new GridLayout(1, 2, 30, 0));
+        JPanel jpBotones = new JPanel(new GridLayout(1, 2, 30, 0));
         jpBotones.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;

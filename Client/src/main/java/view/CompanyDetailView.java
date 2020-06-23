@@ -21,7 +21,6 @@ public class CompanyDetailView extends JPanel {
     private JPanel jpRightCenter;
     private JPanel jpLeft;
     private JPanel jpShareList;
-    private JPanel jpRightBottom;
     private JButton jbBuy;
     private JButton jbSell;
     private JButton jbBack;
@@ -94,7 +93,7 @@ public class CompanyDetailView extends JPanel {
         jpRightCenter.setPreferredSize(new Dimension(400, 300));
         jpRight.add(jpRightCenter, BorderLayout.CENTER);
 
-        jpRightBottom = new JPanel(new BorderLayout());
+        JPanel jpRightBottom = new JPanel(new BorderLayout());
         jpRightBottom.setBackground(color.getBLACK());
         jpRightBottom.setAlignmentX(SwingConstants.CENTER);
 

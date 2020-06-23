@@ -20,14 +20,8 @@ public class LoginView extends JFrame {
     private static final String PASSWORD_LABEL = "Password";
     private static final String LOGIN = "Login";
     private static final String REGISTER = "Register";
-    private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 740;
-    private JLabel labelLogo;
-    private JLabel labelStock;
-    protected JPanel jpNorth;
-    private JPanel jpCenter;
-    private JPanel jpCampos;
-    private JPanel jpBotones;
+    private static final int ANCHURA_PANEL = 1080;
+    private static final int ALTURA_PANEL = 740;
     private JTextField[] jtField;
     private JButton jbLogin;
     private JButton jbRegister;
@@ -39,8 +33,8 @@ public class LoginView extends JFrame {
     public LoginView() {
         color = new StockColors();
         this.setTitle(TITLE);
-        this.setPreferredSize(new Dimension(anchuraPanel, alturaPanel));
-        this.setSize(anchuraPanel, alturaPanel);
+        this.setPreferredSize(new Dimension(ANCHURA_PANEL, ALTURA_PANEL));
+        this.setSize(ANCHURA_PANEL, ALTURA_PANEL);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
@@ -57,16 +51,16 @@ public class LoginView extends JFrame {
         jpLogin.setBackground(Color.WHITE);
 
         //Header
-        jpNorth = new JPanel(new BorderLayout());
+        JPanel jpNorth = new JPanel(new BorderLayout());
         jpNorth.setBackground(Color.WHITE);
         URL url = getClass().getResource(PATH_LOGO);
         ImageIcon imageIcon = new ImageIcon(url);
         Image scaleImage = imageIcon.getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT);
         imageIcon = new ImageIcon(scaleImage);
-        labelLogo = new JLabel(imageIcon);
+        JLabel labelLogo = new JLabel(imageIcon);
 
         jpNorth.add(labelLogo, BorderLayout.CENTER);
-        labelStock = new JLabel("StockLS", SwingConstants.CENTER);
+        JLabel labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
         labelStock.setFont(fuenteLogo);
         jpNorth.add(labelStock, BorderLayout.SOUTH);
@@ -74,7 +68,7 @@ public class LoginView extends JFrame {
         jpLogin.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the bottons
-        jpCenter = new JPanel();
+        JPanel jpCenter = new JPanel();
         jpCenter = new JPanel(new GridLayout(4, 1, 0, 15));
         jpCenter.setBackground(Color.WHITE);
 
@@ -99,7 +93,7 @@ public class LoginView extends JFrame {
         relleno.setPreferredSize(new Dimension(200, 1));
         jpCenter.add(relleno);
 
-        jpBotones = new JPanel(new GridLayout(1, 2, 30, 0));
+        JPanel jpBotones = new JPanel(new GridLayout(1, 2, 30, 0));
         jpBotones.setBackground(Color.WHITE);
         int anchuraBoton = 200;
         int alturaBoton = 40;
@@ -161,8 +155,8 @@ public class LoginView extends JFrame {
     /**
      * Sets the texts of a specific JTextField
      *
-     * @param i
-     * @param text
+     * @param i index of the text field
+     * @param text text to be set
      */
     public void setJTextField(int i, String text) {
         jtField[i].setText(text);
