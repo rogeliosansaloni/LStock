@@ -5,8 +5,16 @@ import utils.mappers.ShareMapper;
 
 import java.util.ArrayList;
 
+/**
+ * Implementation of ShareMapper
+ */
 public class ShareMapperImpl implements ShareMapper {
 
+    /**
+     * Converts SharesSellList DTO to a list of ShareSell
+     * @param shareSellList SharesSellList DTO
+     * @return a list of SharesSell
+     */
     @Override
     public ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList) {
         ArrayList<ShareSell> sharesSell = new ArrayList<ShareSell>();
@@ -20,6 +28,11 @@ public class ShareMapperImpl implements ShareMapper {
         return sharesSell;
     }
 
+    /**
+     * Converts a list of ShareSell to SharesSellList DTO
+     * @param shareSells a list of ShareSell
+     * @return ShareSellList DTO
+     */
     @Override
     public ShareSellList convertToShareSellList(ArrayList<ShareSell> shareSells) {
         ShareSellList shareSellList = new ShareSellList(shareSells.size());
@@ -33,6 +46,11 @@ public class ShareMapperImpl implements ShareMapper {
         return shareSellList;
     }
 
+    /**
+     * Converts ShareTrade DTO to User POJO
+     * @param shareTrade ShareTrade DTO
+     * @return User POJO
+     */
     @Override
     public User shareTradeToUser(ShareTrade shareTrade) {
         User user = new User();
@@ -41,30 +59,51 @@ public class ShareMapperImpl implements ShareMapper {
         return user;
     }
 
+    /**
+     * Converts User POJO to ShareTrade DTO
+     * @param user User POJO
+     * @return ShareTrade DTO
+     */
     @Override
-    public ShareTrade userToShareTrade (User user) {
+    public ShareTrade userToShareTrade(User user) {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setUserId(user.getUserId());
         shareTrade.setTotalBalance(user.getTotalBalance());
-        return  shareTrade;
+        return shareTrade;
     }
 
+    /**
+     * Converts ShareTrade DTO to Company POJO
+     * @param shareTrade ShareTrade DTO
+     * @return Company POJO
+     */
     @Override
-    public Company shareTradeToCompany (ShareTrade shareTrade) {
+    public Company shareTradeToCompany(ShareTrade shareTrade) {
         Company company = new Company();
         company.setCompanyId(shareTrade.getCompanyId());
         return company;
     }
 
+    /**
+     * Converts Company POJO to ShareTrade DTO
+     * @param company Company POJO
+     * @return ShareTrade DTO
+     */
     @Override
-    public ShareTrade companyToShareTrade (Company company) {
+    public ShareTrade companyToShareTrade(Company company) {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setCompanyId(company.getCompanyId());
         return shareTrade;
     }
 
+    /**
+     * Creates ShareTrade DTO with User and Company details
+     * @param user user
+     * @param company company
+     * @return ShareTrade DTO
+     */
     @Override
-    public ShareTrade userCompanyToShareTrade (User user, Company company) {
+    public ShareTrade userCompanyToShareTrade(User user, Company company) {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setUserId(user.getUserId());
         shareTrade.setTotalBalance(user.getTotalBalance());
@@ -72,6 +111,11 @@ public class ShareMapperImpl implements ShareMapper {
         return shareTrade;
     }
 
+    /**
+     * Converts ShareChangeList DTO to a list of ShareChange
+     * @param shareChangeList ShareChangeList DTO
+     * @return a list of ShareChange
+     */
     @Override
     public ArrayList<ShareChange> convertToSharesChange(ShareChangeList shareChangeList) {
         ArrayList<ShareChange> shares = new ArrayList<ShareChange>();
@@ -90,6 +134,11 @@ public class ShareMapperImpl implements ShareMapper {
         return shares;
     }
 
+    /**
+     * Converts a list of ShareChange to ShareChangeList DTO
+     * @param sharesChange a list of ShareChange
+     * @return ShareChangeList DTO
+     */
     @Override
     public ShareChangeList convertToShareChangeList(ArrayList<ShareChange> sharesChange) {
         ShareChangeList shareChangeList = new ShareChangeList(sharesChange.size());
