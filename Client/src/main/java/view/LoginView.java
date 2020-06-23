@@ -144,12 +144,13 @@ public class LoginView extends JFrame {
      * Registers FocusListener for each JTextField of the view
      */
     public void registerFocusController() {
-        this.jtField[0].addFocusListener(new LoginFocusController(this,0, USER_LABEL));
+        this.jtField[0].addFocusListener(new LoginFocusController(this, 0, USER_LABEL));
         this.jtField[1].addFocusListener(new LoginFocusController(this, 1, PASSWORD_LABEL));
     }
 
     /**
      * Gets a specific JTextFrield
+     *
      * @param i id of the JTextField
      * @return Jtextfield
      */
@@ -159,10 +160,11 @@ public class LoginView extends JFrame {
 
     /**
      * Sets the texts of a specific JTextField
+     *
      * @param i
      * @param text
      */
-    public void setJTextField (int i, String text) {
+    public void setJTextField(int i, String text) {
         jtField[i].setText(text);
     }
 
@@ -204,7 +206,7 @@ public class LoginView extends JFrame {
         JOptionPane.showMessageDialog(null, message);
     }
 
-    public void flushCredentials(){
+    public void flushCredentials() {
         jtField[0].setText(USER_LABEL);
         jtField[1].setText(PASSWORD_LABEL);
 

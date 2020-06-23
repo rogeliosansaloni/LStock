@@ -12,13 +12,7 @@ public class SharesSellView extends JFrame {
     private static final int PANEL_WIDTH = 600;
     private static final int PANEL_HEIGHT = 400;
     private static final String TITLE = "SELL SHARES";
-    private JPanel jpMain;
-    private JScrollPane jpScroll;
-    private JPanel jpTable;
-    private JTextField[] jtShares;
-    private JButton jbSell;
-    private JButton jbExit;
-    protected StockColors color;
+    private StockColors color;
 
     public SharesSellView() {
         color = new StockColors();
@@ -34,7 +28,7 @@ public class SharesSellView extends JFrame {
     }
 
     public void initUI() {
-        jpMain = new JPanel();
+        JPanel jpMain = new JPanel();
         jpMain.setLayout(new BorderLayout());
         jpMain.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         jpMain.setBackground(color.getBLACK());
@@ -46,14 +40,14 @@ public class SharesSellView extends JFrame {
         int alturaBoton = 40;
 
         Font fuenteBotones = new Font("Roboto", Font.BOLD, 30);
-        jbSell = new JButton("Sell");
+        JButton jbSell = new JButton("Sell");
         jbSell.setFont(fuenteBotones);
         jbSell.setForeground(Color.BLACK);
         jbSell.setBorder(null);
         jbSell.setBackground(color.getWHITE());
         jbSell.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
-        jbExit = new JButton("Exit");
+        JButton jbExit = new JButton("Exit");
         jbExit.setFont(fuenteBotones);
         jbExit.setForeground(Color.BLACK);
         jbExit.setBorder(null);

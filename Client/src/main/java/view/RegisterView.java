@@ -180,7 +180,7 @@ public class RegisterView extends JFrame {
      * Registers FocusListener for each JTextField of the view
      */
     public void registerFocusController() {
-        this.jtField[0].addFocusListener(new RegisterFocusController(this,0, NICKNAME_LABEL));
+        this.jtField[0].addFocusListener(new RegisterFocusController(this, 0, NICKNAME_LABEL));
         this.jtField[1].addFocusListener(new RegisterFocusController(this, 1, EMAIL_LABEL));
         this.jtField[2].addFocusListener(new RegisterFocusController(this, 2, PASSWORD_LABEL));
         this.jtField[3].addFocusListener(new RegisterFocusController(this, 3, VERIFY_PASSWORD_LABEL));
@@ -188,6 +188,7 @@ public class RegisterView extends JFrame {
 
     /**
      * Gets a specific JTextFrield
+     *
      * @param i id of the JTextField
      * @return Jtextfield
      */
@@ -197,10 +198,11 @@ public class RegisterView extends JFrame {
 
     /**
      * Sets the texts of a specific JTextField
+     *
      * @param i
      * @param text
      */
-    public void setJTextField (int i, String text) {
+    public void setJTextField(int i, String text) {
         jtField[i].setText(text);
     }
 

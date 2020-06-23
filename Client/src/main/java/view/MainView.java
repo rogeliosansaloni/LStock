@@ -7,19 +7,19 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
+
 import controller.FrameListener;
 
 /**
  * Main view
  */
-public class MainView extends JFrame{
+public class MainView extends JFrame {
 
     //logo de stock
     private static final String PATH_LOGO = "/Images/stock.png";
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
     private static final String PATH_ARROW_ICON = "/Images/dropdown-grey.png";
     private static final String TITLE = "StockLS - C2";
-    private String currentView = "";
     private static final String CARD_COMPANY = "Companies";
     private static final String CARD_COMPANYDETAILS = "Company Details";
     private static final String CARD_PROFILE = "My Profile";
@@ -27,6 +27,7 @@ public class MainView extends JFrame{
     private static final String CARD_BALANCE = "Load Balance";
     private static final int PANEL_WIDTH = 1080;
     private static final int PANEL_HEIGHT = 768;
+    private String currentView = "";
     private JLabel labelViewName;
     private JLabel labelCurrentPrice;
     private JLabel labelBalance;
@@ -331,7 +332,7 @@ public class MainView extends JFrame{
      */
 
     public void setTitleCompanyDetail(float value, String companyName) {
-        if(currentView == CARD_COMPANYDETAILS){
+        if (currentView == CARD_COMPANYDETAILS) {
             String text = "CURRENT PRICE: " + value + " €";
             labelCurrentPrice.setText(text);
             labelViewName.setText(companyName);
