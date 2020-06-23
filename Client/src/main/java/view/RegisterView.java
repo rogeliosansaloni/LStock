@@ -84,7 +84,6 @@ public class RegisterView extends JFrame {
         imageIcon = new ImageIcon(scaleImage);
         labelLogo = new JLabel(imageIcon);
 
-        //TODO: Add label under the logo
         jpNorth.add(labelLogo, BorderLayout.CENTER);
         labelStock = new JLabel("StockLS", SwingConstants.CENTER);
         Font fuenteLogo = new Font("Segoe UI", Font.PLAIN, 50);
