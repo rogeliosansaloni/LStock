@@ -31,6 +31,5 @@ public class HomeController implements ActionListener {
                 view.updateView(CARD_BOTS);
                 break;
         }
-
     }
 }

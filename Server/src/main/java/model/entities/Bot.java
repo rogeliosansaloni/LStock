@@ -2,6 +2,7 @@ package model.entities;
 
 import model.managers.StockManager;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -86,7 +87,6 @@ public class Bot extends Thread {
         this.status = status;
     }
 
-
     public StockManager getModel() {
         return model;
     }
@@ -104,6 +104,12 @@ public class Bot extends Thread {
         }
     }
 
+
+    /**
+     * Bot activity control
+     *
+     * @throws InterruptedException
+     */
     private void transact() throws InterruptedException {
         synchronized (shares) {
             while(status != 1) {
@@ -127,7 +133,6 @@ public class Bot extends Thread {
                 model.sellShare(purchase);
                 shares.remove(purchase);
             }
-
             shares.notifyAll();
         }
     }

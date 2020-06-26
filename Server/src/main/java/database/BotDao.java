@@ -1,6 +1,5 @@
 package database;
 
-
 import model.entities.Bot;
 import model.entities.Company;
 
@@ -15,6 +14,10 @@ import java.util.Locale;
 public class BotDao {
     private DBConnector dbConnector;
 
+    /**
+     * Creates and initializes the BotDao
+     * @param dbConnector Database Connector
+     */
     public BotDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
@@ -172,7 +175,6 @@ public class BotDao {
         final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
         final String errorMessage = "Error updating bot activity with id %d";
         final String successMessage = "Bot with id %d has been %s";
-
 
         Bot bot = getBotById(botId);
 

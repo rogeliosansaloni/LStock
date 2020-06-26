@@ -1,12 +1,7 @@
 package model.managers;
 
-import database.CompanyDao;
 import database.DBConnector;
-import database.ShareDao;
 import database.UserDao;
-import model.entities.User;
-
-import java.util.ArrayList;
 
 /**
  * User manager class

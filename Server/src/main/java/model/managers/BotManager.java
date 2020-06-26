@@ -6,7 +6,6 @@ import database.DBConnector;
 import model.entities.Bot;
 import model.entities.Company;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 

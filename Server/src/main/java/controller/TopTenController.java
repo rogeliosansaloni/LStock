@@ -36,6 +36,4 @@ public class TopTenController {
     public void updateTopTenView(){
         view.showTopTen(stockManager.getTopTenlist());
     }
-
-
 }

@@ -1,6 +1,5 @@
 package database;
 
-
 import model.entities.Company;
 import model.entities.CompanyChange;
 import model.entities.CompanyDetail;
@@ -24,10 +23,19 @@ public class CompanyDao {
     private static final String GETTING_COMPANIES_ERROR_CHANGE = "Error getting all companies change.";
     private static final String TOPTEN_MESSAGE = "Error finding top 10 companies of User";
 
+    /**
+     * Creates and initializes the CompanyDao
+     * @param dbConnector Database Connector
+     */
     public CompanyDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
+    /**
+     * Gets a list of registered Company ID's and names
+     *
+     * @return list of companies
+     */
     public ArrayList<Company> getAllCompanyNames() {
         ResultSet result = dbConnector.selectQuery("SELECT * FROM Company");
         ArrayList<Company> companies = null;
@@ -176,7 +184,6 @@ public class CompanyDao {
      * @return a CompanyChange object containing the information retrieved from the database.
      * @throws SQLException
      */
-
     private CompanyChange toCompanyChange(ResultSet resultSet) throws SQLException {
         CompanyChange companyChange = new CompanyChange();
         companyChange.setCompanyId(resultSet.getInt("companyId"));
@@ -187,7 +194,15 @@ public class CompanyDao {
         return companyChange;
     }
 
-    private CompanyDetail toCompanyDetail(int  numUserShares, ResultSet resultSet) throws SQLException {
+    /**
+     * Converts retrieved information into a companyDetail
+     *
+     * @param numUserShares number of shares
+     * @param resultSet result set from database
+     * @return a CompanyDetail object containing the information retrieved from the database.
+     * @throws SQLException
+     */
+    private CompanyDetail toCompanyDetail(int numUserShares, ResultSet resultSet) throws SQLException {
         CompanyDetail companyDetail = new CompanyDetail();
         companyDetail.setNumUserShares(numUserShares);
         companyDetail.setCompanyId(resultSet.getInt("companyId"));
@@ -201,6 +216,14 @@ public class CompanyDao {
         return companyDetail;
     }
 
+    /**
+     * Change the maximum and minimum values of a CompanyDetail from a ResultSet object
+     *
+     * @param retrievedMaxMin result set from database
+     * @param companyDetail company detail object
+     * @return a CompanyDetail object with updated values data
+     * @throws SQLException
+     */
     private CompanyDetail extractMaxMinDetail(ResultSet retrievedMaxMin, CompanyDetail companyDetail) throws SQLException {
         companyDetail.setMaxValue(retrievedMaxMin.getFloat("maximumValue"));
         companyDetail.setMinValue(retrievedMaxMin.getFloat("minimumValue"));
@@ -236,6 +259,12 @@ public class CompanyDao {
         return null;
     }
 
+    /**
+     * Gets the current company value
+     *
+     * @param companyId company reference code
+     * @return value of the company
+     */
     public float getCompanyCurrenValue(int companyId) {
         float currentValue = 0;
         ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyCurrentValue(" + companyId + ");");
@@ -268,7 +297,11 @@ public class CompanyDao {
         }
     }
 
-
+    /**
+     * Gets the top ten valued companies registered
+     *
+     * @return list of top 10 companies
+     */
     public ArrayList<Top10> getTopTen(){
         ResultSet result = dbConnector.selectQuery(
                 "SELECT DISTINCT c.name, s1.price " +
@@ -293,7 +326,4 @@ public class CompanyDao {
         }
         return top10List;
     }
-
-
-
 }

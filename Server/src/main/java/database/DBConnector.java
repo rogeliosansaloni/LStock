@@ -158,6 +158,4 @@ public class DBConnector {
             System.err.println(ex);
         }
     }
-
-
 }

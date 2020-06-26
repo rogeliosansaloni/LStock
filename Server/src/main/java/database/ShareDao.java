@@ -2,7 +2,6 @@ package database;
 
 import model.entities.*;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,10 +15,18 @@ public class ShareDao {
     private static final String UPDATE_PURCHASE_ERROR = "Error updating the purchase.";
     private static final String GETTING_SHARES_ERROR = "Error getting the shares.";
 
+    /**
+     * Creates and initializes the ShareDao
+     * @param dbConnector Database Connector
+     */
     public ShareDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
 
+    /**
+     * Update the purchased Share
+     * @param purchase Purchase data
+     */
     public void updatePurchasedShare (Purchase purchase) {
         //First we need to know if that purchase already exists in the Purchase value of the database
         ResultSet retrievedCheck = dbConnector.selectQuery("CALL checkIfPurchaseExists(" + purchase.getUserId() + ", " + purchase.getCompanyId() + ", " + purchase.getShareId() + ");");
@@ -36,6 +43,10 @@ public class ShareDao {
         }
     }
 
+    /**
+     * Gets the current share identifier
+     * @param companyId company identifier
+     */
     public int getCurrentShareId(int companyId){
         int shareId = 0;
         ResultSet retrievedShares = dbConnector.selectQuery("CALL getMostCurrentShareId(" + companyId + ");");
@@ -49,6 +60,12 @@ public class ShareDao {
         return shareId;
     }
 
+    /**
+     * Gets a list of sold shares of a user and company
+     * @param userId user identifier
+     * @param companyId company identifier
+     * @return list of shares sold
+     */
     public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
         ResultSet retrieved = dbConnector.selectQuery("CALL getSharesSell(" + userId + "," + companyId + ");");
         ArrayList<ShareSell> shares = null;
@@ -82,6 +99,13 @@ public class ShareDao {
         return sharesChange;
     }
 
+    /**
+     * Converts retrieved information to ShareSell
+     *
+     * @param resultSet result set from database
+     * @return a ShareSell object containing the information retrieved from the database.
+     * @throws SQLException
+     */
     private ShareSell toShareSell(ResultSet resultSet) throws SQLException {
         ShareSell shareSell = new ShareSell();
         shareSell.setShareId(resultSet.getInt("shareId"));
@@ -90,6 +114,13 @@ public class ShareDao {
         return shareSell;
     }
 
+    /**
+     * Converts retrieved information to ShareChange
+     *
+     * @param resultSet result set from database
+     * @return a ShareChange object containing the information retrieved from the database.
+     * @throws SQLException
+     */
     private ShareChange toShareChange(ResultSet resultSet) throws SQLException {
         ShareChange shareChange = new ShareChange();
         shareChange.setUserId(resultSet.getInt("userId"));
@@ -100,8 +131,6 @@ public class ShareDao {
         shareChange.setShareCurrentValue(resultSet.getFloat("shareCurrentValue"));
         shareChange.setSharesQuantity(resultSet.getInt("sharesQuantity"));
         shareChange.setProfitLoss(resultSet.getFloat("profitLoss"));
-
         return shareChange;
     }
-
 }

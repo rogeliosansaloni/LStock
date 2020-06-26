@@ -1,6 +1,5 @@
 package view;
 
-
 import model.entities.Top10;
 import utils.StockColors;
 
