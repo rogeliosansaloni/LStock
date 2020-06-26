@@ -201,7 +201,6 @@ public class StockManager {
         return companyDao.getTopTen();
     }
 
-
     public ArrayList<ShareChange> getSharesChange(int userId) {
         sharesChange = shareDao.getSharesChange(userId);
         return sharesChange;
