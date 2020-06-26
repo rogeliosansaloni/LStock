@@ -7,6 +7,7 @@ import model.entities.Company;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Represents the DAO for the Bot table
@@ -32,7 +33,7 @@ public class BotDao {
         final String errorMessage = "Error in creating bot for %s";
 
         // Create the new bot for the specified company
-        dbConnector.insertQuery(String.format(insertQuery, bot.getCompany().getCompanyId(), bot.getActiveTime(),
+        dbConnector.insertQuery(String.format(Locale.US, insertQuery, bot.getCompany().getCompanyId(), bot.getActiveTime(),
                 bot.getProbability()));
 
         // Get the latest bot created for the specified company
