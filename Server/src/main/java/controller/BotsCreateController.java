@@ -16,10 +16,10 @@ public class BotsCreateController implements ActionListener {
     private static final String CREATE = "CREATE";
     private static final String CANCEL = "CANCEL";
     private static final String CARD_BOTS = "Manage Bots";
-    private static final String NAME = "Name";
     private static final String ACTIVATION_TIME = "Activation Time";
     private static final String PROBABILITY = "Buy Percentage";
-    private static final String BOT_NAME_ERROR = "You have to indicate a bot name.";
+    private static final String BOT_NUMBER_PERCENTAGE_ERROR = "You have to indicate a valid percentage (for example: 45.6).";
+    private static final String BOT_NUMBER_ACTIVATION_ERROR = "You have to indicate a valid activation value (for example: 20.6).";
     private static final String BOT_PROB_ERROR = "You have to indicate a probability value (0-100%).";
     private static final String BOT_PROB_VALUE_ERROR = "Probability value is wrong (Only 0-100%).";
     private static final String BOT_ACT_ERROR = "You have to indicate an activation time.";
@@ -54,10 +54,9 @@ public class BotsCreateController implements ActionListener {
         switch (e.getActionCommand()) {
             case CREATE:
                 String companyName = view.getCompanyName();
-                String botName = view.getBotName();
                 String percentage = view.getPercentage();
                 String activation = view.getActivation();
-                if (validFields(botName, percentage, activation)) {
+                if (validFields(percentage, activation)) {
                     Bot bot = new Bot();
                     int id = model.getCompanyId(companyName);
                     bot.setCompany(new Company(id, companyName));
@@ -81,40 +80,48 @@ public class BotsCreateController implements ActionListener {
     /**
      * Checks if the fields are all correct.
      *
-     * @param botName the bot name
      * @param percentage the probability of being bought/sold
      * @param activation the activation time in seconds
      * @return true if they're all valid
      */
-    private boolean validFields (String botName, String percentage, String activation) {
-        if (botName.equals(NAME)) {
-            view.showErrorMessage(BOT_NAME_ERROR);
+    private boolean validFields (String percentage, String activation) {
+        float percentageFloat;
+        float activationFloat;
+
+        if (percentage.equals(PROBABILITY)) {
+            view.showErrorMessage(BOT_PROB_ERROR);
             return false;
         }
         else {
-            if (percentage.equals(PROBABILITY)) {
-                view.showErrorMessage(BOT_PROB_ERROR);
+            if (activation.equals(ACTIVATION_TIME)) {
+                view.showErrorMessage(BOT_ACT_ERROR);
                 return false;
             }
-            else {
-                if (Float.parseFloat(percentage) < 0 || Float.parseFloat(percentage) > 100) {
-                    view.showErrorMessage(BOT_PROB_VALUE_ERROR);
-                    return false;
-                }
-                else {
-                    if (activation.equals(ACTIVATION_TIME)) {
-                        view.showErrorMessage(BOT_ACT_ERROR);
-                        return false;
-                    }
-                    else {
-                        if (Float.parseFloat(activation) <= 0) {
-                            view.showErrorMessage(BOT_ACT_VALUE_ERROR);
-                            return false;
-                        }
-                    }
-                }
-            }
         }
+
+        try {
+            percentageFloat = Float.parseFloat(percentage);
+        } catch (NumberFormatException e) {
+            view.showErrorMessage(BOT_NUMBER_PERCENTAGE_ERROR);
+            return false;
+        }
+        try {
+            activationFloat = Float.parseFloat(activation);
+        } catch (NumberFormatException e) {
+            view.showErrorMessage(BOT_NUMBER_ACTIVATION_ERROR);
+            return false;
+        }
+
+         if (percentageFloat < 0 || percentageFloat > 100) {
+             view.showErrorMessage(BOT_PROB_VALUE_ERROR);
+             return false;
+         }
+         else {
+             if (activationFloat <= 0) {
+                 view.showErrorMessage(BOT_ACT_VALUE_ERROR);
+                 return false;
+             }
+         }
         return true;
     }
 }

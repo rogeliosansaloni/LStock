@@ -136,15 +136,6 @@ public class BotsCreateView extends JPanel {
     }
 
     /**
-     * Gets the indicated bot name
-     *
-     * @return the bot name
-     */
-    public String getBotName() {
-        return jtField[0].getText();
-    }
-
-    /**
      * Gets the selected company name
      *
      * @return the company name
