@@ -11,8 +11,10 @@ import model.entities.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Represents the User DAO
+ */
 public class UserDao {
-
     private DBConnector dbConnector;
     private static final String REGISTER_MESSAGE_1 = "Register Success";
     private static final String REGISTER_MESSAGE_2 = "Email Taken";
@@ -217,26 +219,6 @@ public class UserDao {
             }
         } catch (SQLException e) {
             System.out.println(PROFILE_MESSAGE_2);
-        }
-    }
-
-    /**
-     * Gets the users information
-     *
-     * @param user the User
-     * @return user User and its information
-     */
-    public void getUserInfo(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + "');");
-
-        try {
-            while (result.next()) {
-                if (result.getInt("user_id") == user.getUserId()) {
-                    user.setDescription(result.getString("description"));
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(PROFILE_MESSAGE_1);
         }
     }
 

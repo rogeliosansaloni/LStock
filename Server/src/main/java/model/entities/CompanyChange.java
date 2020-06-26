@@ -1,14 +1,18 @@
 package model.entities;
 
-
+/**
+ * Company change class
+ */
 public class CompanyChange {
-
     private int companyId;
     private String name;
     private float currentShare;
     private float change;
     private float changePer;
 
+    /**
+     * Empty constructor of CompanyChange
+     */
     public CompanyChange() {
     }
 
@@ -30,6 +34,9 @@ public class CompanyChange {
         this.changePer = changePer;
     }
 
+    /**
+     * Getters and setters
+     */
     public int getCompanyId() {
         return companyId;
     }

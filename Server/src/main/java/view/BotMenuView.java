@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * View for the bot menu
+ */
 public class BotMenuView extends JPanel {
     private static final String CARD_CREATE = "Create Bot";
     private static final String CARD_EDIT = "Edit Bot";
@@ -24,11 +27,17 @@ public class BotMenuView extends JPanel {
     private JButton jbShowList;
     private JButton jbActivity;
 
+    /**
+     * Constructor for BotMenuView
+     */
     public BotMenuView() {
         color = new StockColors();
         initUI();
     }
 
+    /**
+     * Creates the BotMenuView
+     */
     private void initUI() {
         this.setBackground(color.getWHITE());
         JPanel jpCenter = new JPanel();
@@ -68,7 +77,7 @@ public class BotMenuView extends JPanel {
      * command
      * @param button button that we want to set up
      * @param actionCommand the action command to be set
-     * @param controller the controller that implements ActionListener
+     * @param controller ActionListener
      */
     private void setUpButton(JButton button, String actionCommand, ActionListener controller) {
         button.addActionListener(controller);
@@ -93,37 +102,5 @@ public class BotMenuView extends JPanel {
         button.setPreferredSize(new Dimension(anchuraBoton, alturaBoton));
 
         return button;
-    }
-
-    public BotsCreateView getBotsCreateView() {
-        return botsCreateView;
-    }
-
-    public void setBotsCreateView(BotsCreateView botsCreateView) {
-        this.botsCreateView = botsCreateView;
-    }
-
-    public BotsEditView getBotsEditView() {
-        return botsEditView;
-    }
-
-    public void setBotsEditView(BotsEditView botsEditView) {
-        this.botsEditView = botsEditView;
-    }
-
-    public BotsRemoveView getBotsRemoveView() {
-        return botsRemoveView;
-    }
-
-    public void setBotsRemoveView(BotsRemoveView botsRemoveView) {
-        this.botsRemoveView = botsRemoveView;
-    }
-
-    public BotsListView getBotsListView() {
-        return botsListView;
-    }
-
-    public void setBotsListView(BotsListView botsListView) {
-        this.botsListView = botsListView;
     }
 }

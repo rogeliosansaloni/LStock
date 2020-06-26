@@ -28,28 +28,6 @@ public class CompanyDao {
         this.dbConnector = dbConnector;
     }
 
-    /**
-     * Creates a company in the database
-     *
-     * @param company the company to create
-     */
-    public void createCompany(Company company) {
-        boolean companyExist = false;
-        ResultSet verify = dbConnector.selectQuery("SELECT * FROM Company WHERE name LIKE '%" + company.getName() + "%';");
-
-        try {
-            while (verify.next()) {
-                System.out.println("This company already exists.");
-                companyExist = true;
-            }
-            if (!companyExist) {
-                dbConnector.insertQuery("INSERT INTO Company (name) VALUES ('" + company.getName() + "')");
-            }
-        } catch (SQLException e) {
-            System.out.println("Error creating" + company.getName() + ".");
-        }
-    }
-
     public ArrayList<Company> getAllCompanyNames() {
         ResultSet result = dbConnector.selectQuery("SELECT * FROM Company");
         ArrayList<Company> companies = null;

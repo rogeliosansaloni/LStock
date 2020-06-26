@@ -67,6 +67,9 @@ public class User {
         this.totalBalance = totalBalance;
     }
 
+    /**
+     * Empty constructor of the user
+     */
     public User() {
 
     }

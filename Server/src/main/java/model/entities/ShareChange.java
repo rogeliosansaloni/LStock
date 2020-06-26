@@ -1,7 +1,7 @@
 package model.entities;
 
 /**
- * The information of the
+ * This class represents the different changes of a company share
  */
 public class ShareChange {
 
@@ -14,6 +14,9 @@ public class ShareChange {
     private int sharesQuantity;
     private float profitLoss;
 
+    /**
+     * Empty constructor of ShareChange
+     */
     public ShareChange() {
 
     }
@@ -55,7 +58,9 @@ public class ShareChange {
         this.sharesQuantity = sharesQuantity;
     }
 
-
+    /**
+     * Getters and setters
+     */
 
     public int getUserId() {
         return userId;

@@ -1,21 +1,30 @@
 package controller;
 
 import model.managers.UserManager;
+import view.MainView;
 import view.SharesListView;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-
+/**
+ * Controller for the shares list
+ */
 public class SharesListController implements ListSelectionListener {
     private SharesListView view;
     private UserManager userManager;
     private ListSelectionModel selectionModel;
-    private static final String NO_SHARES_AVAILABLE = "This User doesn't have any shares to display!";
+    private static final String NO_SHARES_AVAILABLE = "This user doesn't have any shares to display!";
     private int selectedRow = 0;
     private boolean selectedUser;
 
+    /**
+     * SharesList Controller
+     * @param sharesListView SharesListView
+     */
     public SharesListController(SharesListView sharesListView){
         this.view = sharesListView;
         this.userManager = new UserManager();

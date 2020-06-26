@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- * Represents the manager that controls all operations that can be
- * done to the bots
+ * Represents the manager that controls all operations that can be done to the bots
  */
 public class BotManager {
     private ArrayList<Company> companies;

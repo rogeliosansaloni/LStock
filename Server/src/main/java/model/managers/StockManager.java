@@ -10,6 +10,9 @@ import utils.UserMapperImpl;
 
 import java.util.ArrayList;
 
+/**
+ * Stock manager class
+ */
 public class StockManager {
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
@@ -22,7 +25,7 @@ public class StockManager {
     private ShareMapperImpl shareMapper;
 
     /**
-     * Constructor for a StockManager
+     * Constructor for StockManager
      */
     public StockManager() {
         DBConnector connector = new DBConnector();
@@ -32,20 +35,6 @@ public class StockManager {
         mapper = new UserMapperImpl();
         shareMapper = new ShareMapperImpl();
         connector.connect();
-    }
-
-    /**
-     * Constructor for a StockManager
-     *
-     * @param userDao Dao for the User Table
-     * @param companyDao Dao for the Company Table
-     */
-    public StockManager(UserDao userDao, CompanyDao companyDao) {
-        this.userDao = userDao;
-        this.companyDao = companyDao;
-        this.companies = new ArrayList<Company>();
-        this.companiesChange = new ArrayList<CompanyChange>();
-        this.sharesChange = new ArrayList<ShareChange>();
     }
 
     /**
@@ -158,15 +147,28 @@ public class StockManager {
         return info;
     }
 
+    /**
+     * Buys a company share and updates the purchased share
+     * @param purchase Purchased share
+     */
     public void buyShare(Purchase purchase) {
         shareDao.updatePurchasedShare(purchase);
     }
 
+    /**
+     * Sells a company share/shares and updates it
+     * @param purchase Purchased share
+     */
     public void sellShare(Purchase purchase) {
         purchase.setShareQuantity(-purchase.getShareQuantity());
         shareDao.updatePurchasedShare(purchase);
     }
 
+    /**
+     * Gets the current share identifier
+     * @param id Share identifier
+     * @return the share identifier
+     */
     public int getShareId(int id) {
         return shareDao.getCurrentShareId(id);
     }
@@ -201,17 +203,33 @@ public class StockManager {
         return companyDao.getTopTen();
     }
 
-
+    /**
+     * Gets the list of the share changes within a given a time
+     * @param userId User identifier
+     * @return a list of shares changes
+     */
     public ArrayList<ShareChange> getSharesChange(int userId) {
         sharesChange = shareDao.getSharesChange(userId);
         return sharesChange;
     }
 
+    /**
+     * Gets the company details from a user and company id
+     * @param userId User identifier
+     * @param companyId Company identifier
+     * @return a list of a company detail
+     */
     public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
         companyDetails = companyDao.getCompanyDetails(userId, companyId);
         return companyDetails;
     }
 
+    /**
+     * Gets the sold shares from a user and company id
+     * @param userId User identifier
+     * @param companyId Company identifier
+     * @return a list of sold shares
+     */
     public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
         return shareDao.getSharesSell(userId, companyId);
     }

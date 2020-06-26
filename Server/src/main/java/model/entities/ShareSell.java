@@ -9,6 +9,9 @@ public class ShareSell {
     private float shareValue;
     private int shareQuantity;
 
+    /**
+     * Empty constructor of ShareSell
+     */
     public ShareSell() {
     }
 
@@ -25,6 +28,9 @@ public class ShareSell {
         this.shareQuantity = shareQuantity;
     }
 
+    /**
+     * Getters and setters
+     */
     public float getShareValue() {
         return shareValue;
     }

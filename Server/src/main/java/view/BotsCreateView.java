@@ -29,7 +29,7 @@ public class BotsCreateView extends JPanel {
     private JButton jbCancel;
 
     /**
-     * Creates the view for bot creation
+     * Constructor of BotsCreateView where the view is also created.
      */
     public BotsCreateView() {
         StockColors color = new StockColors();
@@ -98,7 +98,7 @@ public class BotsCreateView extends JPanel {
     /**
      * Registers controller for each field of the form
      *
-     * @param controller the action listener
+     * @param controller ActionListener
      */
     public void registerController(ActionListener controller) {
         this.jbCreate.addActionListener(controller);

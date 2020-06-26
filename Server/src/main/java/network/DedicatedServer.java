@@ -14,6 +14,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+ * Dedicated server class
+ */
 public class DedicatedServer extends Thread {
     private boolean isOn;
     private ObjectInputStream ois;
@@ -161,14 +164,26 @@ public class DedicatedServer extends Thread {
     }
 
 
+    /**
+     * Gets the object output stream
+     * @return ObjectOutputStream
+     */
     public ObjectOutputStream getOos() {
         return oos;
     }
 
+    /**
+     * Set clients
+     * @param clients List of clientes connections
+     */
     public void setClients(LinkedList<DedicatedServer> clients) {
         this.clients = clients;
     }
 
+    /**
+     * Updates clients
+     * @throws IOException
+     */
     public void updateAllClients() throws IOException {
         for (DedicatedServer client : clients) {
             ObjectOutputStream oosClient = null;

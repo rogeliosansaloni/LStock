@@ -36,6 +36,12 @@ public class Company {
         this.bots = bot;
     }
 
+    /**
+     * Company constructor
+     * @param name Company name
+     * @param value Company value
+     * @param numShares Company total number of shares
+     */
     public Company(String name, float value, int numShares) {
         this.name = name;
         this.value = value;
@@ -43,6 +49,11 @@ public class Company {
         this.bots = new ArrayList<Bot>();
     }
 
+    /**
+     * Company constructor
+     * @param name Company name
+     * @param value Company value
+     */
     public Company(String name, float value) {
         this.name = name;
         this.value = value;
@@ -51,6 +62,13 @@ public class Company {
         this.shares = new ArrayList<Share>();
     }
 
+    /**
+     * Company constructor
+     * @param companyId Company identifier
+     * @param name Company name
+     * @param value Company value
+     * @param numShares Company total number of shares
+     */
     public Company(int companyId, String name, float value, int numShares) {
         this.companyId = companyId;
         this.name = name;
@@ -59,14 +77,25 @@ public class Company {
         this.bots = new ArrayList<Bot>();
     }
 
+    /**
+     * Company constructor. Initializes the list of bots
+     */
     public Company() {
         this.bots = new ArrayList<Bot>();
     }
 
+    /**
+     * Company constructor
+     * @param companyId Company identifier
+     */
     public Company(int companyId) {
         this.companyId = companyId;
     }
 
+    /**
+     * Company constructor
+     * @param name Company name
+     */
     public Company(String name) {
         this.name = name;
     }
@@ -76,13 +105,19 @@ public class Company {
         this.name = name;
     }
 
-    public void listBots() {
-    }
-
+    /**
+     * Add bots
+     * @param bot the bot
+     */
     public void addBot(Bot bot) {
         this.bots.add(bot);
     }
 
+    /**
+     * Recalculates the company value when we buy/sell a share
+     * @param action indicates the action that has been done
+     * @return new value
+     */
     public float recalculateValue(String action) {
         if (action.equals(BUY_ACTION)) {
             value += (value * 0.01f);
@@ -92,10 +127,6 @@ public class Company {
             }
         }
         return value;
-    }
-
-    public void addToShares (Share share){
-
     }
 
     /**
@@ -144,10 +175,6 @@ public class Company {
         this.value = value;
     }
 
-    public void setNumShares(int numShares) {
-        this.numShares = numShares;
-    }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -158,10 +185,6 @@ public class Company {
 
     public void setShares(ArrayList<Share> shares) {
         this.shares = shares;
-    }
-
-    public int getShareId() {
-        return shareId;
     }
 
     public void setShareId(int shareId) {

@@ -8,17 +8,19 @@ import model.entities.User;
 
 import java.util.ArrayList;
 
+/**
+ * User manager class
+ */
 public class UserManager {
     private DBConnector connector;
     private UserDao userDao;
-    private ShareDao shareDao;
-    private CompanyDao companyDao;
 
+    /**
+     * Constructor for the user manager
+     */
     public UserManager(){
         connector = new DBConnector();
         userDao = new UserDao(connector);
-        shareDao = new ShareDao(connector);
-        companyDao = new CompanyDao(connector);
         connector.connect();
     }
 
@@ -29,10 +31,6 @@ public class UserManager {
      */
     public String[][] getUserList(){
         return userDao.getAllUserList();
-    }
-
-    public ArrayList<User> getUsers(){
-        return userDao.getAllUsers();
     }
 
     /**

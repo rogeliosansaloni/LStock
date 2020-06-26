@@ -13,6 +13,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 
+/**
+ * Server class
+ */
 public class Server extends Thread {
     private String ip;
     private int port;

@@ -1,25 +1,11 @@
 package model.entities;
 
+/**
+ * Top 10 companies class
+ */
 public class Top10 {
-    private int company_id;
     private String name;
     private float price;
-    private  int share_quantity;
-
-    /**
-     * Constructor for a Top10 Company
-     *
-     * @param company_id company identification
-     * @param name      company name
-     * @param price     current company share price
-     * @param share_quantity number of shares
-     */
-    public Top10(int company_id, String name, float price, int share_quantity) {
-        this.company_id = company_id;
-        this.name = name;
-        this.price = price;
-        this.share_quantity = share_quantity;
-    }
 
     /**
      * Constructor for a Top10 Company
@@ -32,35 +18,28 @@ public class Top10 {
         this.price = price;
     }
 
-    public int getCompany_id() {
-        return company_id;
-    }
-
-    public void setCompany_id(int company_id) {
-        this.company_id = company_id;
-    }
-
+    /**
+     * Gets the company name
+     * @return the company name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the company name
+     * @param name company name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the company price
+     * @return company price
+     */
     public float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public int getShare_quantity() {
-        return share_quantity;
-    }
-
-    public void setShare_quantity(int share_quantity) {
-        this.share_quantity = share_quantity;
-    }
 }
