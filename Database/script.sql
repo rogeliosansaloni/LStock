@@ -39,7 +39,7 @@ INSERT INTO Company(name) VALUES ('Scottech');
 CREATE TABLE IF NOT EXISTS Bots (
 	bot_id BIGINT AUTO_INCREMENT,
 	company_id BIGINT,
-	active_time INT,
+	active_time FLOAT,
 	probability FLOAT, 
 	activity_status BOOLEAN,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
