@@ -136,15 +136,26 @@ public class StockManager {
             }
         }
         //Recalculates the new value of the company
-        float currentValue = companyDao.getCompanyCurrenValue(company.getCompanyId());
-        company.setValue(currentValue);
-        company.recalculateValue(action);
+        company = updateCompanyValue(company, action);
 
-        //Updates the company new value
-        companyDao.updateCompanyNewValue(company);
         ShareTrade info = shareMapper.userCompanyToShareTrade(user, company);
         info.setView(view);
         return info;
+    }
+
+    /**
+     * Recalculates the new value of the company
+     *
+     * @param company company
+     * @param action the action
+     */
+    public Company updateCompanyValue(Company company, String action) {
+        float currentValue = companyDao.getCompanyCurrenValue(company.getCompanyId());
+        company.setValue(currentValue);
+        company.recalculateValue(action);
+        //Updates the company new value
+        companyDao.updateCompanyNewValue(company);
+        return company;
     }
 
     /**
@@ -153,7 +164,8 @@ public class StockManager {
      * @param purchase Purchased share
      */
     public void buyShare(Purchase purchase) {
-        shareDao.updatePurchasedShare(purchase);
+        Company company = new Company(purchase.getCompanyId());
+        updateCompanyValue(company, "BUY");
     }
 
     /**
@@ -162,8 +174,8 @@ public class StockManager {
      * @param purchase Purchased share
      */
     public void sellShare(Purchase purchase) {
-        purchase.setShareQuantity(-purchase.getShareQuantity());
-        shareDao.updatePurchasedShare(purchase);
+        Company company = new Company(purchase.getCompanyId());
+        updateCompanyValue(company, "SELL");
     }
 
     /**
