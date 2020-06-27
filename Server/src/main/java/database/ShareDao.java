@@ -69,26 +69,39 @@ public class ShareDao {
     }
 
     /**
-     * Gets a list of sold shares of a user and company
+     * Gets a list of sold shares of a user and all the companies
      * @param userId user identifier
-     * @param companyId company identifier
      * @return list of shares sold
      */
-    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
+    public ArrayList<ArrayList<ShareSell>> getSharesSell(int userId) {
         final String selectQuery = "CALL getSharesSell(%d, %d);";
         final String errorMessage = "Error getting shares sell";
+        final String getNumCompanies = "SELECT COUNT(c.company_id) as numCompanies FROM Company as c;";
 
-        ResultSet retrieved = dbConnector.selectQuery(String.format(Locale.US, selectQuery, userId, companyId));
-        ArrayList<ShareSell> shares = null;
-        try {
-            shares = new ArrayList<ShareSell>();
-            while (retrieved.next()) {
-                shares.add(toShareSell(retrieved));
-            }
-        } catch (SQLException e) {
-            System.out.println(errorMessage);
+        ResultSet retrievedNumCompanies = dbConnector.selectQuery(getNumCompanies);
+        int numCompanies = 0;
+        try{
+            numCompanies = retrievedNumCompanies.getInt("numCompanies");
+        }catch (SQLException e){
+            System.out.println("Error getting the number of companies.");
         }
-        return shares;
+        ArrayList<ArrayList<ShareSell>> companiesSharesSells = new ArrayList<ArrayList<ShareSell>>();
+
+        for(int i=1; i<numCompanies+1; i++){
+            int companyId = i;
+            ResultSet retrieved = dbConnector.selectQuery(String.format(Locale.US, selectQuery, userId, companyId));
+            ArrayList<ShareSell> shares = null;
+            try {
+                shares = new ArrayList<ShareSell>();
+                while (retrieved.next()) {
+                    shares.add(toShareSell(retrieved));
+                }
+            } catch (SQLException e) {
+                System.out.println(errorMessage);
+            }
+            companiesSharesSells.add(shares);
+        }
+        return companiesSharesSells;
     }
 
     /**
