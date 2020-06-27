@@ -169,13 +169,13 @@ public class BotManager {
      * @param bot bot to be removed
      */
     public void removeBotFromCompany(Bot bot) {
-        for (Company company : companies) {
-            if (company.getCompanyId() == bot.getCompany().getCompanyId()) {
-                ArrayList<Bot> bots = company.getBots();
+        for (int j = 0; j < companies.size(); j++) {
+            if (companies.get(j).getCompanyId() == bot.getCompany().getCompanyId()) {
+                ArrayList<Bot> bots = companies.get(j).getBots();
                 for (int i = 0; i < bots.size(); i++) {
                     if (bots.get(i).getBotId() == bot.getBotId()) {
                         bots.get(i).stopBot();
-                        company.removeBot(i);
+                        companies.get(j).removeBot(i);
                     }
                 }
                 return;
