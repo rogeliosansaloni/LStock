@@ -316,11 +316,11 @@ public class CompanyDao {
      */
     public ArrayList<Top10> getTopTen(){
         ResultSet result = dbConnector.selectQuery(
-                "SELECT DISTINCT c.name, s1.price " +
-                        "FROM Company as c " +
-                        "JOIN Share as s1 ON s1.company_id = c.company_id " +
-                        "WHERE s1.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s1.company_id) " +
-                        "ORDER BY s1.price DESC LIMIT 10;");
+                "SELECT DISTINCT c.company_id, MAX(s1.price)\n" +
+                        "FROM Share as s1 JOIN Company as c ON s1.company_id = c.company_id\n" +
+                        "WHERE s1.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s1.company_id)\n" +
+                        "GROUP BY s1.company_id\n" +
+                        "ORDER BY MAX(s1.price) DESC LIMIT 10;");
 
         ArrayList<Top10> top10List = null;
         try {
