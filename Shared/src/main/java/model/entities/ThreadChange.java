@@ -5,15 +5,8 @@ public class ThreadChange extends TunnelObject{
     private DetailViewInfo detailViewInfo;
     private ShareChangeList shareChangeList;
 
-    public ThreadChange() {
-        System.out.println("thread change invoked");
-    }
-
-    public void asdf(){
-        System.out.println("asdf ThreadChange");
-    }
-
     public ThreadChange(CompanyChangeList companyChangeList, DetailViewInfo detailViewInfo, ShareChangeList shareChangeList) {
+        System.out.println("ThreadChange created.");
         this.companyChangeList = companyChangeList;
         this.detailViewInfo = detailViewInfo;
         this.shareChangeList = shareChangeList;

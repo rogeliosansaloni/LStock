@@ -191,7 +191,24 @@ public class DedicatedServer extends Thread {
             ObjectOutputStream oosClient = null;
             if (client.isOn) {
                 oosClient = client.getOos();
-                ThreadChange change = new ThreadChange();
+
+                // Get company change list
+                ArrayList<CompanyChange> companies = stockModel.getCompaniesChange();
+                CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
+
+                // Get share change list
+                ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(stockModel.getLoggedUser());
+                ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
+
+                // Get detail view info
+                ArrayList<CompanyDetail> companiesDetails = stockModel.getCompanyDetails(stockModel.getLoggedUser(), companyId);
+                ArrayList<ShareSell> shares = stockModel.getSharesSell(stockModel.getLoggedUser(), companyId);
+                CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companiesDetails);
+                ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
+                DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
+
+                ThreadChange change = new ThreadChange(companyChangeList, detailViewInfo, sharesChangeList);
+
                 if (oosClient != null) {
                     oosClient.writeObject(change);
                 }

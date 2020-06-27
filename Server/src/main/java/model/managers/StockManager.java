@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * Represents the manager that control all transactions and stock operations
  */
 public class StockManager {
+    private int loggedUser;
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareChange> sharesChange;
@@ -67,6 +68,7 @@ public class StockManager {
         AuthenticationInfo info = mapper.userToAuthenticationInfo(user);
         if (response.equals("Login Success")) {
             info.setValidated(true);
+            this.loggedUser = info.getId();
         } else {
             info.setValidated(false);
         }
@@ -250,6 +252,10 @@ public class StockManager {
      */
     public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
         return shareDao.getSharesSell(userId, companyId);
+    }
+
+    public int getLoggedUser() {
+        return loggedUser;
     }
 }
 
