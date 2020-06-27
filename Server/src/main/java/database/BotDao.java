@@ -79,6 +79,7 @@ public class BotDao {
      * @return a list of all existing bots
      */
     public ArrayList<Bot> getAllBots() {
+        final String errorMessage = "Error getting all bots";
         ResultSet retrievedBots = dbConnector.selectQuery("SELECT c.name, bot_id, active_time, probability, activity_status" +
                 " FROM Bots as b, Company as c WHERE b.company_id = c.company_id;");
         ArrayList<Bot> bots = null;
@@ -88,7 +89,7 @@ public class BotDao {
                 bots.add(toBot(retrievedBots));
             }
         } catch (SQLException e) {
-            System.out.println("Error getting all bots");
+            System.out.println(errorMessage);
         }
         return bots;
     }

@@ -37,7 +37,8 @@ public class CompanyDao {
      * @return list of companies
      */
     public ArrayList<Company> getAllCompanyNames() {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM Company");
+        final String selectQuery = "SELECT * FROM Company";
+        ResultSet result = dbConnector.selectQuery(selectQuery);
         ArrayList<Company> companies = null;
         try {
             companies = new ArrayList<>();
@@ -108,10 +109,18 @@ public class CompanyDao {
      */
 
     public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
+        final String callNumShares = "CALL getNumUserShares(%d, %d);";
+        final String callCompanyDetails = "CALL getCompanyDetails(%d, %d);";
+        final String callMaxMinValues = "CALL getMaxMinValues(%d, %d);";
+        final String selectQuery = "SELECT c.name as companyName, s.price as currentPrice " +
+                "FROM Company as c JOIN Share as s ON s.company_id = c.company_id " +
+                "WHERE c.company_id = %d AND " +
+                "s.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s.company_id);";
+
         ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
         int numUserShares = 0;
 
-        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + userId + ", " + companyId + ");");
+        ResultSet retrievedShares = dbConnector.selectQuery(String.format(callNumShares, userId ,companyId));
         try {
             if(retrievedShares.next()){
                 numUserShares = retrievedShares.getInt("numUserShares");
@@ -121,21 +130,19 @@ public class CompanyDao {
         }
 
         for(int i=0; i<10; i++){
-            ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
+            ResultSet retrieved = dbConnector.selectQuery(String.format(callCompanyDetails, i, companyId));
             try {
                 if(!retrieved.next()){
-                    ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName, s.price as currentPrice " +
-                                                                            "FROM Company as c JOIN Share as s ON s.company_id = c.company_id " +
-                                                                            "WHERE c.company_id = " + companyId + " AND " +
-                                                                            "s.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s.company_id);");
+                    ResultSet retrievedCompanyName = dbConnector.selectQuery(String.format(selectQuery, companyId));
                     retrievedCompanyName.next();
-                    companies.add(new CompanyDetail(numUserShares, companyId, retrievedCompanyName.getString("companyName"), i, retrievedCompanyName.getFloat("currentPrice")));
+                    companies.add(new CompanyDetail(numUserShares, companyId, retrievedCompanyName.getString("companyName"),
+                            i, retrievedCompanyName.getFloat("currentPrice")));
                 }else{
                     retrieved.beforeFirst();
                     while (retrieved.next()) {
                         companies.add(toCompanyDetail(numUserShares, retrieved));
                     }
-                    ResultSet retrievedMaxMin = dbConnector.selectQuery("CALL getMaxMinValues(" + i + ", " + companyId + ");");
+                    ResultSet retrievedMaxMin = dbConnector.selectQuery(String.format(callMaxMinValues, i, companyId));
                     while (retrievedMaxMin.next()) {
                         companies.set(i, extractMaxMinDetail(retrievedMaxMin, companies.get(i)));
                     }
@@ -266,8 +273,10 @@ public class CompanyDao {
      * @return value of the company
      */
     public float getCompanyCurrenValue(int companyId) {
+        final String callCompanyCurrentValue = "CALL getCompanyCurrentValue(%d);";
         float currentValue = 0;
-        ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyCurrentValue(" + companyId + ");");
+
+        ResultSet retrieved = dbConnector.selectQuery(String.format(callCompanyCurrentValue, companyId));
         try {
             while(retrieved.next()){
                 currentValue = retrieved.getFloat("currentValue");
@@ -284,8 +293,11 @@ public class CompanyDao {
      * @param company the company
      */
     public void updateCompanyNewValue (Company company) {
-        dbConnector.insertQuery("INSERT INTO Share (company_id, price) VALUES (" + company.getCompanyId() + ", " + company.getValue() + ");");
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM Share WHERE company_id = " + company.getCompanyId() + " AND price = " + company.getValue() + ";");
+        final String insertQuery = "INSERT INTO Share (company_id, price) VALUES (%d, %f);";
+        final String selectQuery = "SELECT * FROM Share WHERE company_id = %d AND price = %f;";
+
+        dbConnector.insertQuery(String.format(insertQuery, company.getCompanyId(), company.getValue()));
+        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, company.getCompanyId(), company.getValue()));
         try {
             while (result.next()) {
                 if (company.getCompanyId() == result.getInt("company_id") && company.getValue() == result.getFloat("price")) {

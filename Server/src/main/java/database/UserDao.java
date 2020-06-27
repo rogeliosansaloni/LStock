@@ -42,8 +42,10 @@ public class UserDao {
      * @param user the User to be registered
      */
     public String createUser(User user) {
+        final String insertQuery = "INSERT INTO User (nickname,email,password) VALUES ('%s','%s','%s')";
         String message = REGISTER_MESSAGE_1;
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() +
+                "%' OR email LIKE '%" + user.getEmail() + "%';");
         try {
             while (result.next()) {
                 if (result.getString("email").equals(user.getEmail())) {
@@ -55,7 +57,7 @@ public class UserDao {
                 }
             }
             if (message.equals(REGISTER_MESSAGE_1)) {
-                dbConnector.insertQuery("INSERT INTO User (nickname,email,password) VALUES ('" + user.getNickname() + "','" + user.getEmail() + "','" + user.getPassword() + "')");
+                dbConnector.insertQuery(String.format(insertQuery, user.getNickname(), user.getEmail(), user.getPassword()));
             }
         } catch (SQLException e) {
             message = REGISTER_MESSAGE_4;
@@ -69,7 +71,8 @@ public class UserDao {
      * @param user the User to be validated
      */
     public String validateUser(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() + "%' OR email LIKE '%" + user.getEmail() + "%';");
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() +
+                "%' OR email LIKE '%" + user.getEmail() + "%';");
         String message = LOGIN_MESSAGE_3;
         try {
             while (result.next()) {
@@ -95,18 +98,21 @@ public class UserDao {
 
 
     /**
-     * It will get all the users registered in LStock
+     * Gets all registered users
      *
-     * @return All registered users Arraylist
+     * @return list of registered users
      */
     public ArrayList<User> getAllUsers() {
-        ResultSet getUsers = dbConnector.selectQuery("SELECT * FROM User;");
+        final String selectQuery = "SELECT * FROM User;";
+        final String errorMessage = "Error getting all users";
+
+        ResultSet getUsers = dbConnector.selectQuery(selectQuery);
         ArrayList<User> users = null;
         try {
             users = new ArrayList<User>();
             while (getUsers.next()) {
                 float value = 0;
-                if (userShare(getUsers.getObject("nickname").toString()) != null){
+                if (userShare(getUsers.getObject("nickname").toString()) != null) {
                     value = getUserValue((String) getUsers.getObject("nickname"));
                 }
                 users.add(new User(
@@ -117,21 +123,21 @@ public class UserDao {
                 ));
             }
         } catch (SQLException e) {
-            System.out.println("Error getting all users");
+            System.out.println(errorMessage);
         }
         return users;
     }
 
     /**
-     * It will get all the users registered in LStock
+     * Converts ArraList of users to a list of strings
      *
-     * @return All registered users
+     * @return a list of users
      */
-    public String[][] getAllUserList() {
+    public String[][] toUserList() {
         String[][] users;
         ArrayList<User> userList = getAllUsers();
         users = new String[userList.size()][4];
-        for (int i = 0; i < userList.size(); i++){
+        for (int i = 0; i < userList.size(); i++) {
             users[i][0] = userList.get(i).getNickname();
             users[i][1] = userList.get(i).getEmail();
             users[i][2] = String.valueOf(userList.get(i).getStockValue());
@@ -141,42 +147,45 @@ public class UserDao {
     }
 
     /**
-     * It will update the information of one user
+     * Updates the information of one user
      *
      * @param name User nickname
      * @return userValue of all the shares owned
      */
-    public float getUserValue(String name){
+    public float getUserValue(String name) {
         ArrayList<ShareChange> userShares = userShare(name);
         float userValue = 0;
-        for (ShareChange c : userShares){
-            userValue += c.getShareCurrentValue()*c.getSharesQuantity();
+        for (ShareChange c : userShares) {
+            userValue += c.getShareCurrentValue() * c.getSharesQuantity();
         }
         return userValue;
     }
 
     /**
-     * It will update the information of one user
+     * Updates the information of one user
      *
-     * @param user User information
+     * @param user user with the new balance
      */
     public void updateUserBalance(User user) {
-        dbConnector.callProcedure("CALL updateUserBalance( " + user.getUserId() + ", " + user.getTotalBalance() + ");");
+        final String procedure = "CALL updateUserBalance(%d, %f);";
+        dbConnector.callProcedure(String.format(procedure, user.getUserId(), user.getTotalBalance()));
     }
 
     /**
-     * It will update the information of one user
+     * Updates the information of one user
      *
-     * @param user User information
+     * @param user user with the new balance
      */
     public void updateUserBalanceLoad(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
+        final String selectQuery = "SELECT * FROM User WHERE user_id = %d;";
+        final String updateQuery = "UPDATE User SET total_balance = '%f' WHERE user_id = %d;";
 
+        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 if (result.getInt("user_id") == user.getUserId()) {
                     float totalAmount = result.getFloat("total_balance") + user.getTotalBalance();
-                    dbConnector.updateQuery("UPDATE User SET total_balance = '" + totalAmount + "' WHERE user_id = " + user.getUserId() + ";");
+                    dbConnector.updateQuery(String.format(updateQuery, totalAmount, user.getUserId()));
                     user.setTotalBalance(totalAmount);
                 }
             }
@@ -186,12 +195,14 @@ public class UserDao {
     }
 
     /**
-     * It will get user necessary for the Client Profile View
+     * Gets user information for the profile
      *
-     * @param user User information
+     * @param user user
      */
     public void getUserProfileInfo(User user) {
-        ResultSet result = dbConnector.selectQuery("CALL getUserProfileInfo(" + user.getUserId() + ");");
+        final String selectQuery = "CALL getUserProfileInfo(%d);";
+
+        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 user.setNickname(result.getString("nickname"));
@@ -209,12 +220,14 @@ public class UserDao {
      * @param user The user
      */
     public void updateUserInformation(User user) {
-        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user.getUserId() + ";");
+        final String selectQuery = "SELECT * FROM User WHERE user_id = %d;";
+        final String updateQuery = "UPDATE User SET description = '%s' WHERE user_id = %d;";
 
+        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 if (result.getInt("user_id") == user.getUserId()) {
-                    dbConnector.insertQuery("UPDATE User SET description = '" + user.getDescription() + "' WHERE user_id = " + user.getUserId() + ";");
+                    dbConnector.insertQuery(String.format(updateQuery, user.getDescription(), user.getUserId()));
                 }
             }
         } catch (SQLException e) {
@@ -229,16 +242,18 @@ public class UserDao {
      * @return Selected user information Arraylist
      */
     public ArrayList<ShareChange> userShare(String name) {
-        ResultSet result = dbConnector.selectQuery("SELECT user_id FROM User WHERE nickname = '"+name+"';");
-        ArrayList<ShareChange> userSharesList= null;
+        final String selectUserIdQuery = "SELECT user_id FROM User WHERE nickname = '%s';";
+        final String selectQuery = "SELECT DISTINCT Purchase.share_quantity, Share.price, Company.name, Company.company_id FROM Share " +
+                "INNER JOIN Purchase ON Share.share_id = Purchase.share_id " +
+                "INNER JOIN Company ON Company.company_id = Purchase.company_id " +
+                "INNER JOIN User ON Purchase.user_id = '%d';";
+
+        ResultSet result = dbConnector.selectQuery(String.format(selectUserIdQuery, name));
+        ArrayList<ShareChange> userSharesList = null;
         try {
             while (result.next()) {
-                int user_id = result.getInt("user_id");
-                result = dbConnector.selectQuery(
-                        "SELECT DISTINCT Purchase.share_quantity, Share.price, Company.name, Company.company_id FROM Share " +
-                                "INNER JOIN Purchase ON Share.share_id = Purchase.share_id " +
-                                "INNER JOIN Company ON Company.company_id = Purchase.company_id " +
-                                "INNER JOIN User ON Purchase.user_id = '"+user_id+"';");
+                int userId = result.getInt("user_id");
+                result = dbConnector.selectQuery(String.format(selectQuery, userId));
                 userSharesList = new ArrayList<ShareChange>();
                 while (result.next()) {
                     userSharesList.add(new ShareChange(
@@ -256,21 +271,21 @@ public class UserDao {
     }
 
     /**
-     * Returns all the shares of the selected user
+     * Gets all the shares of the selected user
      *
-     * @param name Selected user name
-     * @return Shares from selected user
+     * @param name select user's name
+     * @return a list of shares of the user
      */
     public String[][] getUserShares(String name) {
         String[][] shares;
         ArrayList<ShareChange> userShares = userShare(name);
         shares = new String[userShares.size()][4];
-        if (!userShares.isEmpty()){
-            for (int i = 0; i < userShares.size(); i++){
+        if (!userShares.isEmpty()) {
+            for (int i = 0; i < userShares.size(); i++) {
                 shares[i][0] = userShares.get(i).getCompanyName();
                 shares[i][1] = String.valueOf(userShares.get(i).getSharesQuantity());
                 shares[i][2] = String.valueOf(userShares.get(i).getShareCurrentValue());
-                shares[i][3] = String.valueOf(userShares.get(i).getSharesQuantity()*userShares.get(i).getShareCurrentValue());
+                shares[i][3] = String.valueOf(userShares.get(i).getSharesQuantity() * userShares.get(i).getShareCurrentValue());
             }
             return shares;
         }
