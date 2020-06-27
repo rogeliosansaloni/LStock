@@ -294,14 +294,27 @@ public class NetworkManager extends Thread {
                 // New updates received from the
                 if (received instanceof ThreadChange) {
                     System.out.println("ThreadChange received.");
-                    if (mainController != null) {
+                    /*if (mainController != null) {
                         mainController.sendCompaniesChange();
                         mainController.sendUserProfileInfo();
                         mainController.sendSharesChange();
                         if (model.getCompanyDetails() != null) {
                             mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
                         }
-                    }
+                    }*/
+                    CompanyChangeList companies = (CompanyChangeList) ((ThreadChange) received).getCompanyChangeList();
+                    ShareChangeList shares = (ShareChangeList) ((ThreadChange) received).getShareChangeList();
+
+                    ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
+                    model.setCompaniesChange(companiesChange);
+                    model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
+                    model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
+                    ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
+                    model.setSharesChange(sharesChange);
+                    mainController.updateModel(model);
+                    mainController.updateCompanyList();
+                    mainController.updateCompanyDetails();
+                    mainController.updateShareView();
                 }
 
             } catch (IOException | ClassNotFoundException e) {
