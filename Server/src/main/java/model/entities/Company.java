@@ -27,13 +27,13 @@ public class Company {
      * @param user      user who has shares in that company
      */
 
-    public Company(int companyId, String name, float value, int numShares, User user, ArrayList<Bot> bot) {
+    public Company(int companyId, String name, float value, int numShares, User user, ArrayList<Bot> bots) {
         this.companyId = companyId;
         this.name = name;
         this.value = value;
         this.numShares = numShares;
         this.user = user;
-        this.bots = bot;
+        this.bots = bots;
     }
 
     /**
@@ -134,6 +134,14 @@ public class Company {
             }
         }
         return value;
+    }
+
+    /**
+     * Remove bot from list of company bots
+     * @param index
+     */
+    public void removeBot(int index) {
+        bots.remove(index);
     }
 
     /**
