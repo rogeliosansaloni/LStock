@@ -4,7 +4,6 @@ import model.entities.ShareChangeList;
 import model.entities.CompanyChangeList;
 import model.entities.StockManager;
 import model.entities.TunnelObject;
-import model.entities.TunnelObject;
 import model.entities.UserProfileInfo;
 import network.NetworkManager;
 import view.LoginView;

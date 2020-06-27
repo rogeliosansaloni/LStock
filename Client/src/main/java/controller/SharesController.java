@@ -1,20 +1,30 @@
 package controller;
 
-import model.entities.*;
+import model.entities.ShareChange;
+import model.entities.ShareTrade;
+import model.entities.StockManager;
 import network.NetworkManager;
 import view.SharesView;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
+/**
+ * Controller for Share functionality
+ */
 public class SharesController implements ActionListener {
     private static final String SELL_ACTION = "SELL";
     private static final String VIEW = "Shares";
     private SharesView view;
     private StockManager model;
 
+    /**
+     * Initializes Shares controller, view and model
+     *
+     * @param view    SharesView view
+     * @param model StockManager model
+     */
     public SharesController(SharesView view, StockManager model) {
         this.view = view;
         this.model = model;

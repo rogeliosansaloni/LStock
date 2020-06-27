@@ -9,15 +9,18 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * The Profile View
+ * The Shares View
  */
-
 public class SharesView extends JPanel {
     private JScrollPane jpScroll;
     private JPanel jpTable;
     private JPanel jpAlert;
     private JButton[] jbSellShares;
     private StockColors color;
+
+    /**
+     * Creates and initializes the Shares View
+     */
 
     public SharesView() {
         color = new StockColors();

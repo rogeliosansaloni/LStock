@@ -25,32 +25,40 @@ public class Purchase {
         this.shareQuantity = shareQuantity;
     }
 
+    /**
+     * Getters
+     **/
+
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
-
     public int getShareId() {
         return shareId;
     }
 
-    public void setShareId(int shareId) {
-        this.shareId = shareId;
-    }
-
     public int getShareQuantity() {
         return shareQuantity;
+    }
+
+    /**
+     * Setters
+     **/
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public void setShareId(int shareId) {
+        this.shareId = shareId;
     }
 
     public void setShareQuantity(int shareQuantity) {
