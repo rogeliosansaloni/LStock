@@ -32,9 +32,10 @@ public class BotsCreateController implements ActionListener {
 
     /**
      * Creates and initializes the controller
+     *
      * @param view Bot creation view
      */
-    public BotsCreateController (BotsCreateView view, MainView mainView, BotManager model) {
+    public BotsCreateController(BotsCreateView view, MainView mainView, BotManager model) {
         this.model = model;
         this.view = view;
         this.mainView = mainView;
@@ -84,15 +85,14 @@ public class BotsCreateController implements ActionListener {
      * @param activation the activation time in seconds
      * @return true if they're all valid
      */
-    private boolean validFields (String percentage, String activation) {
+    private boolean validFields(String percentage, String activation) {
         float percentageFloat;
         float activationFloat;
 
         if (percentage.equals(PROBABILITY)) {
             view.showErrorMessage(BOT_PROB_ERROR);
             return false;
-        }
-        else {
+        } else {
             if (activation.equals(ACTIVATION_TIME)) {
                 view.showErrorMessage(BOT_ACT_ERROR);
                 return false;
@@ -112,16 +112,15 @@ public class BotsCreateController implements ActionListener {
             return false;
         }
 
-         if (percentageFloat < 0 || percentageFloat > 100) {
-             view.showErrorMessage(BOT_PROB_VALUE_ERROR);
-             return false;
-         }
-         else {
-             if (activationFloat <= 0) {
-                 view.showErrorMessage(BOT_ACT_VALUE_ERROR);
-                 return false;
-             }
-         }
+        if (percentageFloat < 0 || percentageFloat > 100) {
+            view.showErrorMessage(BOT_PROB_VALUE_ERROR);
+            return false;
+        } else {
+            if (activationFloat <= 0) {
+                view.showErrorMessage(BOT_ACT_VALUE_ERROR);
+                return false;
+            }
+        }
         return true;
     }
 }

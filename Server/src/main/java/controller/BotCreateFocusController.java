@@ -15,8 +15,9 @@ public class BotCreateFocusController implements FocusListener {
 
     /**
      * Creates and initializes the controller
-     * @param view view for creating a bot
-     * @param id id of the text field to control
+     *
+     * @param view      view for creating a bot
+     * @param id        id of the text field to control
      * @param labelName label of the text field
      */
     public BotCreateFocusController(BotsCreateView view, int id, String labelName) {
@@ -27,21 +28,23 @@ public class BotCreateFocusController implements FocusListener {
 
     /**
      * Controls the text field when clicked
+     *
      * @param e focus event
      */
     @Override
     public void focusGained(FocusEvent e) {
         if (view.getJTextField(id).getText().equals(labelName))
-            view.setJTextField(id,"");
+            view.setJTextField(id, "");
     }
 
     /**
      * Controls the text field when unclicked
+     *
      * @param e focus event
      */
     @Override
     public void focusLost(FocusEvent e) {
-        if(view.getJTextField(id).getText().equals(""))
+        if (view.getJTextField(id).getText().equals(""))
             view.setJTextField(id, labelName);
     }
 }

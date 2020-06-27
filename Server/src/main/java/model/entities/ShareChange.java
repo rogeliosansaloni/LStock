@@ -20,17 +20,18 @@ public class ShareChange {
     public ShareChange() {
 
     }
+
     /**
      * It will create a companyChange
      *
-     * @param userId user id
-     * @param companyId company id
-     * @param shareId      share id
-     * @param companyName     company name
-     * @param shareOriginalValue     the price of the share when the user bought it
-     * @param shareCurrentValue the current price of the share
+     * @param userId             user id
+     * @param companyId          company id
+     * @param shareId            share id
+     * @param companyName        company name
+     * @param shareOriginalValue the price of the share when the user bought it
+     * @param shareCurrentValue  the current price of the share
      * @param sharesQuantity     the quantity of shares the user has
-     * @param profitLoss     (the price of the share when the user bought it - its current price) * sharesQuantity
+     * @param profitLoss         (the price of the share when the user bought it - its current price) * sharesQuantity
      */
     public ShareChange(int userId, int companyId, int shareId, String companyName, float shareOriginalValue, float shareCurrentValue, int sharesQuantity, float profitLoss) {
         this.userId = userId;
@@ -46,12 +47,12 @@ public class ShareChange {
     /**
      * It will create a companyChange
      *
-     * @param companyId company id
-     * @param companyName     company name
+     * @param companyId         company id
+     * @param companyName       company name
      * @param shareCurrentValue the current price of the share
-     * @param sharesQuantity     the quantity of shares the user has
+     * @param sharesQuantity    the quantity of shares the user has
      */
-    public ShareChange(int companyId, String companyName, float shareCurrentValue, int sharesQuantity){
+    public ShareChange(int companyId, String companyName, float shareCurrentValue, int sharesQuantity) {
         this.companyId = companyId;
         this.companyName = companyName;
         this.shareCurrentValue = shareCurrentValue;

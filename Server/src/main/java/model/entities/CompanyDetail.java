@@ -22,15 +22,16 @@ public class CompanyDetail {
 
     /**
      * Constructor of CompanyDetail
+     *
      * @param numUserShares Total number of shares
-     * @param companyId Company identifier
-     * @param companyName Company name
-     * @param shareIdOpen Share identifier
-     * @param valueOpen Company starting value
-     * @param shareIdClose Company share end identifier
-     * @param valueClose Company ending value
-     * @param maxValue Company maximum value
-     * @param minValue Company minimum value
+     * @param companyId     Company identifier
+     * @param companyName   Company name
+     * @param shareIdOpen   Share identifier
+     * @param valueOpen     Company starting value
+     * @param shareIdClose  Company share end identifier
+     * @param valueClose    Company ending value
+     * @param maxValue      Company maximum value
+     * @param minValue      Company minimum value
      * @param minutesBefore Minutes
      */
     public CompanyDetail(int numUserShares, int companyId, String companyName, int shareIdOpen, float valueOpen, int shareIdClose, float valueClose, float maxValue, float minValue, int minutesBefore) {
@@ -48,11 +49,12 @@ public class CompanyDetail {
 
     /**
      * Company detail constructor
+     *
      * @param numUserShares Total number of shares
-     * @param companyId Company identifier
-     * @param companyName Company name
+     * @param companyId     Company identifier
+     * @param companyName   Company name
      * @param minutesBefore Minutes
-     * @param valueClose Closest value
+     * @param valueClose    Closest value
      */
     public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore, float valueClose) {
         this.numUserShares = numUserShares;

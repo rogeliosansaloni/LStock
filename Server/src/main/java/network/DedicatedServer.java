@@ -96,7 +96,7 @@ public class DedicatedServer extends Thread {
                     } else if (userInfo.getAction().equals("information")) {
                         UserProfileInfo userProfileInfo = stockModel.updateUserInformation(user);
                         oos.writeObject(userProfileInfo);
-                    } else if (userInfo.getAction().equals("profileView")){
+                    } else if (userInfo.getAction().equals("profileView")) {
                         UserProfileInfo userProfileInfo = stockModel.getUserProfileInfo(user);
                         oos.writeObject(userProfileInfo);
                     }
@@ -141,12 +141,12 @@ public class DedicatedServer extends Thread {
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (EOFException e){
-            try{
-                if(!sClient.isClosed()){
+        } catch (EOFException e) {
+            try {
+                if (!sClient.isClosed()) {
                     sClient.close();
                 }
-            }catch (IOException e2){
+            } catch (IOException e2) {
                 System.out.println("Error closing the communication with the server.");
             }
             stopServerConnection();
@@ -161,6 +161,7 @@ public class DedicatedServer extends Thread {
 
     /**
      * Gets the object output stream
+     *
      * @return ObjectOutputStream
      */
     public ObjectOutputStream getOos() {
@@ -169,6 +170,7 @@ public class DedicatedServer extends Thread {
 
     /**
      * Set clients
+     *
      * @param clients List of clientes connections
      */
     public void setClients(LinkedList<DedicatedServer> clients) {
@@ -177,12 +179,13 @@ public class DedicatedServer extends Thread {
 
     /**
      * Updates clients
+     *
      * @throws IOException
      */
     public void updateAllClients() throws IOException {
         for (DedicatedServer client : clients) {
             ObjectOutputStream oosClient = null;
-            if (client.isOn){
+            if (client.isOn) {
                 oosClient = client.getOos();
                 ThreadChange change = new ThreadChange();
                 if (oosClient != null) {

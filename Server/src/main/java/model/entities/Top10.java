@@ -10,16 +10,17 @@ public class Top10 {
     /**
      * Constructor for a Top10 Company
      *
-     * @param name      company name
-     * @param price     current company share price
+     * @param name  company name
+     * @param price current company share price
      */
-    public Top10(String name, float price){
+    public Top10(String name, float price) {
         this.name = name;
         this.price = price;
     }
 
     /**
      * Gets the company name
+     *
      * @return the company name
      */
     public String getName() {
@@ -28,6 +29,7 @@ public class Top10 {
 
     /**
      * Sets the company name
+     *
      * @param name company name
      */
     public void setName(String name) {
@@ -36,6 +38,7 @@ public class Top10 {
 
     /**
      * Gets the company price
+     *
      * @return company price
      */
     public float getPrice() {

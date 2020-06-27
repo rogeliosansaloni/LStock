@@ -13,7 +13,7 @@ public class UserManager {
     /**
      * Constructor for the user manager
      */
-    public UserManager(){
+    public UserManager() {
         connector = new DBConnector();
         userDao = new UserDao(connector);
         connector.connect();
@@ -24,7 +24,7 @@ public class UserManager {
      *
      * @return Registered users
      */
-    public String[][] getUserList(){
+    public String[][] getUserList() {
         return userDao.toUserList();
     }
 
@@ -33,7 +33,7 @@ public class UserManager {
      *
      * @return User shares list
      */
-    public String[][] getUserShares(String name){
+    public String[][] getUserShares(String name) {
         return userDao.getUserShares(name);
     }
 }

@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- *  Main Controller for the Server
+ * Main Controller for the Server
  */
 public class MainController implements ActionListener {
     private static final String CARD_HOME = "Home";
@@ -39,7 +39,7 @@ public class MainController implements ActionListener {
      * Creates and initializes MainController
      * with the main views and controllers for Server
      *
-     * @param view MainView
+     * @param view     MainView
      * @param botModel
      */
     public MainController(MainView view, BotManager botModel) {
@@ -58,13 +58,13 @@ public class MainController implements ActionListener {
         this.jpBotsEditView = new BotsEditView();
         this.topTenController = new TopTenController(topTenView);
         this.topTenView.showTopTen(this.topTenController.getTopTenCompanies());
-        this.view.addToCardLayout(this.homeView, this.sharesListView,this.topTenView,this.jpMenuBots,this.jpBotsCreateView,this.jpBotsRemoveView,this.jpBotsListView,this.jpBotsEditView);
-        this.botMenuController = new BotMenuController(this,view);
-        this.botsCreateController = new BotsCreateController(jpBotsCreateView,view,botModel);
+        this.view.addToCardLayout(this.homeView, this.sharesListView, this.topTenView, this.jpMenuBots, this.jpBotsCreateView, this.jpBotsRemoveView, this.jpBotsListView, this.jpBotsEditView);
+        this.botMenuController = new BotMenuController(this, view);
+        this.botsCreateController = new BotsCreateController(jpBotsCreateView, view, botModel);
         this.botsRemoveController = new BotsRemoveController(jpBotsRemoveView, view, botModel);
-        this.botsListController = new BotsListController(view,jpBotsListView,botModel);
-        this.botsEditController = new BotsEditController(jpBotsEditView,view,botModel);
-        this.view.addToCardLayout(homeView,sharesListView,topTenView,jpMenuBots,jpBotsCreateView,jpBotsRemoveView,jpBotsListView,jpBotsEditView);
+        this.botsListController = new BotsListController(view, jpBotsListView, botModel);
+        this.botsEditController = new BotsEditController(jpBotsEditView, view, botModel);
+        this.view.addToCardLayout(homeView, sharesListView, topTenView, jpMenuBots, jpBotsCreateView, jpBotsRemoveView, jpBotsListView, jpBotsEditView);
         updateTopTen();
     }
 
@@ -100,7 +100,7 @@ public class MainController implements ActionListener {
      * Updates de Top 10 Company list after
      * a desired time value
      */
-    public void updateTopTen(){
+    public void updateTopTen() {
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -108,36 +108,49 @@ public class MainController implements ActionListener {
                 topTenController.updateTopTenView();
             }
         };
-        timer.schedule(task,0,1000);
+        timer.schedule(task, 0, 1000);
     }
 
     /**
      * Gets the BotMenuController
+     *
      * @return BotMenuController
      */
-    public BotMenuController getBotMenuController() { return botMenuController; }
+    public BotMenuController getBotMenuController() {
+        return botMenuController;
+    }
 
     /**
      * Gets the BotsCreateController
+     *
      * @return BotsCreateCntroller
      */
-    public BotsCreateController getBotsCreateController() { return botsCreateController; }
+    public BotsCreateController getBotsCreateController() {
+        return botsCreateController;
+    }
 
     /**
      * Gets the BotsRemoveController
+     *
      * @return BotsRemoveController
      */
-    public BotsRemoveController getBotsRemoveController() { return botsRemoveController; }
+    public BotsRemoveController getBotsRemoveController() {
+        return botsRemoveController;
+    }
 
     /**
      * Gets the BotsListController
+     *
      * @return BotsListController
      */
-    public BotsListController getBotsListController() { return  botsListController; }
+    public BotsListController getBotsListController() {
+        return botsListController;
+    }
 
 
     /**
      * Gets the BotsEditController
+     *
      * @return BotsEditController
      */
     public BotsEditController getBotsEditController() {

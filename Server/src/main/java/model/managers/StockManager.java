@@ -149,6 +149,7 @@ public class StockManager {
 
     /**
      * Buys a company share and updates the purchased share
+     *
      * @param purchase Purchased share
      */
     public void buyShare(Purchase purchase) {
@@ -157,6 +158,7 @@ public class StockManager {
 
     /**
      * Sells a company share/shares and updates it
+     *
      * @param purchase Purchased share
      */
     public void sellShare(Purchase purchase) {
@@ -166,6 +168,7 @@ public class StockManager {
 
     /**
      * Gets the current share identifier
+     *
      * @param id Share identifier
      * @return the share identifier
      */
@@ -199,12 +202,13 @@ public class StockManager {
      *
      * @return ArrayList<Top10> with Top 10 Companies
      */
-    public ArrayList<Top10> getTopTenlist(){
+    public ArrayList<Top10> getTopTenlist() {
         return companyDao.getTopTen();
     }
 
     /**
      * Gets the list of the share changes within a given a time
+     *
      * @param userId User identifier
      * @return a list of shares changes
      */
@@ -215,7 +219,8 @@ public class StockManager {
 
     /**
      * Gets the company details from a user and company id
-     * @param userId User identifier
+     *
+     * @param userId    User identifier
      * @param companyId Company identifier
      * @return a list of a company detail
      */
@@ -226,7 +231,8 @@ public class StockManager {
 
     /**
      * Gets the sold shares from a user and company id
-     * @param userId User identifier
+     *
+     * @param userId    User identifier
      * @param companyId Company identifier
      * @return a list of sold shares
      */

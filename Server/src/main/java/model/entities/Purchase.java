@@ -12,15 +12,16 @@ public class Purchase {
     /**
      * Empty constructor of Purchase
      */
-    public Purchase(){
+    public Purchase() {
 
     }
 
     /**
      * Constructor of Purchase
-     * @param userId User identifier
-     * @param companyId Company identifier
-     * @param shareId Share identifier
+     *
+     * @param userId        User identifier
+     * @param companyId     Company identifier
+     * @param shareId       Share identifier
      * @param shareQuantity Quantity share
      */
     public Purchase(int userId, int companyId, int shareId, int shareQuantity) {

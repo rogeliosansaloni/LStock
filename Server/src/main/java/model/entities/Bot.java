@@ -99,7 +99,7 @@ public class Bot extends Thread {
     public void run() {
         try {
             transact();
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -118,7 +118,7 @@ public class Bot extends Thread {
      */
     private void transact() throws InterruptedException {
         synchronized (shares) {
-            while(status != 1) {
+            while (status != 1) {
                 System.out.println("The bot " + botId + " is inactive.");
                 shares.wait();
             }

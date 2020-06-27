@@ -18,7 +18,8 @@ public class BotsRemoveComboBoxController implements ItemListener {
 
     /**
      * Creates and initializes the combobox controller
-     * @param view Bot Remove view
+     *
+     * @param view  Bot Remove view
      * @param model BotManager
      */
     public BotsRemoveComboBoxController(BotsRemoveView view, BotManager model) {

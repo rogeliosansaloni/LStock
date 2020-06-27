@@ -25,6 +25,7 @@ public class JSONReader {
 
     /**
      * Reads the server configuration from the file
+     *
      * @return the server configuration information
      */
     public ServerConfiguration getServerConfiguration() {

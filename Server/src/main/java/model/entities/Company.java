@@ -38,8 +38,9 @@ public class Company {
 
     /**
      * Company constructor
-     * @param name Company name
-     * @param value Company value
+     *
+     * @param name      Company name
+     * @param value     Company value
      * @param numShares Company total number of shares
      */
     public Company(String name, float value, int numShares) {
@@ -51,7 +52,8 @@ public class Company {
 
     /**
      * Company constructor
-     * @param name Company name
+     *
+     * @param name  Company name
      * @param value Company value
      */
     public Company(String name, float value) {
@@ -64,9 +66,10 @@ public class Company {
 
     /**
      * Company constructor
+     *
      * @param companyId Company identifier
-     * @param name Company name
-     * @param value Company value
+     * @param name      Company name
+     * @param value     Company value
      * @param numShares Company total number of shares
      */
     public Company(int companyId, String name, float value, int numShares) {
@@ -86,6 +89,7 @@ public class Company {
 
     /**
      * Company constructor
+     *
      * @param companyId Company identifier
      */
     public Company(int companyId) {
@@ -94,6 +98,7 @@ public class Company {
 
     /**
      * Company constructor
+     *
      * @param name Company name
      */
     public Company(String name) {
@@ -107,6 +112,7 @@ public class Company {
 
     /**
      * Add bots
+     *
      * @param bot the bot
      */
     public void addBot(Bot bot) {
@@ -115,6 +121,7 @@ public class Company {
 
     /**
      * Recalculates the company value when we buy/sell a share
+     *
      * @param action indicates the action that has been done
      * @return new value
      */
