@@ -1,6 +1,8 @@
 package controller;
 
-import model.entities.*;
+import model.entities.ShareChange;
+import model.entities.ShareTrade;
+import model.entities.StockManager;
 import network.NetworkManager;
 import view.SharesView;
 

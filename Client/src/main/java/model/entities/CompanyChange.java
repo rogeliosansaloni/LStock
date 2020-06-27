@@ -27,40 +27,48 @@ public class CompanyChange {
         this.changePer = changePer;
     }
 
+    /**
+     * Getters
+     **/
+
     public int getCompanyId() {
         return companyId;
-    }
-
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public float getCurrentShare() {
         return currentShare;
-    }
-
-    public void setCurrentShare(float currentShare) {
-        this.currentShare = currentShare;
     }
 
     public float getChange() {
         return change;
     }
 
-    public void setChange(float change) {
-        this.change = change;
-    }
-
     public float getChangePer() {
         return changePer;
+    }
+
+    /**
+     * Setters
+     **/
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCurrentShare(float currentShare) {
+        this.currentShare = currentShare;
+    }
+
+    public void setChange(float change) {
+        this.change = change;
     }
 
     public void setChangePer(float changePer) {

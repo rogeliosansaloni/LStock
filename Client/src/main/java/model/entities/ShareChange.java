@@ -39,64 +39,72 @@ public class ShareChange {
         this.profitLoss = profitLoss;
     }
 
+    /**
+     * Getters
+     **/
+
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
-
     public int getShareId() {
         return shareId;
-    }
-
-    public void setShareId(int shareId) {
-        this.shareId = shareId;
     }
 
     public String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
     public float getShareOriginalValue() {
         return shareOriginalValue;
-    }
-
-    public void setShareOriginalValue(float shareOriginalValue) {
-        this.shareOriginalValue = shareOriginalValue;
     }
 
     public float getShareCurrentValue() {
         return shareCurrentValue;
     }
 
-    public void setShareCurrentValue(float shareCurrentValue) {
-        this.shareCurrentValue = shareCurrentValue;
-    }
-
     public int getSharesQuantity() {
         return sharesQuantity;
     }
 
-    public void setSharesQuantity(int sharesQuantity) {
-        this.sharesQuantity = sharesQuantity;
-    }
-
     public float getProfitLoss() {
         return profitLoss;
+    }
+
+    /**
+     * Setters
+     **/
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public void setShareId(int shareId) {
+        this.shareId = shareId;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setShareOriginalValue(float shareOriginalValue) {
+        this.shareOriginalValue = shareOriginalValue;
+    }
+
+    public void setShareCurrentValue(float shareCurrentValue) {
+        this.shareCurrentValue = shareCurrentValue;
+    }
+
+    public void setSharesQuantity(int sharesQuantity) {
+        this.sharesQuantity = sharesQuantity;
     }
 
     public void setProfitLoss(float profitLoss) {

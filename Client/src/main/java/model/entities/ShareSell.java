@@ -25,24 +25,32 @@ public class ShareSell {
         this.shareQuantity = shareQuantity;
     }
 
+    /**
+     * Getters
+     **/
+
     public float getShareValue() {
         return shareValue;
-    }
-
-    public void setShareValue(float shareValue) {
-        this.shareValue = shareValue;
     }
 
     public int getShareQuantity() {
         return shareQuantity;
     }
 
-    public void setShareQuantity(int shareQuantity) {
-        this.shareQuantity = shareQuantity;
-    }
-
     public int getShareId() {
         return shareId;
+    }
+
+    /**
+     * Setters
+     **/
+
+    public void setShareValue(float shareValue) {
+        this.shareValue = shareValue;
+    }
+
+    public void setShareQuantity(int shareQuantity) {
+        this.shareQuantity = shareQuantity;
     }
 
     public void setShareId(int shareId) {
