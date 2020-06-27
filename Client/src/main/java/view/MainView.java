@@ -1,14 +1,13 @@
 package view;
 
-import model.entities.*;
+import controller.FrameListener;
+import model.entities.User;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-
-import controller.FrameListener;
 
 /**
  * Main view
@@ -210,6 +209,11 @@ public class MainView extends JFrame {
         optionLogout = new JMenuItem("Log out");
     }
 
+    /**
+     * add options to the menu
+     *
+     * @param option the option that we want to use
+     */
     public void addOptionBar(JMenuItem option) {
         Font fontOptions = new Font("Roboto", Font.PLAIN, 28);
         Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
@@ -221,6 +225,9 @@ public class MainView extends JFrame {
         menuOptions.add(option);
     }
 
+    /**
+     * Update the menu bar without the company option
+     */
     private void updateOptionsCompany() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
@@ -229,6 +236,9 @@ public class MainView extends JFrame {
         addOptionBar(optionLogout);
     }
 
+    /**
+     * Update the menu bar without the balance option
+     */
     private void updateOptionsBalance() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
@@ -237,6 +247,9 @@ public class MainView extends JFrame {
         addOptionBar(optionLogout);
     }
 
+    /**
+     * Update the menu bar without the shares option
+     */
     private void updateOptionsShares() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
@@ -245,6 +258,9 @@ public class MainView extends JFrame {
         addOptionBar(optionLogout);
     }
 
+    /**
+     * Update the menu bar without the profile option
+     */
     private void updateOptionsProfile() {
         menuOptions.removeAll();
         addOptionBar(optionCompany);
@@ -253,6 +269,9 @@ public class MainView extends JFrame {
         addOptionBar(optionLogout);
     }
 
+    /**
+     * Update the menu bar without the company detail option
+     */
     private void updateOptionsCompanyDetail() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
@@ -281,6 +300,9 @@ public class MainView extends JFrame {
 
     }
 
+    /**
+     * Register controllers to Menu Bar
+     */
     public int confirmLogOutWindow() {
         int verify = JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Log Out", JOptionPane.YES_NO_OPTION);
         return verify;
