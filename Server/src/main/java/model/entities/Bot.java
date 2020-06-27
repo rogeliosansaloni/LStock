@@ -104,6 +104,12 @@ public class Bot extends Thread {
         }
     }
 
+    /**
+     * Stops the bot thread
+     */
+    public void stopBot() {
+        interrupt();
+    }
 
     /**
      * Bot activity control
@@ -124,7 +130,8 @@ public class Bot extends Thread {
             Purchase purchase = new Purchase(1, company.getCompanyId(), model.getShareId(company.getCompanyId()), 1);
 
             // Checks if the bot should buy or sell according to probability
-            if (new Random().nextDouble() >= probability) {
+            double randomProb = new Random().nextDouble();
+            if (randomProb * 100 >= probability) {
                 System.out.println(String.format(TRANSACTION_MESSAGE, botId, "buy"));
                 model.buyShare(purchase);
                 shares.add(purchase);
