@@ -5,6 +5,7 @@ import model.entities.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Represents the DAO for the Share table
@@ -33,14 +34,14 @@ public class ShareDao {
         final String callUpdatePurchase = "CALL updatePurchase(%d, %d, %d, %d);";
 
         //First we need to know if that purchase already exists in the Purchase value of the database
-        ResultSet retrievedCheck = dbConnector.selectQuery(String.format(callExistingPurchase, purchase.getUserId(),
+        ResultSet retrievedCheck = dbConnector.selectQuery(String.format(Locale.US, callExistingPurchase, purchase.getUserId(),
                 purchase.getCompanyId(), purchase.getShareId()));
         try {
             if (!retrievedCheck.next()) {
-                dbConnector.callProcedure(String.format(callInsertPurchase, purchase.getUserId(), purchase.getCompanyId(),
+                dbConnector.callProcedure(String.format(Locale.US, callInsertPurchase, purchase.getUserId(), purchase.getCompanyId(),
                         purchase.getShareId(), purchase.getShareQuantity()));
             } else {
-                dbConnector.callProcedure(String.format(callUpdatePurchase, purchase.getUserId(), purchase.getCompanyId(),
+                dbConnector.callProcedure(String.format(Locale.US, callUpdatePurchase, purchase.getUserId(), purchase.getCompanyId(),
                         purchase.getShareId(), purchase.getShareQuantity()));
             }
         } catch (SQLException e) {
@@ -56,7 +57,7 @@ public class ShareDao {
         final String callMostCurrentShareId = "CALL getMostCurrentShareId(%d);";
         int shareId = 0;
 
-        ResultSet retrievedShares = dbConnector.selectQuery(String.format(callMostCurrentShareId, companyId));
+        ResultSet retrievedShares = dbConnector.selectQuery(String.format(Locale.US, callMostCurrentShareId, companyId));
         try {
             while (retrievedShares.next()) {
                 shareId = retrievedShares.getInt("share_id");
@@ -77,7 +78,7 @@ public class ShareDao {
         final String selectQuery = "CALL getSharesSell(%d, %d);";
         final String errorMessage = "Error getting shares sell";
 
-        ResultSet retrieved = dbConnector.selectQuery(String.format(selectQuery, userId, companyId));
+        ResultSet retrieved = dbConnector.selectQuery(String.format(Locale.US, selectQuery, userId, companyId));
         ArrayList<ShareSell> shares = null;
         try {
             shares = new ArrayList<ShareSell>();
@@ -100,7 +101,7 @@ public class ShareDao {
         final String selectQuery = "CALL getSharesChange(%d);";
         final String errorMessage = "Error getting all shares";
 
-        ResultSet retrievedShares = dbConnector.selectQuery(String.format(selectQuery, userId));
+        ResultSet retrievedShares = dbConnector.selectQuery(String.format(Locale.US, selectQuery, userId));
         ArrayList<ShareChange> sharesChange = new ArrayList<ShareChange>();
         try {
             while (retrievedShares.next()) {

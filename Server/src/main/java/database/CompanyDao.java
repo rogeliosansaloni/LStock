@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 /**
  * Represents the DAO for the Company table
@@ -21,7 +22,7 @@ public class CompanyDao {
     private static final String GETTING_COMPANIES_ERROR = "Error getting all companies.";
     private static final String GETTING_COMPANIES_ERROR_DETAIL = "Error getting all companies detail.";
     private static final String GETTING_COMPANIES_ERROR_CHANGE = "Error getting all companies change.";
-    private static final String TOPTEN_MESSAGE = "Error finding top 10 companies of User";
+    private static final String TOPTEN_MESSAGE = "Error finding the top 10 companies.";
 
     /**
      * Creates and initializes the CompanyDao
@@ -120,7 +121,7 @@ public class CompanyDao {
         ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
         int numUserShares = 0;
 
-        ResultSet retrievedShares = dbConnector.selectQuery(String.format(callNumShares, userId ,companyId));
+        ResultSet retrievedShares = dbConnector.selectQuery(String.format(Locale.US, callNumShares, userId ,companyId));
         try {
             if(retrievedShares.next()){
                 numUserShares = retrievedShares.getInt("numUserShares");
@@ -130,10 +131,10 @@ public class CompanyDao {
         }
 
         for(int i=0; i<10; i++){
-            ResultSet retrieved = dbConnector.selectQuery(String.format(callCompanyDetails, i, companyId));
+            ResultSet retrieved = dbConnector.selectQuery(String.format(Locale.US, callCompanyDetails, i, companyId));
             try {
                 if(!retrieved.next()){
-                    ResultSet retrievedCompanyName = dbConnector.selectQuery(String.format(selectQuery, companyId));
+                    ResultSet retrievedCompanyName = dbConnector.selectQuery(String.format(Locale.US, selectQuery, companyId));
                     retrievedCompanyName.next();
                     companies.add(new CompanyDetail(numUserShares, companyId, retrievedCompanyName.getString("companyName"),
                             i, retrievedCompanyName.getFloat("currentPrice")));
@@ -142,7 +143,7 @@ public class CompanyDao {
                     while (retrieved.next()) {
                         companies.add(toCompanyDetail(numUserShares, retrieved));
                     }
-                    ResultSet retrievedMaxMin = dbConnector.selectQuery(String.format(callMaxMinValues, i, companyId));
+                    ResultSet retrievedMaxMin = dbConnector.selectQuery(String.format(Locale.US, callMaxMinValues, i, companyId));
                     while (retrievedMaxMin.next()) {
                         companies.set(i, extractMaxMinDetail(retrievedMaxMin, companies.get(i)));
                     }
@@ -276,7 +277,7 @@ public class CompanyDao {
         final String callCompanyCurrentValue = "CALL getCompanyCurrentValue(%d);";
         float currentValue = 0;
 
-        ResultSet retrieved = dbConnector.selectQuery(String.format(callCompanyCurrentValue, companyId));
+        ResultSet retrieved = dbConnector.selectQuery(String.format(Locale.US, callCompanyCurrentValue, companyId));
         try {
             while(retrieved.next()){
                 currentValue = retrieved.getFloat("currentValue");
@@ -296,8 +297,8 @@ public class CompanyDao {
         final String insertQuery = "INSERT INTO Share (company_id, price) VALUES (%d, %f);";
         final String selectQuery = "SELECT * FROM Share WHERE company_id = %d AND price = %f;";
 
-        dbConnector.insertQuery(String.format(insertQuery, company.getCompanyId(), company.getValue()));
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, company.getCompanyId(), company.getValue()));
+        dbConnector.insertQuery(String.format(Locale.US, insertQuery, company.getCompanyId(), company.getValue()));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, company.getCompanyId(), company.getValue()));
         try {
             while (result.next()) {
                 if (company.getCompanyId() == result.getInt("company_id") && company.getValue() == result.getFloat("price")) {
@@ -316,7 +317,7 @@ public class CompanyDao {
      */
     public ArrayList<Top10> getTopTen(){
         ResultSet result = dbConnector.selectQuery(
-                "SELECT DISTINCT c.company_id, MAX(s1.price)\n" +
+                "SELECT DISTINCT c.name as name, MAX(s1.price) as price\n" +
                         "FROM Share as s1 JOIN Company as c ON s1.company_id = c.company_id\n" +
                         "WHERE s1.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s1.company_id)\n" +
                         "GROUP BY s1.company_id\n" +

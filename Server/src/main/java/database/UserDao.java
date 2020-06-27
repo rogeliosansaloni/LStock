@@ -10,6 +10,7 @@ import model.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 
 /**
  * Represents the User DAO
@@ -57,7 +58,7 @@ public class UserDao {
                 }
             }
             if (message.equals(REGISTER_MESSAGE_1)) {
-                dbConnector.insertQuery(String.format(insertQuery, user.getNickname(), user.getEmail(), user.getPassword()));
+                dbConnector.insertQuery(String.format(Locale.US, insertQuery, user.getNickname(), user.getEmail(), user.getPassword()));
             }
         } catch (SQLException e) {
             message = REGISTER_MESSAGE_4;
@@ -168,7 +169,7 @@ public class UserDao {
      */
     public void updateUserBalance(User user) {
         final String procedure = "CALL updateUserBalance(%d, %f);";
-        dbConnector.callProcedure(String.format(procedure, user.getUserId(), user.getTotalBalance()));
+        dbConnector.callProcedure(String.format(Locale.US, procedure, user.getUserId(), user.getTotalBalance()));
     }
 
     /**
@@ -180,12 +181,12 @@ public class UserDao {
         final String selectQuery = "SELECT * FROM User WHERE user_id = %d;";
         final String updateQuery = "UPDATE User SET total_balance = '%f' WHERE user_id = %d;";
 
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 if (result.getInt("user_id") == user.getUserId()) {
                     float totalAmount = result.getFloat("total_balance") + user.getTotalBalance();
-                    dbConnector.updateQuery(String.format(updateQuery, totalAmount, user.getUserId()));
+                    dbConnector.updateQuery(String.format(Locale.US, updateQuery, totalAmount, user.getUserId()));
                     user.setTotalBalance(totalAmount);
                 }
             }
@@ -202,7 +203,7 @@ public class UserDao {
     public void getUserProfileInfo(User user) {
         final String selectQuery = "CALL getUserProfileInfo(%d);";
 
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 user.setNickname(result.getString("nickname"));
@@ -223,11 +224,11 @@ public class UserDao {
         final String selectQuery = "SELECT * FROM User WHERE user_id = %d;";
         final String updateQuery = "UPDATE User SET description = '%s' WHERE user_id = %d;";
 
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 if (result.getInt("user_id") == user.getUserId()) {
-                    dbConnector.insertQuery(String.format(updateQuery, user.getDescription(), user.getUserId()));
+                    dbConnector.insertQuery(String.format(Locale.US, updateQuery, user.getDescription(), user.getUserId()));
                 }
             }
         } catch (SQLException e) {
@@ -248,12 +249,12 @@ public class UserDao {
                 "INNER JOIN Company ON Company.company_id = Purchase.company_id " +
                 "INNER JOIN User ON Purchase.user_id = '%d';";
 
-        ResultSet result = dbConnector.selectQuery(String.format(selectUserIdQuery, name));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectUserIdQuery, name));
         ArrayList<ShareChange> userSharesList = null;
         try {
             while (result.next()) {
                 int userId = result.getInt("user_id");
-                result = dbConnector.selectQuery(String.format(selectQuery, userId));
+                result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, userId));
                 userSharesList = new ArrayList<ShareChange>();
                 while (result.next()) {
                     userSharesList.add(new ShareChange(
