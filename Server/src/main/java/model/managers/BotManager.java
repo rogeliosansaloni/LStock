@@ -175,7 +175,7 @@ public class BotManager {
                 for (int i = 0; i < bots.size(); i++) {
                     if (bots.get(i).getBotId() == bot.getBotId()) {
                         bots.get(i).stopBot();
-                        company.getBots().remove(i);
+                        company.removeBot(i);
                     }
                 }
                 return;
