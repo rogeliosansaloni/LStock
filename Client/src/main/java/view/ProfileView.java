@@ -14,26 +14,23 @@ import java.util.Map;
  */
 public class ProfileView extends JPanel {
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
-    protected StockColors color;
     private JLabel jlNicknameTitle, jlEmailTitle, jlDescriptionTitle;
     private JLabel jlNickname, jlEmail, jlDescription;
-    private JPanel jpInformation;
-    private JPanel jpPhoto;
-    private JPanel jpNickname, jpEmail, jpDescription;
+    private JPanel jpDescription;
     private JLabel jlUserPhoto;
 
     /**
      * Creates the Profile view
      */
-    public ProfileView (){
+    public ProfileView() {
 
         //General window setup
-        color = new StockColors();
+        StockColors color = new StockColors();
         this.setBackground(color.getBLACK());
         this.setLayout(new FlowLayout());
 
         //We create the JPanel for the Icon
-        jpPhoto = new JPanel(new BorderLayout());
+        JPanel jpPhoto = new JPanel(new BorderLayout());
         // Create User Icon
         ImageIcon imageIcon = new ImageIcon(ProfileView.class.getResource(
                 PATH_USER_PHOTO));
@@ -49,18 +46,18 @@ public class ProfileView extends JPanel {
         jpPhoto.setAlignmentY(SwingConstants.CENTER);
 
         //Panel Information
-        jpInformation = new JPanel(new BorderLayout());
+        JPanel jpInformation = new JPanel(new BorderLayout());
         jpInformation.setAlignmentX(SwingConstants.LEFT);
         jpInformation.setBackground(color.getBLACK());
         jpInformation.setAlignmentX(SwingConstants.CENTER);
         jpInformation.setAlignmentY(SwingConstants.CENTER);
-        jpInformation.setBorder(new EmptyBorder(0,60,0,0));
+        jpInformation.setBorder(new EmptyBorder(0, 60, 0, 0));
 
         Font fontTitle = new Font("Segoe UI Semibold", Font.BOLD, 32);
         Font fontText = new Font("Segoe UI Semibold", Font.PLAIN, 25);
 
         //NICKNAME
-        jpNickname = new JPanel(new BorderLayout());
+        JPanel jpNickname = new JPanel(new BorderLayout());
         jpNickname.setBackground(color.getBLACK());
         jlNicknameTitle = new JLabel("NICKNAME");
         jlNicknameTitle.setBackground(color.getBLACK());
@@ -68,7 +65,7 @@ public class ProfileView extends JPanel {
         Map attributesN = fontTitle.getAttributes();
         attributesN.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         jlNicknameTitle.setFont(fontTitle.deriveFont(attributesN));
-        jlNicknameTitle.setBorder(new EmptyBorder(0,0,10,0));
+        jlNicknameTitle.setBorder(new EmptyBorder(0, 0, 10, 0));
 
         jlNickname = new JLabel("This is my nickname.");
         jlNickname.setBackground(color.getBLACK());
@@ -76,16 +73,16 @@ public class ProfileView extends JPanel {
         jlNickname.setFont(fontText);
         jpNickname.add(jlNicknameTitle, BorderLayout.NORTH);
         jpNickname.add(jlNickname, BorderLayout.CENTER);
-        jpNickname.setBorder(new EmptyBorder(0,0,35,0));
+        jpNickname.setBorder(new EmptyBorder(0, 0, 35, 0));
 
         //EMAIL
-        jpEmail = new JPanel(new BorderLayout());
+        JPanel jpEmail = new JPanel(new BorderLayout());
         jpEmail.setBackground(color.getBLACK());
         jlEmailTitle = new JLabel("EMAIL");
         jlEmailTitle.setForeground(color.getWHITE());
         attributesN.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         jlEmailTitle.setFont(fontTitle.deriveFont(attributesN));
-        jlEmailTitle.setBorder(new EmptyBorder(0,0,10,0));
+        jlEmailTitle.setBorder(new EmptyBorder(0, 0, 10, 0));
 
         jlEmail = new JLabel("This is my email.");
         jlEmail.setBackground(color.getBLACK());
@@ -93,7 +90,7 @@ public class ProfileView extends JPanel {
         jlEmail.setFont(fontText);
         jpEmail.add(jlEmailTitle, BorderLayout.NORTH);
         jpEmail.add(jlEmail, BorderLayout.CENTER);
-        jpEmail.setBorder(new EmptyBorder(0,0,35,0));
+        jpEmail.setBorder(new EmptyBorder(0, 0, 35, 0));
 
         //DESCRIPTION
         jpDescription = new JPanel(new BorderLayout());
@@ -102,7 +99,7 @@ public class ProfileView extends JPanel {
         jlDescriptionTitle.setForeground(color.getWHITE());
         attributesN.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         jlDescriptionTitle.setFont(fontTitle.deriveFont(attributesN));
-        jlDescriptionTitle.setBorder(new EmptyBorder(0,0,10,0));
+        jlDescriptionTitle.setBorder(new EmptyBorder(0, 0, 10, 0));
 
 
         jlDescription = new JLabel("This is my description.");
@@ -126,13 +123,13 @@ public class ProfileView extends JPanel {
     /**
      * Updates the user information: nickname, email and description.
      */
-    public void updateProfileView(User user){
+    public void updateProfileView(User user) {
         jlNickname.setText(user.getNickname());
         jlEmail.setText(user.getEmail());
         String description = user.getDescription();
-        if(description == null || description.equals("")){
+        if (description == null || description.equals("")) {
             jpDescription.setVisible(false);
-        }else{
+        } else {
             jpDescription.setVisible(true);
             jlDescription.setText(user.getDescription());
         }

@@ -34,7 +34,6 @@ public class MainController implements ActionListener {
     private BotsRemoveController botsRemoveController;
     private BotsListController botsListController;
     private BotsEditController botsEditController;
-    //TODO: Add the rest con controllers
 
     /**
      * Creates and initializes MainController

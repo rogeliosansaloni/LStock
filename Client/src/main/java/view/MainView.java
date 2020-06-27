@@ -1,25 +1,24 @@
 package view;
 
-import model.entities.*;
+import controller.FrameListener;
+import model.entities.User;
 import utils.StockColors;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import controller.FrameListener;
 
 /**
  * Main view
  */
-public class MainView extends JFrame{
+public class MainView extends JFrame {
 
     //logo de stock
     private static final String PATH_LOGO = "/Images/stock.png";
     private static final String PATH_USER_PHOTO = "/Images/logoUser.png";
     private static final String PATH_ARROW_ICON = "/Images/dropdown-grey.png";
     private static final String TITLE = "StockLS - C2";
-    private String currentView = "";
     private static final String CARD_COMPANY = "Companies";
     private static final String CARD_COMPANYDETAILS = "Company Details";
     private static final String CARD_PROFILE = "My Profile";
@@ -27,6 +26,7 @@ public class MainView extends JFrame{
     private static final String CARD_BALANCE = "Load Balance";
     private static final int PANEL_WIDTH = 1080;
     private static final int PANEL_HEIGHT = 768;
+    private String currentView = "";
     private JLabel labelViewName;
     private JLabel labelCurrentPrice;
     private JLabel labelBalance;
@@ -209,6 +209,11 @@ public class MainView extends JFrame{
         optionLogout = new JMenuItem("Log out");
     }
 
+    /**
+     * add options to the menu
+     *
+     * @param option the option that we want to use
+     */
     public void addOptionBar(JMenuItem option) {
         Font fontOptions = new Font("Roboto", Font.PLAIN, 28);
         Border bordeOptions = BorderFactory.createLineBorder(color.getDarkGreyText(), 1);
@@ -220,6 +225,9 @@ public class MainView extends JFrame{
         menuOptions.add(option);
     }
 
+    /**
+     * Update the menu bar without the company option
+     */
     private void updateOptionsCompany() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
@@ -228,6 +236,9 @@ public class MainView extends JFrame{
         addOptionBar(optionLogout);
     }
 
+    /**
+     * Update the menu bar without the balance option
+     */
     private void updateOptionsBalance() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
@@ -236,6 +247,9 @@ public class MainView extends JFrame{
         addOptionBar(optionLogout);
     }
 
+    /**
+     * Update the menu bar without the shares option
+     */
     private void updateOptionsShares() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
@@ -244,6 +258,9 @@ public class MainView extends JFrame{
         addOptionBar(optionLogout);
     }
 
+    /**
+     * Update the menu bar without the profile option
+     */
     private void updateOptionsProfile() {
         menuOptions.removeAll();
         addOptionBar(optionCompany);
@@ -252,6 +269,9 @@ public class MainView extends JFrame{
         addOptionBar(optionLogout);
     }
 
+    /**
+     * Update the menu bar without the company detail option
+     */
     private void updateOptionsCompanyDetail() {
         menuOptions.removeAll();
         addOptionBar(optionProfile);
@@ -280,6 +300,9 @@ public class MainView extends JFrame{
 
     }
 
+    /**
+     * Register controllers to Menu Bar
+     */
     public int confirmLogOutWindow() {
         int verify = JOptionPane.showConfirmDialog(null, "Do you really want to logout?", "Log Out", JOptionPane.YES_NO_OPTION);
         return verify;
@@ -331,7 +354,7 @@ public class MainView extends JFrame{
      */
 
     public void setTitleCompanyDetail(float value, String companyName) {
-        if(currentView == CARD_COMPANYDETAILS){
+        if (currentView == CARD_COMPANYDETAILS) {
             String text = "CURRENT PRICE: " + value + " €";
             labelCurrentPrice.setText(text);
             labelViewName.setText(companyName);

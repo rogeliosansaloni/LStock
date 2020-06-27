@@ -41,6 +41,13 @@ public class CompanyDetail {
         this.minutesBefore = minutesBefore;
     }
 
+    /**
+     * @param numUserShares
+     * @param companyId
+     * @param companyName
+     * @param minutesBefore
+     * @param valueClose
+     */
     public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore, float valueClose) {
         this.numUserShares = numUserShares;
         this.companyId = companyId;
@@ -54,80 +61,88 @@ public class CompanyDetail {
         this.minValue = -1;
     }
 
+    /**
+     * Getters
+     **/
+
     public int getNumUserShares() {
         return numUserShares;
-    }
-
-    public void setNumUserShares(int numUserShares) {
-        this.numUserShares = numUserShares;
     }
 
     public int getCompanyId() {
         return companyId;
     }
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
-    }
-
     public String getCompanyName() {
         return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public int getShareIdOpen() {
         return shareIdOpen;
     }
 
-    public void setShareIdOpen(int shareIdOpen) {
-        this.shareIdOpen = shareIdOpen;
-    }
-
     public float getValueOpen() {
         return valueOpen;
-    }
-
-    public void setValueOpen(float valueOpen) {
-        this.valueOpen = valueOpen;
     }
 
     public int getShareIdClose() {
         return shareIdClose;
     }
 
-    public void setShareIdClose(int shareIdClose) {
-        this.shareIdClose = shareIdClose;
-    }
-
     public float getValueClose() {
         return valueClose;
-    }
-
-    public void setValueClose(float valueClose) {
-        this.valueClose = valueClose;
     }
 
     public float getMaxValue() {
         return maxValue;
     }
 
-    public void setMaxValue(float maxValue) {
-        this.maxValue = maxValue;
-    }
-
     public float getMinValue() {
         return minValue;
     }
 
-    public void setMinValue(float minValue) {
-        this.minValue = minValue;
-    }
-
     public int getMinutesBefore() {
         return minutesBefore;
+    }
+
+    /**
+     * Setters
+     **/
+
+    public void setNumUserShares(int numUserShares) {
+        this.numUserShares = numUserShares;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setShareIdOpen(int shareIdOpen) {
+        this.shareIdOpen = shareIdOpen;
+    }
+
+    public void setValueOpen(float valueOpen) {
+        this.valueOpen = valueOpen;
+    }
+
+    public void setShareIdClose(int shareIdClose) {
+        this.shareIdClose = shareIdClose;
+    }
+
+    public void setValueClose(float valueClose) {
+        this.valueClose = valueClose;
+    }
+
+    public void setMaxValue(float maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public void setMinValue(float minValue) {
+        this.minValue = minValue;
     }
 
     public void setMinutesBefore(int minutesBefore) {

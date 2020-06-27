@@ -1,15 +1,14 @@
 package model.entities;
 
-import java.util.ArrayList;
-
+/**
+ * Represents a Company in the system
+ */
 public class Company {
     private int companyId;
     private String name;
     private float value;
     private int shares;
     private User user;
-    private ArrayList<Bot> bots;
-    private ArrayList<Share> sharesList;
 
     /**
      * It will create a company
@@ -20,7 +19,6 @@ public class Company {
      * @param shares    number of shares available to the user
      * @param user      user who has shares in that company
      */
-
     public Company(int companyId, String name, float value, int shares, User user) {
         this.companyId = companyId;
         this.name = name;
@@ -29,6 +27,14 @@ public class Company {
         this.user = user;
     }
 
+    /**
+     * It will create a company
+     *
+     * @param companyId identification
+     * @param name      company name
+     * @param value     current company price
+     * @param shares    number of shares available to the user
+     */
     public Company(int companyId, String name, float value, int shares) {
         this.companyId = companyId;
         this.name = name;
@@ -36,14 +42,10 @@ public class Company {
         this.shares = shares;
     }
 
+    /**
+     * It will create an empty company
+     */
     public Company() {
-
-    }
-
-    public void listBots() {
-    }
-
-    public void addToShares(Share share) {
 
     }
 

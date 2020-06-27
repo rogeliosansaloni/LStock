@@ -58,6 +58,7 @@ public class User {
     /**
      * Getters
      **/
+
     public int getUserId() {
         return userId;
     }
@@ -97,6 +98,7 @@ public class User {
     /**
      * Setters
      **/
+
     public void setUserId(int userId) {
         this.userId = userId;
     }

@@ -8,7 +8,6 @@ import view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * Controller for the company detail companyDetailView
@@ -27,9 +26,10 @@ public class CompanyDetailController implements ActionListener {
 
     /**
      * Creates and initializes the controller and the Main companyDetailView
-     * @param mainView MainView
-     * @param companyDetailView  Main companyDetailView
-     * @param model StockManager
+     *
+     * @param mainView          MainView
+     * @param companyDetailView Main companyDetailView
+     * @param model             StockManager
      */
     public CompanyDetailController(MainView mainView, CompanyDetailView companyDetailView, StockManager model) {
         this.mainView = mainView;
@@ -89,7 +89,7 @@ public class CompanyDetailController implements ActionListener {
     /**
      * Registers the controller for the CompanyDetailView
      */
-    public void registerController(){
+    public void registerController() {
         companyDetailView.registerController(this);
         companyDetailView.registerFocusController(new CompanyDetailFocusController(companyDetailView));
     }
@@ -171,7 +171,7 @@ public class CompanyDetailController implements ActionListener {
         int companyId = model.getCompanyDetailId();
         int shareId = model.getCurrentShareId();
         float currentShareValue = model.getCurrentShareValue();
-        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, numShares,  BUY_ACTION, VIEW);
+        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, currentShareValue, numShares, BUY_ACTION, VIEW);
         try {
             NetworkManager.getInstance().sendShareTrade(shareTrade);
         } catch (IOException e1) {
@@ -191,7 +191,7 @@ public class CompanyDetailController implements ActionListener {
         int companyId = model.getCompanyDetailId();
         int[] shareId = model.getSharesSellSharesId();
         float[] shareValue = model.getSharesSellSharesValue();
-        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, shareValue, numShares,  SELL_ACTION, VIEW);
+        ShareTrade shareTrade = new ShareTrade(userId, userBalance, companyId, shareId, shareValue, numShares, SELL_ACTION, VIEW);
         try {
             NetworkManager.getInstance().sendShareTrade(shareTrade);
         } catch (IOException e1) {
@@ -202,7 +202,7 @@ public class CompanyDetailController implements ActionListener {
     /**
      * Sends a CompaniesChangeList class when the user presses the back button
      */
-    public void sendCompaniesChange(){
+    public void sendCompaniesChange() {
         try {
             NetworkManager.getInstance().sendTunnelObject(new CompanyChangeList());
         } catch (IOException ex) {

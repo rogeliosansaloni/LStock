@@ -8,16 +8,22 @@ import view.MainView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
 
-
+/**
+ * Controller for the CompanyView
+ */
 public class CompanyController implements ActionListener {
-
+    private static final String CARD_COMPANYDETAILS = "Company Details";
     private CompanyView view;
     private StockManager model;
     private MainView mainView;
-    private static final String CARD_COMPANYDETAILS = "Company Details";
 
+    /**
+     * Creates and initializes the controller
+     * @param view company view
+     * @param model main stock model
+     * @param mainView main view
+     */
     public CompanyController(CompanyView view, StockManager model, MainView mainView) {
         this.view = view;
         this.model = model;
@@ -36,7 +42,7 @@ public class CompanyController implements ActionListener {
     }
 
     /**
-     * Proc that shows the companies on the view's table
+     *Shows the companies on the view's table
      */
     public void updateCompanyList() {
         this.view.showCompanies(model.getCompaniesChange());

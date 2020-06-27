@@ -14,22 +14,6 @@ public class StockManager {
         this.user = user;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public ArrayList<CompanyDetail> getCompanyDetails() {
-        return companyDetails;
-    }
-
-    public ArrayList<ShareSell> getSharesSell() {
-        return sharesSell;
-    }
-
     /**
      * Gets the ids of all shares that the user has in the CompanyDetailView
      */
@@ -51,12 +35,9 @@ public class StockManager {
         return sharesValue;
     }
 
-    public float getCurrentShareValue() {
-        return companyDetails.get(0).getValueClose();
-    }
 
     /**
-     * Gets the maximum value of all the prices that are in the Candlestick Chart of CompanyDetailView
+     * Gets the maximum value of all the prices that are in the Candlestick Chart of CompanyDetailView.
      */
     public float getMaxDetailShareValue() {
         float maxValue = companyDetails.get(0).getMaxValue();
@@ -68,33 +49,9 @@ public class StockManager {
         return maxValue;
     }
 
-    public int getCurrentShareId() {
-        return companyDetails.get(0).getShareIdClose();
-    }
-
-    public String getCompanyDetailName() {
-        return companyDetails.get(0).getCompanyName();
-    }
-
-    public int getCompanyDetailId() {
-        return companyDetails.get(0).getCompanyId();
-    }
-
-    public ArrayList<CompanyChange> getCompaniesChange() {
-        return companiesChange;
-    }
-
-    public void setCompanyDetails(ArrayList<CompanyDetail> companyDetails) {
-        this.companyDetails = companyDetails;
-    }
-
-    public void setSharesSell(ArrayList<ShareSell> sharesSell) {
-        this.sharesSell = sharesSell;
-    }
-
-    public ArrayList<ShareChange> getSharesChange() {
-        return sharesChange;
-    }
+    /**
+     * Gets the information of the shares that are in the Candlestick Chart of CompanyDetailView.
+     */
 
     public ShareChange getShareChangeInfo(int shareId) {
         for(int i=0; i<sharesChange.size(); i++){
@@ -105,14 +62,9 @@ public class StockManager {
         return null;
     }
 
-    public void setCompaniesChange(ArrayList<CompanyChange> companiesChange) {
-        this.companiesChange = companiesChange;
-    }
-
-    public void setSharesChange(ArrayList<ShareChange> sharesChange) {
-        this.sharesChange = sharesChange;
-    }
-
+    /**
+     * Updates the information of the user.
+     */
 
     public void updateUserInfo(User user) {
         this.user.setNickname(user.getNickname());
@@ -149,5 +101,72 @@ public class StockManager {
         }
         return user.getTotalBalance() + benefitSale;
     }
+
+    /**
+     * Getters
+     **/
+
+    public int getCurrentShareId() {
+        return companyDetails.get(0).getShareIdClose();
+    }
+
+    public String getCompanyDetailName() {
+        return companyDetails.get(0).getCompanyName();
+    }
+
+    public int getCompanyDetailId() {
+        return companyDetails.get(0).getCompanyId();
+    }
+
+    public ArrayList<CompanyChange> getCompaniesChange() {
+        return companiesChange;
+    }
+
+    public ArrayList<ShareChange> getSharesChange() {
+        return sharesChange;
+    }
+
+    public float getCurrentShareValue() {
+        return companyDetails.get(0).getValueClose();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public ArrayList<CompanyDetail> getCompanyDetails() {
+        return companyDetails;
+    }
+
+    public ArrayList<ShareSell> getSharesSell() {
+        return sharesSell;
+    }
+
+    /**
+     * Setters
+     **/
+
+    public void setCompanyDetails(ArrayList<CompanyDetail> companyDetails) {
+        this.companyDetails = companyDetails;
+    }
+
+    public void setSharesSell(ArrayList<ShareSell> sharesSell) {
+        this.sharesSell = sharesSell;
+    }
+
+    public void setCompaniesChange(ArrayList<CompanyChange> companiesChange) {
+        this.companiesChange = companiesChange;
+    }
+
+    public void setSharesChange(ArrayList<ShareChange> sharesChange) {
+        this.sharesChange = sharesChange;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+
+
 
 }

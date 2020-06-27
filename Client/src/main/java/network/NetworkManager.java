@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import controller.CompanyDetailFocusController;
 import controller.LoginController;
 import controller.MainController;
 import controller.RegisterController;
@@ -28,7 +27,6 @@ public class NetworkManager extends Thread {
     private ObjectOutputStream oos;
     private boolean running;
     private static NetworkManager instance = null;
-    private NetworkConfiguration configuration;
     private MainController mainController;
     private LoginController loginController;
     private RegisterController registerController;
@@ -58,14 +56,14 @@ public class NetworkManager extends Thread {
     }
 
     /**
-     * Constructor that initializes all the elements for server connection
+     * Initializes all the elements for server connection
      *
      * @throws IOException
      */
     private NetworkManager() throws IOException {
         // Get Network configuration from JSON
         JSONReader jsonReader = new JSONReader();
-        configuration = jsonReader.getClientConfiguration();
+        NetworkConfiguration configuration = jsonReader.getClientConfiguration();
 
         // Set up the connection to the server
         this.serverSocket = new Socket(configuration.getIp(), configuration.getPort()); // pass ip and port from NetworkConfiguration
@@ -87,7 +85,7 @@ public class NetworkManager extends Thread {
     }
 
     /**
-     * Initialize the mappers
+     * Initializes the mappers
      */
     private void init() {
         this.mapper = new UserMapperImpl();
@@ -109,18 +107,9 @@ public class NetworkManager extends Thread {
     }
 
     /**
-     * Sets the company changes in the model
-     * @param companyChange list of company changes
-     */
-    private void initCompanies(ArrayList<CompanyChange> companyChange) {
-        model.setCompaniesChange(companyChange);
-    }
-
-    /**
      * Reinitialize the main view with the new login information.
-     * @param companyChange the list of company changes
      */
-    private void reinitMainView(ArrayList<CompanyChange> companyChange) {
+    private void reinitMainView() {
 
         // Refresh the header information with new user information
         mainView.initHeaderInformation(model.getUser().getNickname(), model.getUser().getTotalBalance());
@@ -148,9 +137,9 @@ public class NetworkManager extends Thread {
     /**
      * Stops the connection to the server and interrupts the client thread
      */
-    public void stopServerConnection() throws IOException{
+    public void stopServerConnection() throws IOException {
         running = false;
-        if(!serverSocket.isClosed()){
+        if (!serverSocket.isClosed()) {
             System.out.println("Client disconnected.");
             serverSocket.close();
         }
@@ -188,6 +177,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Sends information of the buy/sell of shares
+     *
      * @param object object that contains information for buy and sell of shares
      * @throws IOException
      */
@@ -197,6 +187,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Sends user profile information
+     *
      * @param object object that contains the user profile information
      * @throws IOException
      */
@@ -206,6 +197,7 @@ public class NetworkManager extends Thread {
 
     /**
      * Sends share change information
+     *
      * @param object object that contains the the id of the user from who we want to obtain the shares
      * @throws IOException
      */
@@ -274,7 +266,7 @@ public class NetworkManager extends Thread {
                     if (mainView == null) {
                         initMainView(companiesChange);
                     } else {
-                        reinitMainView(companiesChange);
+                        reinitMainView();
                     }
                     model.setCompaniesChange(companiesChange);
                     mainController.updateModel(model);

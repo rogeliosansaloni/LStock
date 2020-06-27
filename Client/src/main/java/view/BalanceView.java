@@ -22,11 +22,11 @@ public class BalanceView extends JPanel {
     /**
      * Creates the balance view
      */
-    public BalanceView () {
+    public BalanceView() {
         StockColors color = new StockColors();
         //Balance
         this.setBackground(color.getBLACK());
-        this.setLayout(new GridLayout(3,1));
+        this.setLayout(new GridLayout(3, 1));
         jlCurrent = new JLabel(SELECT_AMOUNT, CENTER);
         Font font = new Font("Segoe UI", Font.PLAIN, 30);
         jlCurrent.setFont(font);
@@ -42,7 +42,7 @@ public class BalanceView extends JPanel {
         jcbAmount = new JComboBox<>(amount);
         Font fontOptions = new Font("Segoe UI", Font.PLAIN, 28);
         jcbAmount.setFont(fontOptions);
-        jcbAmount.setPreferredSize(new Dimension(150,50));
+        jcbAmount.setPreferredSize(new Dimension(150, 50));
 
         jpMoney.add(jcbAmount);
         jpAmount.add(jpMoney);
@@ -57,7 +57,7 @@ public class BalanceView extends JPanel {
         jbLoad.setBorder(borderOptions);
         jbLoad.setForeground(color.getBLACK());
         jbLoad.setFont(fontOptions);
-        jbLoad.setPreferredSize(new Dimension(200,50));
+        jbLoad.setPreferredSize(new Dimension(200, 50));
 
         jpLoadButton.add(jbLoad, BorderLayout.CENTER);
 
@@ -69,6 +69,7 @@ public class BalanceView extends JPanel {
 
     /**
      * Adds actionListener to load button
+     *
      * @param actionListener ActionListener
      */
     public void registerController(ActionListener actionListener) {
@@ -78,6 +79,7 @@ public class BalanceView extends JPanel {
 
     /**
      * Gets the amount selected
+     *
      * @return amount selected
      */
     public String getAmount() {
@@ -86,9 +88,10 @@ public class BalanceView extends JPanel {
 
     /**
      * Update the current balance
+     *
      * @param amount new amount
      */
-    public void updateCurrentBalance (String amount) {
+    public void updateCurrentBalance(String amount) {
         jlCurrent.setText("You have: " + amount + "$");
     }
 
