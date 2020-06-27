@@ -1,6 +1,8 @@
 package model.entities;
 
-
+/**
+ * Represents Company Details
+ */
 public class CompanyDetail {
 
     private int numUserShares;
@@ -14,18 +16,18 @@ public class CompanyDetail {
     private float minValue;
     private int minutesBefore;
 
-    public CompanyDetail() {
-    }
-
     /**
-     * It will create a companyChange
+     * It will create a CompanyDetail
      *
+     * @param numUserShares    number of shares
      * @param companyId      company id
      * @param companyName      company name
      * @param shareIdOpen      shareId of the open value
      * @param valueOpen     value of the share at the beginning of that minute
      * @param shareIdClose      shareId of the close value
      * @param valueClose    value of the share at the end of that minute
+     * @param maxValue     maximum value
+     * @param minValue     minimum value
      * @param minutesBefore      minutes before tha last change in the value of the share
      */
     public CompanyDetail(int numUserShares, int companyId, String companyName, int shareIdOpen, float valueOpen, int shareIdClose, float valueClose, float maxValue, float minValue, int minutesBefore) {
@@ -39,19 +41,6 @@ public class CompanyDetail {
         this.maxValue = maxValue;
         this.minValue = minValue;
         this.minutesBefore = minutesBefore;
-    }
-
-    public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore, float valueClose) {
-        this.numUserShares = numUserShares;
-        this.companyId = companyId;
-        this.companyName = companyName;
-        this.minutesBefore = minutesBefore;
-        this.shareIdOpen = -1;
-        this.shareIdClose = -1;
-        this.valueOpen = -1;
-        this.valueClose = valueClose;
-        this.maxValue = -1;
-        this.minValue = -1;
     }
 
     public int getNumUserShares() {
