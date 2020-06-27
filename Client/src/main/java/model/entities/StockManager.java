@@ -8,6 +8,7 @@ public class StockManager {
     private ArrayList<ArrayList<CompanyDetail>> companyDetailsList;
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareSell> sharesSell;
+    private ArrayList<ArrayList<ShareSell>> sharesSellList;
     private ArrayList<ShareChange> sharesChange;
     private int currentCompanyId;
 
@@ -15,6 +16,7 @@ public class StockManager {
     public StockManager(User user) {
         this.user = user;
         companyDetailsList = new ArrayList<ArrayList<CompanyDetail>>();
+        sharesSellList = new ArrayList<ArrayList<ShareSell>>();
     }
 
     /**
@@ -144,6 +146,10 @@ public class StockManager {
 
     public ArrayList<ShareSell> getSharesSell() {
         return sharesSell;
+    }
+
+    public ArrayList<ArrayList<ShareSell>> getSharesSellList() {
+        return sharesSellList;
     }
 
     public int getCurrentCompanyId() {
