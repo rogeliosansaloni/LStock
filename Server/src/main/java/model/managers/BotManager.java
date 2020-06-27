@@ -42,9 +42,14 @@ public class BotManager {
     public int createBot(Bot bot) {
         Company company = companyDao.getCompanyByName(bot.getCompany().getName());
         bot.setCompany(company);
-        addBotToCompany(bot);
-        bot.start();
-        return botDao.createBot(bot);
+        int result = botDao.createBot(bot);
+        if (result != -1) {
+            Bot newBot = botDao.getBotById(result);
+            addBotToCompany(newBot);
+            newBot.setModel(this.stockModel);
+            newBot.start();
+        }
+        return result;
     }
 
     /**
@@ -92,8 +97,8 @@ public class BotManager {
         for (Company company : companies) {
             ArrayList<Bot> bots = getAllBotsByCompany(company.getCompanyId());
             for(Bot b : bots) {
-                b.start();
                 b.setModel(this.stockModel);
+                b.start();
             }
             company.setBots(bots);
         }
@@ -163,9 +168,11 @@ public class BotManager {
     public void removeBotFromCompany(Bot bot) {
         for(Company company : companies) {
             if (company.getCompanyId() == bot.getCompany().getCompanyId()) {
-                for (Bot b : company.getBots()) {
-                    if (b.getBotId() == bot.getBotId()) {
-                        company.getBots().remove(b);
+                ArrayList<Bot> bots = company.getBots();
+                for (int i = 0; i < bots.size(); i++) {
+                    if (bots.get(i).getBotId() == bot.getBotId()) {
+                        bots.get(i).stopBot();
+                        company.getBots().remove(i);
                     }
                 }
                 return;
