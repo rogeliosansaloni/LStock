@@ -13,6 +13,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Dedicated server class
@@ -27,7 +29,7 @@ public class DedicatedServer extends Thread {
     private CompanyMapperImpl companyMapper;
     private ShareMapperImpl shareMapper;
     private LinkedList<DedicatedServer> clients;
-
+    private TimerTask task;
 
     /**
      * DedicatedServer constructor
@@ -48,6 +50,7 @@ public class DedicatedServer extends Thread {
     public void stopServerConnection() {
         this.isOn = false;
         this.interrupt();
+        stopUpdatingClients();
     }
 
     /**
@@ -56,6 +59,7 @@ public class DedicatedServer extends Thread {
     public void startServerConnection() {
         this.isOn = true;
         this.start();
+        updateClients();
     }
 
     /**
@@ -109,7 +113,7 @@ public class DedicatedServer extends Thread {
                     Company company = shareMapper.shareTradeToCompany(shareTrade);
                     ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchases, shareTrade.getActionToDo(), shareTrade.getView());
                     oos.writeObject(share);
-                    updateAllClients();
+                    //updateAllClients();
                 }
 
                 if (tunnelObject instanceof CompanyList) {
@@ -193,5 +197,30 @@ public class DedicatedServer extends Thread {
                 }
             }
         }
+    }
+
+    /**
+     * Triggers updateAllClients every second
+     */
+    private void updateClients() {
+        Timer timer = new Timer();
+        this.task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    updateAllClients();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        timer.schedule(this.task, 0, 1000);
+    }
+
+    /**
+     * Stops updating all clients automatically
+     */
+    private void stopUpdatingClients() {
+        this.task.cancel();
     }
 }
