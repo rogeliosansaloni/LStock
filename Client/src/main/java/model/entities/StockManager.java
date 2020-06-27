@@ -19,17 +19,18 @@ public class StockManager {
      */
     public int[] getSharesSellSharesId() {
         int[] sharesId = new int[sharesSell.size()];
-        for(int i=0; i<sharesSell.size(); i++){
+        for (int i = 0; i < sharesSell.size(); i++) {
             sharesId[i] = sharesSell.get(i).getShareId();
         }
         return sharesId;
     }
+
     /**
      * Gets the values of all shares that the user has in the CompanyDetailView
      */
     public float[] getSharesSellSharesValue() {
         float[] sharesValue = new float[sharesSell.size()];
-        for(int i=0; i<sharesSell.size(); i++){
+        for (int i = 0; i < sharesSell.size(); i++) {
             sharesValue[i] = sharesSell.get(i).getShareValue();
         }
         return sharesValue;
@@ -41,8 +42,8 @@ public class StockManager {
      */
     public float getMaxDetailShareValue() {
         float maxValue = companyDetails.get(0).getMaxValue();
-        for(int i=1; i<companyDetails.size(); i++){
-            if(companyDetails.get(i).getMaxValue() > maxValue){
+        for (int i = 1; i < companyDetails.size(); i++) {
+            if (companyDetails.get(i).getMaxValue() > maxValue) {
                 maxValue = companyDetails.get(i).getMaxValue();
             }
         }
@@ -54,8 +55,8 @@ public class StockManager {
      */
 
     public ShareChange getShareChangeInfo(int shareId) {
-        for(int i=0; i<sharesChange.size(); i++){
-            if(sharesChange.get(i).getShareId() == shareId){
+        for (int i = 0; i < sharesChange.size(); i++) {
+            if (sharesChange.get(i).getShareId() == shareId) {
                 return sharesChange.get(i);
             }
         }
@@ -75,7 +76,7 @@ public class StockManager {
     /**
      * Checks if the user has enough value to buy the shares in the CompanyDetailView.
      */
-    public float checkUserBalance (int quantityShares){
+    public float checkUserBalance(int quantityShares) {
         float totalPurchase = quantityShares * getCurrentShareValue();
         float userBalance = user.getTotalBalance() - totalPurchase;
         return userBalance;
@@ -84,17 +85,17 @@ public class StockManager {
     /**
      * Updates the user balance
      */
-    public void updateUserBalance (float newBalance){
+    public void updateUserBalance(float newBalance) {
         this.user.setTotalBalance(newBalance);
     }
 
     /**
      * Checks if the has enough shares of each type to sell them
      */
-    public float checkNumUserShares (int[] quantityShares){
+    public float checkNumUserShares(int[] quantityShares) {
         float benefitSale = 0;
-        for(int i=0; i<quantityShares.length; i++){
-            if(this.sharesSell.get(i).getShareQuantity() < quantityShares[i]){
+        for (int i = 0; i < quantityShares.length; i++) {
+            if (this.sharesSell.get(i).getShareQuantity() < quantityShares[i]) {
                 return -1;
             }
             benefitSale += quantityShares[i] * getCurrentShareValue();
@@ -165,8 +166,6 @@ public class StockManager {
     public void setUser(User user) {
         this.user = user;
     }
-
-
 
 
 }
