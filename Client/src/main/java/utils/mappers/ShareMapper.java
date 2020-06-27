@@ -22,7 +22,17 @@ public interface ShareMapper {
 
     ShareChangeList convertToShareChangeList(ArrayList<ShareChange> sharesChange);
 
-    ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList);
+    /**
+     * Converts retrieved information into a ShareSell Arraylist
+     * @param shareSellList ShareSellList data
+     * @return a ShareSell Arraylist containing the information retrieved.
+     */
+    ArrayList<ArrayList<ShareSell>> converToSharesSell(ArrayList<ShareSellList> shareSellList);
 
-    ShareSellList convertToShareSellList(ArrayList<ShareSell> shareSells);
+    /**
+     * Converts retrieved information into a ShareSellList
+     * @param shareSells ShareSell list
+     * @return a ShareSellList object containing the information retrieved.
+     */
+    ArrayList<ShareSellList> convertToShareSellList(ArrayList<ArrayList<ShareSell>> shareSells);
 }

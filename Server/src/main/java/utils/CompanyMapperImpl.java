@@ -65,43 +65,52 @@ public class CompanyMapperImpl implements CompanyMapper {
     }
 
     @Override
-    public ArrayList<CompanyDetail> converToCompanyDetails(CompanyDetailList companyDetailList) {
-        ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
-        int companiesLen = companyDetailList.getValueClose().length;
-        int numUserShares = companyDetailList.getNumUserShares();
-        int companyId = companyDetailList.getCompanyId();
-        String companyName = companyDetailList.getCompanyName();
-        int[] shareIdOpen = companyDetailList.getShareIdOpen();
-        float[] valueOpen = companyDetailList.getValueOpen();
-        int[] shareIdClose = companyDetailList.getShareIdClose();
-        float[] valueClose = companyDetailList.getValueClose();
-        float[] maxValue = companyDetailList.getMaxValue();
-        float[] minValue = companyDetailList.getMinValue();
+    public ArrayList<ArrayList<CompanyDetail>> converToCompanyDetails(ArrayList<CompanyDetailList> companyDetailList) {
+        ArrayList<ArrayList<CompanyDetail>> companiesDetails = new ArrayList<ArrayList<CompanyDetail>>();
+        for(int i=0; i< companyDetailList.size(); i++){
+            ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
+            int companiesLen = companyDetailList.get(i).getValueClose().length;
+            int numUserShares = companyDetailList.get(i).getNumUserShares();
+            int companyId = companyDetailList.get(i).getCompanyId();
+            String companyName = companyDetailList.get(i).getCompanyName();
+            int[] shareIdOpen = companyDetailList.get(i).getShareIdOpen();
+            float[] valueOpen = companyDetailList.get(i).getValueOpen();
+            int[] shareIdClose = companyDetailList.get(i).getShareIdClose();
+            float[] valueClose = companyDetailList.get(i).getValueClose();
+            float[] maxValue = companyDetailList.get(i).getMaxValue();
+            float[] minValue = companyDetailList.get(i).getMinValue();
 
-        int[] minutesBefore = companyDetailList.getMinutesBefore();
-        for (int i = 0; i < companiesLen; i++) {
-            companies.add(new CompanyDetail(numUserShares, companyId, companyName, shareIdOpen[i], valueOpen[i], shareIdClose[i], valueClose[i], maxValue[i], minValue[i], minutesBefore[i]));
+            int[] minutesBefore = companyDetailList.get(i).getMinutesBefore();
+            for (int j = 0; j < companiesLen; j++) {
+                companies.add(new CompanyDetail(numUserShares, companyId, companyName, shareIdOpen[j], valueOpen[j], shareIdClose[j], valueClose[j], maxValue[j], minValue[j], minutesBefore[j]));
+            }
+            companiesDetails.add(companies);
         }
-        return companies;
+
+        return companiesDetails;
     }
 
     @Override
-    public CompanyDetailList convertToCompanyDetailList(ArrayList<CompanyDetail> companyDetails) {
-        CompanyDetailList companyDetailList = new CompanyDetailList(companyDetails.size());
-        int i = 0;
-        companyDetailList.setNumUserShares(companyDetails.get(0).getNumUserShares());
-        companyDetailList.setCompanyId(companyDetails.get(0).getCompanyId());
-        companyDetailList.setCompanyName(companyDetails.get(0).getCompanyName());
-        for (CompanyDetail c : companyDetails) {
-            companyDetailList.setShareIdOpen(i, c.getShareIdOpen());
-            companyDetailList.setValueOpen(i, c.getValueOpen());
-            companyDetailList.setShareIdClose(i, c.getShareIdClose());
-            companyDetailList.setValueClose(i, c.getValueClose());
-            companyDetailList.setMaxValue(i, c.getMaxValue());
-            companyDetailList.setMinValue(i, c.getMinValue());
-            companyDetailList.setMinutesBefore(i, c.getMinutesBefore());
-            i++;
+    public ArrayList<CompanyDetailList> convertToCompanyDetailList(ArrayList<ArrayList<CompanyDetail>> companyDetails) {
+        ArrayList<CompanyDetailList> companiesDetails = new ArrayList<CompanyDetailList>();
+        for(int n=0; n<companyDetails.size(); n++){
+            CompanyDetailList companyDetailList = new CompanyDetailList(companyDetails.size());
+            companyDetailList.setNumUserShares(companyDetails.get(n).get(0).getNumUserShares());
+            companyDetailList.setCompanyId(companyDetails.get(n).get(0).getCompanyId());
+            companyDetailList.setCompanyName(companyDetails.get(n).get(0).getCompanyName());
+            int i = 0;
+            for (CompanyDetail c : companyDetails.get(n)) {
+                companyDetailList.setShareIdOpen(i, c.getShareIdOpen());
+                companyDetailList.setValueOpen(i, c.getValueOpen());
+                companyDetailList.setShareIdClose(i, c.getShareIdClose());
+                companyDetailList.setValueClose(i, c.getValueClose());
+                companyDetailList.setMaxValue(i, c.getMaxValue());
+                companyDetailList.setMinValue(i, c.getMinValue());
+                companyDetailList.setMinutesBefore(i, c.getMinutesBefore());
+                i++;
+            }
+            companiesDetails.add(companyDetailList);
         }
-        return companyDetailList;
+        return companiesDetails;
     }
 }

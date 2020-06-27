@@ -17,7 +17,7 @@ public class StockManager {
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareChange> sharesChange;
-    private ArrayList<CompanyDetail> companyDetails;
+    private ArrayList<ArrayList<CompanyDetail>> companyDetails;
     private UserDao userDao;
     private CompanyDao companyDao;
     private ShareDao shareDao;
@@ -230,26 +230,24 @@ public class StockManager {
     }
 
     /**
-     * Gets the company details from a user and company id
+     * Gets all the company details from a user
      *
      * @param userId    User identifier
-     * @param companyId Company identifier
      * @return a list of a company detail
      */
-    public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
-        companyDetails = companyDao.getCompanyDetails(userId, companyId);
+    public ArrayList<ArrayList<CompanyDetail>> getCompanyDetails(int userId) {
+        companyDetails = companyDao.getCompanyDetails(userId);
         return companyDetails;
     }
 
     /**
-     * Gets the sold shares from a user and company id
+     * Gets all the sold shares from a user
      *
      * @param userId    User identifier
-     * @param companyId Company identifier
      * @return a list of sold shares
      */
-    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
-        return shareDao.getSharesSell(userId, companyId);
+    public ArrayList<ArrayList<ShareSell>> getSharesSell(int userId) {
+        return shareDao.getSharesSell(userId);
     }
 }
 

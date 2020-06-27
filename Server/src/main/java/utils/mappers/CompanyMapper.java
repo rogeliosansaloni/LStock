@@ -41,12 +41,12 @@ public interface CompanyMapper {
      * @param companyDetailList CompanyDetailList data
      * @return a CompanyDetail ArrayList containing the information retrieved.
      */
-    ArrayList<CompanyDetail> converToCompanyDetails(CompanyDetailList companyDetailList);
+    ArrayList<ArrayList<CompanyDetail>> converToCompanyDetails(ArrayList<CompanyDetailList> companyDetailList);
 
     /**
      * Converts retrieved information into a CompanyDetailList
      * @param companyDetails CompanyDetail ArrayList
      * @return a CompanyDetailList object containing the information retrieved.
      */
-    CompanyDetailList convertToCompanyDetailList(ArrayList<CompanyDetail> companyDetails);
+    ArrayList<CompanyDetailList> convertToCompanyDetailList(ArrayList<ArrayList<CompanyDetail>> companyDetails);
 }

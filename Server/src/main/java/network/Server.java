@@ -150,10 +150,10 @@ public class Server extends Thread {
                 ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
 
                 // Get detail view info
-                ArrayList<CompanyDetail> companiesDetails = stockModel.getCompanyDetails(client.getLoggedUser(), companyId);
-                ArrayList<ShareSell> shares = stockModel.getSharesSell(client.getLoggedUser(), companyId);
-                CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companiesDetails);
-                ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
+                ArrayList<ArrayList<CompanyDetail>> companiesDetails = stockModel.getCompanyDetails(client.getLoggedUser());
+                ArrayList<ArrayList<ShareSell>> shares = stockModel.getSharesSell(client.getLoggedUser());
+                ArrayList<CompanyDetailList> companyDetailList = companyMapper.convertToCompanyDetailList(companiesDetails);
+                ArrayList<ShareSellList> shareSellList = shareMapper.convertToShareSellList(shares);
                 DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
 
                 ThreadChange change = new ThreadChange(companyChangeList, detailViewInfo, sharesChangeList);
