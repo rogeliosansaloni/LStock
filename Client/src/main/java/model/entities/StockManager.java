@@ -5,13 +5,18 @@ import java.util.ArrayList;
 public class StockManager {
     private User user;
     private ArrayList<CompanyDetail> companyDetails;
+    private ArrayList<ArrayList<CompanyDetail>> companyDetailsList;
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareSell> sharesSell;
+    private ArrayList<ArrayList<ShareSell>> sharesSellList;
     private ArrayList<ShareChange> sharesChange;
+    private int currentCompanyId;
 
 
     public StockManager(User user) {
         this.user = user;
+        companyDetailsList = new ArrayList<ArrayList<CompanyDetail>>();
+        sharesSellList = new ArrayList<ArrayList<ShareSell>>();
     }
 
     /**
@@ -143,6 +148,18 @@ public class StockManager {
         return sharesSell;
     }
 
+    public ArrayList<ArrayList<ShareSell>> getSharesSellList() {
+        return sharesSellList;
+    }
+
+    public int getCurrentCompanyId() {
+        return currentCompanyId;
+    }
+
+    public ArrayList<ArrayList<CompanyDetail>> getCompanyDetailsList() {
+        return companyDetailsList;
+    }
+
     /**
      * Setters
      **/
@@ -167,5 +184,7 @@ public class StockManager {
         this.user = user;
     }
 
-
+    public int setCurrentCompanyId(int id) {
+        return currentCompanyId;
+    }
 }
