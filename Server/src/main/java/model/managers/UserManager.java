@@ -28,7 +28,7 @@ public class UserManager {
      * @return Registered users
      */
     public String[][] getUserList(){
-        return userDao.getAllUserList();
+        return userDao.toUserList();
     }
 
     public ArrayList<User> getUsers(){
