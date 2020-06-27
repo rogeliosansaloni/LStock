@@ -5,7 +5,16 @@ import model.entities.User;
 import model.entities.UserProfileInfo;
 import utils.mappers.UserMapper;
 
+/**
+ * Implementation of UserMapper
+ */
 public class UserMapperImpl implements UserMapper {
+    /**
+     * Converts AuthenticationInfo DTO to User POJO
+     *
+     * @param authInfo authentication information
+     * @return User
+     */
     @Override
     public User authenticationInfoToUser(AuthenticationInfo authInfo) {
         User user = new User();
@@ -17,6 +26,12 @@ public class UserMapperImpl implements UserMapper {
         return user;
     }
 
+    /**
+     * Converts User POJO to AuthenticationInfo DTO
+     *
+     * @param user User
+     * @return AuthenticationInfo object
+     */
     @Override
     public AuthenticationInfo userToAuthenticationInfo(User user) {
         AuthenticationInfo auth = new AuthenticationInfo();
@@ -26,6 +41,12 @@ public class UserMapperImpl implements UserMapper {
         return auth;
     }
 
+    /**
+     * Converts UserProfieInfo DTO to User POJO
+     *
+     * @param userProfile UserProfile DTO
+     * @return User
+     */
     @Override
     public User userProfileInfoToUser(UserProfileInfo userProfile) {
         User user = new User();
@@ -35,10 +56,5 @@ public class UserMapperImpl implements UserMapper {
         user.setDescription(userProfile.getDescription());
         user.setTotalBalance(userProfile.getTotalBalance());
         return user;
-    }
-
-    @Override
-    public UserProfileInfo userToUserProfileInfo(User user) {
-        return null;
     }
 }

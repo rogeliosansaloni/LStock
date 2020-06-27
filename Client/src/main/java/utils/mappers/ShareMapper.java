@@ -4,6 +4,9 @@ import model.entities.*;
 
 import java.util.ArrayList;
 
+/**
+ * Mapper interface for Share
+ */
 public interface ShareMapper {
     User shareTradeToUser(ShareTrade shareTrade);
 

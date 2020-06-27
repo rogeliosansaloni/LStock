@@ -10,9 +10,13 @@ public class Share {
     private Company company;
     private int shareId;
 
-    public Share (){
-
-    }
+    public Share (){ }
+    /**
+     * @param price
+     * @param user
+     * @param company
+     * @param shareId
+     */
     public Share(float price, User user, Company company, int shareId){
         this.price = price;
         this.user = user;
@@ -20,10 +24,17 @@ public class Share {
         this.shareId = shareId;
     }
 
+    /**
+     * @return
+     */
     public float calculateTotalValue (){
         float value = 0;
         return value;
     }
+
+    /**
+     * Getters
+     **/
 
     public float getPrice() {
         return price;
@@ -33,13 +44,17 @@ public class Share {
         return shareId;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public Company getCompany() {
         return company;
     }
 
-    public User getUser() {
-        return user;
-    }
+    /**
+     * Setters
+     **/
 
     public void setPrice(float price) {
         this.price = price;

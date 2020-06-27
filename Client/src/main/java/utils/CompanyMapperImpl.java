@@ -5,7 +5,15 @@ import utils.mappers.CompanyMapper;
 
 import java.util.ArrayList;
 
+/**
+ * Implementation of CompanyMapper
+ */
 public class CompanyMapperImpl implements CompanyMapper {
+    /**
+     * Converts CompanyList DTO to a list of Companies
+     * @param companyList CompanyList DTO
+     * @return a list of Companies
+     */
     @Override
     public ArrayList<Company> convertToCompanies(CompanyList companyList) {
         ArrayList<Company> companies = new ArrayList<Company>();
@@ -20,6 +28,11 @@ public class CompanyMapperImpl implements CompanyMapper {
         return companies;
     }
 
+    /**
+     * Converts a list of Companies to CompanyList DTO
+     * @param companies a list of Companies
+     * @return CompanyList DTO
+     */
     @Override
     public CompanyList convertToCompanyList(ArrayList<Company> companies) {
         CompanyList companyList = new CompanyList(companies.size());
@@ -34,6 +47,11 @@ public class CompanyMapperImpl implements CompanyMapper {
         return companyList;
     }
 
+    /**
+     * Converts a CompanyChangeList DTO to a list of CompanyChange
+     * @param companyChangeList CompanyChangeList DTO
+     * @return a list of CompanyChange
+     */
     @Override
     public ArrayList<CompanyChange> convertToCompaniesChange(CompanyChangeList companyChangeList) {
         ArrayList<CompanyChange> companies = new ArrayList<CompanyChange>();
@@ -49,6 +67,11 @@ public class CompanyMapperImpl implements CompanyMapper {
         return companies;
     }
 
+    /**
+     * Converts a list of companies to CompanyChangeList DTO
+     * @param companiesChange a list of Companies
+     * @return CompanyChangeList DTO
+     */
     @Override
     public CompanyChangeList convertToCompanyChangeList(ArrayList<CompanyChange> companiesChange) {
         CompanyChangeList companyChangeList = new CompanyChangeList(companiesChange.size());

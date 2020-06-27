@@ -8,12 +8,19 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+/**
+ * The Company View
+ */
 
 public class CompanyView extends JPanel {
     private JScrollPane jpScroll;
     private JPanel jpTable;
     private JButton[][] jlCompanies;
     private StockColors color;
+
+    /**
+     * Creates and initializes the company view
+     */
 
     public CompanyView() {
         color = new StockColors();
