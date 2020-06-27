@@ -138,7 +138,7 @@ public class Company {
 
     /**
      * Remove bot from list of company bots
-     * @param index
+     * @param index index of the bot to be deleted
      */
     public void removeBot(int index) {
         bots.remove(index);
