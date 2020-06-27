@@ -97,6 +97,30 @@ public class UserDao {
         return message;
     }
 
+    /**
+     * Get user id from email or nickname
+     * @param user user
+     * @return user id. If it fails because of an SQLException, return -2. Else, return -1.
+     */
+    public int getUserId(User user) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() +
+                "%' OR email LIKE '%" + user.getEmail() + "%';");
+        try {
+            while (result.next()) {
+                if (result.getString("email").equals(user.getEmail()) && user.getPassword().equals(result.getObject("password"))) {
+                    return result.getInt("user_id");
+                } else {
+                    if (result.getString("nickname").equals(user.getNickname()) && user.getPassword().equals(result.getObject("password"))) {
+                        return result.getInt("user_id");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            return -2;
+        }
+        return -1;
+    }
+
 
     /**
      * Gets all registered users

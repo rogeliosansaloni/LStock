@@ -3,15 +3,22 @@ package network;
 import controller.BotsEditComboBoxController;
 import controller.BotsRemoveComboBoxController;
 import controller.MainController;
+import model.entities.*;
 import model.managers.BotManager;
 import model.managers.StockManager;
+import utils.CompanyMapperImpl;
 import utils.JSONReader;
+import utils.ShareMapperImpl;
 import view.MainView;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Server class
@@ -27,12 +34,17 @@ public class Server extends Thread {
     private MainController mainController;
     private BotManager botModel;
     private StockManager stockModel;
+    private TimerTask task;
+    private CompanyMapperImpl companyMapper;
+    private ShareMapperImpl shareMapper;
 
     public Server() throws IOException {
         initServerConfiguration();
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
         this.clients = new LinkedList<DedicatedServer>();
+        this.companyMapper = new CompanyMapperImpl();
+        this.shareMapper = new ShareMapperImpl();
     }
 
     /**
@@ -53,6 +65,7 @@ public class Server extends Thread {
         // Start main server thread
         isOn = true;
         this.start();
+        updateClients();
     }
 
     /**
@@ -63,6 +76,7 @@ public class Server extends Thread {
         isOn = false;
         stopListening();
         this.interrupt();
+        stopUpdatingClients();
     }
 
     /**
@@ -96,9 +110,6 @@ public class Server extends Thread {
                 // Create dedicated server to attend to the client
                 DedicatedServer client = new DedicatedServer(clientSocket, stockModel);
                 clients.add(client);
-                for (DedicatedServer c : clients) {
-                    c.setClients(clients);
-                }
                 System.out.println("Client has connected correctly!");
 
                 // Start dedicated server for the client
@@ -117,5 +128,65 @@ public class Server extends Thread {
         for (DedicatedServer client : clients) {
             client.stopServerConnection();
         }
+    }
+
+    /**
+     * Updates clients
+     *
+     * @throws IOException
+     */
+    public void updateAllClients() throws IOException {
+        for (DedicatedServer client : clients) {
+            ObjectOutputStream oosClient = null;
+            if (isOn) {
+                oosClient = client.getOos();
+
+                // Get company change list
+                ArrayList<CompanyChange> companies = stockModel.getCompaniesChange();
+                CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
+
+                // Get share change list
+                ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(client.getLoggedUser());
+                ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
+
+                // Get detail view info
+                ArrayList<CompanyDetail> companiesDetails = stockModel.getCompanyDetails(client.getLoggedUser(), companyId);
+                ArrayList<ShareSell> shares = stockModel.getSharesSell(client.getLoggedUser(), companyId);
+                CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companiesDetails);
+                ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
+                DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
+
+                ThreadChange change = new ThreadChange(companyChangeList, detailViewInfo, sharesChangeList);
+
+                if (oosClient != null) {
+                    oosClient.writeObject(change);
+                }
+            }
+        }
+    }
+
+    /**
+     * Triggers updateAllClients every second
+     */
+    private void updateClients() {
+        Timer timer = new Timer();
+        this.task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    updateAllClients();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        timer.schedule(this.task, 0, 1000);
+    }
+
+    /**
+     * Stops updating all clients automatically
+     */
+    private void stopUpdatingClients() {
+        this.task.cancel();
     }
 }

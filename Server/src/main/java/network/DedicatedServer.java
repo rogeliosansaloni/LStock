@@ -12,9 +12,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Dedicated server class
@@ -28,8 +25,7 @@ public class DedicatedServer extends Thread {
     private UserMapperImpl mapper;
     private CompanyMapperImpl companyMapper;
     private ShareMapperImpl shareMapper;
-    private LinkedList<DedicatedServer> clients;
-    private TimerTask task;
+    private int loggedUser;
 
     /**
      * DedicatedServer constructor
@@ -42,6 +38,7 @@ public class DedicatedServer extends Thread {
         this.mapper = new UserMapperImpl();
         this.companyMapper = new CompanyMapperImpl();
         this.shareMapper = new ShareMapperImpl();
+        this.loggedUser = -1;
     }
 
     /**
@@ -50,7 +47,6 @@ public class DedicatedServer extends Thread {
     public void stopServerConnection() {
         this.isOn = false;
         this.interrupt();
-        stopUpdatingClients();
     }
 
     /**
@@ -59,7 +55,6 @@ public class DedicatedServer extends Thread {
     public void startServerConnection() {
         this.isOn = true;
         this.start();
-        updateClients();
     }
 
     /**
@@ -86,6 +81,9 @@ public class DedicatedServer extends Thread {
                         // Check if we need user validation for login
                         if (info.getAction().equals("login")) {
                             AuthenticationInfo authInfoLogin = stockModel.validateUser(user);
+                            if (authInfoLogin.isValidated()) {
+                                loggedUser = authInfoLogin.getId();
+                            }
                             oos.writeObject(authInfoLogin);
                         }
                     }
@@ -113,7 +111,6 @@ public class DedicatedServer extends Thread {
                     Company company = shareMapper.shareTradeToCompany(shareTrade);
                     ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchases, shareTrade.getActionToDo(), shareTrade.getView());
                     oos.writeObject(share);
-                    //updateAllClients();
                 }
 
                 if (tunnelObject instanceof CompanyList) {
@@ -162,7 +159,6 @@ public class DedicatedServer extends Thread {
         }
     }
 
-
     /**
      * Gets the object output stream
      *
@@ -172,72 +168,7 @@ public class DedicatedServer extends Thread {
         return oos;
     }
 
-    /**
-     * Set clients
-     *
-     * @param clients List of clientes connections
-     */
-    public void setClients(LinkedList<DedicatedServer> clients) {
-        this.clients = clients;
-    }
-
-    /**
-     * Updates clients
-     *
-     * @throws IOException
-     */
-    public void updateAllClients() throws IOException {
-        for (DedicatedServer client : clients) {
-            ObjectOutputStream oosClient = null;
-            if (client.isOn) {
-                oosClient = client.getOos();
-
-                // Get company change list
-                ArrayList<CompanyChange> companies = stockModel.getCompaniesChange();
-                CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
-
-                // Get share change list
-                ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(stockModel.getLoggedUser());
-                ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
-
-                // Get detail view info
-                ArrayList<CompanyDetail> companiesDetails = stockModel.getCompanyDetails(stockModel.getLoggedUser(), companyId);
-                ArrayList<ShareSell> shares = stockModel.getSharesSell(stockModel.getLoggedUser(), companyId);
-                CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companiesDetails);
-                ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
-                DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
-
-                ThreadChange change = new ThreadChange(companyChangeList, detailViewInfo, sharesChangeList);
-
-                if (oosClient != null) {
-                    oosClient.writeObject(change);
-                }
-            }
-        }
-    }
-
-    /**
-     * Triggers updateAllClients every second
-     */
-    private void updateClients() {
-        Timer timer = new Timer();
-        this.task = new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    updateAllClients();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        timer.schedule(this.task, 0, 1000);
-    }
-
-    /**
-     * Stops updating all clients automatically
-     */
-    private void stopUpdatingClients() {
-        this.task.cancel();
+    public int getLoggedUser() {
+        return loggedUser;
     }
 }
