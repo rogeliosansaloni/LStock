@@ -11,7 +11,7 @@ import utils.UserMapperImpl;
 import java.util.ArrayList;
 
 /**
- * Stock manager class
+ * Represents the manager that control all transactions and stock operations
  */
 public class StockManager {
     private ArrayList<Company> companies;
@@ -38,7 +38,7 @@ public class StockManager {
     }
 
     /**
-     * Function that registers a user if the conditions are met
+     * Registers a user if the conditions are met
      *
      * @param user the user
      * @return Authentification with the information we need to send for the client

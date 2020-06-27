@@ -4,17 +4,16 @@ import database.DBConnector;
 import database.UserDao;
 
 /**
- * User manager class
+ * Represents the manager that controls the user operations
  */
 public class UserManager {
-    private DBConnector connector;
     private UserDao userDao;
 
     /**
      * Constructor for the user manager
      */
     public UserManager() {
-        connector = new DBConnector();
+        DBConnector connector = new DBConnector();
         userDao = new UserDao(connector);
         connector.connect();
     }
