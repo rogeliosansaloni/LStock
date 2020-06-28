@@ -26,6 +26,12 @@ git clone https://atlassian.salle.url.edu:7943/scm/dpoo/dpoo-stock-c2.git
 
 Primero ejecutamos el servidor y después el cliente. Podemos ejecutar diferentes instancias del cliente pero solo puede haber una instancia del servidor arrancado.
 
+## Aviso
+
+Hay que tener cuidado con el número de acciones que se insieren en la base de datos. A partir de un cierto número elevado de tuplas en la tabla Share (unas 300 aproximadamente), 
+las queries que se usan para extraer la información comienzan a ralentizarse bastante y el programa funciona más lentamente. Por ello es recomendable no tener muchos bots activados a la vez,
+y que estos no se activen muy seguidamente.
+
 ## Autores
 Mary Grace Adina - marygrace.adina<br/>
 Claudia Alonso Carrasco - claudia.alonso<br/>
