@@ -22,9 +22,28 @@ git clone https://atlassian.salle.url.edu:7943/scm/dpoo/dpoo-stock-c2.git
 6. En caso de que no esté configurado correctamente el soporte al framework Maven, hacer clic derecho en cada módulo > Add Framework Support... > Maven. Detectará el fichero pom.xml para la configuración Maven.
 7. Si IntelliJ muestre un mensaje sobre la importación automática de dependencias, hacer clic a Enable auto-import.
 
+## Conexión BBDD
+
+1. Asignar tu IP publico:
+	
+	1.Columna de izquierda, Security Groups
+	2.Edit Rules
+	3. Añadir tu IP en (SSH, MySQL/Aurora,HTTPS)
+2. Connectar a AWS
+
+	1. Acceder desde : https://438369310031.signin.aws.amazon.com/console
+	2. Usar tus credenciales de AWS (pedir accesso: nicolemarie.jimenez@students.salle.url.edu).
+	3. Region: eu-west-3 / Paris
+	4. EC2
+	5. Instances > DPOO-C2 StockLS DDBB > Actions > Instance State > Start
+	6. Una vez terminado lo que se tiene que hacer, apagar el servidor.
+
+
 ## Uso
 
-Primero ejecutamos el servidor y después el cliente. Podemos ejecutar diferentes instancias del cliente pero solo puede haber una instancia del servidor arrancado.
+1.Ejecutar el script MySql
+2.Primero ejecutamos el servidor y después el cliente.
+  -Podemos ejecutar diferentes instancias del cliente pero solo puede haber una instancia del servidor arrancado.
 
 ## Autores
 Mary Grace Adina - marygrace.adina<br/>
