@@ -101,7 +101,7 @@ public class Server extends Thread {
                 Socket clientSocket = sSocket.accept();
 
                 // Create dedicated server to attend to the client
-                DedicatedServer client = new DedicatedServer(clientSocket,stockModel);
+                DedicatedServer client = new DedicatedServer(clientSocket, stockModel);
                 clients.add(client);
                 System.out.println("Client has connected correctly!");
 
