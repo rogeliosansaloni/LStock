@@ -18,6 +18,7 @@ public class StockManager {
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareChange> sharesChange;
     private ArrayList<CompanyDetail> companyDetails;
+    private ArrayList<ArrayList<CompanyDetail>> companyDetailsList;
     private UserDao userDao;
     private CompanyDao companyDao;
     private ShareDao shareDao;
@@ -38,7 +39,21 @@ public class StockManager {
     }
 
     /**
-     * Registers a user if the conditions are met
+     * Constructor for a StockManager
+     *
+     * @param userDao Dao for the User Table
+     * @param companyDao Dao for the Company Table
+     */
+    public StockManager(UserDao userDao, CompanyDao companyDao) {
+        this.userDao = userDao;
+        this.companyDao = companyDao;
+        this.companies = new ArrayList<Company>();
+        this.companiesChange = new ArrayList<CompanyChange>();
+        this.sharesChange = new ArrayList<ShareChange>();
+    }
+
+    /**
+     * Function that registers a user if the conditions are met
      *
      * @param user the user
      * @return Authentification with the information we need to send for the client
@@ -112,6 +127,17 @@ public class StockManager {
         UserProfileInfo info = mapper.userToUserProfileInfo(user);
         info.setAction("profileView");
         return info;
+    }
+
+    /**
+     * Gets all the info of the user.
+     *
+     * @param user_id the user_id
+     * @return User the information of the user
+     */
+    public User getAllUserInfo(int user_id) {
+        User user = userDao.getAllUserInfo(user_id);
+        return user;
     }
 
     /**
@@ -230,10 +256,10 @@ public class StockManager {
     }
 
     /**
-     * Gets the company details from a user and company id
+     * Gets the company details from a user and a certain comapany
      *
      * @param userId    User identifier
-     * @param companyId Company identifier
+     * @param companyId Company Identifier
      * @return a list of a company detail
      */
     public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
@@ -242,14 +268,35 @@ public class StockManager {
     }
 
     /**
-     * Gets the sold shares from a user and company id
+     * Gets the sold shares from a user and a certain comapany
      *
      * @param userId    User identifier
-     * @param companyId Company identifier
-     * @return a list of sold shares
+     * @param companyId Company Identifier
+     * @return a list of a company detail
      */
     public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
         return shareDao.getSharesSell(userId, companyId);
+    }
+
+    /**
+     * Gets all the company details from a user
+     *
+     * @param userId    User identifier
+     * @return a list of a company detail
+     */
+    public ArrayList<ArrayList<CompanyDetail>> getCompanyDetailsUpdate(int userId) {
+        companyDetailsList = companyDao.getCompanyDetailsUpdate(userId);
+        return companyDetailsList;
+    }
+
+    /**
+     * Gets all the sold shares from a user
+     *
+     * @param userId    User identifier
+     * @return a list of sold shares
+     */
+    public ArrayList<ArrayList<ShareSell>> getSharesSellUpdate(int userId) {
+        return shareDao.getSharesSellUpdate(userId);
     }
 }
 

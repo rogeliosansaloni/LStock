@@ -86,7 +86,7 @@ public class RegisterView extends JFrame {
         jpRegister.add(jpNorth, BorderLayout.NORTH);
 
         //We create a center panel for the form and the buttons
-        jpCenter = new JPanel();
+        JPanel jpCenter = new JPanel();
         jpCenter = new JPanel(new GridLayout(6, 1, 0, 15));
         jpCenter.setBackground(Color.WHITE);
 

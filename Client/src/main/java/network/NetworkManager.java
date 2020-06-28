@@ -290,10 +290,9 @@ public class NetworkManager extends Thread {
                     mainController.updateModel(model);
                     mainController.updateShareView();
                 }
-                
+
                 if (received instanceof ThreadChange) {
-                    ((ThreadChange) received).asdf();
-                    if(mainView != null){
+                    if (mainView != null) {
                         mainController.sendCompaniesChange();
                         mainController.sendUserProfileInfo();
                         mainController.sendSharesChange();
@@ -302,7 +301,6 @@ public class NetworkManager extends Thread {
                         }
                     }
                 }
-
             } catch (IOException | ClassNotFoundException e) {
                 running = false;
                 try {

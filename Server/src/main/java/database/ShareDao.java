@@ -69,16 +69,13 @@ public class ShareDao {
     }
 
     /**
-     * Gets a list of sold shares of a user and company
+     * Gets a list of sold shares of a user and a company
      * @param userId user identifier
      * @param companyId company identifier
      * @return list of shares sold
      */
     public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
-        final String selectQuery = "CALL getSharesSell(%d, %d);";
-        final String errorMessage = "Error getting shares sell";
-
-        ResultSet retrieved = dbConnector.selectQuery(String.format(Locale.US, selectQuery, userId, companyId));
+        ResultSet retrieved = dbConnector.selectQuery("CALL getSharesSell(" + userId + "," + companyId + ");");
         ArrayList<ShareSell> shares = null;
         try {
             shares = new ArrayList<ShareSell>();
@@ -86,9 +83,47 @@ public class ShareDao {
                 shares.add(toShareSell(retrieved));
             }
         } catch (SQLException e) {
-            System.out.println(errorMessage);
+            System.out.println("Error getting shares sell");
         }
         return shares;
+    }
+
+
+    /**
+     * Gets a list of sold shares of a user and all the companies
+     * @param userId user identifier
+     * @return list of shares sold
+     */
+    public ArrayList<ArrayList<ShareSell>> getSharesSellUpdate(int userId) {
+        final String selectQuery = "CALL getSharesSell(%d, %d);";
+        final String errorMessage = "Error getting shares sell";
+        final String getNumCompanies = "SELECT COUNT(c.company_id) as numCompanies FROM Company as c;";
+
+        ResultSet retrievedNumCompanies = dbConnector.selectQuery(getNumCompanies);
+        int numCompanies = 0;
+        try{
+            retrievedNumCompanies.next();
+            numCompanies = retrievedNumCompanies.getInt("numCompanies");
+        }catch (SQLException e){
+            System.out.println("Error getting the number of companies.");
+        }
+        ArrayList<ArrayList<ShareSell>> companiesSharesSells = new ArrayList<ArrayList<ShareSell>>();
+
+        for(int i=1; i<numCompanies+1; i++){
+            int companyId = i;
+            ResultSet retrieved = dbConnector.selectQuery(String.format(Locale.US, selectQuery, userId, companyId));
+            ArrayList<ShareSell> shares = null;
+            try {
+                shares = new ArrayList<ShareSell>();
+                while (retrieved.next()) {
+                    shares.add(toShareSell(retrieved));
+                }
+            } catch (SQLException e) {
+                System.out.println(errorMessage);
+            }
+            companiesSharesSells.add(shares);
+        }
+        return companiesSharesSells;
     }
 
     /**

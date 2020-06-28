@@ -87,6 +87,7 @@ public class BotsRemoveController implements ActionListener {
             case REMOVE:
                 int botId = mainView.getBotsRemoveView().getBotId();
                 Bot botToBeDeleted = model.getBot(botId);
+                model.configureBot(botId, "DISABLE");
                 if (model.deleteBot(botId)) {
                     view.showMessages(String.format(SUCCESS_MESSAGE, botId));
                     model.removeBotFromCompany(botToBeDeleted);

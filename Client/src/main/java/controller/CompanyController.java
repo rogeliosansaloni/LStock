@@ -37,6 +37,7 @@ public class CompanyController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         int companyId = Integer.parseInt(e.getActionCommand());
+        model.setCurrentCompanyId(companyId);
         sendUserShares(companyId);
         mainView.updateView(CARD_COMPANYDETAILS);
     }

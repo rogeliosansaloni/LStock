@@ -97,6 +97,54 @@ public class UserDao {
         return message;
     }
 
+    /**
+     * Get user id from email or nickname
+     * @param user user
+     * @return user id. If it fails because of an SQLException, return -2. Else, return -1.
+     */
+    public int getUserId(User user) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() +
+                "%' OR email LIKE '%" + user.getEmail() + "%';");
+        try {
+            while (result.next()) {
+                if (result.getString("email").equals(user.getEmail()) && user.getPassword().equals(result.getObject("password"))) {
+                    return result.getInt("user_id");
+                } else {
+                    if (result.getString("nickname").equals(user.getNickname()) && user.getPassword().equals(result.getObject("password"))) {
+                        return result.getInt("user_id");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            return -2;
+        }
+        return -1;
+    }
+
+    /**
+     * Gets all the information from a user
+     * @param user_id the user id
+     * @return User
+     */
+    public User getAllUserInfo(int user_id) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user_id + ";");
+        User user = new User();
+        try {
+            while (result.next()) {
+                user.setUserId(result.getInt("user_id"));
+                user.setNickname(result.getObject("nickname").toString());
+                user.setEmail(result.getObject("email").toString());
+                if(result.getObject("description") != null){
+                    user.setDescription(result.getObject("description").toString());
+                }
+                user.setTotalBalance(result.getFloat("total_balance"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting all the user information");
+        }
+        return user;
+    }
+
 
     /**
      * Gets all registered users

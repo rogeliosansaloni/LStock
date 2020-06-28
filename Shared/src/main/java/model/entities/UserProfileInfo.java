@@ -3,6 +3,8 @@ package model.entities;
 /**
  * Represents the DTO that contains user details for profile page
  */
+
+
 public class UserProfileInfo extends TunnelObject {
     private int userId;
     private String nickname;
@@ -23,6 +25,14 @@ public class UserProfileInfo extends TunnelObject {
     public UserProfileInfo(int userId, String action) {
         this.userId = userId;
         this.action = action;
+    }
+
+    public UserProfileInfo(int userId, String nickname, String email, String description, float totalBalance) {
+        this.userId = userId;
+        this.nickname = nickname;
+        this.email = email;
+        this.description = description;
+        this.totalBalance = totalBalance;
     }
 
     public int getUserId() {
