@@ -1,4 +1,5 @@
 
+-- list of procedures used in the intellij's code
 USE stock_c2;
 
 DELIMITER $$
