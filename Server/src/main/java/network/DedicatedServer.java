@@ -142,7 +142,6 @@ public class DedicatedServer extends Thread {
                     ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
                     oos.writeObject(sharesChangeList);
                 }
-
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
