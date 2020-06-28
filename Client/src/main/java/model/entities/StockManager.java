@@ -2,6 +2,9 @@ package model.entities;
 
 import java.util.ArrayList;
 
+/**
+ * Manager for the main information of stocks from the server
+ */
 public class StockManager {
     private User user;
     private ArrayList<CompanyDetail> companyDetails;
@@ -12,7 +15,10 @@ public class StockManager {
     private ArrayList<ShareChange> sharesChange;
     private int currentCompanyId;
 
-
+    /**
+     * Creates the manager
+     * @param user user
+     */
     public StockManager(User user) {
         this.user = user;
         companyDetailsList = new ArrayList<ArrayList<CompanyDetail>>();
@@ -86,13 +92,6 @@ public class StockManager {
         float totalPurchase = quantityShares * getCurrentShareValue();
         float userBalance = user.getTotalBalance() - totalPurchase;
         return userBalance;
-    }
-
-    /**
-     * Updates the user balance
-     */
-    public void updateUserBalance(float newBalance) {
-        this.user.setTotalBalance(newBalance);
     }
 
     /**
