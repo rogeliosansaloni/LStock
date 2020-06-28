@@ -15,9 +15,11 @@ public class BotMenuController implements ActionListener {
     private static final String CARD_LIST = "Bots";
     private MainView view;
     private MainController mainController;
+
     /**
      * Creates and initializes the controller
-     * @param view main view for Client
+     *
+     * @param view           main view for Client
      * @param mainController main controller for Client views
      */
     public BotMenuController(MainController mainController, MainView view) {

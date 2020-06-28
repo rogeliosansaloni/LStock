@@ -25,9 +25,10 @@ public class BotsRemoveController implements ActionListener {
 
     /**
      * Creates and initializes the controller
-     * @param view MainView to be able to return to Bots Menu view
+     *
+     * @param view     MainView to be able to return to Bots Menu view
      * @param mainView the main view for Client
-     * @param model BotManager
+     * @param model    BotManager
      */
     public BotsRemoveController(BotsRemoveView view, MainView mainView, BotManager model) {
         this.view = view;
@@ -47,6 +48,7 @@ public class BotsRemoveController implements ActionListener {
 
     /**
      * Gets the company id of the selected company name from the combobox
+     *
      * @return id of the company
      */
     private int getSelectedCompanyId() {
@@ -56,12 +58,13 @@ public class BotsRemoveController implements ActionListener {
 
     /**
      * Get the company from a list of companies by id
+     *
      * @param companies list of companies
-     * @param id id of the company
+     * @param id        id of the company
      * @return company
      */
     private Company getCompany(ArrayList<Company> companies, int id) {
-        for(Company c : companies) {
+        for (Company c : companies) {
             if (c.getCompanyId() == id) {
                 return c;
             }
@@ -71,6 +74,7 @@ public class BotsRemoveController implements ActionListener {
 
     /**
      * Get the bots of the selected company
+     *
      * @return bots of the company
      */
     private ArrayList<Bot> getInitBots() {
@@ -79,10 +83,11 @@ public class BotsRemoveController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch(e.getActionCommand()) {
+        switch (e.getActionCommand()) {
             case REMOVE:
                 int botId = mainView.getBotsRemoveView().getBotId();
                 Bot botToBeDeleted = model.getBot(botId);
+                model.configureBot(botId, "DISABLE");
                 if (model.deleteBot(botId)) {
                     view.showMessages(String.format(SUCCESS_MESSAGE, botId));
                     model.removeBotFromCompany(botToBeDeleted);

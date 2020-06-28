@@ -43,6 +43,7 @@ public class RegisterView extends JFrame {
     private JButton jbLogin;
     private JButton jbRegister;
     private StockColors color;
+    private JPanel jpCenter;
 
     /**
      * Creates and initializes the register view
@@ -84,7 +85,7 @@ public class RegisterView extends JFrame {
         jpNorth.setBorder(BorderFactory.createEmptyBorder(40, 0, 35, 0));
         jpRegister.add(jpNorth, BorderLayout.NORTH);
 
-        //We create a center panel for the form and the bottons
+        //We create a center panel for the form and the buttons
         JPanel jpCenter = new JPanel();
         jpCenter = new JPanel(new GridLayout(6, 1, 0, 15));
         jpCenter.setBackground(Color.WHITE);
@@ -179,7 +180,7 @@ public class RegisterView extends JFrame {
     }
 
     /**
-     * Gets a specific JTextFrield
+     * Gets a specific JTextField
      *
      * @param i id of the JTextField
      * @return Jtextfield

@@ -22,9 +22,25 @@ git clone https://atlassian.salle.url.edu:7943/scm/dpoo/dpoo-stock-c2.git
 6. En caso de que no esté configurado correctamente el soporte al framework Maven, hacer clic derecho en cada módulo > Add Framework Support... > Maven. Detectará el fichero pom.xml para la configuración Maven.
 7. Si IntelliJ muestre un mensaje sobre la importación automática de dependencias, hacer clic a Enable auto-import.
 
+## Conexión BBDD
+
+Hay dos maneras para la conexión a la base de datos
+1. Conexión a la base de datos en remoto. Tenemos una base de datos en AWS. Para usar esta base de datos, deberéis avisarnos y os daremos acceso. Además para que podamos arrancar el
+servidor donde se encuentra MySQL.
+2. Conexión a la base de datos en local. Al ejecutar el script de MySQL en local, hay que cambiar también las credenciales de la base de datos especificadas en config.json.
+
+
 ## Uso
 
-Primero ejecutamos el servidor y después el cliente. Podemos ejecutar diferentes instancias del cliente pero solo puede haber una instancia del servidor arrancado.
+1.Ejecutar el script MySQL y la creación de las procedures.
+2.Primero ejecutamos el servidor y después el cliente.
+  -Podemos ejecutar diferentes instancias del cliente pero solo puede haber una instancia del servidor arrancado.
+
+## Aviso
+
+Hay que tener cuidado con el número de acciones que se insieren en la base de datos. A partir de un cierto número elevado de tuplas en la tabla Share (unas 300 aproximadamente), 
+las queries que se usan para extraer la información comienzan a ralentizarse bastante y el programa funciona más lentamente. Por ello es recomendable no tener muchos bots activados a la vez,
+y que estos no se activen muy seguidamente.
 
 ## Autores
 Mary Grace Adina - marygrace.adina<br/>

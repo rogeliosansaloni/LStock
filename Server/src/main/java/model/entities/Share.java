@@ -9,18 +9,11 @@ public class Share {
     private int idShare;
     private float price;
 
-    public Share(User user, Company company, float price) {
-        this.user = user;
-        this.company = company;
-        this.price = price;
-    }
-
+    /**
+     * Empty constructor of Share
+     */
     public Share() {
 
-    }
-
-    public float calculteTotalValue() {
-        return 1;
     }
 
     /**

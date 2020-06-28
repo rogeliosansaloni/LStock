@@ -1,15 +1,29 @@
 package model.entities;
 
+/**
+ * Purchase class
+ */
 public class Purchase {
     private int userId;
     private int companyId;
     private int shareId;
     private int shareQuantity;
 
-    public Purchase(){
+    /**
+     * Empty constructor of Purchase
+     */
+    public Purchase() {
 
     }
 
+    /**
+     * Constructor of Purchase
+     *
+     * @param userId        User identifier
+     * @param companyId     Company identifier
+     * @param shareId       Share identifier
+     * @param shareQuantity Quantity share
+     */
     public Purchase(int userId, int companyId, int shareId, int shareQuantity) {
         this.userId = userId;
         this.companyId = companyId;
@@ -17,6 +31,9 @@ public class Purchase {
         this.shareQuantity = shareQuantity;
     }
 
+    /**
+     * Getters and setters
+     */
     public int getUserId() {
         return userId;
     }

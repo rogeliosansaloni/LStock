@@ -11,7 +11,7 @@ public class ShareMapperImpl implements ShareMapper {
     public Purchase[] shareTradeToPurchase(ShareTrade shareTrade) {
         int numPurchases = shareTrade.getShareId().length;
         Purchase[] purchases = new Purchase[numPurchases];
-        for(int i=0; i<numPurchases; i++){
+        for (int i = 0; i < numPurchases; i++) {
             purchases[i] = new Purchase();
             purchases[i].setUserId(shareTrade.getUserId());
             purchases[i].setCompanyId(shareTrade.getCompanyId());
@@ -30,15 +30,15 @@ public class ShareMapperImpl implements ShareMapper {
     }
 
     @Override
-    public ShareTrade userToShareTrade (User user) {
+    public ShareTrade userToShareTrade(User user) {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setUserId(user.getUserId());
         shareTrade.setTotalBalance(user.getTotalBalance());
-        return  shareTrade;
+        return shareTrade;
     }
 
     @Override
-    public Company shareTradeToCompany (ShareTrade shareTrade) {
+    public Company shareTradeToCompany(ShareTrade shareTrade) {
         Company company = new Company();
         company.setCompanyId(shareTrade.getCompanyId());
         company.setValue(shareTrade.getSharePrice()[0]);
@@ -46,14 +46,14 @@ public class ShareMapperImpl implements ShareMapper {
     }
 
     @Override
-    public ShareTrade companyToShareTrade (Company company) {
+    public ShareTrade companyToShareTrade(Company company) {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setCompanyId(company.getCompanyId());
         return shareTrade;
     }
 
     @Override
-    public ShareTrade userCompanyToShareTrade (User user, Company company) {
+    public ShareTrade userCompanyToShareTrade(User user, Company company) {
         ShareTrade shareTrade = new ShareTrade();
         shareTrade.setUserId(user.getUserId());
         shareTrade.setTotalBalance(user.getTotalBalance());
@@ -61,6 +61,33 @@ public class ShareMapperImpl implements ShareMapper {
         return shareTrade;
     }
 
+    /**
+     * Converts SharesSellList DTO to a list of ShareSell
+     * @param shareSellList SharesSellList DTO
+     * @return a list of SharesSell
+     */
+    @Override
+    public ArrayList<ArrayList<ShareSell>> converToSharesSellUpdate(ArrayList<ShareSellList> shareSellList) {
+        ArrayList<ArrayList<ShareSell>> sharesSells = new ArrayList<ArrayList<ShareSell>>();
+        for(int n=0; n< shareSellList.size(); n++){
+            ArrayList<ShareSell> shares = new ArrayList<ShareSell>();
+            int sharesLen = shareSellList.get(n).getShareQuantity().length;
+            int[] shareId = shareSellList.get(n).getShareId();
+            float[] sharesValue = shareSellList.get(n).getShareValue();
+            int[] sharesQuantity = shareSellList.get(n).getShareQuantity();
+            for (int i = 0; i < sharesLen; i++) {
+                shares.add(new ShareSell(shareId[i], sharesValue[i], sharesQuantity[i]));
+            }
+            sharesSells.add(shares);
+        }
+        return sharesSells;
+    }
+
+    /**
+     * Converts SharesSellList DTO to a list of ShareSell
+     * @param shareSellList SharesSellList DTO
+     * @return a list of SharesSell
+     */
     @Override
     public ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList) {
         ArrayList<ShareSell> sharesSell = new ArrayList<ShareSell>();
@@ -74,6 +101,7 @@ public class ShareMapperImpl implements ShareMapper {
         return sharesSell;
     }
 
+
     @Override
     public ShareSellList convertToShareSellList(ArrayList<ShareSell> shareSells) {
         ShareSellList shareSellList = new ShareSellList(shareSells.size());
@@ -85,6 +113,24 @@ public class ShareMapperImpl implements ShareMapper {
             i++;
         }
         return shareSellList;
+    }
+
+
+    @Override
+    public ArrayList<ShareSellList> convertToShareSellListUpdate(ArrayList<ArrayList<ShareSell>> shareSells) {
+        ArrayList<ShareSellList> sharesSells = new ArrayList<ShareSellList>();
+        for(int n=0; n<shareSells.size(); n++){
+            ShareSellList shareSellList = new ShareSellList(shareSells.size());
+            int i = 0;
+            for (ShareSell s : shareSells.get(n)) {
+                shareSellList.setShareId(i, s.getShareId());
+                shareSellList.setShareValue(i, s.getShareValue());
+                shareSellList.setShareQuantity(i, s.getShareQuantity());
+                i++;
+            }
+            sharesSells.add(shareSellList);
+        }
+        return sharesSells;
     }
 
     @Override
@@ -108,7 +154,7 @@ public class ShareMapperImpl implements ShareMapper {
     @Override
     public ShareChangeList convertToShareChangeList(ArrayList<ShareChange> sharesChange) {
         ShareChangeList shareChangeList = new ShareChangeList(sharesChange.size());
-        if(sharesChange.size() > 0){
+        if (sharesChange.size() > 0) {
             shareChangeList.setUserId(sharesChange.get(0).getUserId());
             int i = 0;
             for (ShareChange s : sharesChange) {

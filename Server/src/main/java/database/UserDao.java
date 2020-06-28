@@ -10,9 +10,12 @@ import model.entities.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Locale;
 
+/**
+ * Represents the User DAO
+ */
 public class UserDao {
-
     private DBConnector dbConnector;
     private static final String REGISTER_MESSAGE_1 = "Register Success";
     private static final String REGISTER_MESSAGE_2 = "Email Taken";
@@ -55,7 +58,7 @@ public class UserDao {
                 }
             }
             if (message.equals(REGISTER_MESSAGE_1)) {
-                dbConnector.insertQuery(String.format(insertQuery, user.getNickname(), user.getEmail(), user.getPassword()));
+                dbConnector.insertQuery(String.format(Locale.US, insertQuery, user.getNickname(), user.getEmail(), user.getPassword()));
             }
         } catch (SQLException e) {
             message = REGISTER_MESSAGE_4;
@@ -92,6 +95,54 @@ public class UserDao {
             message = LOGIN_MESSAGE_2;
         }
         return message;
+    }
+
+    /**
+     * Get user id from email or nickname
+     * @param user user
+     * @return user id. If it fails because of an SQLException, return -2. Else, return -1.
+     */
+    public int getUserId(User user) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE nickname LIKE '%" + user.getNickname() +
+                "%' OR email LIKE '%" + user.getEmail() + "%';");
+        try {
+            while (result.next()) {
+                if (result.getString("email").equals(user.getEmail()) && user.getPassword().equals(result.getObject("password"))) {
+                    return result.getInt("user_id");
+                } else {
+                    if (result.getString("nickname").equals(user.getNickname()) && user.getPassword().equals(result.getObject("password"))) {
+                        return result.getInt("user_id");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            return -2;
+        }
+        return -1;
+    }
+
+    /**
+     * Gets all the information from a user
+     * @param user_id the user id
+     * @return User
+     */
+    public User getAllUserInfo(int user_id) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user_id + ";");
+        User user = new User();
+        try {
+            while (result.next()) {
+                user.setUserId(result.getInt("user_id"));
+                user.setNickname(result.getObject("nickname").toString());
+                user.setEmail(result.getObject("email").toString());
+                if(result.getObject("description") != null){
+                    user.setDescription(result.getObject("description").toString());
+                }
+                user.setTotalBalance(result.getFloat("total_balance"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting all the user information");
+        }
+        return user;
     }
 
 
@@ -166,7 +217,7 @@ public class UserDao {
      */
     public void updateUserBalance(User user) {
         final String procedure = "CALL updateUserBalance(%d, %f);";
-        dbConnector.callProcedure(String.format(procedure, user.getUserId(), user.getTotalBalance()));
+        dbConnector.callProcedure(String.format(Locale.US, procedure, user.getUserId(), user.getTotalBalance()));
     }
 
     /**
@@ -178,12 +229,12 @@ public class UserDao {
         final String selectQuery = "SELECT * FROM User WHERE user_id = %d;";
         final String updateQuery = "UPDATE User SET total_balance = '%f' WHERE user_id = %d;";
 
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 if (result.getInt("user_id") == user.getUserId()) {
                     float totalAmount = result.getFloat("total_balance") + user.getTotalBalance();
-                    dbConnector.updateQuery(String.format(updateQuery, totalAmount, user.getUserId()));
+                    dbConnector.updateQuery(String.format(Locale.US, updateQuery, totalAmount, user.getUserId()));
                     user.setTotalBalance(totalAmount);
                 }
             }
@@ -200,7 +251,7 @@ public class UserDao {
     public void getUserProfileInfo(User user) {
         final String selectQuery = "CALL getUserProfileInfo(%d);";
 
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 user.setNickname(result.getString("nickname"));
@@ -221,11 +272,11 @@ public class UserDao {
         final String selectQuery = "SELECT * FROM User WHERE user_id = %d;";
         final String updateQuery = "UPDATE User SET description = '%s' WHERE user_id = %d;";
 
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, user.getUserId()));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, user.getUserId()));
         try {
             while (result.next()) {
                 if (result.getInt("user_id") == user.getUserId()) {
-                    dbConnector.insertQuery(String.format(updateQuery, user.getDescription(), user.getUserId()));
+                    dbConnector.insertQuery(String.format(Locale.US, updateQuery, user.getDescription(), user.getUserId()));
                 }
             }
         } catch (SQLException e) {
@@ -234,9 +285,9 @@ public class UserDao {
     }
 
     /**
-     * Gets the user's share data
+     * Gets the users share data from the database
      *
-     * @param name user's name
+     * @param name Selected user name
      * @return Selected user information Arraylist
      */
     public ArrayList<ShareChange> userShare(String name) {
@@ -246,12 +297,12 @@ public class UserDao {
                 "INNER JOIN Company ON Company.company_id = Purchase.company_id " +
                 "INNER JOIN User ON Purchase.user_id = '%d';";
 
-        ResultSet result = dbConnector.selectQuery(String.format(selectUserIdQuery, name));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectUserIdQuery, name));
         ArrayList<ShareChange> userSharesList = null;
         try {
             while (result.next()) {
                 int userId = result.getInt("user_id");
-                result = dbConnector.selectQuery(String.format(selectQuery, userId));
+                result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, userId));
                 userSharesList = new ArrayList<ShareChange>();
                 while (result.next()) {
                     userSharesList.add(new ShareChange(

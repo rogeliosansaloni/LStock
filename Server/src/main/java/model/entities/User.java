@@ -55,9 +55,9 @@ public class User {
     /**
      * Creates a user with the specified information
      *
-     * @param nickname user nickname
-     * @param email user email
-     * @param stockValue user stock value
+     * @param nickname     user nickname
+     * @param email        user email
+     * @param stockValue   user stock value
      * @param totalBalance user total balance
      */
     public User(String nickname, String email, float stockValue, float totalBalance) {
@@ -67,6 +67,9 @@ public class User {
         this.totalBalance = totalBalance;
     }
 
+    /**
+     * Empty constructor of the user
+     */
     public User() {
 
     }

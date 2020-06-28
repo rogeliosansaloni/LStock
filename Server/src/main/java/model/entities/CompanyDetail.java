@@ -14,19 +14,25 @@ public class CompanyDetail {
     private float minValue;
     private int minutesBefore;
 
+    /**
+     * Empty constructor for CompanyDetail
+     */
     public CompanyDetail() {
     }
 
     /**
-     * It will create a companyChange
+     * Constructor of CompanyDetail
      *
-     * @param companyId      company id
-     * @param companyName      company name
-     * @param shareIdOpen      shareId of the open value
-     * @param valueOpen     value of the share at the beginning of that minute
-     * @param shareIdClose      shareId of the close value
-     * @param valueClose    value of the share at the end of that minute
-     * @param minutesBefore      minutes before tha last change in the value of the share
+     * @param numUserShares Total number of shares
+     * @param companyId     Company identifier
+     * @param companyName   Company name
+     * @param shareIdOpen   Share identifier
+     * @param valueOpen     Company starting value
+     * @param shareIdClose  Company share end identifier
+     * @param valueClose    Company ending value
+     * @param maxValue      Company maximum value
+     * @param minValue      Company minimum value
+     * @param minutesBefore Minutes
      */
     public CompanyDetail(int numUserShares, int companyId, String companyName, int shareIdOpen, float valueOpen, int shareIdClose, float valueClose, float maxValue, float minValue, int minutesBefore) {
         this.shareIdOpen = shareIdOpen;
@@ -41,19 +47,31 @@ public class CompanyDetail {
         this.minutesBefore = minutesBefore;
     }
 
-    public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore, float valueClose) {
+    /**
+     * Company detail constructor
+     *
+     * @param numUserShares Total number of shares
+     * @param companyId     Company identifier
+     * @param companyName   Company name
+     * @param minutesBefore Minutes
+     * @param valueClose    Closest value
+     */
+    public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore, int shareIdClose, float valueClose) {
         this.numUserShares = numUserShares;
         this.companyId = companyId;
         this.companyName = companyName;
         this.minutesBefore = minutesBefore;
         this.shareIdOpen = -1;
-        this.shareIdClose = -1;
+        this.shareIdClose = shareIdClose;
         this.valueOpen = -1;
         this.valueClose = valueClose;
         this.maxValue = -1;
         this.minValue = -1;
     }
 
+    /**
+     * Getters and setters
+     */
     public int getNumUserShares() {
         return numUserShares;
     }

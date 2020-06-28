@@ -86,7 +86,6 @@ public class Bot extends Thread {
         this.status = status;
     }
 
-
     public StockManager getModel() {
         return model;
     }
@@ -98,27 +97,48 @@ public class Bot extends Thread {
     @Override
     public void run() {
         try {
-            transact();
-        } catch(InterruptedException e) {
+            // Show if bot is active or not
+            if (status != 1) {
+                System.out.println("The bot " + botId + " is inactive.");
+            } else {
+                System.out.println("The bot " + botId + " is active.");
+            }
+
+            // Loop for bot transactions
+            while (true) {
+                transact();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             e.printStackTrace();
         }
     }
 
+    /**
+     * Stops the bot thread
+     */
+    public void stopBot() {
+        interrupt();
+    }
+
+    /**
+     * Bot activity control
+     *
+     * @throws InterruptedException
+     */
     private void transact() throws InterruptedException {
         synchronized (shares) {
-            while(status != 1) {
-                System.out.println("The bot " + botId + " is inactive.");
+            while (status != 1) {
                 shares.wait();
             }
-            System.out.println("The bot " + botId + " is active.");
 
             // Bot works every after X seconds
             Thread.sleep((long) (activeTime * 1000));
-
             Purchase purchase = new Purchase(1, company.getCompanyId(), model.getShareId(company.getCompanyId()), 1);
 
             // Checks if the bot should buy or sell according to probability
-            if (new Random().nextDouble() >= probability) {
+            double randomProb = new Random().nextDouble();
+            if (randomProb * 100 <= probability) {
                 System.out.println(String.format(TRANSACTION_MESSAGE, botId, "buy"));
                 model.buyShare(purchase);
                 shares.add(purchase);
@@ -127,7 +147,14 @@ public class Bot extends Thread {
                 model.sellShare(purchase);
                 shares.remove(purchase);
             }
+        }
+    }
 
+    /**
+     * Activates the disabled bot
+     */
+    public void wakeUpBot(){
+        synchronized (shares) {
             shares.notifyAll();
         }
     }

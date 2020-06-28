@@ -10,26 +10,31 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
 
-
+/**
+ * View for Shares List
+ */
 public class SharesListView extends JPanel{
     private static final String[] COLUMNS_USER = { "Users", "Email", "Stock Value", "Total Balance"};
     private static final String[] COLUMNS_SHARE = { "Company", "Shares", "Share Price", "Total Value"};
     private String[][] ROWS = {{ "", "", "", ""}};
-    private static final int anchuraPanel = 1080;
-    private static final int alturaPanel = 768;
     protected StockColors color;
     private JTable jtSharesList;
-    private JButton jbReturn;
     private JPanel jpCenter;
     private JPanel jpSouth;
     JScrollPane scrollPane;
     private ListSelectionModel selectionModel;
 
+    /**
+     * Constructor for the SharesListView
+     */
     public SharesListView () {
         color = new StockColors();
         initUI();
     }
 
+    /**
+     * Creates the SharesListView
+     */
     private void initUI() {
         //Main Panel
         this.setLayout(new BorderLayout());
@@ -55,11 +60,11 @@ public class SharesListView extends JPanel{
         jpCenter.add(scrollPane);
         this.add(jpCenter, BorderLayout.CENTER);
 
-        //Return button
         jpSouth = new JPanel();
         jpSouth.setLayout(new BoxLayout(jpSouth, BoxLayout.Y_AXIS));
         jpSouth.setBackground(Color.WHITE);
         jpSouth.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+
         this.add(jpSouth, BorderLayout.SOUTH);
     }
 
@@ -94,7 +99,7 @@ public class SharesListView extends JPanel{
     }
 
     /**
-     *  Empty the table
+     *  Empties the table
      */
     public void emptyTable(){
         this.jtSharesList.setModel(new DefaultTableModel());
@@ -103,7 +108,7 @@ public class SharesListView extends JPanel{
     }
 
     /**
-     *  Fills table with User data
+     *  Fills table with the user data
      */
     public void fillUserData() {
         this.jtSharesList.setModel(new DefaultTableModel());

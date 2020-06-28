@@ -12,8 +12,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
+/**
+ * Dedicated server class
+ */
 public class DedicatedServer extends Thread {
     private boolean isOn;
     private ObjectInputStream ois;
@@ -23,7 +27,9 @@ public class DedicatedServer extends Thread {
     private UserMapperImpl mapper;
     private CompanyMapperImpl companyMapper;
     private ShareMapperImpl shareMapper;
-    private LinkedList<DedicatedServer> clients;
+    private int loggedUser;
+    private int currentCompanyId = 1;
+    private TimerTask task;
 
 
     /**
@@ -37,6 +43,7 @@ public class DedicatedServer extends Thread {
         this.mapper = new UserMapperImpl();
         this.companyMapper = new CompanyMapperImpl();
         this.shareMapper = new ShareMapperImpl();
+        this.loggedUser = -1;
     }
 
     /**
@@ -45,6 +52,7 @@ public class DedicatedServer extends Thread {
     public void stopServerConnection() {
         this.isOn = false;
         this.interrupt();
+        stopUpdatingClient();
     }
 
     /**
@@ -53,6 +61,7 @@ public class DedicatedServer extends Thread {
     public void startServerConnection() {
         this.isOn = true;
         this.start();
+        updateClient();
     }
 
     /**
@@ -79,6 +88,9 @@ public class DedicatedServer extends Thread {
                         // Check if we need user validation for login
                         if (info.getAction().equals("login")) {
                             AuthenticationInfo authInfoLogin = stockModel.validateUser(user);
+                            if (authInfoLogin.isValidated()) {
+                                loggedUser = authInfoLogin.getId();
+                            }
                             oos.writeObject(authInfoLogin);
                         }
                     }
@@ -93,7 +105,7 @@ public class DedicatedServer extends Thread {
                     } else if (userInfo.getAction().equals("information")) {
                         UserProfileInfo userProfileInfo = stockModel.updateUserInformation(user);
                         oos.writeObject(userProfileInfo);
-                    } else if (userInfo.getAction().equals("profileView")){
+                    } else if (userInfo.getAction().equals("profileView")) {
                         UserProfileInfo userProfileInfo = stockModel.getUserProfileInfo(user);
                         oos.writeObject(userProfileInfo);
                     }
@@ -106,7 +118,6 @@ public class DedicatedServer extends Thread {
                     Company company = shareMapper.shareTradeToCompany(shareTrade);
                     ShareTrade share = stockModel.updatePurchaseBuy(user, company, purchases, shareTrade.getActionToDo(), shareTrade.getView());
                     oos.writeObject(share);
-                    updateAllClients();
                 }
 
                 if (tunnelObject instanceof CompanyList) {
@@ -124,6 +135,7 @@ public class DedicatedServer extends Thread {
                 if (tunnelObject instanceof UserShares) {
                     ArrayList<CompanyDetail> companies = stockModel.getCompanyDetails(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
                     ArrayList<ShareSell> shares = stockModel.getSharesSell(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
+                    currentCompanyId = ((UserShares) tunnelObject).getCompanyId();
                     CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companies);
                     ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
                     DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
@@ -136,19 +148,15 @@ public class DedicatedServer extends Thread {
                     ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
                     oos.writeObject(sharesChangeList);
                 }
-
-                if (tunnelObject instanceof CurrentShares) {
-
-                }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (EOFException e){
-            try{
-                if(!sClient.isClosed()){
+        } catch (EOFException e) {
+            try {
+                if (!sClient.isClosed()) {
                     sClient.close();
                 }
-            }catch (IOException e2){
+            } catch (IOException e2) {
                 System.out.println("Error closing the communication with the server.");
             }
             stopServerConnection();
@@ -160,25 +168,61 @@ public class DedicatedServer extends Thread {
         }
     }
 
-
-    public ObjectOutputStream getOos() {
-        return oos;
-    }
-
-    public void setClients(LinkedList<DedicatedServer> clients) {
-        this.clients = clients;
-    }
-
-    public void updateAllClients() throws IOException {
-        for (DedicatedServer client : clients) {
-            ObjectOutputStream oosClient = null;
-            if (client.isOn){
-                oosClient = client.getOos();
-                ThreadChange change = new ThreadChange();
-                if (oosClient != null) {
-                    oosClient.writeObject(change);
+    /**
+     * Triggers sendThreadChange every certain period of time
+     */
+    private void updateClient() {
+        Timer timer = new Timer();
+        this.task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    sendThreadChange();
+                    System.out.println("Send a threadChange.");
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
+        };
+        timer.schedule(this.task, 10000, 20000);
+    }
+
+    /**
+     * Updates clients
+     *
+     * @throws IOException
+     */
+    public void sendThreadChange() throws IOException {
+        if (isOn) {
+            // Get company change list
+            ArrayList<CompanyChange> companies = stockModel.getCompaniesChange();
+            CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
+
+            // Get share change list
+            ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(this.loggedUser);
+            ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
+
+            // Get detail view info
+            ArrayList<CompanyDetail> companyDetails = stockModel.getCompanyDetails(this.loggedUser, this.currentCompanyId);
+            ArrayList<ShareSell> shares = stockModel.getSharesSell(this.loggedUser, this.currentCompanyId);
+            CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companyDetails);
+            ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
+            DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
+
+            // Get user info
+            User user = stockModel.getAllUserInfo(this.loggedUser);
+            UserProfileInfo userProfileInfo = new UserProfileInfo(user.getUserId(), user.getNickname(), user.getEmail(), user.getDescription(), user.getTotalBalance());
+            ThreadChange change = new ThreadChange(companyChangeList, detailViewInfo, sharesChangeList, userProfileInfo);
+
+            this.oos.writeObject(change);
         }
     }
+
+    /**
+     * Stops updating the client automatically
+     */
+    private void stopUpdatingClient() {
+        this.task.cancel();
+    }
+
 }

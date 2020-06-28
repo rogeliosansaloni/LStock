@@ -3,16 +3,26 @@ package network;
 import controller.BotsEditComboBoxController;
 import controller.BotsRemoveComboBoxController;
 import controller.MainController;
+import model.entities.*;
 import model.managers.BotManager;
 import model.managers.StockManager;
+import utils.CompanyMapperImpl;
 import utils.JSONReader;
+import utils.ShareMapperImpl;
 import view.MainView;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Timer;
+import java.util.TimerTask;
 
+/**
+ * Server class
+ */
 public class Server extends Thread {
     private String ip;
     private int port;
@@ -65,7 +75,7 @@ public class Server extends Thread {
     /**
      * Initializes main view
      */
-    public void initMainView () {
+    public void initMainView() {
         stockModel = new StockManager();
         botModel = new BotManager(stockModel);
         mainView = new MainView();
@@ -93,9 +103,6 @@ public class Server extends Thread {
                 // Create dedicated server to attend to the client
                 DedicatedServer client = new DedicatedServer(clientSocket, stockModel);
                 clients.add(client);
-                for (DedicatedServer c : clients) {
-                    c.setClients(clients);
-                }
                 System.out.println("Client has connected correctly!");
 
                 // Start dedicated server for the client
@@ -115,4 +122,5 @@ public class Server extends Thread {
             client.stopServerConnection();
         }
     }
+
 }

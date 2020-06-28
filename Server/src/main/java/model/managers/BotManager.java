@@ -6,13 +6,11 @@ import database.DBConnector;
 import model.entities.Bot;
 import model.entities.Company;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 /**
- * Represents the manager that controls all operations that can be
- * done to the bots
+ * Represents the manager that controls all operations that can be done to the bots
  */
 public class BotManager {
     private ArrayList<Company> companies;
@@ -44,9 +42,14 @@ public class BotManager {
     public int createBot(Bot bot) {
         Company company = companyDao.getCompanyByName(bot.getCompany().getName());
         bot.setCompany(company);
-        addBotToCompany(bot);
-        bot.start();
-        return botDao.createBot(bot);
+        int result = botDao.createBot(bot);
+        if (result != -1) {
+            Bot newBot = botDao.getBotById(result);
+            addBotToCompany(newBot);
+            newBot.setModel(this.stockModel);
+            newBot.start();
+        }
+        return result;
     }
 
     /**
@@ -93,9 +96,9 @@ public class BotManager {
     public void getCompanyBots() {
         for (Company company : companies) {
             ArrayList<Bot> bots = getAllBotsByCompany(company.getCompanyId());
-            for(Bot b : bots) {
-                b.start();
+            for (Bot b : bots) {
                 b.setModel(this.stockModel);
+                b.start();
             }
             company.setBots(bots);
         }
@@ -103,6 +106,7 @@ public class BotManager {
 
     /**
      * Filters all the companies with bots
+     *
      * @return companies with bots
      */
     public ArrayList<Company> getCompaniesWithBots() {
@@ -147,10 +151,11 @@ public class BotManager {
 
     /**
      * Adds bot to a company
+     *
      * @param bot bot to be added
      */
     public void addBotToCompany(Bot bot) {
-        for(Company company : companies) {
+        for (Company company : companies) {
             if (company.getCompanyId() == bot.getCompany().getCompanyId()) {
                 company.addBot(bot);
                 return;
@@ -160,14 +165,17 @@ public class BotManager {
 
     /**
      * Removes a bot from the list of company bots
+     *
      * @param bot bot to be removed
      */
     public void removeBotFromCompany(Bot bot) {
-        for(Company company : companies) {
-            if (company.getCompanyId() == bot.getCompany().getCompanyId()) {
-                for (Bot b : company.getBots()) {
-                    if (b.getBotId() == bot.getBotId()) {
-                        company.getBots().remove(b);
+        for (int j = 0; j < companies.size(); j++) {
+            if (companies.get(j).getCompanyId() == bot.getCompany().getCompanyId()) {
+                ArrayList<Bot> bots = companies.get(j).getBots();
+                for (int i = 0; i < bots.size(); i++) {
+                    if (bots.get(i).getBotId() == bot.getBotId()) {
+                        bots.get(i).stopBot();
+                        companies.get(j).removeBot(i);
                     }
                 }
                 return;
@@ -177,15 +185,19 @@ public class BotManager {
 
     /**
      * Change the bot status to new status
-     * @param bot bot which status will be changed
+     *
+     * @param bot         bot which status will be changed
      * @param newActivity new status
      */
     public void changeBotStatus(Bot bot, int newActivity) {
-        for(Company company : companies) {
+        for (Company company : companies) {
             if (company.getCompanyId() == bot.getCompany().getCompanyId()) {
                 for (Bot b : company.getBots()) {
                     if (b.getBotId() == bot.getBotId()) {
                         b.setStatus(newActivity);
+                        if (newActivity == 1) {
+                            b.wakeUpBot();
+                        }
                     }
                 }
                 return;

@@ -16,7 +16,7 @@ public class TopTenController {
     /**
      * Creates and initializes the controller
      */
-    public TopTenController(TopTenCompaniesView topTenCompaniesView){
+    public TopTenController(TopTenCompaniesView topTenCompaniesView) {
         this.view = topTenCompaniesView;
         this.stockManager = new StockManager();
     }
@@ -26,16 +26,14 @@ public class TopTenController {
      *
      * @return TopTenList
      */
-    public ArrayList<Top10> getTopTenCompanies(){
-       return stockManager.getTopTenlist();
+    public ArrayList<Top10> getTopTenCompanies() {
+        return stockManager.getTopTenlist();
     }
 
     /**
      * Updates de Top 10 Company list
      */
-    public void updateTopTenView(){
+    public void updateTopTenView() {
         view.showTopTen(stockManager.getTopTenlist());
     }
-
-
 }

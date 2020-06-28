@@ -15,9 +15,10 @@ public class HomeController implements ActionListener {
 
     /**
      * Creates and initializes the controller
+     *
      * @param view Server main view
      */
-    public HomeController (MainView view) {
+    public HomeController(MainView view) {
         this.view = view;
     }
 
@@ -31,6 +32,5 @@ public class HomeController implements ActionListener {
                 view.updateView(CARD_BOTS);
                 break;
         }
-
     }
 }

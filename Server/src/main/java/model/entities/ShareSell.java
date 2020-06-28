@@ -9,15 +9,18 @@ public class ShareSell {
     private float shareValue;
     private int shareQuantity;
 
+    /**
+     * Empty constructor of ShareSell
+     */
     public ShareSell() {
     }
 
     /**
      * It will create a shareSell
      *
-     * @param shareId      share id
-     * @param shareValue      the value that share had when the user bought it
-     * @param shareQuantity      the quantity that the user has of this share
+     * @param shareId       share id
+     * @param shareValue    the value that share had when the user bought it
+     * @param shareQuantity the quantity that the user has of this share
      */
     public ShareSell(int shareId, float shareValue, int shareQuantity) {
         this.shareId = shareId;
@@ -25,6 +28,9 @@ public class ShareSell {
         this.shareQuantity = shareQuantity;
     }
 
+    /**
+     * Getters and setters
+     */
     public float getShareValue() {
         return shareValue;
     }

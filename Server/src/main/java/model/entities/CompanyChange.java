@@ -1,25 +1,29 @@
 package model.entities;
 
-
+/**
+ * Company change class
+ */
 public class CompanyChange {
-
     private int companyId;
     private String name;
     private float currentShare;
     private float change;
     private float changePer;
 
+    /**
+     * Empty constructor of CompanyChange
+     */
     public CompanyChange() {
     }
 
     /**
      * It will create a companyChange
      *
-     * @param companyId      company id
-     * @param name      company name
-     * @param currentShare     current company's share price
-     * @param change    difference between current price and the price the company had 5 minutes ago
-     * @param changePer      the change value but in % format
+     * @param companyId    company id
+     * @param name         company name
+     * @param currentShare current company's share price
+     * @param change       difference between current price and the price the company had 5 minutes ago
+     * @param changePer    the change value but in % format
      */
 
     public CompanyChange(int companyId, String name, float currentShare, float change, float changePer) {
@@ -30,6 +34,9 @@ public class CompanyChange {
         this.changePer = changePer;
     }
 
+    /**
+     * Getters and setters
+     */
     public int getCompanyId() {
         return companyId;
     }

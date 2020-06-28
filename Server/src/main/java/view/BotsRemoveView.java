@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+/**
+ * View for remove bots
+ */
 public class BotsRemoveView extends JPanel {
     private static final String FONT = "Segoe UI";
     private static final String FONT_BUTTON = "Segoe UI Semibold";
@@ -24,6 +27,9 @@ public class BotsRemoveView extends JPanel {
     private JButton jbRemove;
     private JButton jbCancel;
 
+    /**
+     * Constructor for BotsRemoveView where the view is also created.
+     */
     public BotsRemoveView() {
         StockColors color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
@@ -92,7 +98,7 @@ public class BotsRemoveView extends JPanel {
     /**
      * Gets the selected company name
      *
-     * @return the company name
+     * @return the selected company name
      */
     public String getCompanyName() {
         return String.valueOf(jcbCompany.getSelectedItem());
@@ -126,7 +132,7 @@ public class BotsRemoveView extends JPanel {
 
     /**
      * Registers the controller for the buttons
-     * @param controller controller for the buttons
+     * @param controller ActionListener
      */
     public void registerController(ActionListener controller) {
         this.jbRemove.addActionListener(controller);
@@ -136,8 +142,8 @@ public class BotsRemoveView extends JPanel {
     }
 
     /**
-     * Registers the controller for the combo boxes
-     * @param itemListener item listener for the combo boxes
+     * Registers the controller for the combobox
+     * @param itemListener item listener for the combobox
      */
     public void registerComboBoxController(ItemListener itemListener) {
         this.jcbCompany.addItemListener(itemListener);
@@ -145,8 +151,8 @@ public class BotsRemoveView extends JPanel {
     }
 
     /**
-     * Gets id of bot to be removed
-     * @return id of the bot
+     * Gets id of the selected bot to be removed
+     * @return bot identifier
      */
     public int getBotId() {
         if (jcbBot.getSelectedItem() != null) {

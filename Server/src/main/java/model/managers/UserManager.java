@@ -1,24 +1,20 @@
 package model.managers;
 
-import database.CompanyDao;
 import database.DBConnector;
-import database.ShareDao;
 import database.UserDao;
-import model.entities.User;
 
-import java.util.ArrayList;
-
+/**
+ * Represents the manager that controls the user operations
+ */
 public class UserManager {
-    private DBConnector connector;
     private UserDao userDao;
-    private ShareDao shareDao;
-    private CompanyDao companyDao;
 
-    public UserManager(){
-        connector = new DBConnector();
+    /**
+     * Constructor for the user manager
+     */
+    public UserManager() {
+        DBConnector connector = new DBConnector();
         userDao = new UserDao(connector);
-        shareDao = new ShareDao(connector);
-        companyDao = new CompanyDao(connector);
         connector.connect();
     }
 
@@ -27,12 +23,8 @@ public class UserManager {
      *
      * @return Registered users
      */
-    public String[][] getUserList(){
+    public String[][] getUserList() {
         return userDao.toUserList();
-    }
-
-    public ArrayList<User> getUsers(){
-        return userDao.getAllUsers();
     }
 
     /**
@@ -40,7 +32,7 @@ public class UserManager {
      *
      * @return User shares list
      */
-    public String[][] getUserShares(String name){
+    public String[][] getUserShares(String name) {
         return userDao.getUserShares(name);
     }
 }

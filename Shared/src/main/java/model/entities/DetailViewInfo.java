@@ -30,3 +30,4 @@ public class DetailViewInfo extends TunnelObject {
         this.shareSellList = shareSellList;
     }
 }
+

@@ -8,6 +8,9 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * View for the principal screen
+ */
 public class MainView extends JFrame {
 
     private static final String PATH_LOGO = "/Images/stock.png";
@@ -25,7 +28,6 @@ public class MainView extends JFrame {
     private static final int PANEL_HEIGHT = 740;
 
     private JLabel labelLogo;
-    private JLabel labelStock;
     protected JPanel jpNorth;
     protected JPanel jpLogo;
     private JPanel jpCenter;
@@ -43,6 +45,9 @@ public class MainView extends JFrame {
     private BotsListView jpBotsListView;
     private BotsEditView jpBotsEditView;
 
+    /**
+     * Constructor for the MainView
+     */
     public MainView() {
         color = new StockColors();
         this.setTitle(TITLE);
@@ -56,7 +61,7 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Add diferent views to layout
+     * Adds the different views to a CardLayout
      */
     public void addToCardLayout(HomeView homeView, SharesListView sharesView, TopTenCompaniesView topTenCompaniesView,
                                 BotMenuView menuBots, BotsCreateView botsCreateView, BotsRemoveView botsRemoveView,
@@ -82,7 +87,7 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Creates the UI of the login form
+     * Creates the MainView
      */
     public void initUI() {
         JPanel jpMain = new JPanel();
@@ -175,7 +180,7 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Register controllers to Menu Bar
+     * Register controller to Menu Bar
      * @param actionListener ActionLister
      */
     public void registerController (ActionListener actionListener) {
@@ -208,7 +213,7 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Registers controller for the Bot create view
+     * Registers controller for the create bot view
      *
      * @param controller BotsCreate controller
      */
@@ -218,8 +223,9 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Registers controller for the Bot remove view
-     * @param controller BotsRemove controller
+     * Registers controller for the remove bot view
+     * @param controller BotsRemoveController
+     * @param comboBoxController A combo box controller
      */
     public void registerBotRemoveController(BotsRemoveController controller,
                                             BotsRemoveComboBoxController comboBoxController) {
@@ -227,13 +233,18 @@ public class MainView extends JFrame {
         jpBotsRemoveView.registerComboBoxController(comboBoxController);
     }
 
+    /**
+     * Registers controller for the edit bot view
+     * @param controller BotsEditController
+     * @param comboBoxController A combo box controller
+     */
     public void registerBotEditController(BotsEditController controller, BotsEditComboBoxController comboBoxController) {
         jpBotsEditView.registerController(controller);
         jpBotsEditView.registerComboBoxController(comboBoxController);
     }
 
     /**
-     * Registers controller for Bots List controller
+     * Registers controller for list bot controller
      * @param controller BotsListController
      */
     public void registerBotListController(BotsListController controller) {
@@ -241,36 +252,21 @@ public class MainView extends JFrame {
     }
 
     /**
-     * Gets the Bots List view
-     * @return view for Bot list
-     */
-    public BotsListView getBotsListView () { return jpBotsListView; }
-
-    /**
-     * Gets Bots Remove view
-     * @return view for Bot removal
+     * Gets remove bot view
+     * @return BotsRemoveView panel
      */
     public BotsRemoveView getBotsRemoveView() { return  jpBotsRemoveView; }
 
     /**
-     * Gets Bots Create view
-     * @return view for Bot creation
-     */
-    public BotsCreateView getBotsCreateView() {
-        return jpBotsCreateView;
-    }
-
-    /**
-     * G3ets Bots Edit view
-     * @return view for Bot edition
+     * Gets edit bot view
+     * @return BotsEditView panel
      */
     public BotsEditView getBotsEditView() {
         return jpBotsEditView;
     }
 
-
     /**
-     * Shows desired view
+     * Shows desired view from the CardLayout
      * @param card
      */
     public void updateView(String card) {

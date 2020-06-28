@@ -1,12 +1,12 @@
 package database;
 
-
 import model.entities.Bot;
 import model.entities.Company;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Represents the DAO for the Bot table
@@ -14,6 +14,10 @@ import java.util.ArrayList;
 public class BotDao {
     private DBConnector dbConnector;
 
+    /**
+     * Creates and initializes the BotDao
+     * @param dbConnector Database Connector
+     */
     public BotDao(DBConnector dbConnector) {
         this.dbConnector = dbConnector;
     }
@@ -32,19 +36,19 @@ public class BotDao {
         final String errorMessage = "Error in creating bot for %s";
 
         // Create the new bot for the specified company
-        dbConnector.insertQuery(String.format(insertQuery, bot.getCompany().getCompanyId(), bot.getActiveTime(),
+        dbConnector.insertQuery(String.format(Locale.US, insertQuery, bot.getCompany().getCompanyId(), bot.getActiveTime(),
                 bot.getProbability()));
 
         // Get the latest bot created for the specified company
-        ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, bot.getCompany().getCompanyId()));
+        ResultSet verify = dbConnector.selectQuery(String.format(Locale.US, selectQuery, bot.getCompany().getCompanyId()));
         try {
             while (verify.next()) {
                 int botId = verify.getInt("bot_id");
-                System.out.println(String.format(successMessage, botId));
+                System.out.println(String.format(Locale.US, successMessage, botId));
                 return botId;
             }
         } catch (SQLException e) {
-            System.out.println(String.format(errorMessage, bot.getCompany().getCompanyId()));
+            System.out.println(String.format(Locale.US, errorMessage, bot.getCompany().getCompanyId()));
         }
         return -1;
     }
@@ -59,13 +63,13 @@ public class BotDao {
         final String selectQuery = "SELECT * FROM Bots WHERE bot_id = %d;";
         final String errorMessage = "Error in getting bot information for bot with %d";
 
-        ResultSet retrievedBot = dbConnector.selectQuery(String.format(selectQuery, botId));
+        ResultSet retrievedBot = dbConnector.selectQuery(String.format(Locale.US, selectQuery, botId));
         try {
             while (retrievedBot.next()) {
                 return toBot(retrievedBot);
             }
         } catch (SQLException e) {
-            System.out.println(String.format(errorMessage, botId));
+            System.out.println(String.format(Locale.US, errorMessage, botId));
         }
         return null;
     }
@@ -97,7 +101,7 @@ public class BotDao {
      */
     public ArrayList<Bot> getAllBotsByCompany(int companyId) {
         final String selectQuery = "SELECT * FROM Bots WHERE company_id = %d;";
-        ResultSet retrievedBots = dbConnector.selectQuery(String.format(selectQuery, companyId));
+        ResultSet retrievedBots = dbConnector.selectQuery(String.format(Locale.US, selectQuery, companyId));
         ArrayList<Bot> bots = null;
         try {
             bots = new ArrayList<Bot>();
@@ -144,18 +148,18 @@ public class BotDao {
         final String errorMessage = "Error deleting the bot with id %d";
 
         // Consult the database for the bot to be deleted
-        ResultSet verify = dbConnector.selectQuery(String.format(selectQuery, botId));
+        ResultSet verify = dbConnector.selectQuery(String.format(Locale.US, selectQuery, botId));
         try {
             while (verify.next()) {
                 // If the bot exists, delete it
                 if (verify.getInt("bot_id") == botId) {
-                    dbConnector.deleteQuery(String.format(deleteQuery, botId));
-                    System.out.println(String.format(successMessage, botId));
+                    dbConnector.deleteQuery(String.format(Locale.US, deleteQuery, botId));
+                    System.out.println(String.format(Locale.US, successMessage, botId));
                     return true;
                 }
             }
         } catch (SQLException e) {
-            System.out.println(String.format(errorMessage, botId));
+            System.out.println(String.format(Locale.US, errorMessage, botId));
         }
         return false;
     }
@@ -173,7 +177,6 @@ public class BotDao {
         final String errorMessage = "Error updating bot activity with id %d";
         final String successMessage = "Bot with id %d has been %s";
 
-
         Bot bot = getBotById(botId);
 
         // Determine if we should enable or disable the bot
@@ -187,22 +190,22 @@ public class BotDao {
         }
 
         // Consult the database to get information on the bot to be updated
-        ResultSet result = dbConnector.selectQuery(String.format(selectQuery, botId));
+        ResultSet result = dbConnector.selectQuery(String.format(Locale.US, selectQuery, botId));
         try {
             while (result.next()) {
                 // If the bot exists, update the information
                 if (result.getInt("bot_id") == botId) {
-                    dbConnector.updateQuery(String.format(updateQuery, newActivity, botId));
+                    dbConnector.updateQuery(String.format(Locale.US, updateQuery, newActivity, botId));
                     if(newActivity == 1) {
-                        System.out.println(String.format(successMessage, botId, "enabled."));
+                        System.out.println(String.format(Locale.US, successMessage, botId, "enabled."));
                     } else {
-                        System.out.println(String.format(successMessage, botId, "disabled."));
+                        System.out.println(String.format(Locale.US, successMessage, botId, "disabled."));
                     }
                     return newActivity;
                 }
             }
         } catch (SQLException e) {
-            System.out.println(String.format(errorMessage, botId));
+            System.out.println(String.format(Locale.US, errorMessage, botId));
         }
         return newActivity;
     }

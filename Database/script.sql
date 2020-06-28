@@ -1,4 +1,5 @@
-CREATE DATABASE stock_c2;
+CREATE DATABASE IF NOT EXISTS stock_c2;
+USE stock_c2;
 
 CREATE TABLE IF NOT EXISTS User (
 	user_id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -39,7 +40,7 @@ INSERT INTO Company(name) VALUES ('Scottech');
 CREATE TABLE IF NOT EXISTS Bots (
 	bot_id BIGINT AUTO_INCREMENT,
 	company_id BIGINT,
-	active_time INT,
+	active_time FLOAT,
 	probability FLOAT, 
 	activity_status BOOLEAN,
 	created_at DATETIME DEFAULT CURRENT_TIMESTAMP,

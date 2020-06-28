@@ -291,17 +291,16 @@ public class NetworkManager extends Thread {
                     mainController.updateShareView();
                 }
 
-
                 if (received instanceof ThreadChange) {
-                    ((ThreadChange) received).asdf();
-                    mainController.sendCompaniesChange();
-                    mainController.sendUserProfileInfo();
-                    mainController.sendSharesChange();
-                    if (model.getCompanyDetails() != null) {
-                        mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
+                    if (mainView != null) {
+                        mainController.sendCompaniesChange();
+                        mainController.sendUserProfileInfo();
+                        mainController.sendSharesChange();
+                        if (model.getCompanyDetails() != null) {
+                            mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
+                        }
                     }
                 }
-
             } catch (IOException | ClassNotFoundException e) {
                 running = false;
                 try {

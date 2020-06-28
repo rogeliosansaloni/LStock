@@ -11,6 +11,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+/**
+ * View for the edit bot
+ */
 public class BotsEditView extends JPanel {
     private static final String FONT = "Segoe UI";
     private static final String FONT_BUTTON = "Segoe UI Semibold";
@@ -26,6 +29,9 @@ public class BotsEditView extends JPanel {
     private JButton jbEnable;
     private JButton jbCancel;
 
+    /**
+     * Constructor of BotsEditView where the view is also created.
+     */
     public BotsEditView() {
         color = new StockColors();
         Font font = new Font(FONT, Font.ITALIC, 20);
@@ -158,7 +164,7 @@ public class BotsEditView extends JPanel {
     /**
      * Registers the controller for buttons
      *
-     * @param controller controller that implements ActionListener
+     * @param controller ActionListener
      */
     public void registerController(ActionListener controller) {
         jbEnable.addActionListener(controller);
@@ -167,9 +173,9 @@ public class BotsEditView extends JPanel {
     }
 
     /**
-     * Registers the controller for the combo boxes
+     * Registers the controller for the combobox
      *
-     * @param itemListener item listener for the combo boxes
+     * @param itemListener item listener for the combobox
      */
     public void registerComboBoxController(ItemListener itemListener) {
         this.jcbCompany.addItemListener(itemListener);
@@ -177,7 +183,7 @@ public class BotsEditView extends JPanel {
     }
 
     /**
-     * Shows message when a bot activity status change
+     * Shows message when a bot activity status changes
      *
      * @param message the message
      */

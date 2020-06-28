@@ -7,16 +7,23 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
+/**
+ * Controller for the shares list
+ */
 public class SharesListController implements ListSelectionListener {
     private SharesListView view;
     private UserManager userManager;
     private ListSelectionModel selectionModel;
-    private static final String NO_SHARES_AVAILABLE = "This User doesn't have any shares to display!";
+    private static final String NO_SHARES_AVAILABLE = "This user doesn't have any shares to display!";
     private int selectedRow = 0;
     private boolean selectedUser;
 
-    public SharesListController(SharesListView sharesListView){
+    /**
+     * SharesList Controller
+     *
+     * @param sharesListView SharesListView
+     */
+    public SharesListController(SharesListView sharesListView) {
         this.view = sharesListView;
         this.userManager = new UserManager();
         loadUsers();
@@ -24,26 +31,26 @@ public class SharesListController implements ListSelectionListener {
     }
 
     /**
-     *  Get User data from User Manager and Database
+     * Get User data from User Manager and Database
      */
-    public void loadUsers(){
+    public void loadUsers() {
         this.selectedUser = false;
         loadUserList(userManager.getUserList());
     }
 
     /**
-     *  Load data into SharesList Table
+     * Load data into SharesList Table
      *
      * @param data String array containing data for the table
      */
-    public void loadUserList(String[][] data){
+    public void loadUserList(String[][] data) {
         this.view.setTableRow(data);
         this.view.emptyTable();
         this.view.fillUserData();
     }
 
     /**
-     *  Method to detect clicks on SharesList JTable
+     * Method to detect clicks on SharesList JTable
      */
     @Override
     public void valueChanged(ListSelectionEvent listSelectionEvent) {
@@ -53,12 +60,12 @@ public class SharesListController implements ListSelectionListener {
                 if (!selectionModel.isSelectionEmpty()) {
                     selectedRow = selectionModel.getMinSelectionIndex();
                     String[][] shares = userManager.getUserShares(this.view.getSelectedUser(selectedRow));
-                    if (shares != null){
+                    if (shares != null) {
                         this.view.setTableRow(userManager.getUserShares(this.view.getSelectedUser(selectedRow)));
                         this.view.emptyTable();
                         this.view.fillShareData();
                         this.selectedUser = true;
-                    }else{
+                    } else {
                         this.view.showErrorMessage(NO_SHARES_AVAILABLE);
                     }
                 }

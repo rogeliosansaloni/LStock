@@ -6,12 +6,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * View for home panel
+ */
 public class HomeView extends JPanel {
     private static final String CARD_USERS = "List of Users";
     private static final String CARD_BOTS = "Manage Bots";
     private JButton jbUsers;
     private JButton jbBots;
 
+    /**
+     * Constructor for the HomeView where the view is also created.
+     */
     public HomeView() {
         StockColors color = new StockColors();
         this.setBackground(color.getWHITE());

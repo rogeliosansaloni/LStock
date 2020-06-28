@@ -20,7 +20,7 @@ public class BarChartView extends JPanel {
     float max, min;
 
     /**
-     * Contructor for the BarChart
+     * Empty constructor for the BarChart
      *
      */
     public BarChartView () {}
