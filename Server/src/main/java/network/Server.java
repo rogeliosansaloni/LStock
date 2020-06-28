@@ -34,16 +34,12 @@ public class Server extends Thread {
     private MainController mainController;
     private BotManager botModel;
     private StockManager stockModel;
-    private CompanyMapperImpl companyMapper;
-    private ShareMapperImpl shareMapper;
 
     public Server() throws IOException {
         initServerConfiguration();
         this.isOn = false;
         this.sSocket = new ServerSocket(port);
         this.clients = new LinkedList<DedicatedServer>();
-        this.companyMapper = new CompanyMapperImpl();
-        this.shareMapper = new ShareMapperImpl();
     }
 
     /**

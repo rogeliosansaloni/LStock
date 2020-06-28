@@ -105,10 +105,11 @@ public class Bot extends Thread {
             }
 
             // Loop for bot transactions
-            while (status == 1) {
+            while (true) {
                 transact();
             }
         } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             e.printStackTrace();
         }
     }
@@ -146,6 +147,11 @@ public class Bot extends Thread {
                 model.sellShare(purchase);
                 shares.remove(purchase);
             }
+        }
+    }
+
+    public void wakeUpBot(){
+        synchronized (shares) {
             shares.notifyAll();
         }
     }
