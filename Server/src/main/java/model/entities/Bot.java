@@ -150,6 +150,9 @@ public class Bot extends Thread {
         }
     }
 
+    /**
+     * Activates the disabled bot
+     */
     public void wakeUpBot(){
         synchronized (shares) {
             shares.notifyAll();
