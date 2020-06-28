@@ -2,6 +2,9 @@ package model.entities;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a user
+ */
 public class User {
     private int userId;
     private String nickname;
@@ -11,17 +14,18 @@ public class User {
     private String description;
     private float totalBalance;
     private ArrayList<Company> company;
+
     /**
      * It will create a user
      *
-     * @param userId  identification
-     * @param nickname user nickname
-     * @param email user email
-     * @param password  user password
-     * @param stockValue stock value of the user
-     * @param description additional user information
+     * @param userId       identification
+     * @param nickname     user nickname
+     * @param email        user email
+     * @param password     user password
+     * @param stockValue   stock value of the user
+     * @param description  additional user information
      * @param totalBalance user available balance
-     * @param company companies the user participates
+     * @param company      companies the user participates
      */
 
     public User(int userId, String nickname, String email, String password, float stockValue, String description, float totalBalance, ArrayList<Company> company) {
@@ -34,12 +38,13 @@ public class User {
         this.totalBalance = totalBalance;
         this.company = company;
     }
+
     /**
      * Creates a user with the specified information
      *
      * @param nickname user nickname
-     * @param email user email
-     * @param password  user password
+     * @param email    user email
+     * @param password user password
      */
     public User(String nickname, String email, String password) {
         this.nickname = nickname;
@@ -47,6 +52,24 @@ public class User {
         this.password = password;
     }
 
+    /**
+     * Creates a user with the specified information
+     *
+     * @param nickname     user nickname
+     * @param email        user email
+     * @param stockValue   user stock value
+     * @param totalBalance user total balance
+     */
+    public User(String nickname, String email, float stockValue, float totalBalance) {
+        this.nickname = nickname;
+        this.email = email;
+        this.stockValue = stockValue;
+        this.totalBalance = totalBalance;
+    }
+
+    /**
+     * Empty constructor of the user
+     */
     public User() {
 
     }

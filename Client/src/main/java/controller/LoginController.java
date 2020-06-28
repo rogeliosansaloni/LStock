@@ -1,7 +1,6 @@
 package controller;
 
 import model.entities.AuthenticationInfo;
-import model.entities.TunnelObject;
 import network.NetworkManager;
 import view.LoginView;
 import view.RegisterView;
@@ -10,12 +9,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+/**
+ * Controller of JTextfields and buttons for login functionality
+ */
 public class LoginController implements ActionListener {
     private static final int ERROR_1 = 1;
     private static final int ERROR_2 = 2;
+    private static final String LOGIN = "Login";
+    private static final String REGISTER = "Register";
+    private static final String USER_LABEL = "Nickname or Email";
+    private static final String PASSWORD_LABEL = "Password";
     private LoginView loginView;
     private RegisterView registerView;
 
+    /**
+     * Initializes login controller and views
+     *
+     * @param loginView    Login view
+     * @param registerView Register view
+     */
     public LoginController(LoginView loginView, RegisterView registerView) {
         this.loginView = loginView;
         this.registerView = registerView;
@@ -23,11 +35,11 @@ public class LoginController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("login")) {
+        if (e.getActionCommand().equals(LOGIN)) {
             String user = loginView.getNicknameEmail();
             String password = loginView.getPassword();
             if (validCredentials(user, password)) {
-                TunnelObject login = new AuthenticationInfo(user, user, password, "login");
+                AuthenticationInfo login = new AuthenticationInfo(user, user, password, "login");
                 try {
                     NetworkManager.getInstance().sendAuthentificationInformation(login);
                 } catch (IOException ex) {
@@ -35,7 +47,7 @@ public class LoginController implements ActionListener {
                 }
             }
         }
-        if (e.getActionCommand().equals("register")) {
+        if (e.getActionCommand().equals(REGISTER)) {
             loginView.setVisible(false);
             registerView.setVisible(true);
         }
@@ -50,11 +62,11 @@ public class LoginController implements ActionListener {
      * @return true if all the fields are filled up correctly
      */
     private boolean validCredentials(String user, String password) {
-        if (user.equals("Nickname or Email") && password.equals("Password")) {
+        if (user.equals(USER_LABEL) && password.equals(PASSWORD_LABEL)) {
             loginView.showErrorMessage(ERROR_1);
             return false;
         }
-        if (user.equals("Nickname or Email") || password.equals("Password")) {
+        if (user.equals(USER_LABEL) || password.equals(PASSWORD_LABEL)) {
             loginView.showErrorMessage(ERROR_2);
             return false;
         }
@@ -64,10 +76,13 @@ public class LoginController implements ActionListener {
     /**
      * Closes the login view
      */
-    public void closeLoginView() { loginView.setVisible(false);}
+    public void closeLoginView() {
+        loginView.setVisible(false);
+        loginView.flushCredentials();
+    }
 
     /**
-     * Proc that sends the error message to the view
+     * Sends the error message to the view
      *
      * @param message that contains what error it is dealing with
      */

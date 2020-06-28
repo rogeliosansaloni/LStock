@@ -1,21 +1,19 @@
 package model.entities;
 
+/**
+ * Represents a share
+ */
 public class Share {
+    private User user;
+    private Company company;
     private int idShare;
     private float price;
 
     /**
-     * It will create a share
-     *
-     * @param price share value
+     * Empty constructor of Share
      */
+    public Share() {
 
-    public Share(float price) {
-        this.price = price;
-    }
-
-    public float calculteTotalValue() {
-        return 1;
     }
 
     /**
@@ -29,6 +27,14 @@ public class Share {
         return price;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
     /**
      * Setters
      */
@@ -38,6 +44,14 @@ public class Share {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
 

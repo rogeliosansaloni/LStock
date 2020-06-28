@@ -1,5 +1,6 @@
-package network;
+package database;
 
+import network.ServerConfiguration;
 import utils.JSONReader;
 
 import java.sql.Connection;
@@ -8,8 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Connector to MySQL database
+ */
 public class DBConnector {
-
     private static final String BASE_URL = "jdbc:mysql://%s:%d/%s?verifyServerCertificate=false&useSSL=true";
     private String dbUsername;
     private String dbPassword;
@@ -20,11 +23,17 @@ public class DBConnector {
     private static Statement s;
     private ServerConfiguration config;
 
+    /**
+     * Constructor for DBConnector
+     */
     public DBConnector() {
         config = new ServerConfiguration();
         initDBConfiguration();
     }
 
+    /**
+     * Initializes the database configuration from a file
+     */
     private void initDBConfiguration() {
         JSONReader jsonReader = new JSONReader();
         this.config = jsonReader.getServerConfiguration();
@@ -35,6 +44,9 @@ public class DBConnector {
         this.url = String.format(BASE_URL, config.getDbIp(), dbPort, db);
     }
 
+    /**
+     * Connects to MySQL jdbc driver
+     */
     public void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -50,6 +62,10 @@ public class DBConnector {
 
     }
 
+    /**
+     * Insert query function
+     * @param query Query
+     */
     public void insertQuery(String query) {
         try {
             s = (Statement) conn.createStatement();
@@ -62,6 +78,10 @@ public class DBConnector {
         }
     }
 
+    /**
+     * Updates query function
+     * @param query Query
+     */
     public void updateQuery(String query) {
         try {
             s = (Statement) conn.createStatement();
@@ -74,7 +94,11 @@ public class DBConnector {
         }
     }
 
-
+    /**
+     * Select query function
+     * @param query Query
+     * @return ResultSet
+     */
     public ResultSet selectQuery(String query) {
         ResultSet rs = null;
         try {
@@ -89,7 +113,43 @@ public class DBConnector {
         return rs;
     }
 
+    /**
+     * Delete query function
+     * @param query Query
+     */
+    public void deleteQuery(String query) {
+        try {
+            s = (Statement) conn.createStatement();
+            s.executeUpdate(query);
 
+        } catch (SQLException ex) {
+            System.out.println("Delete KO" + ex.getSQLState());
+            System.out.println("Query: " + query);
+            System.err.println(ex);
+        }
+
+    }
+
+    /**
+     * Procedure calls function
+     * @param query Procedure query
+     */
+    public void callProcedure(String query) {
+        try {
+            s = (Statement) conn.createStatement();
+            s.executeQuery(query);
+
+        } catch (SQLException ex) {
+            System.out.println("Delete KO" + ex.getSQLState());
+            System.out.println("Query: " + query);
+            System.err.println(ex);
+        }
+
+    }
+
+    /**
+     * Close mysql connection
+     */
     public void disconnect() {
         try {
             conn.close();
@@ -98,6 +158,4 @@ public class DBConnector {
             System.err.println(ex);
         }
     }
-
-
 }

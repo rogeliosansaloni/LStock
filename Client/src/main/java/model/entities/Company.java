@@ -1,45 +1,57 @@
 package model.entities;
 
-import java.util.ArrayList;
-
-
-
+/**
+ * Represents a Company in the system
+ */
 public class Company {
     private int companyId;
     private String name;
     private float value;
     private int shares;
     private User user;
-    private ArrayList<Bot> bots;
 
     /**
      * It will create a company
      *
-     * @param companyId  identification
-     * @param name company name
-     * @param value current company price
-     * @param shares  number of shares available to the user
-     * @param user user who has shares in that company
+     * @param companyId identification
+     * @param name      company name
+     * @param value     current company price
+     * @param shares    number of shares available to the user
+     * @param user      user who has shares in that company
      */
-
     public Company(int companyId, String name, float value, int shares, User user) {
         this.companyId = companyId;
         this.name = name;
         this.value = value;
         this.shares = shares;
         this.user = user;
-        this.bots = new ArrayList<Bot>();
     }
 
+    /**
+     * It will create a company
+     *
+     * @param companyId identification
+     * @param name      company name
+     * @param value     current company price
+     * @param shares    number of shares available to the user
+     */
+    public Company(int companyId, String name, float value, int shares) {
+        this.companyId = companyId;
+        this.name = name;
+        this.value = value;
+        this.shares = shares;
+    }
+
+    /**
+     * It will create an empty company
+     */
     public Company() {
 
     }
 
-    public void  listBots(){}
-
     /**
      * Getters
-     * **/
+     **/
     public int getCompanyId() {
         return companyId;
     }
@@ -62,7 +74,7 @@ public class Company {
 
     /**
      * Setters
-     * **/
+     **/
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }

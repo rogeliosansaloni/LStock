@@ -2,6 +2,9 @@ package network;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Server configuration class
+ */
 public class ServerConfiguration {
     private String ip;
     private int port;
