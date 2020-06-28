@@ -17,7 +17,8 @@ public class StockManager {
     private ArrayList<Company> companies;
     private ArrayList<CompanyChange> companiesChange;
     private ArrayList<ShareChange> sharesChange;
-    private ArrayList<ArrayList<CompanyDetail>> companyDetails;
+    private ArrayList<CompanyDetail> companyDetails;
+    private ArrayList<ArrayList<CompanyDetail>> companyDetailsList;
     private UserDao userDao;
     private CompanyDao companyDao;
     private ShareDao shareDao;
@@ -255,14 +256,37 @@ public class StockManager {
     }
 
     /**
+     * Gets the company details from a user and a certain comapany
+     *
+     * @param userId    User identifier
+     * @param companyId Company Identifier
+     * @return a list of a company detail
+     */
+    public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
+        companyDetails = companyDao.getCompanyDetails(userId, companyId);
+        return companyDetails;
+    }
+
+    /**
+     * Gets the sold shares from a user and a certain comapany
+     *
+     * @param userId    User identifier
+     * @param companyId Company Identifier
+     * @return a list of a company detail
+     */
+    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
+        return shareDao.getSharesSell(userId, companyId);
+    }
+
+    /**
      * Gets all the company details from a user
      *
      * @param userId    User identifier
      * @return a list of a company detail
      */
-    public ArrayList<ArrayList<CompanyDetail>> getCompanyDetails(int userId) {
-        companyDetails = companyDao.getCompanyDetails(userId);
-        return companyDetails;
+    public ArrayList<ArrayList<CompanyDetail>> getCompanyDetailsUpdate(int userId) {
+        companyDetailsList = companyDao.getCompanyDetailsUpdate(userId);
+        return companyDetailsList;
     }
 
     /**
@@ -271,8 +295,8 @@ public class StockManager {
      * @param userId    User identifier
      * @return a list of sold shares
      */
-    public ArrayList<ArrayList<ShareSell>> getSharesSell(int userId) {
-        return shareDao.getSharesSell(userId);
+    public ArrayList<ArrayList<ShareSell>> getSharesSellUpdate(int userId) {
+        return shareDao.getSharesSellUpdate(userId);
     }
 }
 

@@ -16,7 +16,7 @@ public class ShareMapperImpl implements ShareMapper {
      * @return a list of SharesSell
      */
     @Override
-    public ArrayList<ArrayList<ShareSell>> converToSharesSell(ArrayList<ShareSellList> shareSellList) {
+    public ArrayList<ArrayList<ShareSell>> converToSharesSellUpdate(ArrayList<ShareSellList> shareSellList) {
         ArrayList<ArrayList<ShareSell>> sharesSells = new ArrayList<ArrayList<ShareSell>>();
         for(int n=0; n< shareSellList.size(); n++){
             ArrayList<ShareSell> shares = new ArrayList<ShareSell>();
@@ -33,12 +33,40 @@ public class ShareMapperImpl implements ShareMapper {
     }
 
     /**
-     * Converts a list of ShareSell to SharesSellList DTO
-     * @param shareSells a list of ShareSell
-     * @return ShareSellList DTO
+     * Converts SharesSellList DTO to a list of ShareSell
+     * @param shareSellList SharesSellList DTO
+     * @return a list of SharesSell
      */
     @Override
-    public ArrayList<ShareSellList> convertToShareSellList(ArrayList<ArrayList<ShareSell>> shareSells) {
+    public ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList) {
+        ArrayList<ShareSell> sharesSell = new ArrayList<ShareSell>();
+        int sharesLen = shareSellList.getShareQuantity().length;
+        int[] shareId = shareSellList.getShareId();
+        float[] sharesValue = shareSellList.getShareValue();
+        int[] sharesQuantity = shareSellList.getShareQuantity();
+        for (int i = 0; i < sharesLen; i++) {
+            sharesSell.add(new ShareSell(shareId[i], sharesValue[i], sharesQuantity[i]));
+        }
+        return sharesSell;
+    }
+
+
+    @Override
+    public ShareSellList convertToShareSellList(ArrayList<ShareSell> shareSells) {
+        ShareSellList shareSellList = new ShareSellList(shareSells.size());
+        int i = 0;
+        for (ShareSell s : shareSells) {
+            shareSellList.setShareId(i, s.getShareId());
+            shareSellList.setShareValue(i, s.getShareValue());
+            shareSellList.setShareQuantity(i, s.getShareQuantity());
+            i++;
+        }
+        return shareSellList;
+    }
+
+
+    @Override
+    public ArrayList<ShareSellList> convertToShareSellListUpdate(ArrayList<ArrayList<ShareSell>> shareSells) {
         ArrayList<ShareSellList> sharesSells = new ArrayList<ShareSellList>();
         for(int n=0; n<shareSells.size(); n++){
             ShareSellList shareSellList = new ShareSellList(shareSells.size());

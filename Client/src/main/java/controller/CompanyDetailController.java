@@ -98,9 +98,8 @@ public class CompanyDetailController implements ActionListener {
      * Updates the CompanyDetailView
      */
     public void updateCompanyDetailView() {
-        //companyDetailView.updateCompanyDetailView(model.getCompanyDetails(), model.getMaxDetailShareValue());
-        companyDetailView.updateCompanyDetailView(model.getCompanyDetailsList().get(model.getCurrentCompanyId()-1), model.getMaxDetailShareValue());
-        companyDetailView.updateSharesToSell(model.getSharesSellList().get(model.getCurrentCompanyId()-1));
+        companyDetailView.updateCompanyDetailView(model.getCompanyDetails(), model.getMaxDetailShareValue());
+        companyDetailView.updateSharesToSell(model.getSharesSell());
     }
 
     /**

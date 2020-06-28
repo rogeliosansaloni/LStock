@@ -4,7 +4,6 @@ public class ThreadChange extends TunnelObject{
     private CompanyChangeList companyChangeList;
     private DetailViewInfo detailViewInfo;
     private ShareChangeList shareChangeList;
-
     private UserProfileInfo userProfileInfo;
 
     public ThreadChange(CompanyChangeList companyChangeList, DetailViewInfo detailViewInfo, ShareChangeList shareChangeList, UserProfileInfo userProfileInfo) {

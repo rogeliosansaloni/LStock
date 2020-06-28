@@ -69,11 +69,32 @@ public class ShareDao {
     }
 
     /**
+     * Gets a list of sold shares of a user and a company
+     * @param userId user identifier
+     * @param companyId company identifier
+     * @return list of shares sold
+     */
+    public ArrayList<ShareSell> getSharesSell(int userId, int companyId) {
+        ResultSet retrieved = dbConnector.selectQuery("CALL getSharesSell(" + userId + "," + companyId + ");");
+        ArrayList<ShareSell> shares = null;
+        try {
+            shares = new ArrayList<ShareSell>();
+            while (retrieved.next()) {
+                shares.add(toShareSell(retrieved));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting shares sell");
+        }
+        return shares;
+    }
+
+
+    /**
      * Gets a list of sold shares of a user and all the companies
      * @param userId user identifier
      * @return list of shares sold
      */
-    public ArrayList<ArrayList<ShareSell>> getSharesSell(int userId) {
+    public ArrayList<ArrayList<ShareSell>> getSharesSellUpdate(int userId) {
         final String selectQuery = "CALL getSharesSell(%d, %d);";
         final String errorMessage = "Error getting shares sell";
         final String getNumCompanies = "SELECT COUNT(c.company_id) as numCompanies FROM Company as c;";

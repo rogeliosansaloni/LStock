@@ -27,12 +27,16 @@ public interface ShareMapper {
      * @param shareSellList ShareSellList data
      * @return a ShareSell Arraylist containing the information retrieved.
      */
-    ArrayList<ArrayList<ShareSell>> converToSharesSell(ArrayList<ShareSellList> shareSellList);
+    ArrayList<ShareSell> converToSharesSell(ShareSellList shareSellList);
 
     /**
      * Converts retrieved information into a ShareSellList
      * @param shareSells ShareSell list
      * @return a ShareSellList object containing the information retrieved.
      */
-    ArrayList<ShareSellList> convertToShareSellList(ArrayList<ArrayList<ShareSell>> shareSells);
+    ShareSellList convertToShareSellList(ArrayList<ShareSell> shareSells);
+
+    ArrayList<ArrayList<ShareSell>> converToSharesSellUpdate(ArrayList<ShareSellList> shareSellList);
+
+    ArrayList<ShareSellList> convertToShareSellListUpdate(ArrayList<ArrayList<ShareSell>> shareSells);
 }

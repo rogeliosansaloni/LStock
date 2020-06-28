@@ -150,10 +150,10 @@ public class Server extends Thread {
                 ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
 
                 // Get detail view info
-                ArrayList<ArrayList<CompanyDetail>> companiesDetails = stockModel.getCompanyDetails(client.getLoggedUser());
-                ArrayList<ArrayList<ShareSell>> shares = stockModel.getSharesSell(client.getLoggedUser());
-                ArrayList<CompanyDetailList> companyDetailList = companyMapper.convertToCompanyDetailList(companiesDetails);
-                ArrayList<ShareSellList> shareSellList = shareMapper.convertToShareSellList(shares);
+                ArrayList<CompanyDetail> companyDetails = stockModel.getCompanyDetails(client.getLoggedUser(), client.getCurrentCompanyId());
+                ArrayList<ShareSell> shares = stockModel.getSharesSell(client.getLoggedUser(), client.getCurrentCompanyId());
+                CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companyDetails);
+                ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
                 DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
 
                 // Get user info
@@ -184,7 +184,7 @@ public class Server extends Thread {
                 }
             }
         };
-        timer.schedule(this.task, 0, 5000);
+        timer.schedule(this.task, 10000, 20000);
     }
 
     /**

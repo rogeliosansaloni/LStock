@@ -1,34 +1,33 @@
 package model.entities;
 
-import java.util.ArrayList;
-
 /**
  * This class has all the necessary information to show in the CompanyDetailView
  */
 public class DetailViewInfo extends TunnelObject {
 
-    private ArrayList<CompanyDetailList> companyDetailList;
+    private CompanyDetailList companyDetailList;
 
-    private ArrayList<ShareSellList> shareSellList;
+    private ShareSellList shareSellList;
 
-    public DetailViewInfo(ArrayList<CompanyDetailList> companyDetailList, ArrayList<ShareSellList> shareSellList) {
+    public DetailViewInfo(CompanyDetailList companyDetailList, ShareSellList shareSellList) {
         this.companyDetailList = companyDetailList;
         this.shareSellList = shareSellList;
     }
 
-    public ArrayList<CompanyDetailList> getCompanyDetailList() {
+    public CompanyDetailList getCompanyDetailList() {
         return companyDetailList;
     }
 
-    public void setCompanyDetailList(ArrayList<CompanyDetailList> companyDetailList) {
+    public void setCompanyDetailList(CompanyDetailList companyDetailList) {
         this.companyDetailList = companyDetailList;
     }
 
-    public ArrayList<ShareSellList> getShareSellList() {
+    public ShareSellList getShareSellList() {
         return shareSellList;
     }
 
-    public void setShareSellList(ArrayList<ShareSellList> shareSellList) {
+    public void setShareSellList(ShareSellList shareSellList) {
         this.shareSellList = shareSellList;
     }
 }
+

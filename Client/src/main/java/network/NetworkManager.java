@@ -274,17 +274,27 @@ public class NetworkManager extends Thread {
                     mainView.setVisible(true);
                 }
 
-                // New updates received from the
+                if (received instanceof DetailViewInfo) {
+                    CompanyDetailList companyDetails = ((DetailViewInfo) received).getCompanyDetailList();
+                    ShareSellList sharesSells = ((DetailViewInfo) received).getShareSellList();
+                    model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
+                    model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
+                    mainController.updateModel(model);
+                    mainController.updateCompanyDetails();
+                }
+
+                if (received instanceof ShareChangeList) {
+                    ShareChangeList shares = (ShareChangeList) received;
+                    ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
+                    model.setSharesChange(sharesChange);
+                    mainController.updateModel(model);
+                    mainController.updateShareView();
+                }
+
+
                 if (received instanceof ThreadChange) {
                     System.out.println("ThreadChange received.");
-                    /*if (mainController != null) {
-                        mainController.sendCompaniesChange();
-                        mainController.sendUserProfileInfo();
-                        mainController.sendSharesChange();
-                        if (model.getCompanyDetails() != null) {
-                            mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
-                        }
-                    }*/
+
                     if (mainController != null) {
                         // Get company change info
                         CompanyChangeList companies = (CompanyChangeList) ((ThreadChange) received).getCompanyChangeList();
@@ -293,10 +303,10 @@ public class NetworkManager extends Thread {
                         model.setCompaniesChange(companiesChange);
 
                         // Get company detail info
-                        ArrayList<CompanyDetailList> companyDetailLists = ((ThreadChange) received).getDetailViewInfo().getCompanyDetailList();
-                        ArrayList<ShareSellList> sharesSells = ((ThreadChange) received).getDetailViewInfo().getShareSellList();
-                        model.setCompanyDetailsList(companyMapper.converToCompanyDetails(companyDetailLists));
-                        model.setSharesSellList(shareMapper.converToSharesSell(sharesSells));
+                        CompanyDetailList companyDetailList = ((ThreadChange) received).getDetailViewInfo().getCompanyDetailList();
+                        ShareSellList sharesSells = ((ThreadChange) received).getDetailViewInfo().getShareSellList();
+                        model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetailList));
+                        model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
 
                         // Get share change info
                         ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);

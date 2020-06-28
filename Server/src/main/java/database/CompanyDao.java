@@ -103,13 +103,60 @@ public class CompanyDao {
     }
 
     /**
+     * Gets the value of the share of an specific company the last 10 minutes
+     * before the last change in the value of the share
+     *
+     * @return ArrayList<CompanyChange> an list of the information mentioned before
+     */
+    public ArrayList<CompanyDetail> getCompanyDetails(int userId, int companyId) {
+        ArrayList<CompanyDetail> companies = new ArrayList<CompanyDetail>();
+        int numUserShares = 0;
+
+        ResultSet retrievedShares = dbConnector.selectQuery("CALL getNumUserShares(" + userId + ", " + companyId + ");");
+        try {
+            if(retrievedShares.next()){
+                numUserShares = retrievedShares.getInt("numUserShares");
+            }
+        } catch (SQLException e) {
+            System.out.println(GETTING_COMPANIES_ERROR_DETAIL);
+        }
+
+        for(int i=0; i<10; i++){
+            ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
+            try {
+                if(!retrieved.next()){
+                    ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName, s.price as currentPrice " +
+                            "FROM Company as c JOIN Share as s ON s.company_id = c.company_id " +
+                            "WHERE c.company_id = " + companyId + " AND " +
+                            "s.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s.company_id);");
+                    retrievedCompanyName.next();
+                    companies.add(new CompanyDetail(numUserShares, companyId, retrievedCompanyName.getString("companyName"), i, retrievedCompanyName.getFloat("currentPrice")));
+                }else{
+                    retrieved.beforeFirst();
+                    while (retrieved.next()) {
+                        companies.add(toCompanyDetail(numUserShares, retrieved));
+                    }
+                    ResultSet retrievedMaxMin = dbConnector.selectQuery("CALL getMaxMinValues(" + i + ", " + companyId + ");");
+                    while (retrievedMaxMin.next()) {
+                        companies.set(i, extractMaxMinDetail(retrievedMaxMin, companies.get(i)));
+                    }
+                }
+            } catch (SQLException e) {
+                System.out.println(GETTING_COMPANIES_ERROR_DETAIL);
+            }
+
+        }
+        return companies;
+    }
+
+
+    /**
      * Gets the value of the shares of all companies the last 10 minutes
      * before the last change in the value of their shares
      *
      * @return ArrayList<ArrayList<CompanyDetail>> an list of the information mentioned before
      */
-
-    public ArrayList<ArrayList<CompanyDetail>> getCompanyDetails(int userId) {
+    public ArrayList<ArrayList<CompanyDetail>> getCompanyDetailsUpdate(int userId) {
         final String callNumShares = "CALL getNumUserShares(%d, %d);";
         final String callCompanyDetails = "CALL getCompanyDetails(%d, %d);";
         final String callMaxMinValues = "CALL getMaxMinValues(%d, %d);";
@@ -129,7 +176,7 @@ public class CompanyDao {
         }
         ArrayList<ArrayList<CompanyDetail>> companiesDetails = new ArrayList<ArrayList<CompanyDetail>>();
 
-        for(int i=1; i<numCompanies+1; i++){
+        for(int i=1; i<=numCompanies; i++){
             int companyId = i;
             int numUserShares = 0;
             ResultSet retrievedShares = dbConnector.selectQuery(String.format(Locale.US, callNumShares, userId ,companyId));
