@@ -56,13 +56,13 @@ public class CompanyDetail {
      * @param minutesBefore Minutes
      * @param valueClose    Closest value
      */
-    public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore, float valueClose) {
+    public CompanyDetail(int numUserShares, int companyId, String companyName, int minutesBefore, int shareIdClose, float valueClose) {
         this.numUserShares = numUserShares;
         this.companyId = companyId;
         this.companyName = companyName;
         this.minutesBefore = minutesBefore;
         this.shareIdOpen = -1;
-        this.shareIdClose = -1;
+        this.shareIdClose = shareIdClose;
         this.valueOpen = -1;
         this.valueClose = valueClose;
         this.maxValue = -1;

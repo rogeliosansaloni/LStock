@@ -110,7 +110,7 @@ public class BotsListView extends JPanel {
                 } else {
                     status = STATUS_KO;
                 }
-                Object[] obj = {b.getCompany().getName(), b.getBotId(), Math.round(b.getProbability()) + "%", Math.round(b.getActiveTime()) + "s", status};
+                Object[] obj = {b.getCompany().getName(), b.getBotId(), String.format("%.2f", b.getProbability()) + "%", Math.round(b.getActiveTime()) + "s", status};
                 model.addRow(obj);
             }
         }

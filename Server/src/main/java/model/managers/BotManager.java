@@ -195,6 +195,9 @@ public class BotManager {
                 for (Bot b : company.getBots()) {
                     if (b.getBotId() == bot.getBotId()) {
                         b.setStatus(newActivity);
+                        if (newActivity == 1) {
+                            b.wakeUpBot();
+                        }
                     }
                 }
                 return;

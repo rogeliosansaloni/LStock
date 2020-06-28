@@ -65,6 +65,10 @@ public interface ShareMapper {
      */
     ShareSellList convertToShareSellList(ArrayList<ShareSell> shareSells);
 
+    ArrayList<ArrayList<ShareSell>> converToSharesSellUpdate(ArrayList<ShareSellList> shareSellList);
+
+    ArrayList<ShareSellList> convertToShareSellListUpdate(ArrayList<ArrayList<ShareSell>> shareSells);
+
     /**
      * Converts retrieved information into a ShareChange Arraylist
      * @param shareChangeList ShareChangeList data
