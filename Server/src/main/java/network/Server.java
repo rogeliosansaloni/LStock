@@ -183,7 +183,7 @@ public class Server extends Thread {
                 }
             }
         };
-        timer.schedule(this.task, 0, 25000);
+        timer.schedule(this.task, 0, 5000);
     }
 
     /**

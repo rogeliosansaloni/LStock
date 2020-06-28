@@ -122,6 +122,7 @@ public class CompanyDao {
         ResultSet retrievedNumCompanies = dbConnector.selectQuery(getNumCompanies);
         int numCompanies = 0;
         try{
+            retrievedNumCompanies.next();
             numCompanies = retrievedNumCompanies.getInt("numCompanies");
         }catch (SQLException e){
             System.out.println("Error getting the number of companies.");

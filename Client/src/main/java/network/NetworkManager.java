@@ -250,6 +250,30 @@ public class NetworkManager extends Thread {
                     }
                 }
 
+                if (received instanceof ShareTrade) {
+                    ShareTrade info = ((ShareTrade) received);
+                    mainController.updateTotalBalance(info.getTotalBalance());
+                    if (info.getView().equals("CompanyDetail")) {
+                        mainController.getCompanyController().sendUserShares(info.getCompanyId());
+                    } else if (info.getView().equals("Shares")) {
+                        mainController.sendSharesChange();
+                    }
+                }
+
+                if (received instanceof CompanyChangeList) {
+                    CompanyChangeList companies = (CompanyChangeList) received;
+                    ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
+                    if (mainView == null) {
+                        initMainView(companiesChange);
+                    } else {
+                        reinitMainView();
+                    }
+                    model.setCompaniesChange(companiesChange);
+                    mainController.updateModel(model);
+                    mainController.updateCompanyList();
+                    mainView.setVisible(true);
+                }
+
                 // New updates received from the
                 if (received instanceof ThreadChange) {
                     System.out.println("ThreadChange received.");

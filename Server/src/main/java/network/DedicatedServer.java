@@ -113,6 +113,11 @@ public class DedicatedServer extends Thread {
                     oos.writeObject(share);
                 }
 
+                if (tunnelObject instanceof CompanyChangeList) {
+                    ArrayList<CompanyChange> companies = stockModel.getCompaniesChange();
+                    CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
+                    oos.writeObject(companyChangeList);
+                }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

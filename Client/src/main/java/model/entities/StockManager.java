@@ -17,6 +17,7 @@ public class StockManager {
         this.user = user;
         companyDetailsList = new ArrayList<ArrayList<CompanyDetail>>();
         sharesSellList = new ArrayList<ArrayList<ShareSell>>();
+        this.currentCompanyId = 1;
     }
 
     /**
@@ -190,7 +191,7 @@ public class StockManager {
 
     public void setCompanyDetailsList(ArrayList<ArrayList<CompanyDetail>> companyDetailsList) {
         this.companyDetailsList = companyDetailsList;
-        this.companyDetails = this.companyDetailsList.get(this.currentCompanyId);
+        this.companyDetails = this.companyDetailsList.get(this.currentCompanyId-1);
     }
 
     public void setSharesSellList(ArrayList<ArrayList<ShareSell>> sharesSellList) {
