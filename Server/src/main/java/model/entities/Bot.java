@@ -139,7 +139,7 @@ public class Bot extends Thread {
 
             // Checks if the bot should buy or sell according to probability
             double randomProb = new Random().nextDouble();
-            if (randomProb * 100 >= probability) {
+            if (randomProb * 100 <= probability) {
                 System.out.println(String.format(TRANSACTION_MESSAGE, botId, "buy"));
                 model.buyShare(purchase);
                 shares.add(purchase);
