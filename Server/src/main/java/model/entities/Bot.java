@@ -110,7 +110,6 @@ public class Bot extends Thread {
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            e.printStackTrace();
         }
     }
 
