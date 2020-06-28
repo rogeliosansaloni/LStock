@@ -178,6 +178,7 @@ public class Server extends Thread {
             public void run() {
                 try {
                     updateAllClients();
+                    System.out.println("Send a threadChange.");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

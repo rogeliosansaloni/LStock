@@ -196,5 +196,6 @@ public class StockManager {
 
     public void setSharesSellList(ArrayList<ArrayList<ShareSell>> sharesSellList) {
         this.sharesSellList = sharesSellList;
+        this.sharesSell =  this.sharesSellList.get(this.currentCompanyId-1);
     }
 }

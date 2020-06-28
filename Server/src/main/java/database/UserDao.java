@@ -134,7 +134,9 @@ public class UserDao {
                 user.setUserId(result.getInt("user_id"));
                 user.setNickname(result.getObject("nickname").toString());
                 user.setEmail(result.getObject("email").toString());
-                user.setDescription(result.getObject("description").toString());
+                if(result.getObject("description") != null){
+                    user.setDescription(result.getObject("description").toString());
+                }
                 user.setTotalBalance(result.getFloat("total_balance"));
             }
         } catch (SQLException e) {
