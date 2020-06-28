@@ -25,7 +25,7 @@ git clone https://atlassian.salle.url.edu:7943/scm/dpoo/dpoo-stock-c2.git
 ## Conexión BBDD
 
 Hay dos maneras para la conexión a la base de datos
-1. Conexión a la base de datos en remoto. Tenemos una base de datos en AWS. Para usar esta base de datos, deberéis avisarnos y os daremos una IP para tener acceso. Además para que podamos arrancar el
+1. Conexión a la base de datos en remoto. Tenemos una base de datos en AWS. Para usar esta base de datos, deberéis avisarnos y os daremos acceso. Además para que podamos arrancar el
 servidor donde se encuentra MySQL.
 2. Conexión a la base de datos en local. Al ejecutar el script de MySQL en local, hay que cambiar también las credenciales de la base de datos especificadas en config.json.
 
