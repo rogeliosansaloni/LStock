@@ -292,7 +292,7 @@ public class NetworkManager extends Thread {
                 }
 
                 if (received instanceof ThreadChange) {
-                    if (mainView != null) {
+                    if (mainView != null && mainView.isVisible()) {
                         mainController.sendCompaniesChange();
                         mainController.sendUserProfileInfo();
                         mainController.sendSharesChange();
