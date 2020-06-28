@@ -291,37 +291,14 @@ public class NetworkManager extends Thread {
                     mainController.updateShareView();
                 }
 
-
                 if (received instanceof ThreadChange) {
-                    System.out.println("ThreadChange received.");
-
-                    if (mainController != null) {
-                        // Get company change info
-                        CompanyChangeList companies = (CompanyChangeList) ((ThreadChange) received).getCompanyChangeList();
-                        ShareChangeList shares = (ShareChangeList) ((ThreadChange) received).getShareChangeList();
-                        ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
-                        model.setCompaniesChange(companiesChange);
-
-                        // Get company detail info
-                        CompanyDetailList companyDetailList = ((ThreadChange) received).getDetailViewInfo().getCompanyDetailList();
-                        ShareSellList sharesSells = ((ThreadChange) received).getDetailViewInfo().getShareSellList();
-                        model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetailList));
-                        model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
-
-                        // Get share change info
-                        ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
-                        model.setSharesChange(sharesChange);
-
-                        // Get user info
-                        User user = mapper.userProfileInfoToUser(((ThreadChange) received).getUserProfileInfo());
-                        model.updateUserInfo(user);
-
-                        mainController.updateModel(model);
-                        mainController.updateCompanyList();
-                        mainController.updateCompanyDetails();
-                        mainController.updateShareView();
-                        mainController.updateTotalBalance(user.getTotalBalance());
-                        mainController.updateModel(model);
+                    if (mainView != null) {
+                        mainController.sendCompaniesChange();
+                        mainController.sendUserProfileInfo();
+                        mainController.sendSharesChange();
+                        if (model.getCompanyDetails() != null) {
+                            mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
+                        }
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {

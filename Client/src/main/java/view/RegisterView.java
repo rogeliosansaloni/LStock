@@ -43,6 +43,7 @@ public class RegisterView extends JFrame {
     private JButton jbLogin;
     private JButton jbRegister;
     private StockColors color;
+    private JPanel jpCenter;
 
     /**
      * Creates and initializes the register view
