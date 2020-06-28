@@ -250,47 +250,6 @@ public class NetworkManager extends Thread {
                     }
                 }
 
-                if (received instanceof ShareTrade) {
-                    ShareTrade info = ((ShareTrade) received);
-                    mainController.updateTotalBalance(info.getTotalBalance());
-                    if (info.getView().equals("CompanyDetail")) {
-                        mainController.getCompanyController().sendUserShares(info.getCompanyId());
-                    } else if (info.getView().equals("Shares")) {
-                        mainController.sendSharesChange();
-                    }
-                }
-
-                if (received instanceof CompanyChangeList) {
-                    CompanyChangeList companies = (CompanyChangeList) received;
-                    ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
-                    if (mainView == null) {
-                        initMainView(companiesChange);
-                    } else {
-                        reinitMainView();
-                    }
-                    model.setCompaniesChange(companiesChange);
-                    mainController.updateModel(model);
-                    mainController.updateCompanyList();
-                    mainView.setVisible(true);
-                }
-
-                if (received instanceof DetailViewInfo) {
-                    CompanyDetailList companyDetails = ((DetailViewInfo) received).getCompanyDetailList();
-                    ShareSellList sharesSells = ((DetailViewInfo) received).getShareSellList();
-                    model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
-                    model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
-                    mainController.updateModel(model);
-                    mainController.updateCompanyDetails();
-                }
-
-                if (received instanceof ShareChangeList) {
-                    ShareChangeList shares = (ShareChangeList) received;
-                    ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
-                    model.setSharesChange(sharesChange);
-                    mainController.updateModel(model);
-                    mainController.updateShareView();
-                }
-
                 // New updates received from the
                 if (received instanceof ThreadChange) {
                     System.out.println("ThreadChange received.");
@@ -302,21 +261,35 @@ public class NetworkManager extends Thread {
                             mainController.getCompanyController().sendUserShares(model.getCompanyDetails().get(0).getCompanyId());
                         }
                     }*/
-                    CompanyChangeList companies = (CompanyChangeList) ((ThreadChange) received).getCompanyChangeList();
-                    ShareChangeList shares = (ShareChangeList) ((ThreadChange) received).getShareChangeList();
+                    if (mainController != null) {
+                        // Get company change info
+                        CompanyChangeList companies = (CompanyChangeList) ((ThreadChange) received).getCompanyChangeList();
+                        ShareChangeList shares = (ShareChangeList) ((ThreadChange) received).getShareChangeList();
+                        ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
+                        model.setCompaniesChange(companiesChange);
 
-                    ArrayList<CompanyChange> companiesChange = companyMapper.convertToCompaniesChange(companies);
-                    model.setCompaniesChange(companiesChange);
-                    model.setCompanyDetails(companyMapper.converToCompanyDetails(companyDetails));
-                    model.setSharesSell(shareMapper.converToSharesSell(sharesSells));
-                    ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
-                    model.setSharesChange(sharesChange);
-                    mainController.updateModel(model);
-                    mainController.updateCompanyList();
-                    mainController.updateCompanyDetails();
-                    mainController.updateShareView();
+                        // Get company detail info
+                        ArrayList<CompanyDetailList> companyDetailLists = ((ThreadChange) received).getDetailViewInfo().getCompanyDetailList();
+                        ArrayList<ShareSellList> sharesSells = ((ThreadChange) received).getDetailViewInfo().getShareSellList();
+                        model.setCompanyDetailsList(companyMapper.converToCompanyDetails(companyDetailLists));
+                        model.setSharesSellList(shareMapper.converToSharesSell(sharesSells));
+
+                        // Get share change info
+                        ArrayList<ShareChange> sharesChange = shareMapper.convertToSharesChange(shares);
+                        model.setSharesChange(sharesChange);
+
+                        // Get user info
+                        User user = mapper.userProfileInfoToUser(((ThreadChange) received).getUserProfileInfo());
+                        model.updateUserInfo(user);
+
+                        mainController.updateModel(model);
+                        mainController.updateCompanyList();
+                        mainController.updateCompanyDetails();
+                        mainController.updateShareView();
+                        mainController.updateTotalBalance(user.getTotalBalance());
+                        mainController.updateModel(model);
+                    }
                 }
-
             } catch (IOException | ClassNotFoundException e) {
                 running = false;
                 try {

@@ -115,6 +115,17 @@ public class StockManager {
     }
 
     /**
+     * Gets all the info of the user.
+     *
+     * @param user_id the user_id
+     * @return User the information of the user
+     */
+    public User getAllUserInfo(int user_id) {
+        User user = userDao.getAllUserInfo(user_id);
+        return user;
+    }
+
+    /**
      * Creates a new share between company and user.
      *
      * @param user    the user

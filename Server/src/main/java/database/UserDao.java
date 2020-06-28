@@ -121,6 +121,28 @@ public class UserDao {
         return -1;
     }
 
+    /**
+     * Gets all the information from a user
+     * @param user_id the user id
+     * @return User
+     */
+    public User getAllUserInfo(int user_id) {
+        ResultSet result = dbConnector.selectQuery("SELECT * FROM User WHERE user_id = " + user_id + ";");
+        User user = new User();
+        try {
+            while (result.next()) {
+                user.setUserId(result.getInt("user_id"));
+                user.setNickname(result.getObject("nickname").toString());
+                user.setEmail(result.getObject("email").toString());
+                user.setDescription(result.getObject("description").toString());
+                user.setTotalBalance(result.getFloat("total_balance"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Error getting all the user information");
+        }
+        return user;
+    }
+
 
     /**
      * Gets all registered users

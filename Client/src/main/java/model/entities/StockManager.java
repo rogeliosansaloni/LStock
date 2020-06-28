@@ -187,4 +187,13 @@ public class StockManager {
     public int setCurrentCompanyId(int id) {
         return currentCompanyId;
     }
+
+    public void setCompanyDetailsList(ArrayList<ArrayList<CompanyDetail>> companyDetailsList) {
+        this.companyDetailsList = companyDetailsList;
+        this.companyDetails = this.companyDetailsList.get(this.currentCompanyId);
+    }
+
+    public void setSharesSellList(ArrayList<ArrayList<ShareSell>> sharesSellList) {
+        this.sharesSellList = sharesSellList;
+    }
 }

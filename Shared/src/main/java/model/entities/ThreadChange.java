@@ -5,11 +5,14 @@ public class ThreadChange extends TunnelObject{
     private DetailViewInfo detailViewInfo;
     private ShareChangeList shareChangeList;
 
-    public ThreadChange(CompanyChangeList companyChangeList, DetailViewInfo detailViewInfo, ShareChangeList shareChangeList) {
+    private UserProfileInfo userProfileInfo;
+
+    public ThreadChange(CompanyChangeList companyChangeList, DetailViewInfo detailViewInfo, ShareChangeList shareChangeList, UserProfileInfo userProfileInfo) {
         System.out.println("ThreadChange created.");
         this.companyChangeList = companyChangeList;
         this.detailViewInfo = detailViewInfo;
         this.shareChangeList = shareChangeList;
+        this.userProfileInfo = userProfileInfo;
     }
 
     public ShareChangeList getShareChangeList() {
@@ -34,5 +37,13 @@ public class ThreadChange extends TunnelObject{
 
     public void setCompanyChangeList(CompanyChangeList companyChangeList) {
         this.companyChangeList = companyChangeList;
+    }
+
+    public UserProfileInfo getUserProfileInfo() {
+        return userProfileInfo;
+    }
+
+    public void setUserProfileInfo(UserProfileInfo userProfileInfo) {
+        this.userProfileInfo = userProfileInfo;
     }
 }

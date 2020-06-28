@@ -113,32 +113,6 @@ public class DedicatedServer extends Thread {
                     oos.writeObject(share);
                 }
 
-                if (tunnelObject instanceof CompanyList) {
-                    ArrayList<Company> companies = stockModel.getCompanies();
-                    CompanyList companyList = companyMapper.convertToCompanyList(companies);
-                    oos.writeObject(companyList);
-                }
-
-                if (tunnelObject instanceof CompanyChangeList) {
-                    ArrayList<CompanyChange> companies = stockModel.getCompaniesChange();
-                    CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
-                    oos.writeObject(companyChangeList);
-                }
-
-                if (tunnelObject instanceof UserShares) {
-                    ArrayList<CompanyDetail> companies = stockModel.getCompanyDetails(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
-                    ArrayList<ShareSell> shares = stockModel.getSharesSell(((UserShares) tunnelObject).getUserId(), ((UserShares) tunnelObject).getCompanyId());
-                    CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companies);
-                    ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
-                    DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
-                    oos.writeObject(detailViewInfo);
-                }
-
-                if (tunnelObject instanceof ShareChangeList) {
-                    ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(((ShareChangeList) tunnelObject).getUserId());
-                    ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
-                    oos.writeObject(sharesChangeList);
-                }
             }
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

@@ -156,7 +156,10 @@ public class Server extends Thread {
                 ArrayList<ShareSellList> shareSellList = shareMapper.convertToShareSellList(shares);
                 DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
 
-                ThreadChange change = new ThreadChange(companyChangeList, detailViewInfo, sharesChangeList);
+                // Get user info
+                User user = stockModel.getAllUserInfo(client.getLoggedUser());
+                UserProfileInfo userProfileInfo = new UserProfileInfo(user.getUserId(), user.getNickname(), user.getEmail(), user.getDescription(), user.getTotalBalance());
+                ThreadChange change = new ThreadChange(companyChangeList, detailViewInfo, sharesChangeList, userProfileInfo);
 
                 if (oosClient != null) {
                     oosClient.writeObject(change);
@@ -180,7 +183,7 @@ public class Server extends Thread {
                 }
             }
         };
-        timer.schedule(this.task, 0, 1000);
+        timer.schedule(this.task, 0, 25000);
     }
 
     /**
