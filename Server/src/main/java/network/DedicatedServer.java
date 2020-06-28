@@ -12,6 +12,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Dedicated server class
@@ -27,6 +29,8 @@ public class DedicatedServer extends Thread {
     private ShareMapperImpl shareMapper;
     private int loggedUser;
     private int currentCompanyId = 1;
+    private TimerTask task;
+
 
     /**
      * DedicatedServer constructor
@@ -48,6 +52,7 @@ public class DedicatedServer extends Thread {
     public void stopServerConnection() {
         this.isOn = false;
         this.interrupt();
+        stopUpdatingClient();
     }
 
     /**
@@ -56,6 +61,7 @@ public class DedicatedServer extends Thread {
     public void startServerConnection() {
         this.isOn = true;
         this.start();
+        updateClient();
     }
 
     /**
@@ -163,19 +169,60 @@ public class DedicatedServer extends Thread {
     }
 
     /**
-     * Gets the object output stream
-     *
-     * @return ObjectOutputStream
+     * Triggers sendThreadChange every certain period of time
      */
-    public ObjectOutputStream getOos() {
-        return oos;
+    private void updateClient() {
+        Timer timer = new Timer();
+        this.task = new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    sendThreadChange();
+                    System.out.println("Send a threadChange.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        timer.schedule(this.task, 10000, 20000);
     }
 
-    public int getLoggedUser() {
-        return loggedUser;
+    /**
+     * Updates clients
+     *
+     * @throws IOException
+     */
+    public void sendThreadChange() throws IOException {
+        if (isOn) {
+            // Get company change list
+            ArrayList<CompanyChange> companies = stockModel.getCompaniesChange();
+            CompanyChangeList companyChangeList = companyMapper.convertToCompanyChangeList(companies);
+
+            // Get share change list
+            ArrayList<ShareChange> sharesChange = stockModel.getSharesChange(this.loggedUser);
+            ShareChangeList sharesChangeList = shareMapper.convertToShareChangeList(sharesChange);
+
+            // Get detail view info
+            ArrayList<CompanyDetail> companyDetails = stockModel.getCompanyDetails(this.loggedUser, this.currentCompanyId);
+            ArrayList<ShareSell> shares = stockModel.getSharesSell(this.loggedUser, this.currentCompanyId);
+            CompanyDetailList companyDetailList = companyMapper.convertToCompanyDetailList(companyDetails);
+            ShareSellList shareSellList = shareMapper.convertToShareSellList(shares);
+            DetailViewInfo detailViewInfo = new DetailViewInfo(companyDetailList, shareSellList);
+
+            // Get user info
+            User user = stockModel.getAllUserInfo(this.loggedUser);
+            UserProfileInfo userProfileInfo = new UserProfileInfo(user.getUserId(), user.getNickname(), user.getEmail(), user.getDescription(), user.getTotalBalance());
+            ThreadChange change = new ThreadChange(companyChangeList, detailViewInfo, sharesChangeList, userProfileInfo);
+
+            this.oos.writeObject(change);
+        }
     }
 
-    public int getCurrentCompanyId() {
-        return currentCompanyId;
+    /**
+     * Stops updating the client automatically
+     */
+    private void stopUpdatingClient() {
+        this.task.cancel();
     }
+
 }

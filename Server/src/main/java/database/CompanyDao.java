@@ -125,12 +125,12 @@ public class CompanyDao {
             ResultSet retrieved = dbConnector.selectQuery("CALL getCompanyDetails(" + i + ", " + companyId + ");");
             try {
                 if(!retrieved.next()){
-                    ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName, s.price as currentPrice " +
+                    ResultSet retrievedCompanyName = dbConnector.selectQuery("SELECT c.name as companyName, s.price as currentPrice, s.share_id as shareId " +
                             "FROM Company as c JOIN Share as s ON s.company_id = c.company_id " +
                             "WHERE c.company_id = " + companyId + " AND " +
                             "s.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s.company_id);");
                     retrievedCompanyName.next();
-                    companies.add(new CompanyDetail(numUserShares, companyId, retrievedCompanyName.getString("companyName"), i, retrievedCompanyName.getFloat("currentPrice")));
+                    companies.add(new CompanyDetail(numUserShares, companyId, retrievedCompanyName.getString("companyName"), i, retrievedCompanyName.getInt("shareId"), retrievedCompanyName.getFloat("currentPrice")));
                 }else{
                     retrieved.beforeFirst();
                     while (retrieved.next()) {
@@ -160,7 +160,7 @@ public class CompanyDao {
         final String callNumShares = "CALL getNumUserShares(%d, %d);";
         final String callCompanyDetails = "CALL getCompanyDetails(%d, %d);";
         final String callMaxMinValues = "CALL getMaxMinValues(%d, %d);";
-        final String selectQuery = "SELECT c.name as companyName, s.price as currentPrice " +
+        final String selectQuery = "SELECT c.name as companyName, s.price as currentPrice, s.share_id as shareId  " +
                 "FROM Company as c JOIN Share as s ON s.company_id = c.company_id " +
                 "WHERE c.company_id = %d AND " +
                 "s.time = (SELECT MAX(s2.time) FROM Share as s2 WHERE s2.company_id = s.company_id);";
@@ -196,7 +196,7 @@ public class CompanyDao {
                         ResultSet retrievedCompanyName = dbConnector.selectQuery(String.format(Locale.US, selectQuery, companyId));
                         retrievedCompanyName.next();
                         companies.add(new CompanyDetail(numUserShares, companyId, retrievedCompanyName.getString("companyName"),
-                                j, retrievedCompanyName.getFloat("currentPrice")));
+                                j, retrievedCompanyName.getInt("shareId"), retrievedCompanyName.getFloat("currentPrice")));
                     }else{
                         retrieved.beforeFirst();
                         while (retrieved.next()) {
