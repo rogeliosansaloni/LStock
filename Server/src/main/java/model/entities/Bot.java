@@ -2,7 +2,6 @@ package model.entities;
 
 import model.managers.StockManager;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -134,7 +133,6 @@ public class Bot extends Thread {
 
             // Bot works every after X seconds
             Thread.sleep((long) (activeTime * 1000));
-
             Purchase purchase = new Purchase(1, company.getCompanyId(), model.getShareId(company.getCompanyId()), 1);
 
             // Checks if the bot should buy or sell according to probability
