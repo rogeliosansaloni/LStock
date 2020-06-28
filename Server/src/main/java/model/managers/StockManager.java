@@ -38,7 +38,21 @@ public class StockManager {
     }
 
     /**
-     * Registers a user if the conditions are met
+     * Constructor for a StockManager
+     *
+     * @param userDao Dao for the User Table
+     * @param companyDao Dao for the Company Table
+     */
+    public StockManager(UserDao userDao, CompanyDao companyDao) {
+        this.userDao = userDao;
+        this.companyDao = companyDao;
+        this.companies = new ArrayList<Company>();
+        this.companiesChange = new ArrayList<CompanyChange>();
+        this.sharesChange = new ArrayList<ShareChange>();
+    }
+
+    /**
+     * Function that registers a user if the conditions are met
      *
      * @param user the user
      * @return Authentification with the information we need to send for the client
