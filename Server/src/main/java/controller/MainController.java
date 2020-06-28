@@ -72,6 +72,7 @@ public class MainController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case CARD_HOME:
+                this.sharesController.loadUsers();
                 view.updateView(CARD_HOME);
                 break;
             case CARD_USERS:
