@@ -24,24 +24,15 @@ git clone https://atlassian.salle.url.edu:7943/scm/dpoo/dpoo-stock-c2.git
 
 ## Conexión BBDD
 
-1. Asignar tu IP publico:
-	
-	1.Columna de izquierda, Security Groups
-	2.Edit Rules
-	3. Añadir tu IP en (SSH, MySQL/Aurora,HTTPS)
-2. Connectar a AWS
-
-	1. Acceder desde : https://438369310031.signin.aws.amazon.com/console
-	2. Usar tus credenciales de AWS (pedir accesso: nicolemarie.jimenez@students.salle.url.edu).
-	3. Region: eu-west-3 / Paris
-	4. EC2
-	5. Instances > DPOO-C2 StockLS DDBB > Actions > Instance State > Start
-	6. Una vez terminado lo que se tiene que hacer, apagar el servidor.
+Hay dos maneras para la conexión a la base de datos
+1. Conexión a la base de datos en remoto. Tenemos una base de datos en AWS. Para usar esta base de datos, hay que avisarnos y darnos una IP para tener acceso. Además para que podamos arrancar el
+servidor donde se encuentra MySQL.
+2. Conexión a la base de datos en local. Al ejecutar el script de MySQL en local, hay que cambiar también las credenciales de la base de datos especificadas en config.json.
 
 
 ## Uso
 
-1.Ejecutar el script MySql
+1.Ejecutar el script MySQL y la creación de las procedures.
 2.Primero ejecutamos el servidor y después el cliente.
   -Podemos ejecutar diferentes instancias del cliente pero solo puede haber una instancia del servidor arrancado.
 
